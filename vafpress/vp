@@ -1,0 +1,23 @@
+<?php
+
+	require_once 'converter.php';
+
+	$args    = $_SERVER['argv'];
+	$command = $args[1];
+	if( $args[0] == 'vp' )
+	{
+		switch ($command) {
+			case 'convert':
+				$converter = new Converter();
+				$opt       = $converter->to_array();
+				file_put_contents('config/option.php', $opt);
+				echo "option.xml converted to option.php";
+				break;
+			
+			default:
+				echo "Unsupported Command";
+				break;
+		}
+	}
+
+?>
