@@ -7,7 +7,7 @@ class VP_Util_Text
 	{
 		if(!function_exists('Markdown'))
 		{
-			require VP_DIR . '\includes\markdown\parser.php';
+			require VP_DIR . '/includes/markdown/parser.php';
 		}
 		return Markdown($text);
 	}
