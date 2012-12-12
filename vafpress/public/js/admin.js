@@ -79,7 +79,7 @@
 				    name = $field.attr('id'),
 				    rules = $field.attr('data-vp-validation'),
 				    type = $field.attr('class'),
-						$input = $('[name="' + name + '"');
+						$input = $('[name="' + name + '"]');
 
 				if (! rules) return;
 				else fields.push({name: name, rules: rules, type: type});
@@ -378,7 +378,7 @@
 		$loading.css('top', $(this).height() / 2);
 		$loading.css('left', $panel.innerWidth() / 2 + $panel.offset().left);
 	});
-	$(window).resize();
+	$(window).load($(window).resize());
 
 	// Validation Functions
 

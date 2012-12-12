@@ -50,7 +50,7 @@
 			</div>
 			<div class="vp-right-panel">
 				<div id="vp-submit" class="vp-submit">
-					<button class="vp-js-save button"><?php _e('Save Changes', VP_TEXTDOMAIN); ?></button>
+					<input class="vp-js-save vp-button" type="button" value="<?php _e('Save Changes', VP_TEXTDOMAIN); ?>" />
 					<p class="vp-js-save-status save-status" style="display: none;"></p>
 				</div>
 				<form id="vp-option-form">

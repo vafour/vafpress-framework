@@ -37,7 +37,7 @@ body {
 	width: 16px;
 }
 
-.vp-option-panel .button {
+.vp-option-panel .vp-button {
 	background-image: -moz-linear-gradient(top,  rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 100%); /* FF3.6+ */
 	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.05))); /* Chrome,Safari4+ */
 	background-image: -webkit-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.05) 100%); /* Chrome10+,Safari5.1+ */
@@ -46,11 +46,13 @@ body {
 	background-image: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.05) 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#0d000000',GradientType=0 ); /* IE6-9 */
 	border-radius: 4px;
+	border-width: 1px;
 	box-shadow: inset 0px 1px 1px rgba(255,255,255,0.4);
 	color: #333333;
 	font-weight: bold;
 	text-shadow: 0px 1px rgba(255,255,255,0.2);
 	padding: 7px 16px;
+	cursor: pointer;
 }
 
 .vp-option-panel {
@@ -272,7 +274,7 @@ body {
 	padding-top: 61px;
 }
 
-.vp-submit .button {
+.vp-submit .vp-button {
 	background-color: #ff9900;
 	border-color: #ff6600;
 	float: right;
@@ -285,7 +287,7 @@ body {
 	text-shadow: 0px -1px #ff6600;
 }
 
-.vp-submit .button:disabled {
+.vp-submit .vp-button:disabled {
 	color: #ffffff !important;
 	border-color: #ff6600 !important;
 	opacity: 0.5;
@@ -308,8 +310,10 @@ body {
 .vp-submit .save-status.success { background-position: 0px -300px; }
 .vp-submit .save-status.failed { background-position: 0px -340px; }
 
-.vp-submit .button:hover {
+.vp-submit .vp-button:hover {
 	background-color: #ffaa11;
+	color: #ffffff;
+	border-color: #ff6600;
 }
 
 .vp-panel {
