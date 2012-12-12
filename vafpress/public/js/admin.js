@@ -378,7 +378,7 @@
 		$loading.css('top', $(this).height() / 2);
 		$loading.css('left', $panel.innerWidth() / 2 + $panel.offset().left);
 	});
-	$(window).load($(window).resize());
+	$(window).load(function(){$(window).resize();});
 
 	// Validation Functions
 
