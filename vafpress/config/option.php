@@ -615,7 +615,7 @@ return array(
 									'min_date' => '1-1-2000',
 									'max_date' => 'today',
 									'format' => 'yy-mm-dd',
-									'default' => '+1D',
+									'default' => '-1W',
 								),
 							),
 						),

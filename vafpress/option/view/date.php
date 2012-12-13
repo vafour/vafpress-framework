@@ -6,7 +6,7 @@
 		</label>
 	</td>
 	<td class="fields">
-		<input <?php echo "data-vp-opt='" . $opt . "'"; ?> type="text" name="<?php echo $name ?>" class="vp-js-datepicker" value="<?php echo $value; ?>" />
+		<input <?php echo "data-vp-opt='" . $opt . "'"; ?> type="text" name="<?php echo $name ?>" class="vp-js-datepicker" />
 		<div class="validation-msgs"><ul></ul></div>
 	</td>
 </tr>

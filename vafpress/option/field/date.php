@@ -28,7 +28,8 @@ class VP_Option_Field_Date extends VP_Option_Field
 		$opt = array(
 			'minDate' => $this->get_min_date(),
 			'maxDate' => $this->get_max_date(),
-			'dateFormat' => $this->get_format()
+			'dateFormat' => $this->get_format(),
+			'value' => $this->get_value()
 		);
 		$this->add_data('opt', VP_Util_Text::make_opt($opt));
 		return VP_Option_View::get_instance()->load('date', $this->get_data());

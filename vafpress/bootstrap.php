@@ -140,6 +140,9 @@ function vp_scripts_and_styles($hook_suffix)
 {
 	global $config, $set;
 
+	$use_upload           = false;
+	$use_new_media_upload = false;
+
 	// if not in option page, don't load
 	if( $hook_suffix !== ('appearance_page_' . $config['menu_page_slug']) )
 		return;
@@ -153,8 +156,6 @@ function vp_scripts_and_styles($hook_suffix)
 		'multiselect' => array( 'js' => array('chosen-js'), 'css' => array('chosen-css') ),
 		'slider'      => array( 'js' => array('jquery-ui-slider'), 'css' => array('jqui') ),
 		'date'        => array( 'js' => array('jquery-ui-datepicker'), 'css' => array('jqui') ),
-		// 'upload'      => array( 'js' => array('plupload-handlers', 'media-upload'), 'css' => array('thickbox') ),
-		// 'wysiwyg'     => array( 'js' => array('editor'), 'css' => array() ),
 	);
 	
 	$fields = $set->get_fields();
@@ -166,11 +167,31 @@ function vp_scripts_and_styles($hook_suffix)
 			$script_deps = array_merge($script_deps, $rules[$type]['js']);
 			$style_deps  = array_merge($style_deps, $rules[$type]['css']);
 		}
+		// check if using upload button
+		if( $type == 'upload' )
+		{
+			$use_upload = true;
+		}
 	}
 	$script_deps = array_unique($script_deps);
 	$style_deps  = array_unique($style_deps);
 
-	wp_enqueue_media();
+	if($use_upload)
+	{
+		wp_enqueue_media();
+
+		global $wp_version;
+		if (version_compare($wp_version, '3.5', '<')) {
+			// version is under 3.5
+			$script_deps[] = 'thickbox';
+			$style_deps[]  = 'thickbox';
+		}
+		else
+		{
+			$use_new_media_upload = true;
+		}
+	}
+
 	wp_register_script('colorpicker-js', VP_PUBLIC_URL . '/js/vendor/colorpicker.js', array('jquery'), '', true);
 	wp_register_script('tipsy-js', VP_PUBLIC_URL . '/js/vendor/jquery.tipsy.js', array('jquery'), '', true);
 	wp_register_script('chosen-js', VP_PUBLIC_URL . '/js/vendor/chosen.jquery.min.js', array('jquery'), '', true);
@@ -182,9 +203,10 @@ function vp_scripts_and_styles($hook_suffix)
 	// Localization + Extra Variables passed to the main JS
 	$messages = VP_Util_Config::get_instance()->load('messages');
 	$extra = array(
-		'vp_public_url' => VP_PUBLIC_URL,
-		'val_msg'       => $messages['validation'],
-		'impexp_msg'    => $messages['impexp']
+		'vp_public_url'        => VP_PUBLIC_URL,
+		'val_msg'              => $messages['validation'],
+		'impexp_msg'           => $messages['impexp'],
+		'use_new_media_upload' => $use_new_media_upload,
 	);
 	wp_localize_script( 'admin', 'vp', $extra );
 

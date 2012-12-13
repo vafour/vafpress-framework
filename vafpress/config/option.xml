@@ -356,7 +356,7 @@
 							<min_date>1-1-2000</min_date>
 							<max_date>today</max_date>
 							<format>yy-mm-dd</format>
-							<default>+1D</default>
+							<default>-1W</default>
 						</date>
 					</fields>
 				</section>

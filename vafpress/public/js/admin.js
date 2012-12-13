@@ -154,45 +154,64 @@
 		});
 	});
 
-	// $('.vp-js-upload').click(function()
-	// {
-	// 	formfield = jQuery('#fwpPhoto').attr('name');
-	// 	input     = $(this).prev('input');
-	// 	preview   = $(this).next().find('img');
-	// 	tb_show('Upload Image', 'media-upload.php?type=image&amp;TB_iframe=true');
-	// 	return false;
-	// });
 
-	console.log(wp.media.editor.send);
+	var upload_callback;
 
-	$('.vp-js-upload').click(function(e) {
+	if( vp.use_new_media_upload )
+	{
+		upload_callback = function(e) {
 
-		var send_attachment = wp.media.editor.send.attachment,
-				send_link = wp.media.editor.send.link,
-				$this = $(this),
-				$input = $this.prev('input'),
-				$preview = $this.next().find('img');
+				var send_attachment = wp.media.editor.send.attachment,
+						send_link = wp.media.editor.send.link,
+						$this = $(this),
+						$input = $this.prev('input'),
+						$preview = $this.next().find('img');
 
-		// handler for attachment
-		wp.media.editor.send.attachment = function(props, attachment) {
-			$input.val(attachment.url);
-			$preview.attr('src', attachment.url);
-			wp.media.editor.send.attachment = send_attachment;
-		}
+				// handler for attachment
+				wp.media.editor.send.attachment = function(props, attachment) {
+					$input.val(attachment.url);
+					$preview.attr('src', attachment.url);
+					wp.media.editor.send.attachment = send_attachment;
+				}
 
-		// handler for link
-		window.send_to_editor = function(html) {
-			if (html != '') {
-				// targetting only link, since attachment is already handled separately
-				var imgurl = $(html).attr('src');
-				$input.val(imgurl);
-				$preview.attr('src', imgurl);
-			}			
-		}
+				// handler for link
+				window.send_to_editor = function(html) {
+					if (html != '') {
+						// targetting only link, since attachment is already handled separately
+						var imgurl = $(html).attr('src');
+						$input.val(imgurl);
+						$preview.attr('src', imgurl);
+					}			
+				}
 
-		wp.media.editor.open($this);
-		return false;
-	})
+				wp.media.editor.open($this);
+				return false;
+			}
+	}
+	else
+	{
+		upload_callback = function(e) {
+				$input     = $(this).prev('input');
+				$preview   = $(this).next().find('img');
+				tb_show('Upload Image', 'media-upload.php?type=image&amp;TB_iframe=true');
+				window.send_to_editor = function(html) {
+					if (html != '') {
+						var imgurl = $(html).find('img').attr('src');
+						if( typeof imgurl == 'undefined' )
+						{
+							imgurl = $(html).attr('src');
+						}
+						$input.val(imgurl);
+						$preview.attr('src', imgurl);
+					}
+					tb_remove();
+				}
+				return false;
+			};
+	}
+
+	$('.vp-js-upload').click(upload_callback);
+
 
 	$('.vp-js-colorpicker').each(function()
 	{
@@ -222,6 +241,7 @@
 		var options = $(this).getDatas();
 		options = parseOpt(options.opt);
 		$(this).datepicker(options);
+		$(this).datepicker('setDate', options.value);
 	});
 
 	// Tipsy
