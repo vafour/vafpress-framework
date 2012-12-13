@@ -97,7 +97,6 @@
 								<radiobutton>
 									<name>field_5</name>
 									<label>RadioButton</label>
-									<description>this is description</description>
 									<items>
 										<item value="value_1" default="true">Label 1</item>
 										<item value="value_2">Label 2</item>
@@ -110,7 +109,6 @@
 								<select>
 									<name>field_12</name>
 									<label>Single Select Box</label>
-									<description>this is description</description>
 									<items>
 										<item value="value_1">Label 1</item>
 										<item value="value_2">Label 2</item>

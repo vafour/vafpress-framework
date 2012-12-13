@@ -24,7 +24,7 @@ return array(
 									'type' => 'textbox',
 									'name' => 'tb_1',
 									'label' => __('Alphabet', VP_TEXTDOMAIN),
-									'description' => __('Only **alphabets** allowed here.', VP_TEXTDOMAIN),
+									'description' => __('Only alphabets allowed here.', VP_TEXTDOMAIN),
 									'default' => 'abcdefg',
 									'validation' => 'alphabet',
 								),
@@ -32,7 +32,7 @@ return array(
 									'type' => 'textbox',
 									'name' => 'tb_2',
 									'label' => __('Alphanumeric', VP_TEXTDOMAIN),
-									'description' => __('Only **alphabets** and **numbers** allowed here.', VP_TEXTDOMAIN),
+									'description' => __('Only alphabets and numbers allowed here.', VP_TEXTDOMAIN),
 									'default' => 'abcd123',
 									'validation' => 'alphanumeric',
 								),
@@ -125,7 +125,6 @@ return array(
 									'type' => 'radiobutton',
 									'name' => 'field_5',
 									'label' => __('RadioButton', VP_TEXTDOMAIN),
-									'description' => __('this is description', VP_TEXTDOMAIN),
 									'items' => array(
 										array(
 											'value' => 'value_1',
@@ -148,7 +147,6 @@ return array(
 									'type' => 'select',
 									'name' => 'field_12',
 									'label' => __('Single Select Box', VP_TEXTDOMAIN),
-									'description' => __('this is description', VP_TEXTDOMAIN),
 									'items' => array(
 										array(
 											'value' => 'value_1',

@@ -153,8 +153,8 @@ function vp_scripts_and_styles($hook_suffix)
 		'multiselect' => array( 'js' => array('chosen-js'), 'css' => array('chosen-css') ),
 		'slider'      => array( 'js' => array('jquery-ui-slider'), 'css' => array('jqui') ),
 		'date'        => array( 'js' => array('jquery-ui-datepicker'), 'css' => array('jqui') ),
-		'upload'      => array( 'js' => array('thickbox', 'media-upload'), 'css' => array('thickbox') ),
-		'wysiwyg'     => array( 'js' => array('editor'), 'css' => array() ),
+		// 'upload'      => array( 'js' => array('plupload-handlers', 'media-upload'), 'css' => array('thickbox') ),
+		// 'wysiwyg'     => array( 'js' => array('editor'), 'css' => array() ),
 	);
 	
 	$fields = $set->get_fields();
@@ -170,6 +170,7 @@ function vp_scripts_and_styles($hook_suffix)
 	$script_deps = array_unique($script_deps);
 	$style_deps  = array_unique($style_deps);
 
+	wp_enqueue_media();
 	wp_register_script('colorpicker-js', VP_PUBLIC_URL . '/js/vendor/colorpicker.js', array('jquery'), '', true);
 	wp_register_script('tipsy-js', VP_PUBLIC_URL . '/js/vendor/jquery.tipsy.js', array('jquery'), '', true);
 	wp_register_script('chosen-js', VP_PUBLIC_URL . '/js/vendor/chosen.jquery.min.js', array('jquery'), '', true);

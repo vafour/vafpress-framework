@@ -132,20 +132,19 @@
 			$slider.prev('.slideinput').val(ui.value);
     	};
 		$slider.slider(options);
-		$slider.prev('.slideinput').keypress(function(e) {
-			$this = $(this);
-			var pressedKey = String.fromCharCode(e.keyCode);
-			var realVal = $this.val() + pressedKey;
-			if (!isNumber(pressedKey) && $.inArray(pressedKey, ['.', '-']) == -1 ) {
+
+		$slider.prev('.slideinput').keydown(function(e) {
+			if ($.inArray(e.keyCode, [189, 190, 8, 37, 39]) == -1 || (e.keyCode < 48 && e.keyCode > 90) ) {
 				e.preventDefault();
-				return;
 			};
-			
-			if (realVal > options.max) {
+		}).blur(function(e) {
+			var $this = $(this),
+			    val = $this.val();
+			if (val > options.max) {
 				$this.val(options.max);
 				$slider.slider('value', options.max);
 				e.preventDefault();
-			} else if (realVal < options.min) {
+			} else if (val < options.min) {
 				$this.val(options.min);
 				$slider.slider('value', options.min);
 				e.preventDefault();
@@ -155,22 +154,45 @@
 		});
 	});
 
-	$('.vp-js-upload').click(function()
-	{
-		formfield = jQuery('#fwpPhoto').attr('name');
-		input     = $(this).prev('input');
-		preview   = $(this).next().find('img');
-		tb_show('Upload Image', 'media-upload.php?type=image&amp;TB_iframe=true');
-		return false;
-	});
+	// $('.vp-js-upload').click(function()
+	// {
+	// 	formfield = jQuery('#fwpPhoto').attr('name');
+	// 	input     = $(this).prev('input');
+	// 	preview   = $(this).next().find('img');
+	// 	tb_show('Upload Image', 'media-upload.php?type=image&amp;TB_iframe=true');
+	// 	return false;
+	// });
 
-	window.send_to_editor = function(html)
-	{
-		imgurl = jQuery('img', html).attr('src');
-		input.val(imgurl);
-		preview.attr('src', imgurl);
-		tb_remove();
-	}
+	console.log(wp.media.editor.send);
+
+	$('.vp-js-upload').click(function(e) {
+
+		var send_attachment = wp.media.editor.send.attachment,
+				send_link = wp.media.editor.send.link,
+				$this = $(this),
+				$input = $this.prev('input'),
+				$preview = $this.next().find('img');
+
+		// handler for attachment
+		wp.media.editor.send.attachment = function(props, attachment) {
+			$input.val(attachment.url);
+			$preview.attr('src', attachment.url);
+			wp.media.editor.send.attachment = send_attachment;
+		}
+
+		// handler for link
+		window.send_to_editor = function(html) {
+			if (html != '') {
+				// targetting only link, since attachment is already handled separately
+				var imgurl = $(html).attr('src');
+				$input.val(imgurl);
+				$preview.attr('src', imgurl);
+			}			
+		}
+
+		wp.media.editor.open($this);
+		return false;
+	})
 
 	$('.vp-js-colorpicker').each(function()
 	{
@@ -203,24 +225,27 @@
 	});
 
 	// Tipsy
-	$('.vp-js-tipsy').tipsy();
+	$('.vp-js-tipsy.description').each(function() { $(this).tipsy({ gravity : 'e' }); });
+	$('.vp-js-tipsy.slideinput').each(function() { $(this).tipsy({ trigger : 'focus' }); });
 
 	// Chosen
 	$('.vp-js-chosen').chosen();
 
 	// Scrollspy
 	var $submit = $('.vp-submit');
-	$submit.scrollspy({
-		min: parseInt($submit.offset().top - 28),
-		max: $(document).height(),
-		onEnter: function(element, position) {
-			$submit.addClass('floating');
-		},
-		onLeave: function(element, position) {
-			$submit.removeClass('floating');
-		}
-	});
-	$(window).scroll();
+	$(window).load(function() {
+		$submit.scrollspy({
+			min: parseInt($submit.offset().top - 28),
+			max: $(document).height(),
+			onEnter: function(element, position) {
+				$submit.addClass('floating');
+			},
+			onLeave: function(element, position) {
+				$submit.removeClass('floating');
+			}
+		});
+		$(window).scroll();
+	})
 
 	// Ajax Saving
 	$('.vp-js-save').bind('click', function(e) {
@@ -374,7 +399,6 @@
 		$overlay.css('height', $panel.innerHeight());
 		$overlay.css('width', $panel.innerWidth());
 		$submit.css('width', $right.innerWidth());
-		$copyright.css('width', $right.innerWidth());
 		$loading.css('top', $(this).height() / 2);
 		$loading.css('left', $panel.innerWidth() / 2 + $panel.offset().left);
 	});

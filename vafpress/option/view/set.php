@@ -1,7 +1,7 @@
 <div class="wrap">
 	<h2><?php echo $set->get_title(); ?></h2>
 	<?php if (VP_Util_config::get_instance()->load('vafpress', 'dev_mode') == 1): ?>
-	<div class="vp-dev-notif"><?php _e('Development Mode is active'); ?></div>
+	<div class="vp-dev-notif updated"><p><?php _e('Development Mode is active'); ?></p></div>
 	<?php endif; ?>
 	<div id="vp-wrap" class="vp-wrap">
 		<div id="vp-option-panel" class="vp-option-panel">
