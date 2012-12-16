@@ -73,8 +73,6 @@
 									<label>CheckBox with Min and Max Selected Validation</label>
 									<description>Minimum selected of 2 items and maximum selected of 2 items, in other words need to choose exactly 2 items.</description>
 									<items>
-										<data source = "function">vp_get_categories</data>
-										<data source = "function">vp_get_users</data>
 										<item value="value_1">Label 1</item>
 										<item value="value_2">Label 2</item>
 										<item value="value_3">Label 3</item>
@@ -97,7 +95,7 @@
 									<default></default>
 								</checkbox>
 								<radiobutton>
-									<name>field_5</name>
+									<name>rb_1</name>
 									<label>RadioButton</label>
 									<items>
 										<item value="value_1" default="true">Label 1</item>
@@ -109,7 +107,7 @@
 									</default>
 								</radiobutton>
 								<select>
-									<name>field_12</name>
+									<name>ss_1</name>
 									<label>Single Select Box</label>
 									<items>
 										<item value="value_1">Label 1</item>
@@ -120,8 +118,18 @@
 										<item>value_3</item>
 									</default>
 								</select>
+								<select>
+									<name>ss_2</name>
+									<label>Select Box with Get Categories Data Source</label>
+									<items>
+										<data source="function">vp_get_categories</data>
+									</items>
+									<default>
+										<item></item>
+									</default>
+								</select>
 								<multiselect>
-									<name>field_13</name>
+									<name>ms_1</name>
 									<label>Multiple Select Box</label>
 									<description>Minimum selected of 2 items and maximum selected of 3 items.</description>
 									<items>

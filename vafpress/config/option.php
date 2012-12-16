@@ -82,16 +82,6 @@ return array(
 									'description' => __('Minimum selected of 2 items and maximum selected of 2 items, in other words need to choose exactly 2 items.', VP_TEXTDOMAIN),
 									'validation' => 'minselected[2]|maxselected[2]',
 									'items' => array(
-										'data' => array(
-											array(
-												'type' => 'function',
-												'name' => 'vp_get_categories',
-											),
-											array(
-												'type' => 'function',
-												'name' => 'vp_get_users',
-											),
-										),
 										array(
 											'value' => 'value_1',
 											'label' => __('Label 1', VP_TEXTDOMAIN),
@@ -133,7 +123,7 @@ return array(
 								),
 								array(
 									'type' => 'radiobutton',
-									'name' => 'field_5',
+									'name' => 'rb_1',
 									'label' => __('RadioButton', VP_TEXTDOMAIN),
 									'items' => array(
 										array(
@@ -155,7 +145,7 @@ return array(
 								),
 								array(
 									'type' => 'select',
-									'name' => 'field_12',
+									'name' => 'ss_1',
 									'label' => __('Single Select Box', VP_TEXTDOMAIN),
 									'items' => array(
 										array(
@@ -176,8 +166,24 @@ return array(
 									),
 								),
 								array(
+									'type' => 'select',
+									'name' => 'ss_2',
+									'label' => __('Select Box with Get Categories Data Source', VP_TEXTDOMAIN),
+									'items' => array(
+										'data' => array(
+											array(
+												'type' => 'function',
+												'name' => 'vp_get_categories',
+											),
+										),
+									),
+									'default' => array(
+										'value_3',
+									),
+								),
+								array(
 									'type' => 'multiselect',
-									'name' => 'field_13',
+									'name' => 'ms_1',
 									'label' => __('Multiple Select Box', VP_TEXTDOMAIN),
 									'description' => __('Minimum selected of 2 items and maximum selected of 3 items.', VP_TEXTDOMAIN),
 									'validation' => 'minselected[2]|maxselected[3]',

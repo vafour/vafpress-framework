@@ -28,7 +28,7 @@ require VP_DIR . '/autoload.php';
 //////////////////////////
 // Include Data Source  //
 //////////////////////////
-require_once '/datasources.php';
+require_once VP_DIR . '/datasources.php';
 
 
 ////////////////////////

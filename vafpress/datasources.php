@@ -5,78 +5,78 @@
  * datasource to field with multiple options
  */
 
-	function vp_get_categories()
+function vp_get_categories()
+{
+
+	$wp_cat = get_categories(array('hide_empty' => 0 ));
+
+	$result = array();
+
+	foreach ($wp_cat as $cat)
 	{
-
-		$wp_cat = get_categories(array('hide_empty' => 0 ));
-
-		$result = array();
-
-		foreach ($wp_cat as $cat)
-		{
-			$result[] = array('value' => $cat->cat_ID, 'label' => $cat->name);
-		}
-
-		return $result;
+		$result[] = array('value' => $cat->cat_ID, 'label' => $cat->name);
 	}
 
-	function vp_get_users()
+	return $result;
+}
+
+function vp_get_users()
+{
+
+	$wp_users = get_users();
+
+	$result = array();
+
+	foreach ($wp_users as $user)
 	{
-
-		$wp_users = get_users();
-
-		$result = array();
-
-		foreach ($wp_users as $user)
-		{
-			$result[] = array('value' => $user->data->ID, 'label' => $user->data->display_name);
-		}
-
-		return $result;
+		$result[] = array('value' => $user->data->ID, 'label' => $user->data->display_name);
 	}
 
-	function vp_get_posts()
+	return $result;
+}
+
+function vp_get_posts()
+{
+
+	$wp_posts = get_posts();
+
+	$result = array();
+
+	foreach ($wp_posts as $post)
 	{
-
-		$wp_posts = get_posts();
-
-		$result = array();
-
-		foreach ($wp_posts as $post)
-		{
-			$result[] = array('value' => $post->ID, 'label' => $post->post_title);
-		}
-
-		return $result;
+		$result[] = array('value' => $post->ID, 'label' => $post->post_title);
 	}
 
-	function vp_get_pages()
+	return $result;
+}
+
+function vp_get_pages()
+{
+
+	$wp_pages = get_pages();
+
+	$result = array();
+
+	foreach ($wp_pages as $page)
 	{
-
-		$wp_pages = get_pages();
-
-		$result = array();
-
-		foreach ($wp_pages as $page)
-		{
-			$result[] = array('value' => $page->ID, 'label' => $page->post_title);
-		}
-
-		return $result;
+		$result[] = array('value' => $page->ID, 'label' => $page->post_title);
 	}
 
-	function vp_get_tags()
+	return $result;
+}
+
+function vp_get_tags()
+{
+	$wp_tags = get_tags(array('hide_empty' => 0));
+
+	$result = array();
+
+	foreach ($wp_tags as $tag)
 	{
-		$wp_tags = get_tags(array('hide_empty' => 0));
-
-		$result = array();
-
-		foreach ($wp_tags as $tag)
-		{
-			$result[] = array('value' => $tag->term_id, 'label' => $tag->name);
-		}
-
-		return $result;
+		$result[] = array('value' => $tag->term_id, 'label' => $tag->name);
 	}
+
+	return $result;
+}
 
 ?>
