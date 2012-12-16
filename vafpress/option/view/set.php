@@ -1,7 +1,7 @@
 <div class="wrap">
 	<h2><?php echo $set->get_title(); ?></h2>
 	<?php if (VP_Util_config::get_instance()->load('vafpress', 'dev_mode') == 1): ?>
-	<div class="vp-dev-notif updated"><p><?php _e('Development Mode is active'); ?></p></div>
+	<div class="vp-dev-notif updated"><p><?php _e('Development Mode is active', 'vafpress'); ?></p></div>
 	<?php endif; ?>
 	<div id="vp-wrap" class="vp-wrap">
 		<div id="vp-option-panel" class="vp-option-panel">
@@ -50,7 +50,7 @@
 			</div>
 			<div class="vp-right-panel">
 				<div id="vp-submit" class="vp-submit">
-					<input class="vp-js-save vp-button" type="button" value="<?php _e('Save Changes', VP_TEXTDOMAIN); ?>" />
+					<input class="vp-js-save vp-button" type="button" value="<?php _e('Save Changes', 'vafpress'); ?>" />
 					<p class="vp-js-save-status save-status" style="display: none;"></p>
 				</div>
 				<form id="vp-option-form">
@@ -63,7 +63,7 @@
 				<?php endforeach; ?>
 				</form>
 				<div id="vp-copyright" class="vp-copyright">
-					<?php printf(__('This option panel is built using <a href="http://vafpress.com">Vafpress Framework %s</a> powered by <a href="http://vafour.com">Vafour</a>', VP_TEXTDOMAIN), VP_VERSION); ?>
+					<?php printf(__('This option panel is built using <a href="http://vafpress.com">Vafpress Framework %s</a> powered by <a href="http://vafour.com">Vafour</a>', 'vafpress'), VP_VERSION); ?>
 				</div>
 			</div>
 		</div>

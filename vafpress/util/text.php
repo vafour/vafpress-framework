@@ -22,13 +22,6 @@ class VP_Util_Text
 		return $optString;
 	}
 
-	public static function _e($string)
-	{
-		if(defined(VP_TEXTDOMAIN))
-			echo __($string, VP_TEXTDOMAIN);
-		echo $string;
-	}
-
 	public static function print_if_exists($value, $format)
 	{
 		if (!empty($value))

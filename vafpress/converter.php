@@ -25,7 +25,7 @@ class Converter
 			if( !$set->hasChildren() )
 			{
 				if( in_array($set->key(), $this->localized) )
-					$opt_arr .= "\t'{$set->key()}' => __('{$set->current()}', VP_TEXTDOMAIN),\n";
+					$opt_arr .= "\t'{$set->key()}' => __('{$set->current()}', 'vafpress'),\n";
 				else
 					$opt_arr .= "\t'{$set->key()}' => '{$set->current()}',\n";
 			}
@@ -47,7 +47,7 @@ class Converter
 				if( !$menu->hasChildren() and !in_array($menu->key(), $this->group) )
 				{
 					if( in_array($menu->key(), $this->localized) )
-						$opt_arr .= "\t\t\t'{$menu->key()}' => __('{$menu->current()}', VP_TEXTDOMAIN),\n";
+						$opt_arr .= "\t\t\t'{$menu->key()}' => __('{$menu->current()}', 'vafpress'),\n";
 					else
 						$opt_arr .= "\t\t\t'{$menu->key()}' => '{$menu->current()}',\n";
 				}
@@ -73,7 +73,7 @@ class Converter
 						if( !$submenu->hasChildren() and !in_array($submenu->key(), $this->group) )
 						{
 							if( in_array($submenu->key(), $this->localized) )
-								$opt_arr .= "\t\t\t\t\t'{$submenu->key()}' => __('{$submenu->current()}', VP_TEXTDOMAIN),\n";
+								$opt_arr .= "\t\t\t\t\t'{$submenu->key()}' => __('{$submenu->current()}', 'vafpress'),\n";
 							else
 								$opt_arr .= "\t\t\t\t\t'{$submenu->key()}' => '{$submenu->current()}',\n";
 						}
@@ -127,7 +127,7 @@ class Converter
 				if( !$section->hasChildren() and !in_array($section->key(), $this->group) )
 				{
 					if( in_array($section->key(), $this->localized) )
-						$opt_arr .= "\t\t\t\t\t\t\t'{$section->key()}' => __('{$section->current()}', VP_TEXTDOMAIN),\n";
+						$opt_arr .= "\t\t\t\t\t\t\t'{$section->key()}' => __('{$section->current()}', 'vafpress'),\n";
 					else
 						$opt_arr .= "\t\t\t\t\t\t\t'{$section->key()}' => '{$section->current()}',\n";
 				}
@@ -151,7 +151,7 @@ class Converter
 						if( $field->key() == 'default' )
 							echo '';
 						if( in_array($field->key(), $this->localized) )
-							$opt_arr .= "\t\t\t\t\t\t\t\t\t'{$field->key()}' => __('{$field->current()}', VP_TEXTDOMAIN),\n";
+							$opt_arr .= "\t\t\t\t\t\t\t\t\t'{$field->key()}' => __('{$field->current()}', 'vafpress'),\n";
 						else
 							$opt_arr .= "\t\t\t\t\t\t\t\t\t'{$field->key()}' => '{$field->current()}',\n";
 					}
@@ -238,7 +238,7 @@ class Converter
 						foreach ($item as $key => $value)
 						{
 							if( in_array($key, $this->localized) )
-								$opt_arr .= "\t\t\t\t\t\t\t\t\t\t\t'$key' => __('$value', VP_TEXTDOMAIN),\n";
+								$opt_arr .= "\t\t\t\t\t\t\t\t\t\t\t'$key' => __('$value', 'vafpress'),\n";
 							else
 								$opt_arr .= "\t\t\t\t\t\t\t\t\t\t\t'$key' => '$value',\n";
 						}

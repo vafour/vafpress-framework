@@ -35,14 +35,13 @@ require_once VP_DIR . '/datasources.php';
 // Load Theme Config  //
 ////////////////////////
 $config = VP_Util_Config::get_instance()->load('vafpress');
-define('VP_TEXTDOMAIN', $config['theme_text_domain']);
 
 
 ////////////////////////
 // Load Languages     //
 ////////////////////////
 $lang_dir = VP_THEME_DIR . '/lang';
-load_theme_textdomain(VP_TEXTDOMAIN, $lang_dir);
+load_theme_textdomain('vafpress', $lang_dir);
 
 
 /////////////////////////
@@ -60,7 +59,7 @@ $ie_menu    = new VP_Option_Group_Menu();
 $ie_section = new VP_Option_Group_Section();
 $ie_field   = new VP_Option_Field_ImpExp();
 
-$ie_menu->set_title(__('Import and Export', VP_TEXTDOMAIN));
+$ie_menu->set_title(__('Import and Export', 'vafpress'));
 $ie_menu->set_name('impexp');
 $ie_menu->set_icon('/icon/impexp.png');
 

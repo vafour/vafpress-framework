@@ -31,11 +31,6 @@ return array(
 	 * Slug of option page menu under appereance
 	 */
 	'menu_page_slug'    => 'vp_theme_option',
-	
-	/**
-	 * Set this the same as your text domain
-	 */
-	'theme_text_domain' => 'vafpress',
 
 );
 
