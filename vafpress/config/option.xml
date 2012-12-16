@@ -73,6 +73,8 @@
 									<label>CheckBox with Min and Max Selected Validation</label>
 									<description>Minimum selected of 2 items and maximum selected of 2 items, in other words need to choose exactly 2 items.</description>
 									<items>
+										<data source = "function">vp_get_categories</data>
+										<data source = "function">vp_get_users</data>
 										<item value="value_1">Label 1</item>
 										<item value="value_2">Label 2</item>
 										<item value="value_3">Label 3</item>

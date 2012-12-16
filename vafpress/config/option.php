@@ -82,6 +82,16 @@ return array(
 									'description' => __('Minimum selected of 2 items and maximum selected of 2 items, in other words need to choose exactly 2 items.', VP_TEXTDOMAIN),
 									'validation' => 'minselected[2]|maxselected[2]',
 									'items' => array(
+										'data' => array(
+											array(
+												'type' => 'function',
+												'name' => 'vp_get_categories',
+											),
+											array(
+												'type' => 'function',
+												'name' => 'vp_get_users',
+											),
+										),
 										array(
 											'value' => 'value_1',
 											'label' => __('Label 1', VP_TEXTDOMAIN),

@@ -25,6 +25,12 @@ defined('VP_START_MEM')  or define('VP_START_MEM',  memory_get_usage());
 require VP_DIR . '/autoload.php';
 
 
+//////////////////////////
+// Include Data Source  //
+//////////////////////////
+require_once '/datasources.php';
+
+
 ////////////////////////
 // Load Theme Config  //
 ////////////////////////
