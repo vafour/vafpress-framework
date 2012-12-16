@@ -605,7 +605,8 @@ return array(
 									'label' => __('Asian Date Format', VP_TEXTDOMAIN),
 									'description' => __('this is description', VP_TEXTDOMAIN),
 									'format' => 'dd-mm-yy',
-									'default' => '12-12-2012',
+									'default' => '',
+									'validation' => 'required',
 								),
 								array(
 									'type' => 'date',

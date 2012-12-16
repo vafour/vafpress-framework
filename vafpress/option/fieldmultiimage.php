@@ -24,6 +24,21 @@ abstract class VP_Option_FieldMultiImage extends VP_Option_FieldMulti
 
 		if (!empty($arr['items']))
 		{
+			if(isset($arr['items']['data']))
+			{
+				foreach ($arr['items']['data'] as $data)
+				{
+					if($data['type'] == 'function')
+					{
+						if(function_exists($data['name']))
+						{
+							$items = call_user_func($data['name']);
+							$arr['items'] = array_merge($arr['items'], $items);
+						}
+					}
+				}
+				unset($arr['items']['data']);
+			}
 			foreach ($arr['items'] as $item)
 			{
 				$the_item = new VP_Option_Field_Item_Image();

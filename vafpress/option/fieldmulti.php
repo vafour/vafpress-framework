@@ -19,6 +19,21 @@ abstract class VP_Option_FieldMulti extends VP_Option_Field
 
 		if (!empty($arr['items']))
 		{
+			if(isset($arr['items']['data']))
+			{
+				foreach ($arr['items']['data'] as $data)
+				{
+					if($data['type'] == 'function')
+					{
+						if(function_exists($data['name']))
+						{
+							$items = call_user_func($data['name']);
+							$arr['items'] = array_merge($arr['items'], $items);
+						}
+					}
+				}
+				unset($arr['items']['data']);
+			}
 			foreach ($arr['items'] as $item)
 			{
 				// if item has image, skip
@@ -41,6 +56,13 @@ abstract class VP_Option_FieldMulti extends VP_Option_Field
 	{
 		parent::_setup_data();
 		$this->add_data('items', $this->get_items());
+	}
+
+	public function add_items($items)
+	{
+		$this->_items = array_merge($this->_items, $items);
+		// $this->_items = $this->_items + $items;
+		// print_r($this->_items);
 	}
 
 	/**

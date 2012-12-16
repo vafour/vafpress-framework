@@ -13,9 +13,6 @@ class Converter
 		// Parse XML String with SimpleXML
 		$options   = file_get_contents('config/option.xml');
 
-		// $group     = array('fields', 'sections', 'submenus', 'menus');
-		// $localized = array('page', 'label', 'title', 'description');
-
 		// Open root array
 		$opt_arr  = "<?php\n";
 		$opt_arr .= "\n";
@@ -163,13 +160,25 @@ class Converter
 				// process items
 				$xml_items    = $field->items;
 				$items        = array();
+				$datasources  = array();
 				$emb_defaults = array();
 				$tag_defaults = array();
 				for( $xml_items->rewind(); $xml_items->valid(); $xml_items->next() )
 				{
 					$item = $xml_items->current();
+
+					// get custom data sources
+					foreach ($item->data as $data)
+					{
+						$datasources[] = array(
+							'type' => (string) $data['source'],
+							'name' => (string) $data,
+						);
+					}
+
+					// get use defined items
 					$itm  = array();
-					foreach ($item as $key => $value)
+					foreach ($item->item as $key => $value)
 					{
 						// Get Items attribute
 						$itm['value'] = (string) $value['value'];
@@ -202,12 +211,30 @@ class Converter
 				}
 
 				// processing items
-				if( !empty($items) )
+				if( !empty($items) || !empty($datasources) )
 				{
 					$opt_arr  .= "\t\t\t\t\t\t\t\t\t'items' => array(\n";
+
+					// add custom datasources
+					if(!empty($datasources))
+					{
+
+						$opt_arr .= "\t\t\t\t\t\t\t\t\t\t'data' => array(\n";
+						foreach ($datasources as $data)
+						{
+							$opt_arr .= "\t\t\t\t\t\t\t\t\t\t\tarray(\n";
+							$opt_arr .= "\t\t\t\t\t\t\t\t\t\t\t\t'type' => '{$data[type]}',\n";
+							$opt_arr .= "\t\t\t\t\t\t\t\t\t\t\t\t'name' => '{$data[name]}',\n";
+							$opt_arr .= "\t\t\t\t\t\t\t\t\t\t\t),\n";
+						}
+						$opt_arr .= "\t\t\t\t\t\t\t\t\t\t),\n";
+					}
+
 					foreach ($items as $item)
 					{
 						$opt_arr .= "\t\t\t\t\t\t\t\t\t\tarray(\n";
+
+
 						foreach ($item as $key => $value)
 						{
 							if( in_array($key, $this->localized) )

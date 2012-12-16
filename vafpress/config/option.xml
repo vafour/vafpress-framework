@@ -347,7 +347,8 @@
 							<label>Asian Date Format</label>
 							<description>this is description</description>
 							<format>dd-mm-yy</format>
-							<default>12-12-2012</default>
+							<default></default>
+							<validation>required</validation>
 						</date>
 						<date>
 							<name>dt_3</name>
