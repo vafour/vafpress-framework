@@ -8,6 +8,7 @@
  * - Configure JS Messages at vafpress/config/messages.php.
  */
 require_once 'vafpress/bootstrap.php';
+require_once 'vafpress/datasources.php';
 
 require_once 'vafpress/datasource.php';
 
