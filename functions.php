@@ -9,6 +9,8 @@
  */
 require_once 'vafpress/bootstrap.php';
 
+require_once 'vafpress/datasource.php';
+
 /*
  * EOF
  */
