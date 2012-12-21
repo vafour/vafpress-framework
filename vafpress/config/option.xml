@@ -122,10 +122,10 @@
 									<name>ss_2</name>
 									<label>Select Box with Get Categories Data Source</label>
 									<items>
-										<data source="function">vp_get_categories</data>
+										<data source="function">vp_get_categories(test,ting)</data>
 									</items>
 									<default>
-										<item></item>
+										<item>{{last}}</item>
 									</default>
 								</select>
 								<multiselect>
@@ -139,7 +139,10 @@
 										<item value="value_4">Label 4</item>
 									</items>
 									<validation>minselected[2]|maxselected[3]</validation>
-									<default></default>
+									<default>
+										<item>{{first}}</item>
+										<item>{{last}}</item>
+									</default>
 								</multiselect>
 							</fields>
 						</section>
@@ -348,14 +351,14 @@
 						<date>
 							<name>dt_1</name>
 							<label>International Date Format</label>
-							<description>this is description</description>
+							<description>Date Picker with International date format.</description>
 							<format>yy-mm-dd</format>
 							<default>2012-12-12</default>
 						</date>
 						<date>
 							<name>dt_2</name>
 							<label>Asian Date Format</label>
-							<description>this is description</description>
+							<description>Date Picker with Asian date format.</description>
 							<format>dd-mm-yy</format>
 							<default></default>
 							<validation>required</validation>
@@ -369,6 +372,79 @@
 							<format>yy-mm-dd</format>
 							<default>-1W</default>
 						</date>
+					</fields>
+				</section>
+			</sections>
+		</menu>
+		<menu>
+			<title>Custom Data Source</title>
+			<name>menu_3</name>
+			<icon>/icon/datasources.png</icon>
+			<sections>
+				<section>
+					<title>Data Source and Special Default</title>
+					<fields>
+						<multiselect>
+							<name>ms_categories</name>
+							<label>Categories</label>
+							<description>MultiSelect field with WP Categories Data Source and **{{first}}** **{{last}}** default items.</description>
+							<items>
+								<data source="function">vp_get_categories</data>
+							</items>
+							<default>
+								<item>{{first}}</item>
+								<item>{{last}}</item>
+							</default>
+						</multiselect>
+						<select>
+							<name>se_pages</name>
+							<label>Pages</label>
+							<description>Select field with WP Pages Data Source</description>
+							<items>
+								<data source="function">vp_get_pages</data>
+							</items>	
+						</select>
+						<checkbox>
+							<name>cb_users</name>
+							<label>Users Data Source</label>
+							<description>Checkbox field with WP Users Data Source and **{{all}}** default items.</description>
+							<items>
+								<data source="function">vp_get_users</data>
+							</items>
+							<default>
+								<item>{{all}}</item>
+							</default>
+						</checkbox>
+						<radiobutton>
+							<name>rb_roles</name>
+							<label>Roles</label>
+							<description>RadioButton field with WP Roles Data Source and **{{last}}** default item.</description>
+							<items>
+								<data source="function">vp_get_roles</data>
+							</items>
+							<default>
+								<item>{{last}}</item>
+							</default>
+						</radiobutton>
+						<multiselect>
+							<name>ms_tags</name>
+							<label>Tags</label>
+							<description>MultiSelect field with WP Tags Data Source and **{{first}}** default items.</description>
+							<items>
+								<data source="function">vp_get_tags</data>
+							</items>
+							<default>
+								<item>{{first}}</item>
+							</default>
+						</multiselect>
+						<select>
+							<name>se_posts</name>
+							<label>Posts</label>
+							<description>Select field with WP Post Data Source</description>
+							<items>
+								<data source="function">vp_get_posts</data>
+							</items>	
+						</select>
 					</fields>
 				</section>
 			</sections>

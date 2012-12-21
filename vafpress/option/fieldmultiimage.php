@@ -30,9 +30,21 @@ abstract class VP_Option_FieldMultiImage extends VP_Option_FieldMulti
 				{
 					if($data['type'] == 'function')
 					{
-						if(function_exists($data['name']))
+						$first    = strpos($data['name'], '(');
+						$last     = strpos($data['name'], ')');
+						if( $first && $last )
 						{
-							$items = call_user_func($data['name']);
+							$function = substr($data['name'], 0, $first);
+							$params   = explode(',', substr($data['name'], $first + 1, $last - $first - 1));					
+						}
+						else
+						{
+							$function = $data['name'];
+							$params   = array();
+						}
+						if(function_exists($function))
+						{
+							$items = call_user_func_array($function, $params);
 							$arr['items'] = array_merge($arr['items'], $items);
 						}
 					}
@@ -47,10 +59,6 @@ abstract class VP_Option_FieldMultiImage extends VP_Option_FieldMulti
 						 ->img($item['img']);
 				$this->add_item($the_item);
 			}
-		}
-		if (!empty($arr['default']))
-		{
-			$this->set_default($arr['default']);
 		}
 		return $this;
 	}

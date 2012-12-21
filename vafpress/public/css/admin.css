@@ -608,6 +608,7 @@ body {
 	-webkit-box-sizing: content-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: content-box;	/* Firefox, other Gecko */
 	box-sizing: content-box;		 /* Opera/IE 8+ */
+	max-height: 150px;
 }
 
 .vp-section tr.vp-select .fields .chzn-drop input {

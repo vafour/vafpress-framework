@@ -10,26 +10,26 @@ return array(
 	 * Validation Messages
 	 */
 	'validation' => array(
-		'alphabet'     => __('Value need to be Alphabet', 'vafpress'),
-		'alphanumeric' => __('Value need to be Alphanumeric', 'vafpress'),
-		'numeric'      => __('Value need to be Numeric', 'vafpress'),
-		'email'        => __('Value need to be Valid Email', 'vafpress'),
-		'url'          => __('Value need to be Valid URL', 'vafpress'),
-		'maxlength'    => __('Length need to be less than {0} characters', 'vafpress'),
-		'minlength'    => __('Length need to be more than {0} characters', 'vafpress'),
-		'maxselected'  => __('Select no more than {0} items', 'vafpress'),
-		'minselected'  => __('Select at least {0} items', 'vafpress'),
-		'required'     => __('This is Required', 'vafpress'),
+		'alphabet'     => __('Value need to be Alphabet', 'vp_textdomain'),
+		'alphanumeric' => __('Value need to be Alphanumeric', 'vp_textdomain'),
+		'numeric'      => __('Value need to be Numeric', 'vp_textdomain'),
+		'email'        => __('Value need to be Valid Email', 'vp_textdomain'),
+		'url'          => __('Value need to be Valid URL', 'vp_textdomain'),
+		'maxlength'    => __('Length need to be less than {0} characters', 'vp_textdomain'),
+		'minlength'    => __('Length need to be more than {0} characters', 'vp_textdomain'),
+		'maxselected'  => __('Select no more than {0} items', 'vp_textdomain'),
+		'minselected'  => __('Select at least {0} items', 'vp_textdomain'),
+		'required'     => __('This is Required', 'vp_textdomain'),
 	),
 
 	/**
 	 * Import / Export Messages
 	 */
 	'impexp' => array(
-		'import_success' => __('Import success, option page will be refreshed..', 'vafpress'),
-		'import_failed'  => __('Import failed', 'vafpress'),
-		'export_success' => __('Export success, copy the serialized options', 'vafpress'),
-		'export_failed'  => __('Export failed', 'vafpress'),
+		'import_success' => __('Import success, option page will be refreshed..', 'vp_textdomain'),
+		'import_failed'  => __('Import failed', 'vp_textdomain'),
+		'export_success' => __('Export success, copy the serialized options', 'vp_textdomain'),
+		'export_failed'  => __('Export failed', 'vp_textdomain'),
 	),
 
 );

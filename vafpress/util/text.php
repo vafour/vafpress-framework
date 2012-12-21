@@ -59,4 +59,26 @@ class VP_Util_Text
 		return strtolower(str_replace($prefix, '', $class_name));
 	}
 
+	public static function starts_with($haystack, $needle)
+	{
+		return !strncmp($haystack, $needle, strlen($needle));
+	}
+
+	public static function ends_with($haystack, $needle)
+	{
+		$length = strlen($needle);
+		if ($length == 0)
+		{
+			return true;
+		}
+		return (substr($haystack, -$length) === $needle);
+	}
+
+	public static function flanked_by($haystack, $left, $right = '')
+	{
+		if( $right == '' )
+			$right = $left;
+		return (self::starts_with($haystack, $left) and self::ends_with($haystack, $right));
+	}
+
 }

@@ -13,6 +13,16 @@ class VP_Util_Array
 		return false;
 	}
 
+	public static function deep_values($array, $the_key)
+	{
+		$result = array();
+		foreach ($array as $key => $value)
+		{
+			$result[] = $value[$the_key];
+		}
+		return $result;
+	}
+
 	/**
 	 * Combine array with the same $left to single array item
 	 * from
@@ -32,16 +42,16 @@ class VP_Util_Array
 		$result = array();
 		foreach ($array as $item)
 		{
-			if(isset($result[$item['name']]))
+			if(isset($result[$item[$left]]))
 			{
-				if(is_array($result[$item['name']]))
-					$result[$item['name']][] = $item['value'];
+				if(is_array($result[$item[$left]]))
+					$result[$item[$left]][] = $item[$right];
 				else
-					$result[$item['name']]   = array($result[$item['name']], $item['value']);
+					$result[$item[$left]]   = array($result[$item[$left]], $item[$right]);
 			}
 			else
 			{
-				$result[$item['name']] = $item['value'];
+				$result[$item[$left]] = $item[$right];
 			}
 		}
 		return $result;

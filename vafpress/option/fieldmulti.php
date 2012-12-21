@@ -25,9 +25,21 @@ abstract class VP_Option_FieldMulti extends VP_Option_Field
 				{
 					if($data['type'] == 'function')
 					{
-						if(function_exists($data['name']))
+						$first    = strpos($data['name'], '(');
+						$last     = strpos($data['name'], ')');
+						if( $first && $last )
 						{
-							$items = call_user_func($data['name']);
+							$function = substr($data['name'], 0, $first);
+							$params   = explode(',', substr($data['name'], $first + 1, $last - $first - 1));					
+						}
+						else
+						{
+							$function = $data['name'];
+							$params   = array();
+						}
+						if(function_exists($function))
+						{
+							$items = call_user_func_array($function, $params);
 							$arr['items'] = array_merge($arr['items'], $items);
 						}
 					}
@@ -47,9 +59,36 @@ abstract class VP_Option_FieldMulti extends VP_Option_Field
 		}
 		if (!empty($arr['default']))
 		{
-			$this->set_default($arr['default']);
+			$this->_process_default($arr['default'], $arr['items']);
 		}
 		return $this;
+	}
+
+	protected function _process_default($arr_default, $arr_items)
+	{
+		$defaults = array();
+		foreach ($arr_default as $def)
+		{
+			switch ($def)
+			{
+				case '{{all}}':
+					$defaults = array_merge($defaults, VP_Util_Array::deep_values($arr_items, 'value'));
+					break;
+				case '{{first}}':
+					$first = VP_Util_Array::first($arr_items);
+					$defaults[] = $first['value'];
+					break;
+				case '{{last}}':
+					$last = end($arr_items);
+					$defaults[] = $last['value'];
+					break;
+				default:
+					$defaults[] = $def;
+					break;
+			}
+		}
+		$defaults = array_unique($defaults);
+		$this->set_default($defaults);
 	}
 
 	protected function _setup_data()
@@ -61,8 +100,6 @@ abstract class VP_Option_FieldMulti extends VP_Option_Field
 	public function add_items($items)
 	{
 		$this->_items = array_merge($this->_items, $items);
-		// $this->_items = $this->_items + $items;
-		// print_r($this->_items);
 	}
 
 	/**

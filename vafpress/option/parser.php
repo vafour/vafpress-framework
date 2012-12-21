@@ -7,6 +7,7 @@ class VP_Option_Parser
 	{
 		// Parse XML String with SimpleXML
 		$set = new VP_Option_Set();
+		$auto_group_naming = VP_Util_Config::get_instance()->load('vafpress', 'auto_group_naming');
 
 		if(empty($arr['title']))
 			$arr['title'] = 'Vafpress';
@@ -17,13 +18,29 @@ class VP_Option_Parser
 		    ->set_page(isset($arr['page']) ? $arr['page'] : '')
 		    ->set_logo(isset($arr['logo']) ? $arr['logo'] : '');
 
+		$auto_menu_index  = 0;
+		$auto_menu        = "the_menu_";
+
 		// Loops trough all the menus
 		if (!empty($arr['menus'])) foreach ($arr['menus'] as $menu)
 		{
-			// Create menu object ? add to se : ''t
+			// Create menu object and add to set
 			$vp_menu = new VP_Option_Group_Menu();
-			$vp_menu->set_name(isset($menu['name']) ? $menu['name'] : '')
-			        ->set_title(isset($menu['title']) ? $menu['title'] : '')
+
+			if($auto_group_naming)
+			{
+				if(isset($menu['name']) and !empty($menu['name']))
+				{
+					$vp_menu->set_name($menu['name']);
+				}
+				else
+				{
+					$vp_menu->set_name($auto_menu . $auto_menu_index);
+					$auto_menu_index++;
+				}
+			}
+
+			$vp_menu->set_title(isset($menu['title']) ? $menu['title'] : '')
 			        ->set_icon(isset($menu['icon']) ? $menu['icon'] : '');
 
 			$set->add_menu($vp_menu);
@@ -32,8 +49,21 @@ class VP_Option_Parser
 			if (!empty($menu['menus'])) foreach ($menu['menus'] as $submenu)
 			{
 				$vp_submenu = new VP_Option_Group_Menu();
-				$vp_submenu->set_name(isset($submenu['name']) ? $submenu['name'] : '')
-				           ->set_title(isset($submenu['title']) ? $submenu['title'] : '')
+
+				if($auto_group_naming)
+				{
+					if(isset($menu['name']) and !empty($menu['name']))
+					{
+						$vp_submenu->set_name($submenu['name']);
+					}
+					else
+					{
+						$vp_submenu->set_name($auto_menu . $auto_menu_index);
+						$auto_menu_index++;
+					}
+				}
+
+				$vp_submenu->set_title(isset($submenu['title']) ? $submenu['title'] : '')
 				           ->set_icon(isset($submenu['icon']) ? $submenu['icon'] : '');
 
 				$vp_menu->add_menu($vp_submenu);

@@ -247,6 +247,7 @@
 	// Tipsy
 	$('.vp-js-tipsy.description').each(function() { $(this).tipsy({ gravity : 'e' }); });
 	$('.vp-js-tipsy.slideinput').each(function() { $(this).tipsy({ trigger : 'focus' }); });
+	$('.vp-js-tipsy.image-item').each(function() { $(this).tipsy(); });
 
 	// Chosen
 	$('.vp-js-chosen').chosen();
