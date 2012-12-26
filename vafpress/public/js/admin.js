@@ -273,6 +273,7 @@
 	$('.vp-js-save').bind('click', function(e) {
 		e.preventDefault();
 
+		$('.vp-option-form tr').removeClass('error');
 		$('.validation-notif.error').remove();
 		$('.validation-msg.error').remove();
 
@@ -349,6 +350,10 @@
 						$msg.html(res);
 						$msg.appendTo($msgs);
 					}
+				}
+
+				if (field.nError > 0) {
+					$tr.addClass('error');
 				}
 
     	}

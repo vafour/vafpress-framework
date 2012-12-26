@@ -23,7 +23,7 @@ body {
 .validation-notif.error {
 	background-image: url('../img/vp-sprite.png');
 	background-repeat: no-repeat;
-	background-position: 0px -380px;
+	background-position: 0px -320px;
 	display: block;
 	height: 16px;
 	width: 16px;
@@ -295,8 +295,8 @@ body {
 	overflow: hidden;
 }
 
-.vp-submit .save-status.success { background-position: 0px -300px; }
-.vp-submit .save-status.failed { background-position: 0px -340px; }
+.vp-submit .save-status.success { background-position: 0px -240px; }
+.vp-submit .save-status.failed { background-position: 0px -280px; }
 
 .vp-submit .vp-button:hover {
 	background-color: #ffaa11;
@@ -314,7 +314,7 @@ body {
 	border: 1px solid #dddddd;
 	box-shadow: inset 0px 1px 0px rgba(255,255,255,1), 0px 1px 0px rgba(255,255,255,1);
 	margin: 0px 0px 30px;
-	padding: 20px 20px 15px 20px;
+	padding: 20px 0px 15px 0px;
 	position: relative;
 }
 
@@ -324,7 +324,7 @@ body {
 	font-size: 14px;
 	line-height: 1em;
 	padding: 4px 10px;
-	margin: -12px 0px 0px 0px;
+	margin: -12px 0px 0px 20px;
 	position: absolute;
 	top: 0px;
 	text-transform: uppercase;
@@ -336,7 +336,7 @@ body {
 	width: 40px;
 	background-image: url('../img/vp-sprite.png');
 	background-repeat: no-repeat;
-	background-position: 10px -160px;
+	background-position: 0px -120px;
 	cursor: pointer;
 	position: absolute;
 	right: 0px;
@@ -346,7 +346,7 @@ body {
 }
 
 .vp-section > .description:hover {
-	background-position: 10px -180px;
+	background-position: -40px -120px;
 }
 
 .vp-section > table {
@@ -359,14 +359,21 @@ body {
 	vertical-align: top;
 }
 
+.vp-section tr.error {
+	background-color: rgba(255,0,0,0.05);
+}
+
 .vp-section tr td {
 	border-bottom: 1px solid rgba(0,0,0,0.075);
-	border-top: 1px solid rgba(255,255,255,1);
-	padding: 15px 10px;
+	box-shadow: inset 0px 1px rgba(255,255,255,1);
+}
+
+.vp-section tr.error td {
+	box-shadow: inset 0px 1px rgba(255,255,255,0.5);
 }
 
 .vp-section tr:first-of-type td {
-	border-top: none;
+	box-shadow: none;
 }
 
 .vp-section tr:last-of-type td {
@@ -378,6 +385,7 @@ body {
 	font-weight: bold;
 	line-height: 20px;
 	width: 200px;
+	padding: 15px 20px 15px 30px;
 }
 
 .vp-section tr > .label label {
@@ -400,6 +408,7 @@ body {
 
 .vp-section tr > .fields {
 	font-weight: normal;
+	padding: 15px 30px 15px 20px;
 }
 
 .vp-section tr .fields .validation-msgs {
@@ -464,10 +473,10 @@ body {
 }
 
 .vp-section tr.vp-checkbox .fields span { background-position: 0px 0px; }
-.vp-section tr.vp-radiobutton .fields span { background-position: 0px -40px; }
+.vp-section tr.vp-radiobutton .fields span { background-position: 0px -20px; }
 
-.vp-section tr.vp-checkbox .fields input:checked ~ span {	background-position: 0px -20px; }
-.vp-section tr.vp-radiobutton .fields input:checked ~ span {	background-position: 0px -60px; }
+.vp-section tr.vp-checkbox .fields input:checked ~ span {	background-position: -20px 0px; }
+.vp-section tr.vp-radiobutton .fields input:checked ~ span {	background-position: -20px -20px; }
 
 .vp-section tr.vp-checkimage .fields label,
 .vp-section tr.vp-radioimage .fields label {
@@ -498,18 +507,18 @@ body {
 .vp-section tr.vp-toggle .fields span {
 	display: block;
 	background-image: url('../img/vp-sprite.png');
-	background-position: 0px -80px;
-	width: 40px;
-	height: 20px;
-	margin-top: 5px;
+	background-position: 0px -40px;
+	width: 100px;
+	height: 40px;
+	margin-top: -5px;
 }
 
 .vp-section tr.vp-toggle .fields input:checked ~ span {
-	background-position: 0px -100px;
+	background-position: -100px -40px;
 }
 
 .vp-section tr.vp-slider .fields {
-	padding-right: 90px;
+	padding-right: 120px;
 	position: relative;
 }
 
@@ -517,7 +526,7 @@ body {
 	background-color: transparent;
 	background-image: url('../img/vp-sprite.png');
 	background-repeat: repeat-x;
-	background-position: 0px -120px;
+	background-position: 0px -80px;
 	border-radius: 4px;
 	border: none;
 	height: 8px;
@@ -529,7 +538,7 @@ body {
 	background-color: transparent;
 	background-image: url('../img/vp-sprite.png');
 	background-repeat: no-repeat;
-	background-position: 0px -140px;
+	background-position: 0px -100px;
 	cursor: pointer;
 	border: none;
 	display: block;
@@ -544,15 +553,15 @@ body {
 .vp-section tr.vp-slider .fields .slidebar .ui-slider-range {
 	background-image: url('../img/vp-sprite.png');
 	background-repeat: repeat-x;
-	background-position: 0px -130px;
+	background-position: 0px -90px;
 	height: 8px;
 	border-radius: 4px;
 	position: absolute;
 	z-index: 0;
 }
 
-.vp-section tr.vp-slider .fields .slideinput {
-	margin-right: 10px;
+.vp-section tr.vp-slider .fields input.slideinput {
+	margin-right: 30px;
 	position: absolute;
 	right: 0px;
 	width: 70px;
@@ -710,7 +719,7 @@ body {
 
 .vp-overlay .vp-loading .anim-spin {
 	background-image: url('../img/vp-sprite.png');
-	background-position: 0px -200px;
+	background-position: 0px -140px;
 	position: absolute;
 	height: 100%;
 	width: 100%;
