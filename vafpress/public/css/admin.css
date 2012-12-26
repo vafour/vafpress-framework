@@ -49,12 +49,12 @@ body {
 }
 
 .vp-option-panel {
-	background: -moz-linear-gradient(top,  rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 500px), #f9f9f9 url('../img/vp-panel-bg.jpg') repeat-y top left; /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.2)), color-stop(500px,rgba(255,255,255,0))), #f9f9f9 url('../img/vp-panel-bg.jpg') repeat-y top left; /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  rgba(255,255,255,0.2) 0%,rgba(255,255,255,0) 500px), #f9f9f9 url('../img/vp-panel-bg.jpg') repeat-y top left; /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  rgba(255,255,255,0.2) 0%,rgba(255,255,255,0) 500px), #f9f9f9 url('../img/vp-panel-bg.jpg') repeat-y top left; /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  rgba(255,255,255,0.2) 0%,rgba(255,255,255,0) 500px), #f9f9f9 url('../img/vp-panel-bg.jpg') repeat-y top left; /* IE10+ */
-	background: linear-gradient(to bottom,  rgba(255,255,255,0.2) 0%,rgba(255,255,255,0) 500px), #f9f9f9 url('../img/vp-panel-bg.jpg') repeat-y top left; /* W3C */
+	background: -moz-linear-gradient(top,  rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 500px), #eeeeee url('../img/vp-panel-bg.jpg') repeat-y top left; /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.2)), color-stop(500px,rgba(255,255,255,0))), #eeeeee url('../img/vp-panel-bg.jpg') repeat-y top left; /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(255,255,255,0.2) 0%,rgba(255,255,255,0) 500px), #eeeeee url('../img/vp-panel-bg.jpg') repeat-y top left; /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgba(255,255,255,0.2) 0%,rgba(255,255,255,0) 500px), #eeeeee url('../img/vp-panel-bg.jpg') repeat-y top left; /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgba(255,255,255,0.2) 0%,rgba(255,255,255,0) 500px), #eeeeee url('../img/vp-panel-bg.jpg') repeat-y top left; /* IE10+ */
+	background: linear-gradient(to bottom,  rgba(255,255,255,0.2) 0%,rgba(255,255,255,0) 500px), #eeeeee url('../img/vp-panel-bg.jpg') repeat-y top left; /* W3C */
 	box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
 	border-radius: 8px;
 	border: 1px solid #cccccc;
@@ -183,6 +183,7 @@ body {
 	color: #ff9900;
 }
 
+.vp-menus ul.vp-menu-level-1 > li.vp-current > a.vp-menu-goto:after,
 .vp-menus ul.vp-menu-level-2 > li.vp-current > a.vp-menu-goto:after {
 	content: ' ';
 	display: block;
@@ -233,7 +234,12 @@ body {
 	border-radius: 0px 8px 8px 0px;
 	overflow: hidden;
 	position: relative;
-	padding: 61px 0px;
+	padding: 63px 0px 56px;
+}
+
+.vp-right-panel .vp-option-form {
+	background-color: #f9f9f9;
+	overflow: hidden;
 }
 
 .vp-submit {
@@ -669,7 +675,6 @@ body {
 }
 
 .vp-copyright {
-	background-color: #eeeeee;
 	border-top: 1px solid #cccccc;
 	border-radius: 0px 0px 8px 0px;
 	color: #888888;

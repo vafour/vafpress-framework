@@ -53,7 +53,7 @@
 					<input class="vp-js-save vp-button" type="button" value="<?php _e('Save Changes', 'vp_textdomain'); ?>" />
 					<p class="vp-js-save-status save-status" style="display: none;"></p>
 				</div>
-				<form id="vp-option-form">
+				<div id="vp-option-form" class="vp-option-form">
 				<?php foreach ($set->get_menus() as $menu): ?>
 				<?php if ($menu === reset($set->get_menus())): ?>
 					<?php echo $menu->render(array('current' => 1)); ?>
@@ -61,7 +61,7 @@
 					<?php echo $menu->render(); ?>
 				<?php endif; ?>
 				<?php endforeach; ?>
-				</form>
+				</div>
 				<div id="vp-copyright" class="vp-copyright">
 					<?php printf(__('This option panel is built using <a href="http://vafpress.com">Vafpress Framework %s</a> powered by <a href="http://vafour.com">Vafour</a>', 'vp_textdomain'), VP_VERSION); ?>
 				</div>

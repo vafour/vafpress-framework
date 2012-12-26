@@ -1,5 +1,5 @@
-<div id="<?php echo $section->get_name(); ?>" class="vp-section">
-	<h3><?php echo $section->get_title(); ?></h3>
+<div <?php VP_Util_Text::print_if_exists($section->get_name(), 'id="%s" '); ?>class="vp-section">
+	<?php VP_Util_Text::print_if_exists($section->get_title(), '<h3>%s</h3>'); ?>
 	<?php VP_Util_Text::print_if_exists($section->get_description(), '<span class="description vp-js-tipsy" original-title="%s"></span>'); ?>
 	<table>
 		<tbody>

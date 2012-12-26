@@ -255,8 +255,9 @@
 	// Scrollspy
 	var $submit = $('.vp-submit');
 	$(window).load(function() {
+		var initTop = parseInt($submit.offset().top - 28);
 		$submit.scrollspy({
-			min: parseInt($submit.offset().top - 28),
+			min: initTop,
 			max: $(document).height(),
 			onEnter: function(element, position) {
 				$submit.addClass('floating');
@@ -411,6 +412,23 @@
 
 	// Overlay
 	$(window).resize(function() {
+		calculatePositionAndSize();
+	});
+	var _addClass = $.fn.addClass;
+	$.fn.addClass = function() {
+		var result = _addClass.apply( this, arguments );
+		if (this.prop('tagName') == 'BODY' && arguments[0] == 'folded') { calculatePositionAndSize(); }
+		return result;
+	}
+	var _removeClass = $.fn.removeClass;
+	$.fn.removeClass = function() {
+		var result = _removeClass.apply( this, arguments );
+		if (this.prop('tagName') == 'BODY' && arguments[0] == 'folded') { calculatePositionAndSize(); }
+		return result;
+	}
+	$(window).load(function(){$(window).resize();});
+
+	function calculatePositionAndSize() {
 		var $overlay = $('#vp-overlay'),
 		    $loading = $('#vp-loading'),
 		    $panel = $('#vp-option-panel'),
@@ -422,8 +440,7 @@
 		$submit.css('width', $right.innerWidth());
 		$loading.css('top', $(this).height() / 2);
 		$loading.css('left', $panel.innerWidth() / 2 + $panel.offset().left);
-	});
-	$(window).load(function(){$(window).resize();});
+	}
 
 	// Validation Functions
 
