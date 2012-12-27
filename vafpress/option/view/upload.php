@@ -7,7 +7,7 @@
 	</td>
 	<td class="fields">
 		<input type="text" readonly id="<?php echo $name; ?>" name="<?php echo $name; ?>" value="<?php echo $value; ?>">
-		<input class="vp-js-upload vp-button" type="button" value="<?php echo $label; ?>" >
+		<input class="vp-js-upload vp-button" type="button" value="<?php _e('Choose File', 'vp_textdomain'); ?>" >
 		<div class="image">
 			<img src="<?php echo $value; ?>" alt="" style="max-width: 300px; max-height: 300px; " />
 		</div>

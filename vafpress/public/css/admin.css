@@ -62,6 +62,7 @@ body {
 	overflow: hidden;
 	color: #666666;
 	position: relative;
+	margin-top: 15px;
 }
 
 .vp-option-panel input,
@@ -414,11 +415,14 @@ body {
 	color: #cc0000;
 	clear: both;
 	font-weight: bold;
-	margin-top: 10px;
 }
 
 .vp-section tr .fields .validation-msgs ul {
 	margin: 0px;
+}
+
+.vp-section tr .fields .validation-msgs ul li:first-child {
+	margin-top: 10px;
 }
 
 .vp-section tr .fields input[type="checkbox"],
@@ -507,13 +511,13 @@ body {
 	display: block;
 	background-image: url('../img/vp-sprite.png');
 	background-position: 0px -40px;
-	width: 100px;
-	height: 40px;
-	margin-top: -5px;
+	width: 60px;
+	height: 30px;
+	margin-top: -2px;
 }
 
 .vp-section tr.vp-toggle .fields input:checked ~ span {
-	background-position: -100px -40px;
+	background-position: -60px -40px;
 }
 
 .vp-section tr.vp-slider .fields {
@@ -571,6 +575,10 @@ body {
 }
 
 .vp-section tr.vp-upload .fields .image {
+	line-height: 0em;
+}
+
+.vp-section tr.vp-upload .fields .image img:not([src=""]) {
 	margin-top: 10px;
 }
 
