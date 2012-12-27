@@ -250,7 +250,9 @@
 	$('.vp-js-tipsy.image-item').each(function() { $(this).tipsy(); });
 
 	// Chosen
-	$('.vp-js-chosen').chosen();
+	if ($.fn.chosen) {
+		$('.vp-js-chosen').chosen();
+	}
 
 	// Scrollspy
 	var $submit = $('.vp-submit');
@@ -385,13 +387,12 @@
 					action: 'vp_ajax_admin',
 					option: option
 				};
-		
+
 		$button.attr('disabled', 'disabled');
 		$overlay.stop(true, true).fadeIn(100, function() {
 			$overlay.removeClass('stop');
 		});
 
-		console.log(data);
 		$.post(ajaxurl, data, function(response)
 		{
 			$save_status.html(response.message);
