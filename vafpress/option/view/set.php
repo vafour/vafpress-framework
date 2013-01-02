@@ -58,7 +58,7 @@
 				<?php if ($menu === reset($set->get_menus())): ?>
 					<?php echo $menu->render(array('current' => 1)); ?>
 				<?php else: ?>
-					<?php echo $menu->render(); ?>
+					<?php echo $menu->render(array('current' => 0)); ?>
 				<?php endif; ?>
 				<?php endforeach; ?>
 				</form>
