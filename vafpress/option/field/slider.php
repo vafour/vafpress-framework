@@ -17,9 +17,9 @@ class VP_Option_Field_Slider extends VP_Option_Field
 	public static function withArray($arr)
 	{
 		$instance = new self();
-		$instance->set_min($arr['min']);
-		$instance->set_max($arr['max']);
-		$instance->set_step($arr['step']);
+		$instance->set_min(isset($arr['min']) ? $arr['min'] : 0);
+		$instance->set_max(isset($arr['max']) ? $arr['max'] : 100);
+		$instance->set_step(isset($arr['step']) ? $arr['step'] : 1);
 		$instance->_basic_make($arr);
 		return $instance;
 	}

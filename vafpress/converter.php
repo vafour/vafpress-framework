@@ -2,7 +2,7 @@
 
 include_once('../../../../wp-load.php');
 
-class Converter
+class VP_Converter
 {
 
 	protected $group = array('fields', 'sections', 'menus');

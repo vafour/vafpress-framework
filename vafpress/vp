@@ -8,7 +8,7 @@
 	{
 		switch ($command) {
 			case 'convert':
-				$converter = new Converter();
+				$converter = new VP_Converter();
 				$opt       = $converter->to_array();
 				file_put_contents('config/option.php', $opt);
 				echo "option.xml converted to option.php";

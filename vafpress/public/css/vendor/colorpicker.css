@@ -81,7 +81,7 @@
 	text-align: right;
 	margin: 0;
 	padding: 0;
-	height: 12px;
+	height: 14px;
 }
 .colorpicker_hex {
 	position: absolute;
@@ -159,20 +159,4 @@
 }
 .colorpicker_slider {
 	background-position: bottom;
-}
-
-.colorSelector {
-    position: relative;
-    width: 27px;
-    height: 27px;
-    background: url(../../img/colorpicker/select.png);
-    float:left;
-}
-.colorSelector div {
-    position: absolute;
-    top: 4px;
-    left: 3px;
-    width: 21px;
-    height: 19px;
-    background: url(../../img/colorpicker/select.png) center;
 }

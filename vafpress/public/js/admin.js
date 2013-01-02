@@ -133,13 +133,22 @@
     	};
 		$slider.slider(options);
 
-		$slider.prev('.slideinput').keydown(function(e) {
-			if ($.inArray(e.keyCode, [189, 190, 8, 37, 39]) == -1 || (e.keyCode < 48 && e.keyCode > 90) ) {
-				e.preventDefault();
-			};
+		$slider.prev('.slideinput').keypress(function(e) {
+			var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
+			console.log(charCode);
+			// if ($.inArray(e.keyCode, [109, 9, 46, 189, 190, 8, 37, 39]) != -1 || (e.keyCode >= 48 && e.keyCode <= 57) )
+			if(e.altKey || e.ctrlKey || e.shiftKey)
+				return true;
+			if ($.inArray(charCode, [45, 46, 8, 0]) != -1 || (charCode >= 48 && charCode <= 57) )
+				return true;
+			return false;
 		}).blur(function(e) {
 			var $this = $(this),
 			    val = $this.val();
+			if( !validateNumeric('vp-textbox', val) ){
+				$this.val(options.min);
+				$slider.slider('value', options.min);
+			}
 			if (val > options.max) {
 				$this.val(options.max);
 				$slider.slider('value', options.max);
@@ -212,14 +221,17 @@
 
 	$('.vp-js-upload').click(upload_callback);
 
-
-	$('.vp-js-colorpicker').each(function()
-	{
+	$('.vp-js-colorpicker').each(function(){
 		var colorpicker  = this;
-		var defaultColor = $(colorpicker).attr('value');
-		$(this).ColorPicker({
-			color: defaultColor,
-			// flat: true, 
+		$(colorpicker).ColorPicker({
+			color: $(colorpicker).attr('value'),
+			onSubmit: function(hsb, hex, rgb, el) {
+				$(el).val(hex);
+				$(el).ColorPickerHide();
+			},
+			onBeforeShow: function () {
+				$(colorpicker).ColorPickerSetColor(this.value);
+			},
 			onShow: function (cp) {
 				$(cp).stop(true, true).fadeIn(500);
 				return false;
@@ -230,10 +242,18 @@
 			},
 			onChange: function (hsb, hex, rgb) {
 				$(colorpicker).prev('label').css('background-color', '#' + hex);
-				$(colorpicker).attr('value','#' + hex);
+				$(colorpicker).attr('value', '#' + hex);
 			}
+		}).bind('keyup', function(e){
+			var val = this.value.trimChar('#');
+			if(this.value != ('#' + val))
+			{
+				$(colorpicker).attr('value', '#' + val);
+			}
+			$(this).ColorPickerSetColor(val);
+			$(this).prev('label').css('background-color', '#' + val);
 		});
-	}); //end color picker
+	});
 
 	// Date Picker
 	$('.vp-js-datepicker').each(function()
@@ -515,7 +535,7 @@
 		// ignore array
 		if ($.isArray(val) || $.inArray(type, ['vp-textbox', 'vp-textarea']) == -1) { return true; }
 
-		var regex = new RegExp(/^[0-9.]+$/);
+		var regex = new RegExp(/^[-+]?[0-9]*\.?[0-9]+$/);
 		return regex.test(val);
 	}
 

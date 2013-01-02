@@ -15,9 +15,9 @@ class VP_Option_Field_Date extends VP_Option_Field
 	{
 		$instance = new self();
 		$instance->_basic_make($arr);
-		$instance->set_min_date($arr['min_date']);
-		$instance->set_max_date($arr['max_date']);
-		$instance->set_format($arr['format']);
+		$instance->set_min_date(isset($arr['min_date']) ? $arr['min_date'] : '');
+		$instance->set_max_date(isset($arr['max_date']) ? $arr['max_date'] : '');
+		$instance->set_format(isset($arr['format']) ? $arr['format'] : 'yy-mm-dd');
 		return $instance;
 	}
 
@@ -26,10 +26,10 @@ class VP_Option_Field_Date extends VP_Option_Field
 		// Setup Data
 		$this->_setup_data();
 		$opt = array(
-			'minDate' => $this->get_min_date(),
-			'maxDate' => $this->get_max_date(),
+			'minDate'    => $this->get_min_date(),
+			'maxDate'    => $this->get_max_date(),
 			'dateFormat' => $this->get_format(),
-			'value' => $this->get_value()
+			'value'      => $this->get_value()
 		);
 		$this->add_data('opt', VP_Util_Text::make_opt($opt));
 		return VP_Option_View::get_instance()->load('date', $this->get_data());
