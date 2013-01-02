@@ -114,7 +114,9 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		}
 		$vp_field->set_value($value);
 
+		echo '<div class="vp-'.$field['type'].'">';
 		echo $vp_field->render();
+		echo '</div>';
 
 		/**
 		 * @todo
