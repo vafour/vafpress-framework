@@ -6,14 +6,16 @@
 		</label>
 	</td>
 	<td class="fields">
-		<textarea id="vp-js-import_text"></textarea>
-		<div class="buttons">
-			<input id="vp-js-import" class="vp-button" type="button" value="<?php _e('Import', 'vp_textdomain') ?>" />
-			<span style="margin-left: 10px;">
-				<span id="vp-js-import-loader" class="hidden"><img src="<?php VP_Util_Res::img_out('ajax-loader.gif', ''); ?>"></span>
-				<span id="vp-js-import-status" class="hidden"></span>
-			</span>
-		</div>
+		<p>
+			<textarea id="vp-js-import_text"></textarea>
+			<div class="buttons">
+				<input id="vp-js-import" class="vp-button" type="button" value="<?php _e('Import', 'vp_textdomain') ?>" />
+				<span style="margin-left: 10px;">
+					<span id="vp-js-import-loader" class="hidden"><img src="<?php VP_Util_Res::img_out('ajax-loader.gif', ''); ?>"></span>
+					<span id="vp-js-import-status" class="hidden"></span>
+				</span>
+			</div>
+		</p>
 	</td>
 </tr>
 
@@ -25,13 +27,15 @@
 		</label>
 	</td>
 	<td class="fields">
-		<textarea id="vp-js-export_text" onclick="this.focus();this.select()" readonly="readonly"></textarea>
-		<div class="buttons">
-			<input id="vp-js-export" class="vp-button" type="button" value="<?php _e('Export', 'vp_textdomain') ?>" />
-			<span style="margin-left: 10px;">
-				<span id="vp-js-export-loader" class="hidden"><img src="<?php VP_Util_Res::img_out('ajax-loader.gif', ''); ?>" style="position:absolute; vertical-align: middle;"></span>
-				<span id="vp-js-export-status" class="hidden"></span>
-			</span>
-		</div>
+		<p>
+			<textarea id="vp-js-export_text" onclick="this.focus();this.select()" readonly="readonly"></textarea>
+			<div class="buttons">
+				<input id="vp-js-export" class="vp-button" type="button" value="<?php _e('Export', 'vp_textdomain') ?>" />
+				<span style="margin-left: 10px;">
+					<span id="vp-js-export-loader" class="hidden"><img src="<?php VP_Util_Res::img_out('ajax-loader.gif', ''); ?>" style="position:absolute; vertical-align: middle;"></span>
+					<span id="vp-js-export-status" class="hidden"></span>
+				</span>
+			</div>
+		</p>
 	</td>
 </tr>

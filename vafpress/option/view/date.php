@@ -1,4 +1,4 @@
-<tr class="vp-date" <?php echo VP_Util_Text::print_if_exists($validation, 'data-vp-validation="%s"'); ?> id="<?php echo $name; ?>" id="<?php echo $name; ?>">
+<tr class="vp-date<?php echo ($container_extra_classes) ? ' ' . $container_extra_classes : '' ?>" <?php echo VP_Util_Text::print_if_exists($validation, 'data-vp-validation="%s"'); ?> id="<?php echo $name; ?>" id="<?php echo $name; ?>">
 	<td class="label">
 		<label>
 			<?php echo $label; ?>
@@ -6,7 +6,9 @@
 		</label>
 	</td>
 	<td class="fields">
-		<input <?php echo "data-vp-opt='" . $opt . "'"; ?> type="text" name="<?php echo $name ?>" class="vp-js-datepicker" />
+		<p>
+			<input <?php echo "data-vp-opt='" . $opt . "'"; ?> type="text" name="<?php echo $name ?>" class="vp-js-datepicker" />
+		</p>
 		<div class="validation-msgs"><ul></ul></div>
 	</td>
 </tr>

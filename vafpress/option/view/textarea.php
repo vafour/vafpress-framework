@@ -1,4 +1,4 @@
-<tr class="vp-textarea" <?php echo VP_Util_Text::print_if_exists($validation, 'data-vp-validation="%s"'); ?> id="<?php echo $name; ?>">
+<tr class="vp-textarea<?php echo ($container_extra_classes) ? ' ' . $container_extra_classes : '' ?>" <?php echo VP_Util_Text::print_if_exists($validation, 'data-vp-validation="%s"'); ?> id="<?php echo $name; ?>">
 	<td class="label">
 		<label>
 			<?php echo $label; ?>
@@ -6,7 +6,9 @@
 		</label>
 	</td>
 	<td class="fields">
-		<textarea name="<?php echo $name; ?>"><?php echo $value; ?></textarea>
+		<p>
+			<textarea name="<?php echo $name; ?>"><?php echo $value; ?></textarea>
+		</p>
 		<div class="validation-msgs"><ul></ul></div>
 	</td>
 </tr>

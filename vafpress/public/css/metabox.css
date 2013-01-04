@@ -1,0 +1,19 @@
+.vp-metabox .vp-meta-row {
+	overflow: hidden;
+}
+
+.vp-metabox table {
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+	border: none;
+}
+
+.vp-metabox th,
+.vp-metabox td {
+	border: none;
+}
+
+.vp-metabox .label {
+	width: 30%;
+}

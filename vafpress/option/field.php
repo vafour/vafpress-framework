@@ -55,6 +55,12 @@ abstract class VP_Option_Field implements iFactory
 	protected $_data;
 
 	/**
+	 * Extra Classes for the container
+	 * @var String
+	 */
+	protected $_container_extra_classes;
+
+	/**
 	 * Class Constructor
 	 */
 	public function __construct()
@@ -74,6 +80,7 @@ abstract class VP_Option_Field implements iFactory
 		$this->add_data('label', $this->get_label());
 		$this->add_data('default', $this->get_default());
 		$this->add_data('value', $this->get_value());
+		$this->add_data('container_extra_classes', $this->get_container_extra_classes());
 
 		// Apply markdown
 		$this->add_data('description', VP_Util_Text::parse_md($this->get_description()));
@@ -254,6 +261,25 @@ abstract class VP_Option_Field implements iFactory
 	 */
 	public function set_field_max_height($_field_max_height) {
 		$this->_field_max_height = $_field_max_height;
+		return $this;
+	}
+
+	/**
+	 * Getter of $_container_extra_classes
+	 *
+	 * @return String Extra Classes for the container
+	 */
+	public function get_container_extra_classes() {
+		return $this->_container_extra_classes;
+	}
+	
+	/**
+	 * Setter of $_container_extra_classes
+	 *
+	 * @param Integer $_container_extra_classes Extra Classes for the container
+	 */
+	public function set_container_extra_classes($_container_extra_classes) {
+		$this->_container_extra_classes = $_container_extra_classes;
 		return $this;
 	}
 

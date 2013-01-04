@@ -28,7 +28,7 @@ class VP_Metabox_Depsloader
 			),
 			'main_css'             => array(
 				'name' => 'vp-metabox',
-				'path' => VP_PUBLIC_URL . '/css/admin.css'
+				'path' => VP_PUBLIC_URL . '/css/metabox.css'
 			),
 		);
 

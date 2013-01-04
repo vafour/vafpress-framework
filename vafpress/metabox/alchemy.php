@@ -35,7 +35,13 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		}
 		else
 		{
+			echo '<div class="vp-metabox">';
+			echo '<table>';
+			echo '<tbody>';
 			$this->_enview($this->template);
+			echo '</tbody>';
+			echo '</table>';
+			echo '</div>';
 		}
 	 
 		// create a nonce for verification
@@ -54,28 +60,16 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 			// if it's a group
 			if( $field['type'] == 'group' )
 			{
-				$group = $field['name'];
-
-				while($mb->have_fields_and_multi($group))
-				{
-					$mb->the_group_open();
-					echo '<a href="#" class="dodelete button" style="float:right;">Remove</a>';
-					foreach ($field['fields'] as $f)
-					{
-						$this->_render_field($f, $mb);
-					}
-					$mb->the_group_close();
-				}
-				echo '<p><a href="#" class="docopy-' . $group . ' button">Add</a></p>';
+				echo $this->_render_group($field, $mb);
 			}
 			else
 			{
-				$this->_render_field($field, $mb);
+				echo $this->_render_field($field, $mb);
 			}
 		}
 	}
 
-	function _render_field($field, $mb)
+	function _render_field($field, $mb, $in_group = false)
 	{
 		$multiple = array('checkbox', 'checkimage', 'multiselect');
 
@@ -114,9 +108,11 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		}
 		$vp_field->set_value($value);
 
-		echo '<div class="vp-'.$field['type'].'">';
-		echo $vp_field->render();
-		echo '</div>';
+		if (!$in_group) {
+			$vp_field->set_container_extra_classes('vp-meta-row');
+		}
+
+		return $vp_field->render();
 
 		/**
 		 * @todo
@@ -126,4 +122,44 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		 */
 	}
 
+	function _render_group($field, $mb) {
+
+		$html .= '<tr id="wpa_loop-' . $field['name'] . '" class="vp-wpa-loop vp-meta-row wpa_loop wpa_loop-' . $field['name'] . '">';
+		$html .= '<td colspan="2">';
+			$html .= '<table>';
+			$html .= '<tbody>';
+
+			while($mb->have_fields_and_multi($field['name']))
+			{
+				if ($this->is_last()) {
+					$class = ' last tocopy';
+				} elseif ($this->is_first()) {
+					$class = ' first';
+				}
+				$html .= '<tr class="vp-wpa-group wpa_group wpa_group-' . $field['name'] . ' ' . $class . '">';
+				$html .= '<td>';
+					$html .= '<table>';
+					$html .= '</tbody>';
+					foreach ($field['fields'] as $f) { $html .= $this->_render_field($f, $mb, true); }
+					$html .= '</tbody>';
+					$html .= '</table>';
+				$html .= '</td>';
+				$html .= '<td style="width: 80px;">';
+				$html .= '<a href="#" class="dodelete button">Remove</a>';
+				$html .= '</td>';
+				$html .= '</tr>';
+			}
+
+				$html .= '<tr>';
+				$html .= '<td colspan="2">';
+				$html .= '<a href="#" class=" button docopy-' . $field['name'] . ' button">Add</a>';
+				$html .= '</td>';
+				$html .= '</tr>';
+			$html .= '</tbody>';
+			$html .= '</table>';
+		$html .= '</td>';
+		$html .= '</tr>';
+
+		return $html;
+	}
 }

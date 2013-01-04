@@ -1,4 +1,4 @@
-<tr class="vp-select" <?php echo VP_Util_Text::print_if_exists($validation, 'data-vp-validation="%s"'); ?> id="<?php echo $name; ?>">
+<tr class="vp-select<?php echo ($container_extra_classes) ? ' ' . $container_extra_classes : '' ?>" <?php echo VP_Util_Text::print_if_exists($validation, 'data-vp-validation="%s"'); ?> id="<?php echo $name; ?>">
 	<td class="label">
 		<label>
 			<?php echo $label; ?>
