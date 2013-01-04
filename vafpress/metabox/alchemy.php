@@ -162,4 +162,161 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 
 		return $html;
 	}
+
+	// get all groups index as array
+	function _get_groups_idx()
+	{
+		$groups = array();
+		foreach ($this->template['fields'] as $field)
+		{
+			if( $field['type'] == 'group' )
+			{
+				$groups[] = $field['name'];
+			}
+		}
+		return $groups;
+	}
+
+	function _save($post_id) 
+	{
+
+		// $dev_mode = true;
+		// if($dev_mode)
+		// 	return;
+
+		$real_post_id = isset($_POST['post_ID']) ? $_POST['post_ID'] : NULL ;
+		
+		// check autosave
+		if (defined('DOING_AUTOSAVE') AND DOING_AUTOSAVE AND !$this->autosave) return $post_id;
+	 
+		// make sure data came from our meta box, verify nonce
+		$nonce = isset($_POST[$this->id.'_nonce']) ? $_POST[$this->id.'_nonce'] : NULL ;
+		if (!wp_verify_nonce($nonce, $this->id)) return $post_id;
+	 
+		// check user permissions
+		if ($_POST['post_type'] == 'page') 
+		{
+			if (!current_user_can('edit_page', $post_id)) return $post_id;
+		}
+		else 
+		{
+			if (!current_user_can('edit_post', $post_id)) return $post_id;
+		}
+	 
+		// authentication passed, save data
+		$new_data = isset( $_POST[$this->id] ) ? $_POST[$this->id] : NULL ;
+
+		// remove 'to-copy' item
+		$groups = $this->_get_groups_idx();
+		foreach ($new_data as $key => &$value)
+		{
+			if( in_array($key, $groups) and is_array($value) )
+			{
+				end($value);
+				$key = key($value);
+				unset($value[$key]);
+			}
+		}
+	 
+		WPAlchemy_MetaBox::clean($new_data);
+
+		if (empty($new_data))
+		{
+			$new_data = NULL;
+		}
+
+		// filter: save
+		if ($this->has_filter('save'))
+		{
+			$new_data = $this->apply_filters('save', $new_data, $real_post_id);
+
+			/**
+			 * halt saving
+			 * @since 1.3.4
+			 */
+			if (FALSE === $new_data) return $post_id;
+
+			WPAlchemy_MetaBox::clean($new_data);
+		}
+
+		// get current fields, use $real_post_id (checked for in both modes)
+		$current_fields = get_post_meta($real_post_id, $this->id . '_fields', TRUE);
+
+		if ($this->mode == WPALCHEMY_MODE_EXTRACT)
+		{
+			$new_fields = array();
+
+			if (is_array($new_data))
+			{
+				foreach ($new_data as $k => $v)
+				{
+					$field = $this->prefix . $k;
+					
+					array_push($new_fields,$field);
+
+					$new_value = $new_data[$k];
+
+					if (is_null($new_value))
+					{
+						delete_post_meta($post_id, $field);
+					}
+					else
+					{
+						update_post_meta($post_id, $field, $new_value);
+					}
+				}
+			}
+
+			$diff_fields = array_diff((array)$current_fields,$new_fields);
+
+			if (is_array($diff_fields))
+			{
+				foreach ($diff_fields as $field)
+				{
+					delete_post_meta($post_id,$field);
+				}
+			}
+
+			delete_post_meta($post_id, $this->id . '_fields');
+
+			if ( ! empty($new_fields))
+			{
+				add_post_meta($post_id,$this->id . '_fields', $new_fields, TRUE);
+			}
+
+			// keep data tidy, delete values if previously using WPALCHEMY_MODE_ARRAY
+			delete_post_meta($post_id, $this->id);
+		}
+		else
+		{
+			if (is_null($new_data))
+			{
+				delete_post_meta($post_id, $this->id);
+			}
+			else
+			{
+				update_post_meta($post_id, $this->id, $new_data);
+			}
+
+			// keep data tidy, delete values if previously using WPALCHEMY_MODE_EXTRACT
+			if (is_array($current_fields))
+			{
+				foreach ($current_fields as $field)
+				{
+					delete_post_meta($post_id, $field);
+				}
+
+				delete_post_meta($post_id, $this->id . '_fields');
+			}
+		}
+
+		// action: save
+		if ($this->has_action('save'))
+		{
+			$this->do_action('save', $new_data, $real_post_id);
+		}
+
+		return $post_id;
+	}
+
 }

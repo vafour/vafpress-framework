@@ -21,6 +21,7 @@ class VP_Option_Depsloader
 			'localize'             => array(
 				'use_upload'           => false,
 				'use_new_media_upload' => false,
+				'public_url'           => VP_PUBLIC_URL,
 			),
 			'main_js'              => array(
 				'name' => 'vp-option-js',
