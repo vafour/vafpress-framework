@@ -6,9 +6,9 @@
 		</label>
 	</td>
 	<td class="fields">
-		<p>
+		<div class="vp-control">
 			<input type="text" name="<?php echo $name ?>" class="input-large" value="<?php echo $value; ?>" />
-		</p>
+		</div>
 		<div class="validation-msgs"><ul></ul></div>
 	</td>
 </tr>

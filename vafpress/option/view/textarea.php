@@ -6,9 +6,9 @@
 		</label>
 	</td>
 	<td class="fields">
-		<p>
+		<div class="vp-control">
 			<textarea name="<?php echo $name; ?>"><?php echo $value; ?></textarea>
-		</p>
+		</div>
 		<div class="validation-msgs"><ul></ul></div>
 	</td>
 </tr>

@@ -6,13 +6,13 @@
 		</label>
 	</td>
 	<td class="fields">
-		<p>
+		<div class="vp-control">
 			<input type="text" readonly id="<?php echo $name; ?>" name="<?php echo $name; ?>" value="<?php echo $value; ?>">
 			<input class="vp-js-upload vp-button" type="button" value="<?php _e('Choose File', 'vp_textdomain'); ?>" >
 			<div class="image">
 				<img src="<?php echo $value; ?>" alt="" style="max-width: 300px; max-height: 300px; " />
 			</div>
-		</p>
+		</div>
 		<div class="validation-msgs"><ul></ul></div>
 	</td>
 </tr>

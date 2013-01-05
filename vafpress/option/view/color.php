@@ -6,10 +6,10 @@
 		</label>
 	</td>
 	<td class="fields">
-		<p>
+		<div class="vp-control">
 			<label for="<?php echo $name; ?>" style="background-color: <?php echo $value; ?>;" maxlength="7"></label>
 			<input maxlength="7" id="<?php echo $name; ?>" class="vp-js-colorpicker" type="text" name="<?php echo $name ?>" value="<?php echo $value; ?>" />
-		</p>
+		</div>
 		<div class="validation-msgs"><ul></ul></div>
 	</td>
 </tr>

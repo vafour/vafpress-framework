@@ -109,59 +109,73 @@
 		});
 	}
 
+	Function.prototype.clone = function() {
+	    var that = this;
+	    var temp = function temporary() { return that.apply(this, arguments); };
+	    for( key in this ) {
+	        temp[key] = this[key];
+	    }
+	    return temp;
+	};
+
 	var upload_callback;
 
 	if( vp.use_new_media_upload )
 	{
+		var _orig_send_attachment = wp.media.editor.send.attachment,
+			_orig_send_link       = wp.media.editor.send.link,
+			_orig_send_to_editor  = window.send_to_editor;
+
 		upload_callback = function(e) {
+			var $this = $(this),
+				$input = $this.prev('input'),
+				$preview = $this.next().find('img');
 
-				var send_attachment = wp.media.editor.send.attachment,
-						send_link = wp.media.editor.send.link,
-						$this = $(this),
-						$input = $this.prev('input'),
-						$preview = $this.next().find('img');
-
-				// handler for attachment
-				wp.media.editor.send.attachment = function(props, attachment) {
-					$input.val(attachment.url);
-					$preview.attr('src', attachment.url);
-					wp.media.editor.send.attachment = send_attachment;
-				}
-
-				// handler for link
-				window.send_to_editor = function(html) {
-					if (html != '') {
-						// targetting only link, since attachment is already handled separately
-						var imgurl = $(html).attr('src');
-						$input.val(imgurl);
-						$preview.attr('src', imgurl);
-					}			
-				}
-
-				wp.media.editor.open($this);
-				return false;
+			// handler for attachment
+			wp.media.editor.send.attachment = function(props, attachment) {
+				$input.val(attachment.url);
+				$preview.attr('src', attachment.url);
+				wp.media.editor.send.attachment = _orig_send_attachment;
 			}
+
+			// handler for link
+			window.send_to_editor = function(html) {
+				if (html != '') {
+					// targetting only link, since attachment is already handled separately
+					var imgurl = $(html).attr('src');
+					$input.val(imgurl);
+					$preview.attr('src', imgurl);
+				}			
+				window.send_to_editor = _orig_send_to_editor;
+			}
+			wp.media.editor.open($this);
+			return false;
+		}
 	}
 	else
 	{
+		var _orig_send_to_editor  = window.send_to_editor.clone();
 		upload_callback = function(e) {
-				$input     = $(this).prev('input');
-				$preview   = $(this).next().find('img');
-				tb_show('Upload Image', 'media-upload.php?type=image&amp;TB_iframe=true');
-				window.send_to_editor = function(html) {
-					if (html != '') {
-						var imgurl = $(html).find('img').attr('src');
-						if( typeof imgurl == 'undefined' )
-						{
-							imgurl = $(html).attr('src');
-						}
-						$input.val(imgurl);
-						$preview.attr('src', imgurl);
+			var _custom_media = true;
+			$input     = $(this).prev('input');
+			$preview   = $(this).next().find('img');
+			tb_show('Upload Image', 'media-upload.php?type=image&amp;TB_iframe=true');
+
+			window.send_to_editor = function(html){
+				if (html != '') {
+					var imgurl = $(html).find('img').attr('src');
+					if( typeof imgurl == 'undefined' )
+					{
+						imgurl = $(html).attr('src');
 					}
-					tb_remove();
+					$input.val(imgurl);
+					$preview.attr('src', imgurl);
 				}
-				return false;
-			};
+				window.send_to_editor = _orig_send_to_editor;
+				tb_remove();
+			}
+			return false;
+		};
 	}
 
 	$('.vp-js-upload').click(upload_callback);

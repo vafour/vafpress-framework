@@ -113,13 +113,6 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		}
 
 		return $vp_field->render();
-
-		/**
-		 * @todo
-		 * - test every elements
-		 * - push
-		 * - begin on shortcode
-		 */
 	}
 
 	function _render_group($field, $mb) {

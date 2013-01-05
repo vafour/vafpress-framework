@@ -6,12 +6,12 @@
 		</label>
 	</td>
 	<td class="fields">
-		<p>
+		<div class="vp-control">
 			<label>
 				<input <?php if( $value ) echo 'checked'; ?> type="checkbox" name="<?php echo $name; ?>" value="1" />
 				<span></span>
 			</label>
-		</p>
+		</div>
 		<div class="validation-msgs"><ul></ul></div>
 	</td>
 </tr>
