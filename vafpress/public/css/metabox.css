@@ -1,5 +1,10 @@
 .vp-metabox .vp-meta-row {
 	overflow: hidden;
+	border-bottom: 1px solid #dddddd;
+}
+
+.vp-metabox .vp-meta-row:last-child {
+	border-bottom: none;
 }
 
 .vp-metabox table {
@@ -12,8 +17,230 @@
 .vp-metabox th,
 .vp-metabox td {
 	border: none;
+	vertical-align: top;
 }
 
 .vp-metabox .label {
-	width: 30%;
+	width: 35%;
+	padding: 12px 20px;
 }
+
+.vp-metabox .label label {
+	cursor: default;
+	font-size: 1em;
+	font-weight: bold;
+	line-height: 1.4em;
+	margin-top: 7px;
+	display: block;
+}
+
+.vp-metabox .label .description {
+	font-size: 0.9em;
+	color: #999999;
+	line-height: 1.3em;
+	font-weight: normal;
+}
+
+.vp-metabox .label .description p {
+	margin: 5px 0px 0px 0px;
+}
+
+.vp-metabox .vp-wpa-group {
+	margin-bottom: 10px;
+}
+
+.vp-metabox .vp-wpa-group > td > table tr > td {
+	border-bottom: 1px dashed #dddddd;
+}
+
+.vp-metabox .vp-wpa-group > td > table tr:last-child > td {
+	border-bottom: none;
+}
+
+.vp-metabox .vp-wpa-group > td > table {
+	border: 1px solid #dddddd;
+	background-color: #f9f9f9;
+	margin: 4px 0px;
+}
+
+.vp-metabox .vp-wpa-group:nth-child(even) > td > table {
+	background-color: #ffffff;
+}
+
+.vp-metabox .vp-wpa-group > td > table .fields {
+	padding-right: 40px;
+}
+
+.vp-metabox .vp-wpa-group .vp-wpa-group-remove {
+	width: 0px;
+	position: relative;
+}
+
+.vp-metabox .vp-wpa-group .vp-wpa-group-remove a {
+	border-radius: 0px 0px 0px 6px;
+	border: 1px solid #dddddd;
+	background-color: #ffffff;
+	color: #999999;
+	font-size: 0.9em;
+	font-weight: bold;
+	line-height: 1em;
+	margin: 2px 2px 0px 0px;
+	padding: 4px 8px;
+	position: absolute;
+	text-transform: uppercase;
+	text-decoration: none;
+	top: 0px;
+	right: 0px;
+}
+
+.vp-metabox .vp-wpa-group .vp-wpa-group-remove a:hover {
+	color: #990000;
+}
+
+.vp-metabox .vp-wpa-group .vp-wpa-group-add a {
+	width: 100%;
+	display: block;
+}
+
+.vp-metabox .fields {
+	padding: 15px 20px;
+}
+
+.vp-metabox .fields .validation-msgs ul {
+	margin: 0px;
+}
+
+.vp-metabox .fields img {
+	padding: 4px;
+	border: 1px solid #dddddd;
+	border-radius: 3px;
+}
+
+.vp-metabox .fields .input {
+	position: relative;
+}
+
+.vp-metabox .vp-textbox input {
+	width: 100%;
+}
+
+.vp-metabox .vp-checkbox label,
+.vp-metabox .vp-radiobutton label {
+	float: left;
+	display: block;
+	margin: 0px 20px 0px 0px;
+}
+
+.vp-metabox .vp-checkbox label input,
+.vp-metabox .vp-radiobutton label input {
+	margin-right: 3px;
+}
+
+.vp-metabox .vp-upload .input {
+	padding-right: 90px;
+}
+
+.vp-metabox .vp-upload input[type="text"] {
+	width: 100%;
+}
+
+.vp-metabox .vp-upload input[type="button"] {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}
+
+.vp-metabox .vp-upload .image {
+	line-height: 0em;
+}
+
+.vp-metabox .vp-upload .image img:not([src=""]) {
+	margin-top: 10px;
+}
+
+.vp-metabox .vp-checkimage .input label,
+.vp-metabox .vp-radioimage .input label {
+	display: inline-block;
+	margin: 5px;
+	vertical-align: top;
+}
+
+.vp-metabox .vp-checkimage label input,
+.vp-metabox .vp-radioimage label input {
+	display: none;
+}
+
+.vp-metabox .vp-checkimage label input:checked ~ img,
+.vp-metabox .vp-radioimage label input:checked ~ img {
+	border-color: #ff9900;
+}
+
+.vp-metabox .vp-color .input {
+	padding-left: 25px;
+}
+
+.vp-metabox .vp-color .input .indicator {
+	box-shadow: inset 0px 0px 0px 2px rgba(0,0,0,0.1);
+	display: block;
+	height: 20px;
+	margin-top: 3px;
+	left: 0px;
+	position: absolute;
+	top: 0px;
+	width: 20px;
+}
+
+.vp-metabox .vp-slider .input {
+	padding-right: 80px;
+}
+
+.vp-metabox .vp-slider .input .slidebar {
+	width: 100%;
+	margin-top: 6px;
+}
+
+.vp-metabox .vp-slider .input .slideinput {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 60px;
+	margin-top: -5px;
+}
+
+.vp-metabox .vp-select select,
+.vp-metabox .vp-multiselect select,
+.vp-metabox .vp-select .chzn-container,
+.vp-metabox .vp-multiselect .chzn-container,
+.vp-metabox .vp-select .chzn-container .chzn-drop,
+.vp-metabox .vp-multiselect .chzn-container .chzn-drop,
+.vp-metabox .vp-select .chzn-container .chzn-drop .chzn-search input,
+.vp-metabox .vp-multiselect .chzn-container .chzn-drop .chzn-search input {
+	width: 100% !important;
+}
+
+.vp-metabox .vp-select .chzn-container .chzn-drop,
+.vp-metabox .vp-multiselect .chzn-container .chzn-drop {
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box; /* Firefox, other Gecko */
+	box-sizing: border-box;	/* Opera/IE 8+ */
+}
+
+.vp-metabox .vp-select .chzn-container .chzn-drop,
+.vp-metabox .vp-multiselect .chzn-container .chzn-drop {
+	width: 100%;
+	margin-right: 10px; /* hack */
+}
+
+.vp-metabox .vp-multiselect .search-field input {
+	height: auto;
+}
+
+.vp-metabox .vp-textarea textarea {
+	width: 100%;
+	resize: vertical;
+	min-height: 100px;
+	max-height: 200px;
+}
+
+/* jQuery UI Datepicker bottom div bug */
+#ui-datepicker-div { display:none }

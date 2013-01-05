@@ -1,4 +1,4 @@
-<tr class="vp-checkimage<?php echo ($container_extra_classes) ? ' ' . $container_extra_classes : '' ?>" <?php echo VP_Util_Text::print_if_exists($validation, 'data-vp-validation="%s"'); ?> id="<?php echo $name; ?>" id="<?php echo $name; ?>">
+<tr class="vp-field vp-checkimage<?php echo ($container_extra_classes) ? ' ' . $container_extra_classes : '' ?>" <?php echo VP_Util_Text::print_if_exists($validation, 'data-vp-validation="%s"'); ?> id="<?php echo $name; ?>" id="<?php echo $name; ?>">
 	<td class="label">
 		<label>
 			<?php echo $label; ?>
@@ -6,7 +6,7 @@
 		</label>
 	</td>
 	<td class="fields">
-		<div class="vp-control">
+		<div class="input">
 			<?php foreach ($items as $item): ?>
 			<label>
 				<input <?php if(in_array($item->value, $value)) echo "checked" ?> type="checkbox" name="<?php echo $name; ?>" value="<?php echo $item->value; ?>" />

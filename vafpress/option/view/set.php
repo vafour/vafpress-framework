@@ -50,8 +50,10 @@
 			</div>
 			<div class="vp-right-panel">
 				<div id="vp-submit" class="vp-submit">
-					<input class="vp-js-save vp-button" type="button" value="<?php _e('Save Changes', 'vp_textdomain'); ?>" />
-					<p class="vp-js-save-status save-status" style="display: none;"></p>
+					<div class="inner">
+						<input class="vp-js-save vp-button" type="button" value="<?php _e('Save Changes', 'vp_textdomain'); ?>" />
+						<p class="vp-js-save-status save-status" style="display: none;"></p>
+					</div>
 				</div>
 				<form id="vp-option-form" class="vp-option-form">
 				<?php foreach ($set->get_menus() as $menu): ?>

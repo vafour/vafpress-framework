@@ -1,4 +1,4 @@
-<tr class="vp-select<?php echo ($container_extra_classes) ? ' ' . $container_extra_classes : '' ?>" <?php echo VP_Util_Text::print_if_exists($validation, 'data-vp-validation="%s"'); ?> id="<?php echo $name; ?>">
+<tr class="vp-field vp-select<?php echo ($container_extra_classes) ? ' ' . $container_extra_classes : '' ?>" <?php echo VP_Util_Text::print_if_exists($validation, 'data-vp-validation="%s"'); ?> id="<?php echo $name; ?>">
 	<td class="label">
 		<label>
 			<?php echo $label; ?>
@@ -6,11 +6,13 @@
 		</label>
 	</td>
 	<td class="fields">
-		<select name="<?php echo $name; ?>" class="vp-js-chosen">
-			<?php foreach ($items as $item): ?>
-			<option <?php if($item->value == $value) echo "selected" ?> value="<?php echo $item->value; ?>"><?php echo $item->label; ?></option>
-			<?php endforeach; ?>
-		</select>
+		<div class="input">
+			<select name="<?php echo $name; ?>" class="vp-js-chosen">
+				<?php foreach ($items as $item): ?>
+				<option <?php if($item->value == $value) echo "selected" ?> value="<?php echo $item->value; ?>"><?php echo $item->label; ?></option>
+				<?php endforeach; ?>
+			</select>
+		</div>
 		<div class="validation-msgs"><ul></ul></div>
 	</td>
 </tr>

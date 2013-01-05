@@ -19,17 +19,17 @@ class VP_Converter
 		$opt_arr .= "return array(\n";
 
 		// Parse Set Option and Catch the Menus
-		$set = new SimpleXMLIterator( $options );
-		for( $set->rewind(); $set->valid(); $set->next() ) {
+		$set = new SimpleXMLIterator($options);
+		for($set->rewind(); $set->valid(); $set->next()) {
 			// Print Option Set Attributes
-			if( !$set->hasChildren() )
+			if(!$set->hasChildren())
 			{
-				if( in_array($set->key(), $this->localized) )
+				if(in_array($set->key(), $this->localized))
 					$opt_arr .= "\t'{$set->key()}' => __('{$set->current()}', 'vp_textdomain'),\n";
 				else
 					$opt_arr .= "\t'{$set->key()}' => '{$set->current()}',\n";
 			}
-			if( $set->key() == 'menus' )
+			if($set->key() == 'menus')
 			{
 				$menus = $set->getChildren();
 			}
@@ -42,20 +42,20 @@ class VP_Converter
 			// Menu Begin
 			$opt_arr .= "\t\tarray(\n";
 			$submenus = array();
-			for( $menu->rewind(); $menu->valid(); $menu->next() ) {
+			for($menu->rewind(); $menu->valid(); $menu->next()) {
 				// Print Menu Attributes
-				if( !$menu->hasChildren() and !in_array($menu->key(), $this->group) )
+				if(!$menu->hasChildren() and !in_array($menu->key(), $this->group))
 				{
-					if( in_array($menu->key(), $this->localized) )
+					if(in_array($menu->key(), $this->localized))
 						$opt_arr .= "\t\t\t'{$menu->key()}' => __('{$menu->current()}', 'vp_textdomain'),\n";
 					else
 						$opt_arr .= "\t\t\t'{$menu->key()}' => '{$menu->current()}',\n";
 				}
-				if( $menu->key() == 'menus' )
+				if($menu->key() == 'menus')
 				{
 					$submenus = $menu->getChildren();
 				}
-				if( $menu->key() == 'sections' )
+				if($menu->key() == 'sections')
 				{
 					$sections = $menu->getChildren();
 				}
@@ -68,16 +68,16 @@ class VP_Converter
 				{
 					$opt_arr .= "\t\t\t\tarray(\n";
 					$sections = array();
-					for( $submenu->rewind(); $submenu->valid(); $submenu->next() ) {
+					for($submenu->rewind(); $submenu->valid(); $submenu->next()) {
 						// Print Tab Attributes
-						if( !$submenu->hasChildren() and !in_array($submenu->key(), $this->group) )
+						if(!$submenu->hasChildren() and !in_array($submenu->key(), $this->group))
 						{
-							if( in_array($submenu->key(), $this->localized) )
+							if(in_array($submenu->key(), $this->localized))
 								$opt_arr .= "\t\t\t\t\t'{$submenu->key()}' => __('{$submenu->current()}', 'vp_textdomain'),\n";
 							else
 								$opt_arr .= "\t\t\t\t\t'{$submenu->key()}' => '{$submenu->current()}',\n";
 						}
-						if( $submenu->key() == 'sections' )
+						if($submenu->key() == 'sections')
 						{
 							$sections = $submenu->getChildren();
 						}
@@ -122,16 +122,16 @@ class VP_Converter
 			// Section Open
 			$opt_arr .= "\t\t\t\t\t\tarray(\n";
 			$fields = array();
-			for( $section->rewind(); $section->valid(); $section->next() ) {
+			for($section->rewind(); $section->valid(); $section->next()) {
 				// Print Tab Attributes
-				if( !$section->hasChildren() and !in_array($section->key(), $this->group) )
+				if(!$section->hasChildren() and !in_array($section->key(), $this->group))
 				{
-					if( in_array($section->key(), $this->localized) )
+					if(in_array($section->key(), $this->localized))
 						$opt_arr .= "\t\t\t\t\t\t\t'{$section->key()}' => __('{$section->current()}', 'vp_textdomain'),\n";
 					else
 						$opt_arr .= "\t\t\t\t\t\t\t'{$section->key()}' => '{$section->current()}',\n";
 				}
-				if( $section->key() == 'fields' )
+				if($section->key() == 'fields')
 				{
 					$fields = $section->getChildren();
 				}
@@ -143,14 +143,14 @@ class VP_Converter
 			{
 				$opt_arr .= "\t\t\t\t\t\t\t\tarray(\n";
 				$opt_arr .= "\t\t\t\t\t\t\t\t\t'type' => '$key',\n";
-				for( $field->rewind(); $field->valid(); $field->next() )
+				for($field->rewind(); $field->valid(); $field->next())
 				{
 					// Print Tab Attributes
-					if( !$field->hasChildren() )
+					if(!$field->hasChildren())
 					{
-						if( $field->key() == 'default' )
+						if($field->key() == 'default')
 							echo '';
-						if( in_array($field->key(), $this->localized) )
+						if(in_array($field->key(), $this->localized))
 							$opt_arr .= "\t\t\t\t\t\t\t\t\t'{$field->key()}' => __('{$field->current()}', 'vp_textdomain'),\n";
 						else
 							$opt_arr .= "\t\t\t\t\t\t\t\t\t'{$field->key()}' => '{$field->current()}',\n";
@@ -163,7 +163,7 @@ class VP_Converter
 				$datasources  = array();
 				$emb_defaults = array();
 				$tag_defaults = array();
-				for( $xml_items->rewind(); $xml_items->valid(); $xml_items->next() )
+				for($xml_items->rewind(); $xml_items->valid(); $xml_items->next())
 				{
 					$item = $xml_items->current();
 
@@ -184,7 +184,7 @@ class VP_Converter
 						$itm['value'] = (string) $value['value'];
 						$itm['label'] = (string) $value;
 						$img = (string) $value['img'];
-						if( !empty($img) )
+						if(!empty($img))
 						{
 							$itm['img'] = $img;
 						}
@@ -192,7 +192,7 @@ class VP_Converter
 
 						// Check for default
 						$default = (string) $value['default'];
-						if( !empty($default) )
+						if(!empty($default))
 						{
 							$emb_defaults[] = $itm['value'];
 						}
@@ -200,18 +200,18 @@ class VP_Converter
 				}
 
 				$xml_defaults = $field->default;
-				for( $xml_defaults->rewind(); $xml_defaults->valid(); $xml_defaults->next() )
+				for($xml_defaults->rewind(); $xml_defaults->valid(); $xml_defaults->next())
 				{
 					$default = $xml_defaults->current();
 					foreach ($default as $key => $value)
 					{
-						if( $key == 'item' )
+						if($key == 'item')
 							$tag_defaults[] = (string) $value;
 					}
 				}
 
 				// processing items
-				if( !empty($items) || !empty($datasources) )
+				if(!empty($items) || !empty($datasources))
 				{
 					$opt_arr  .= "\t\t\t\t\t\t\t\t\t'items' => array(\n";
 
@@ -237,7 +237,7 @@ class VP_Converter
 
 						foreach ($item as $key => $value)
 						{
-							if( in_array($key, $this->localized) )
+							if(in_array($key, $this->localized))
 								$opt_arr .= "\t\t\t\t\t\t\t\t\t\t\t'$key' => __('$value', 'vp_textdomain'),\n";
 							else
 								$opt_arr .= "\t\t\t\t\t\t\t\t\t\t\t'$key' => '$value',\n";
@@ -248,11 +248,11 @@ class VP_Converter
 				}
 
 				// processing defaaults
-				if( !empty($tag_defaults) )
+				if(!empty($tag_defaults))
 					$defaults = $tag_defaults;
 				else
 					$defaults = $emb_defaults;
-				if( !empty($defaults) )
+				if(!empty($defaults))
 				{
 					$opt_arr  .= "\t\t\t\t\t\t\t\t\t'default' => array(\n";
 					foreach ($defaults as $def)

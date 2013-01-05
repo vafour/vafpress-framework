@@ -1,4 +1,4 @@
-<tr class="vp-radiobutton<?php echo ($container_extra_classes) ? ' ' . $container_extra_classes : '' ?>" <?php echo VP_Util_Text::print_if_exists($validation, 'data-vp-validation="%s"'); ?> id="<?php echo $name; ?>">
+<tr class="vp-field vp-radiobutton<?php echo ($container_extra_classes) ? ' ' . $container_extra_classes : '' ?>" <?php echo VP_Util_Text::print_if_exists($validation, 'data-vp-validation="%s"'); ?> id="<?php echo $name; ?>">
 	<td class="label">
 		<label>
 			<?php echo $label; ?>
@@ -6,7 +6,7 @@
 		</label>
 	</td>
 	<td class="fields">
-		<div class="vp-control">
+		<div class="input">
 			<?php foreach ($items as $item): ?>
 			<label>
 				<input <?php if($item->value == $value) echo "checked" ?> type="radio" name="<?php echo $name; ?>" value="<?php echo $item->value; ?>" />

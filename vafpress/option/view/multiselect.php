@@ -1,4 +1,4 @@
-<tr class="vp-multiselect<?php echo ($container_extra_classes) ? ' ' . $container_extra_classes : '' ?>" <?php echo VP_Util_Text::print_if_exists($validation, 'data-vp-validation="%s"'); ?> id="<?php echo $name; ?>">
+<tr class="vp-field vp-multiselect<?php echo ($container_extra_classes) ? ' ' . $container_extra_classes : '' ?>" <?php echo VP_Util_Text::print_if_exists($validation, 'data-vp-validation="%s"'); ?> id="<?php echo $name; ?>">
 	<td class="label">
 		<label>
 			<?php echo $label; ?>
@@ -6,7 +6,7 @@
 		</label>
 	</td>
 	<td class="fields">
-		<div class="vp-control">
+		<div class="input">
 			<select multiple name="<?php echo $name; ?>" class="vp-js-chosen">
 				<?php foreach ($items as $item): ?>
 				<option <?php if(in_array($item->value, $value)) echo "selected" ?> value="<?php echo $item->value; ?>"><?php echo $item->label; ?></option>

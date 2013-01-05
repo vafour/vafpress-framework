@@ -113,6 +113,13 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		}
 
 		return $vp_field->render();
+
+		/**
+		 * @todo
+		 * - test every elements
+		 * - push
+		 * - begin on shortcode
+		 */
 	}
 
 	function _render_group($field, $mb) {
@@ -124,12 +131,10 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 
 			while($mb->have_fields_and_multi($field['name']))
 			{
-				if ($this->is_last()) {
-					$class = ' last tocopy';
-				} elseif ($this->is_first()) {
-					$class = ' first';
-				}
-				$html .= '<tr class="vp-wpa-group wpa_group wpa_group-' . $field['name'] . ' ' . $class . '">';
+				$class = '';
+				if ($this->is_last()) $class = ' last tocopy';
+				if ($this->is_first()) $class = ' first';
+				$html .= '<tr class="vp-wpa-group wpa_group wpa_group-' . $field['name'] . $class . '">';
 				$html .= '<td>';
 					$html .= '<table>';
 					$html .= '</tbody>';
@@ -137,16 +142,17 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 					$html .= '</tbody>';
 					$html .= '</table>';
 				$html .= '</td>';
-				$html .= '<td style="width: 80px;">';
-				$html .= '<a href="#" class="dodelete button">Remove</a>';
+				$html .= '<td class="vp-wpa-group-remove">';
+				$html .= '<a href="#" class="dodelete" title="Remove">X</a>';
 				$html .= '</td>';
 				$html .= '</tr>';
 			}
 
 				$html .= '<tr>';
-				$html .= '<td colspan="2">';
-				$html .= '<a href="#" class=" button docopy-' . $field['name'] . ' button">Add</a>';
+				$html .= '<td class="vp-wpa-group-add">';
+				$html .= '<a href="#" class="button docopy-' . $field['name'] . ' button">Add</a>';
 				$html .= '</td>';
+				$html .= '<td></td>';
 				$html .= '</tr>';
 			$html .= '</tbody>';
 			$html .= '</table>';

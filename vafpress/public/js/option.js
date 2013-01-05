@@ -103,7 +103,11 @@
 		$parent.addClass('vp-current');
 		$panel.siblings('.vp-panel').removeClass('vp-current');
 		$panel.addClass('vp-current');
+
+		// Init chosen
+		if ($.fn.chosen) $panel.find('.vp-js-chosen').chosen();
 	});
+	$('.vp-current > .vp-js-menu-goto').click();
 
 	$('.vp-js-menu-dropdown').click(function(e)
 	{
@@ -270,9 +274,8 @@
 	$('.vp-js-tipsy.image-item').each(function() { $(this).tipsy(); });
 
 	// Chosen
-	if ($.fn.chosen) {
-		$('.vp-js-chosen').chosen();
-	}
+	// if ($.fn.chosen) $('.vp-js-chosen').chosen();
+	// Please see vp-js-menu-goto click handler
 
 	// Scrollspy
 	var $submit = $('.vp-submit');
