@@ -97,9 +97,10 @@
 	color: #990000;
 }
 
-.vp-metabox .vp-wpa-group .vp-wpa-group-add a {
+.vp-metabox .vp-wpa-group-add a {
 	width: 100%;
 	display: block;
+	text-align: center;
 }
 
 .vp-metabox .fields {

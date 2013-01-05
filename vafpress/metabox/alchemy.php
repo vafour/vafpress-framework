@@ -150,7 +150,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 
 				$html .= '<tr>';
 				$html .= '<td class="vp-wpa-group-add">';
-				$html .= '<a href="#" class="button docopy-' . $field['name'] . ' button">Add</a>';
+				$html .= '<a href="#" class="button button-large docopy-' . $field['name'] . '">Add More</a>';
 				$html .= '</td>';
 				$html .= '<td></td>';
 				$html .= '</tr>';
