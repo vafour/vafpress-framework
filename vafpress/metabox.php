@@ -20,6 +20,11 @@ if(empty($metas))
 	{
 		$metas[] = include($filename);
 	}
+}
+
+// if there is metaboxes
+if(!empty($metas))
+{	
 	// development mode notice
 	if(VP_Util_Config::get_instance()->load('metabox/main', 'dev_mode'))
 	{
