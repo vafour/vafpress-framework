@@ -22,6 +22,7 @@ class VP_Option_Depsloader
 				'use_upload'           => false,
 				'use_new_media_upload' => false,
 				'public_url'           => VP_PUBLIC_URL,
+				'nonce'                => wp_create_nonce( 'vafpress' ),
 			),
 			'main_js'              => array(
 				'name' => 'vp-option-js',

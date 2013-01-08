@@ -188,11 +188,22 @@ function vp_ajax_admin()
 	global $config;
 
 	$option = $_POST['option'];
+	$nonce  = $_POST['nonce'];
+
 	$option = VP_Util_Array::unite( $option, 'name', 'value' );
 	$option = $set->normalize_values($option);
 	$set->populate_values($option);
 
-	$result = $set->save($config['option_key'], true);
+	$verify = check_ajax_referer('vafpress', 'nonce', false);
+	if($verify)
+	{
+		$result = $set->save($config['option_key'], true);
+	}
+	else
+	{
+		$result['status']  = false;
+		$result['message'] = __("Unverified Access.", 'vp_textdomain');
+	}
 	header('Content-type: application/json');
 	echo json_encode($result);
 	die();

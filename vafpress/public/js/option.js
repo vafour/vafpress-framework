@@ -2,6 +2,9 @@
 
 	$.getScript(vp_wp.public_url + "/js/shared.js", function(data, textStatus, jqxhr) {
 
+		// console.log(vp_wp);
+		vp_wp.nonce = 'adsf';
+
 		/* BEGIN FETCHING ALL FIELDS' VALIDATION RULES */
 		var validation = [];
 		$('.vp-menu-goto').each(function(i) {
@@ -197,7 +200,8 @@
 				option = $form.serializeArray(),
 				data = {
 						action: 'vp_ajax_admin',
-						option: option
+						option: option,
+						nonce : vp_wp.nonce
 					};
 
 			$button.attr('disabled', 'disabled');
@@ -244,7 +248,10 @@
 			if (this.prop('tagName') == 'BODY' && arguments[0] == 'folded') { calculatePositionAndSize(); }
 			return result;
 		};
-		$(window).load(function(){$(window).resize();});
+
+		$(window).load(function(){
+			$(window).resize();
+		});
 
 		function calculatePositionAndSize() {
 			var $overlay = $('#vp-overlay'),
@@ -376,4 +383,5 @@
 			}, 'JSON');
 		});
 	});
+
 }(jQuery));
