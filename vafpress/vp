@@ -10,10 +10,18 @@
 			case 'convert':
 				$converter = new VP_Converter();
 				$opt       = $converter->to_array();
-				file_put_contents('config/option.php', $opt);
-				echo "option.xml converted to option.php";
+				$result    = file_put_contents($opt['dest'], $opt['opt_arr']);
+				if($result !== FALSE)
+				{
+					echo "Conversion Succes\n";
+					echo "Source: " . $opt['source'] . "\n";
+					echo "Dest  : " . $opt['dest'] . "\n";
+				}
+				else
+				{
+					echo "Error Occured";
+				}
 				break;
-			
 			default:
 				echo "Unsupported Command";
 				break;

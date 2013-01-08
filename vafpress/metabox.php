@@ -9,9 +9,30 @@ include_once VP_INCLUDE_DIR . '/wpalchemy/MetaBox.php';
 global $vp_metaboxes;
 
 // load all files from metaboxes
-foreach (glob(VP_CONFIG_DIR . "/metaboxes/*.php") as $filename)
+$metas = array();
+foreach (glob(VP_CONFIG_DIR . "/metabox/instances/*.php") as $filename)
 {
 	$metas[] = include($filename);
+}
+if(empty($metas))
+{
+	foreach (glob(VP_CONFIG_DIR . "/metabox/instances/*.php.sample") as $filename)
+	{
+		$metas[] = include($filename);
+	}
+	// development mode notice
+	if(VP_Util_Config::get_instance()->load('metabox/main', 'dev_mode'))
+	{
+		if ( WPAlchemy_MetaBox::_is_post() or WPAlchemy_MetaBox::_is_page() )
+		{
+			add_action('admin_notices', 'vp_mb_notice_devmode');
+		}
+	}
+}
+
+function vp_mb_notice_devmode()
+{
+    VP_WP_Util::admin_notice(__("[Vafpress Framework] Metabox Development Mode is Active, value won't be saved into database.", 'vp_textdomain'), false);
 }
 
 // instantiate metaboxes object
@@ -24,6 +45,7 @@ foreach ($metas as $meta)
 		'template' => $meta
 	));
 }
+
 
 /**
  * @todo error checking
@@ -43,15 +65,33 @@ function vp_mb_get($key)
 	{
 		if($idx == 0)
 		{
-			$temp = $vp_metaboxes[$key];
-			$temp->the_meta();
+			if(array_key_exists($key, $vp_metaboxes))
+			{
+				$temp = $vp_metaboxes[$key];
+				$temp->the_meta();
+			}
+			else
+			{
+				throw new Exception("Metabox Undefined", 1);
+			}
 		}
 		else
 		{
-			if( is_object($temp) and get_class($temp) == 'VP_MetaBox_Alchemy' )
+			if( is_object($temp) and get_class($temp) === 'VP_MetaBox_Alchemy' )
+			{
 				$temp = $temp->get_the_value($key);
+			}
 			else
-				$temp = $temp[$key];
+			{
+				if(array_key_exists($key, $temp))
+				{
+					$temp = $temp[$key];
+				}
+				else
+				{
+					throw new Exception("No Value", 1);
+				}
+			}
 		}
 	}
 	return $temp;

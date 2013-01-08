@@ -3,7 +3,7 @@
 /**
  * CONSTANTS
  */
-define('VP_VERSION' , '1.0a');
+define('VP_VERSION', '1.0a');
 
 define('VP_THEME_DIR'  , get_template_directory());
 define('VP_DIR'        , VP_THEME_DIR . '/vafpress');
@@ -36,7 +36,7 @@ require_once VP_DIR . '/datasources.php';
 ////////////////////////
 // Load Theme Config  //
 ////////////////////////
-$config = VP_Util_Config::get_instance()->load('vafpress');
+$config = VP_Util_Config::get_instance()->load('option/main');
 
 
 ////////////////////////
@@ -49,17 +49,26 @@ load_theme_textdomain('vp_textdomain', $lang_dir);
 /////////////////////////
 // Parsing the option  //
 /////////////////////////
-$options = include(VP_CONFIG_DIR . '/option.php');
+try {
+	// loading the file, if doesn't exists try to load .sample version
+	$option_path        = VP_CONFIG_DIR . '/option/option.php';
+	$option_path_sample = $option_path . '.sample';
+	if(file_exists($option_path))
+		$options = include($option_path);
+	else
+		$options = include($option_path_sample);
+} catch (Exception $e){
+	echo $e->getMessage();
+}
 $parser  = new VP_Option_Parser();
 $set	 = $parser->parse_array_options($options);
-
 
 ////////////////////////////////////////////////
 // Add Import and Export Option Functionality //
 ////////////////////////////////////////////////
-$ie_menu    = new VP_Option_Group_Menu();
-$ie_section = new VP_Option_Group_Section();
-$ie_field   = new VP_Option_Field_ImpExp();
+$ie_menu    = new VP_Option_Control_Group_Menu();
+$ie_section = new VP_Option_Control_Group_Section();
+$ie_field   = new VP_Option_Control_Field_ImpExp();
 
 $ie_menu->set_title(__('Import and Export', 'vp_textdomain'));
 $ie_menu->set_name('impexp');
@@ -149,6 +158,22 @@ $opt_loader      = new VP_WP_Loader();
 $opt_deps_loader = new VP_Option_Depsloader($set);
 $opt_loader->register($opt_deps_loader);
 
+// development mode notice
+add_action('admin_notices', 'vp_opt_notice_devmode');
+
+function vp_opt_notice_devmode($hook_suffix)
+{
+	global $opt_deps_loader;
+	global $hook_suffix;
+
+	if(VP_Util_config::get_instance()->load('option/main', 'dev_mode'))
+	{
+		if($opt_deps_loader->can_output($hook_suffix))
+		{
+	    	VP_WP_Util::admin_notice(__("[Vafpress Framework] Theme Option Development Mode is Active, value won't be saved into database.", 'vp_textdomain'), false);
+		}
+	}
+}
 
 //////////////////////
 // Ajax Admin Logic //
@@ -167,7 +192,7 @@ function vp_ajax_admin()
 	$option = $set->normalize_values($option);
 	$set->populate_values($option);
 
-	$result = $set->save($config['option_key']);
+	$result = $set->save($config['option_key'], true);
 	header('Content-type: application/json');
 	echo json_encode($result);
 	die();
@@ -181,13 +206,26 @@ function vp_ajax_import_option()
 	header('Content-type: application/json');
 
 	$option = $_POST['option'];
-	$option = maybe_unserialize(stripslashes($option));
-	if( !is_array($option) )
-		$option = array();
+	if(empty($option))
+	{
+		$result['status']  = false;
+		$result['message'] = "Can't be empty.";
+	}
+	else
+	{
+		$option = maybe_unserialize(stripslashes($option));
+		if( is_array($option) )
+		{
+			$set->populate_values($option);
+			$result = $set->save($config['option_key'], true);
+		}
+		else
+		{
+			$result['status']  = false;
+			$result['message'] = "Invalid data.";
+		}
+	}
 
-	$set->populate_values($option);
-
-	$result = $set->save($config['option_key']);
 	echo json_encode($result);
 	die();
 }

@@ -8,6 +8,8 @@
 class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 {
 
+	private $things = array();
+
 	/**
 	 * Used to setup the meta box content template
 	 *
@@ -67,6 +69,8 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 				echo $this->_render_field($field, $mb);
 			}
 		}
+		// print_r($this);
+		// print_r($this->_get_scheme());
 	}
 
 	function _render_field($field, $mb, $in_group = false)
@@ -84,7 +88,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		$field['name'] = $mb->get_the_name();
 
 		// create the object
-		$make     = 'VP_Option_Field_' . $field['type'];
+		$make     = 'VP_Control_Field_' . $field['type'];
 		$vp_field = call_user_func("$make::withArray", $field);
 
 		// get value from mb
@@ -92,8 +96,12 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		// get default from array
 		$default  = $vp_field->get_default();
 
+		// echo $mb->get_the_name();
+		// var_dump($default);
+		// var_dump($value);
+
 		// if value is null and default exist, use default
-		if( empty($value) and !empty($default) )
+		if( is_null($value) and !empty($default) )
 		{
 			$value = $default;				
 		}
@@ -114,16 +122,11 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 
 		return $vp_field->render();
 
-		/**
-		 * @todo
-		 * - test every elements
-		 * - push
-		 * - begin on shortcode
-		 */
 	}
 
 	function _render_group($field, $mb) {
 
+		$html  = '';
 		$html .= '<tr id="wpa_loop-' . $field['name'] . '" class="vp-wpa-loop vp-meta-row wpa_loop wpa_loop-' . $field['name'] . '">';
 		$html .= '<td colspan="2">';
 			$html .= '<table>';
@@ -178,10 +181,10 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 
 	function _save($post_id) 
 	{
-
-		// $dev_mode = true;
-		// if($dev_mode)
-		// 	return;
+		// skip saving if dev mode is on
+		$dev_mode = VP_Util_Config::get_instance()->load('metabox/main', 'dev_mode');
+		if($dev_mode)
+			return;
 
 		$real_post_id = isset($_POST['post_ID']) ? $_POST['post_ID'] : NULL ;
 		
@@ -205,7 +208,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		// authentication passed, save data
 		$new_data = isset( $_POST[$this->id] ) ? $_POST[$this->id] : NULL ;
 
-		// remove 'to-copy' item
+		// remove 'to-copy' item from being saved
 		$groups = $this->_get_groups_idx();
 		foreach ($new_data as $key => &$value)
 		{
@@ -216,6 +219,23 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 				unset($value[$key]);
 			}
 		}
+
+		// try to normalize data, since alchemy clean any empty value, it will
+		// throw away empty checkbox value, making unchecked checkbox not being saved
+		$scheme = $this->_get_scheme();
+		foreach ($scheme as $key => &$value)
+		{
+			if( in_array($key, $groups) and is_array($value) )
+			{
+				$count = count($new_data[$key]);
+				$data  = $value[0];
+				$value = array();
+				for ($i=0; $i < $count; $i++)
+				{ 
+					array_push($value, $data);
+				}
+			}
+		}
 	 
 		WPAlchemy_MetaBox::clean($new_data);
 
@@ -223,6 +243,9 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		{
 			$new_data = NULL;
 		}
+
+		// continuation of normalizing data
+		$new_data = VP_Util_Array::array_merge_recursive_all($scheme, $new_data);
 
 		// filter: save
 		if ($this->has_filter('save'))
@@ -316,6 +339,53 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		}
 
 		return $post_id;
+	}
+
+	private function _get_scheme()
+	{
+
+		$this->in_template = TRUE;
+
+		$scheme      = array();
+		$curr_group  = '';
+		$is_in_group = false;
+		$multiple = array('checkbox', 'checkimage', 'multiselect');
+
+		$fields = $this->template;
+		$fields = $fields['fields'];
+
+		foreach ($fields as $field)
+		{
+			if( $field['type'] == 'group' )
+			{
+				$curr_group          = $field['name'];
+				$scheme[$curr_group] = array();
+				$is_in_group         = true;
+				while($this->have_fields_and_multi($curr_group))
+				{
+					$ops = array();
+					foreach ($field['fields'] as $f)
+					{
+						if(in_array($f['type'], $multiple))
+							$ops[$f['name']] = array();
+						else
+							$ops[$f['name']] = '';
+					}
+					$scheme[$curr_group][] = $ops;
+				}
+				end($scheme[$curr_group]);
+				$key = key($scheme[$curr_group]);
+				unset($scheme[$curr_group][$key]);
+			}
+			else
+			{
+				if(in_array($field['type'], $multiple))
+					$scheme[$field['name']] = array();
+				else
+					$scheme[$field['name']] = '';
+			}
+		}
+		return $scheme;
 	}
 
 }

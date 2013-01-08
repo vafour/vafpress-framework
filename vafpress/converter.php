@@ -11,7 +11,27 @@ class VP_Converter
 	public function to_array()
 	{
 		// Parse XML String with SimpleXML
-		$options   = file_get_contents('config/option.xml');
+		
+		// Loading the file, if doesn't exists try to load .sample version
+		$option_path        = VP_CONFIG_DIR . '/option';
+
+		$source_path        = $option_path  . '/option.xml';
+		$source_path_sample = $source_path  . '.sample';
+		$dest_path          = $option_path  . '/option.php';
+		$dest_path_sample   = $dest_path    . '.sample';
+
+		if(file_exists($source_path))
+		{
+			$spath = $source_path;
+			$dpath = $dest_path;
+		}
+		else
+		{
+			$spath = $source_path_sample;
+			$dpath = $dest_path_sample;	
+		}
+
+		$options = file_get_contents($spath);
 
 		// Open root array
 		$opt_arr  = "<?php\n";
@@ -110,7 +130,13 @@ class VP_Converter
 		$opt_arr .= " *EOF\n";
 		$opt_arr .= " */";
 
-		return $opt_arr;
+		$result = array(
+			'opt_arr' => $opt_arr,
+			'source'  => $spath,
+			'dest'    => $dpath
+		);
+
+		return $result;
 	}
 
 	private function process_sections($sections, $opt_arr)

@@ -53,10 +53,17 @@ class VP_Util_Text
 		return $array;
 	}
 
-	public static function field_type_from_class($class_name)
+	public static function field_type_from_class($class)
 	{
-		$prefix = 'VP_Option_Field_';
-		return strtolower(str_replace($prefix, '', $class_name));
+		$prefix = array('VP_Control_Field_', 'VP_Option_Control_Field_');
+		return strtolower(str_replace($prefix, '', $class));
+	}
+
+	public static function field_class_from_type($type)
+	{
+		// for now just do generic field, since impexp isn't used in parsing
+		$class = 'VP_Control_Field_' . $type;
+		return $class;
 	}
 
 	public static function starts_with($haystack, $needle)

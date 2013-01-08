@@ -602,6 +602,7 @@ body {
 
 .vp-section tr.vp-upload .fields .image img:not([src=""]) {
 	margin-top: 10px;
+	max-width: 60%;
 }
 
 .vp-section tr.vp-select .fields select,

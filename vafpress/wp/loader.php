@@ -37,8 +37,6 @@ class VP_WP_Loader
 		// determine whether to load uploader and which version
 		if($deps['localize']['use_upload'])
 		{
-			wp_enqueue_media();
-
 			global $wp_version;
 			if (version_compare($wp_version, '3.5', '<')) {
 				// version is under 3.5
@@ -48,6 +46,7 @@ class VP_WP_Loader
 			else
 			{
 				$deps['localize']['use_new_media_upload'] = true;
+				wp_enqueue_media();
 			}
 		}
 
@@ -74,7 +73,7 @@ class VP_WP_Loader
 		// register, enqueue and localized scripts
 		wp_register_script($deps['main_js']['name'], $deps['main_js']['path'], $deps['scripts'], '', true);
 		wp_enqueue_script($deps['main_js']['name']);
-		wp_localize_script($deps['main_js']['name'], 'vp', $deps['localize']);
+		wp_localize_script($deps['main_js']['name'], 'vp_wp', $deps['localize']);
 
 		// register and enqueue styles
 		wp_register_style($deps['main_css']['name'], $deps['main_css']['path'], $deps['styles']);

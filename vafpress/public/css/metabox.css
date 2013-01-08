@@ -151,12 +151,13 @@
 	right: 0px;
 }
 
-.vp-metabox .vp-upload .image {
+.vp-metabox .vp-upload .image img{
 	line-height: 0em;
 }
 
 .vp-metabox .vp-upload .image img:not([src=""]) {
 	margin-top: 10px;
+	max-width: 60%;
 }
 
 .vp-metabox .vp-checkimage .input label,

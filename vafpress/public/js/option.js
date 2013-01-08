@@ -1,641 +1,379 @@
 ;(function($) {
 
-	/**
-	 * =============================================================
-	 * Simple Plugins
-	 * =============================================================
-	 */
-	$.fn.getAttributes = function() {
-		var attributes = {}; 
-		if (!this.length)
-			return this;
-		$.each(this[0].attributes, function(index, attr) {
-			attributes[attr.name] = attr.value;
-		});
-		return attributes;
-	}
-	$.fn.getDatas = function() {
-		var attributes = {};
-		var prefix = "data-vp-";
-		if (!this.length)
-			return this;
-		$.each(this[0].attributes, function(index, attr) {
-			if (attr.name.substring(0, prefix.length) == prefix)
-			{
-				attributes[attr.name.substring(prefix.length)] = attr.value;
-			}
-		});
-		return attributes;
-	}
-	function isNumber(n) {
-	  return !isNaN(parseFloat(n)) && isFinite(n);
-	}
-	if (!String.prototype.trimChar) {
-		String.prototype.trimChar =  function(string) { return this.replace(new RegExp('^' + string + '+|' + string + '+$', 'g'), '') };
-	}
-	function parseOpt(optString)
-	{
-		var openIdx, closeIdx, temp, tempArr, opt = {};
-		for (var i = 0; i < optString.length; i++)
-		{
-			if (optString[i] == '(')
-			{
-				openIdx = i;
-			}
-			if (optString[i] == ')')
-			{
-				closeIdx = i;
-				temp = optString.substring(openIdx + 1, closeIdx);
-				tempArr = temp.split(':');
-				opt[tempArr[0]] = isNumber(tempArr[1]) ? parseFloat(tempArr[1]) : tempArr[1];
-			}
-		}
-		return opt;
-	}
-	String.prototype.format = function() {
-		var args = arguments;
-		return this.replace(/{(\d+)}/g, function(match, number) {
-			return typeof args[number] != 'undefined'
-				? args[number]
-				: match
-			;
-		});
-	};
-	/*
-	 * =============================================================
-	 */
+	$.getScript(vp_wp.public_url + "/js/shared.js", function(data, textStatus, jqxhr) {
 
-	/* BEGIN FETCHING ALL FIELDS' VALIDATION RULES */
-	var validation = [];
-	$('.vp-menu-goto').each(function(i) {
-		var href = $(this).attr('href'),
-		    $panel = $(href),
-		    fields = [];
+		/* BEGIN FETCHING ALL FIELDS' VALIDATION RULES */
+		var validation = [];
+		$('.vp-menu-goto').each(function(i) {
+			var href = $(this).attr('href'),
+				$panel = $(href),
+				fields = [];
 
-		$panel.children('.vp-section').each(function(i) {
-			var $section = $(this);
-			$section.find('tr').each(function(j) {
-				var $field = $(this),
-				    name = $field.attr('id'),
-				    rules = $field.attr('data-vp-validation'),
-				    type = $field.attr('class'),
+			$panel.children('.vp-section').each(function(i) {
+				var $section = $(this);
+				$section.find('tr').each(function(j) {
+					var $field = $(this),
+						name = $field.attr('id'),
+						rules = $field.attr('data-vp-validation'),
+						type = $field.getDatas().type,
 						$input = $('[name="' + name + '"]');
 
-				if (! rules) return;
-				else fields.push({name: name, rules: rules, type: type});
-			})
-		})
+					if (! rules) return;
+					else fields.push({name: name, rules: rules, type: type});
+				});
+			});
 
-		if (fields.length > 0) validation.push({name: href.trim('#'), fields: fields});
-	})
-	/* END FETCHING ALL FIELDS' VALIDATION RULES */
+			if (fields.length > 0) validation.push({name: href.trim('#'), fields: fields});
+		});
+		/* END FETCHING ALL FIELDS' VALIDATION RULES */
 
-	// get and click current hash
-	$('.vp-js-menu-goto').click(function(e)
-	{
-		e.preventDefault();
-		window.location.hash = $(this).attr('href');
-		var $this = $(this),
-		    $parent = $this.parent('li'),
-		    $li = $parent.siblings('li'),
-		    $panel = $($this.attr('href'));
-		$li.removeClass('vp-current');
-		$parent.addClass('vp-current');
-		$panel.siblings('.vp-panel').removeClass('vp-current');
-		$panel.addClass('vp-current');
-
-		// Init chosen
-		if ($.fn.chosen) $panel.find('.vp-js-chosen').chosen();
-	});
-	$('.vp-current > .vp-js-menu-goto').click();
-
-	$('.vp-js-menu-dropdown').click(function(e)
-	{
-		e.preventDefault();
-		var $this = $(this),
-		    $parent = $this.parent('li'),
-		    $li = $parent.siblings('li'),
-		    $sub = $this.next('ul');
-		if ($parent.hasClass('vp-current')) return;
-		$li.removeClass('vp-current');
-		$parent.addClass('vp-current');
-		$sub.children('li.vp-current').children('a').click();
-	})
-
-	// goto current menu
-	var hash = window.location.hash;
-	$('a[href="' + hash + '"]').trigger('click');
-
-	$('.vp-js-slider').each(function(i, el)
-	{
-		var $slider = $(this);
-		var options = $(this).getDatas();
-		options = parseOpt(options.opt);
-		options.range = 'min';
-		options.slide = function(event, ui) {
-			$slider.prev('.slideinput').val(ui.value);
-    	};
-		$slider.slider(options);
-
-		$slider.prev('.slideinput').keypress(function(e) {
-			var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
-			console.log(charCode);
-			// if ($.inArray(e.keyCode, [109, 9, 46, 189, 190, 8, 37, 39]) != -1 || (e.keyCode >= 48 && e.keyCode <= 57) )
-			if(e.altKey || e.ctrlKey || e.shiftKey)
-				return true;
-			if ($.inArray(charCode, [45, 46, 8, 0]) != -1 || (charCode >= 48 && charCode <= 57) )
-				return true;
-			return false;
-		}).blur(function(e) {
+		// get and click current hash
+		$('.vp-js-menu-goto').click(function(e)
+		{
+			e.preventDefault();
+			window.location.hash = $(this).attr('href');
 			var $this = $(this),
-			    val = $this.val();
-			if( !validateNumeric('vp-textbox', val) ){
-				$this.val(options.min);
-				$slider.slider('value', options.min);
-			}
-			if (val > options.max) {
-				$this.val(options.max);
-				$slider.slider('value', options.max);
-				e.preventDefault();
-			} else if (val < options.min) {
-				$this.val(options.min);
-				$slider.slider('value', options.min);
-				e.preventDefault();
-			} else {
-				$slider.slider('value', $this.val());
-			};
+				$parent = $this.parent('li'),
+				$li = $parent.siblings('li'),
+				$panel = $($this.attr('href'));
+			$li.removeClass('vp-current');
+			$parent.addClass('vp-current');
+			$panel.siblings('.vp-panel').removeClass('vp-current');
+			$panel.addClass('vp-current');
+
+			// Init chosen
+			if ($.fn.chosen) $panel.find('.vp-js-chosen').chosen();
 		});
-	});
 
+		// goto current menu
+		var hash = window.location.hash;
+		if(hash !== ''){
+			$('a[href="' + hash + '"]').trigger('click');
+		}
+		else{
+			$('.vp-current > .vp-js-menu-goto').click();
+		}
 
-	var upload_callback;
+		$('.vp-js-menu-dropdown').click(function(e)
+		{
+			e.preventDefault();
+			var $this = $(this),
+				$parent = $this.parent('li'),
+				$li = $parent.siblings('li'),
+				$sub = $this.next('ul');
+			if ($parent.hasClass('vp-current')) return;
+			$li.removeClass('vp-current');
+			$parent.addClass('vp-current');
+			$sub.children('li.vp-current').children('a').click();
+		});
 
-	if( vp.use_new_media_upload )
-	{
-		upload_callback = function(e) {
-
-				var send_attachment = wp.media.editor.send.attachment,
-						send_link = wp.media.editor.send.link,
-						$this = $(this),
-						$input = $this.prev('input'),
-						$preview = $this.next().find('img');
-
-				// handler for attachment
-				wp.media.editor.send.attachment = function(props, attachment) {
-					$input.val(attachment.url);
-					$preview.attr('src', attachment.url);
-					wp.media.editor.send.attachment = send_attachment;
+		// Scrollspy
+		var $submit = $('.vp-submit');
+		$(window).load(function() {
+			var initTop = parseInt($submit.offset().top - 28, 10);
+			$submit.scrollspy({
+				min: initTop,
+				max: $(document).height(),
+				onEnter: function(element, position) {
+					$submit.addClass('floating');
+				},
+				onLeave: function(element, position) {
+					$submit.removeClass('floating');
 				}
+			});
+			$(window).scroll();
+		});
 
-				// handler for link
-				window.send_to_editor = function(html) {
-					if (html != '') {
-						// targetting only link, since attachment is already handled separately
-						var imgurl = $(html).attr('src');
-						$input.val(imgurl);
-						$preview.attr('src', imgurl);
-					}			
-				}
+		// Ajax Saving
+		$('.vp-js-save').bind('click', function(e) {
+			e.preventDefault();
 
-				wp.media.editor.open($this);
-				return false;
-			}
-	}
-	else
-	{
-		upload_callback = function(e) {
-				$input     = $(this).prev('input');
-				$preview   = $(this).next().find('img');
-				tb_show('Upload Image', 'media-upload.php?type=image&amp;TB_iframe=true');
-				window.send_to_editor = function(html) {
-					if (html != '') {
-						var imgurl = $(html).find('img').attr('src');
-						if( typeof imgurl == 'undefined' )
-						{
-							imgurl = $(html).attr('src');
+			$('.vp-option-form tr').removeClass('error');
+			$('.validation-notif.error').remove();
+			$('.validation-msg.error').remove();
+
+			var msgHTML = '<li class="validation-msg error"></li>',
+				menuNotifHTML = '<span class="validation-notif error"></span>',
+				allError = 0;
+
+		for (var i=0; i<validation.length; i++) {
+			var panel = validation[i];
+
+		panel.nError = 0;
+		for (var j=0; j<panel.fields.length; j++) {
+			var field = panel.fields[j],
+				$tr = $('#' + field.name),
+					$msgs = $tr.children('td.fields').children('.validation-msgs').children('ul'),
+					$input = $('[name="' + field.name + '"]'),
+					val = $input.validationVal(),
+					type = field.type,
+					rules = field.rules.split('|');
+
+					field.nError = 0;
+					for (k=0; k<rules.length; k++) {
+						var rule = rules[k],
+							q1 = rule.indexOf('['),
+							q2 = rule.indexOf(']'),
+							def = (q1 >= 0) ? rule.substring(0, q1) : rule,
+							res = '',
+							n;
+
+						switch (def) {
+							case 'alphabet':
+								if (!vp.validateAlphabet(type, val)) { res = vp_wp.val_msg.alphabet.format(); }
+								break;
+							case 'alphanumeric':
+								if (!vp.validateAlphaNumeric(type, val)) { res = vp_wp.val_msg.alphanumeric.format(); }
+								break;
+							case 'numeric':
+								if (!vp.validateNumeric(type, val)) { res = vp_wp.val_msg.numeric.format(); }
+								break;
+							case 'email':
+								if (!vp.validateEmail(type, val)) { res = vp_wp.val_msg.email.format(); }
+								break;
+							case 'url':
+								if (!vp.validateURL(type, val)) { res = vp_wp.val_msg.url.format(); }
+								break;
+							case 'maxlength':
+								n = rule.substring(q1 + 1, q2);
+								if (!vp.validateMaxLength(type, val, n)) { res = vp_wp.val_msg.maxlength.format(n); }
+								break;
+							case 'minlength':
+								n = rule.substring(q1 + 1, q2);
+								if (!vp.validateMinLength(type, val, n)) { res= vp_wp.val_msg.minlength.format(n); }
+								break;
+							case 'maxselected':
+								n = rule.substring(q1 + 1, q2);
+								if (!vp.validateMaxLength(type, val, n)) { res = vp_wp.val_msg.maxselected.format(n); }
+								break;
+							case 'minselected':
+								n = rule.substring(q1 + 1, q2);
+								if (!vp.validateMinLength(type, val, n)) { res= vp_wp.val_msg.minselected.format(n); }
+								break;
+							case 'required':
+								if (!vp.validateRequired(type, val)) { res = vp_wp.val_msg.required.format(); }
+								break;
 						}
-						$input.val(imgurl);
-						$preview.attr('src', imgurl);
-					}
-					tb_remove();
-				}
-				return false;
-			};
-	}
 
-	$('.vp-js-upload').click(upload_callback);
+						if (res !== '') {
+							// push into errors pool
+							field.nError += 1;
+							panel.nError += 1;
+							allError += 1;
 
-	$('.vp-js-colorpicker').each(function(){
-		var colorpicker  = this;
-		$(colorpicker).ColorPicker({
-			color: $(colorpicker).attr('value'),
-			onSubmit: function(hsb, hex, rgb, el) {
-				$(el).val(hex);
-				$(el).ColorPickerHide();
-			},
-			onBeforeShow: function () {
-				$(colorpicker).ColorPickerSetColor(this.value);
-			},
-			onShow: function (cp) {
-				$(cp).stop(true, true).fadeIn(500);
-				return false;
-			},
-			onHide: function (cp) {
-				$(cp).stop(true, true).fadeOut(500);
-				return false;
-			},
-			onChange: function (hsb, hex, rgb) {
-				$(colorpicker).prev('label').css('background-color', '#' + hex);
-				$(colorpicker).attr('value', '#' + hex);
-			}
-		}).bind('keyup', function(e){
-			var val = this.value.trimChar('#');
-			if(this.value != ('#' + val))
-			{
-				$(colorpicker).attr('value', '#' + val);
-			}
-			$(this).ColorPickerSetColor(val);
-			$(this).prev('label').css('background-color', '#' + val);
-		});
-	});
-
-	// Date Picker
-	$('.vp-js-datepicker').each(function()
-	{
-		var options = $(this).getDatas();
-		options = parseOpt(options.opt);
-		$(this).datepicker(options);
-		$(this).datepicker('setDate', options.value);
-	});
-
-	// Tipsy
-	$('.vp-js-tipsy.description').each(function() { $(this).tipsy({ gravity : 'e' }); });
-	$('.vp-js-tipsy.slideinput').each(function() { $(this).tipsy({ trigger : 'focus' }); });
-	$('.vp-js-tipsy.image-item').each(function() { $(this).tipsy(); });
-
-	// Chosen
-	// if ($.fn.chosen) $('.vp-js-chosen').chosen();
-	// Please see vp-js-menu-goto click handler
-
-	// Scrollspy
-	var $submit = $('.vp-submit');
-	$(window).load(function() {
-		var initTop = parseInt($submit.offset().top - 28);
-		$submit.scrollspy({
-			min: initTop,
-			max: $(document).height(),
-			onEnter: function(element, position) {
-				$submit.addClass('floating');
-			},
-			onLeave: function(element, position) {
-				$submit.removeClass('floating');
-			}
-		});
-		$(window).scroll();
-	})
-
-	// Ajax Saving
-	$('.vp-js-save').bind('click', function(e) {
-		e.preventDefault();
-
-		$('.vp-option-form tr').removeClass('error');
-		$('.validation-notif.error').remove();
-		$('.validation-msg.error').remove();
-
-		var msgHTML = '<li class="validation-msg error"></li>',
-        menuNotifHTML = '<span class="validation-notif error"></span>',
-        allError = 0;
-
-    for (var i=0; i<validation.length; i++) {
-    	var panel = validation[i];
-
-    	panel.nError = 0;
-    	for (var j=0; j<panel.fields.length; j++) {
-    		var field = panel.fields[j],
-    		    $tr = $('#' + field.name),
-				    $msgs = $tr.children('td.fields').children('.validation-msgs').children('ul'),
-				    $input = $('[name="' + field.name + '"]'),
-				    val = $input.validationVal(),
-				    type = field.type,
-				    rules = field.rules.split('|');
-
-				field.nError = 0;
-				for (k=0; k<rules.length; k++) {
-					var rule = rules[k],
-					    q1 = rule.indexOf('['),
-					    q2 = rule.indexOf(']'),
-					    def = (q1 >= 0) ? rule.substring(0, q1) : rule,
-					    res = '';
-
-					switch (def) {
-						case 'alphabet':
-							if (!validateAlphabet(type, val)) { res = vp.val_msg.alphabet.format(); }
-							break;
-						case 'alphanumeric':
-							if (!validateAlphaNumeric(type, val)) { res = vp.val_msg.alphanumeric.format(); }
-							break;
-						case 'numeric':
-							if (!validateNumeric(type, val)) { res = vp.val_msg.numeric.format(); }
-							break;
-						case 'email':
-							if (!validateEmail(type, val)) { res = vp.val_msg.email.format(); }
-							break;
-						case 'url':
-							if (!validateURL(type, val)) { res = vp.val_msg.url.format(); }
-							break;
-						case 'maxlength':
-							var n = rule.substring(q1 + 1, q2);
-							if (!validateMaxLength(type, val, n)) { res = vp.val_msg.maxlength.format(n); }
-							break;
-						case 'minlength':
-							var n = rule.substring(q1 + 1, q2);
-							if (!validateMinLength(type, val, n)) { res= vp.val_msg.minlength.format(n); }
-							break;
-						case 'maxselected':
-							var n = rule.substring(q1 + 1, q2);
-							if (!validateMaxLength(type, val, n)) { res = vp.val_msg.maxselected.format(n); }
-							break;
-						case 'minselected':
-							var n = rule.substring(q1 + 1, q2);
-							if (!validateMinLength(type, val, n)) { res= vp.val_msg.minselected.format(n); }
-							break;
-						case 'required':
-							if (!validateRequired(type, val)) { res = vp.val_msg.required.format(); }
-							break;
+							// set message
+						var $msg = $(msgHTML);
+							$msg.html(res);
+							$msg.appendTo($msgs);
+						}
 					}
 
-					if (res != '') {
-						// push into errors pool
-						field.nError += 1;
-						panel.nError += 1;
-						allError += 1;
-
-						// set message
-				    var $msg = $(msgHTML);
-						$msg.html(res);
-						$msg.appendTo($msgs);
-					}
-				}
-
-				if (field.nError > 0) {
-					$tr.addClass('error');
-				}
-
-    	}
-
+			if (field.nError > 0) {
+				$tr.addClass('error');
+			}
+		}
 			if (panel.nError > 0) {
 				// notify the menu which has the href
 				var $notif = $(menuNotifHTML),
-				    $anchor = $('[href="' + panel.name +'"]'),
-				    $grandparent = $anchor.parent('li').parent('ul');
+					$anchor = $('[href="' + panel.name +'"]'),
+					$grandparent = $anchor.parent('li').parent('ul');
 				$notif.appendTo($anchor);
 				if ($grandparent.hasClass('vp-menu-level-2')) {
-					if ($grandparent.siblings('a').children('.validation-notif.error').length == 0) {
+					if ($grandparent.siblings('a').children('.validation-notif.error').length === 0) {
 						$notif.clone().appendTo($grandparent.siblings('a'));
 					}
 				}
 			}
-    }
+		}
 
 		// do not saving it any error occurs
-    if (allError > 0) { return; }
+		if (allError > 0) { return; }
 
-		// otherwise, do saving
-		var $overlay = $('#vp-overlay'),
-		    $button = $(this),
-		    $save_status = $('.vp-js-save-status'),
-		    $form = $('#vp-option-form'),
-		    option = $form.serializeArray(),
-		    data = {
-					action: 'vp_ajax_admin',
-					option: option
-				};
+			// otherwise, do saving
+			var $overlay = $('#vp-overlay'),
+				$button = $(this),
+				$save_status = $('.vp-js-save-status'),
+				$form = $('#vp-option-form'),
+				option = $form.serializeArray(),
+				data = {
+						action: 'vp_ajax_admin',
+						option: option
+					};
 
-		$button.attr('disabled', 'disabled');
-		$overlay.stop(true, true).fadeIn(100, function() {
-			$overlay.removeClass('stop');
-		});
-
-		$.post(ajaxurl, data, function(response)
-		{
-			$save_status.html(response.message);
-			if (response.status) {
-				$save_status.addClass('success');
-			} else {
-				$save_status.addClass('failed');
-			};
-			$save_status.stop(true, true).fadeIn(100);
-
-			$overlay.stop(true, true).fadeOut(100, function() {
-				$overlay.addClass('stop');
+			$button.attr('disabled', 'disabled');
+			$overlay.stop(true, true).fadeIn(100, function() {
+				$overlay.removeClass('stop');
 			});
 
-			setTimeout(function() {
-				$button.removeAttr('disabled');
-				$save_status.stop(true, true).fadeOut(1000, function() {
-					$save_status.removeClass('success').removeClass('failed');
+			$.post(ajaxurl, data, function(response)
+			{
+				$save_status.html(response.message);
+				if (response.status) {
+					$save_status.addClass('success');
+				} else {
+					$save_status.addClass('failed');
+				}
+				$save_status.stop(true, true).fadeIn(100);
+
+				$overlay.stop(true, true).fadeOut(100, function() {
+					$overlay.addClass('stop');
 				});
-			}, 3000);
-		}, 'JSON');
-	});
 
-	// Overlay
-	$(window).resize(function() {
-		calculatePositionAndSize();
-	});
-	var _addClass = $.fn.addClass;
-	$.fn.addClass = function() {
-		var result = _addClass.apply( this, arguments );
-		if (this.prop('tagName') == 'BODY' && arguments[0] == 'folded') { calculatePositionAndSize(); }
-		return result;
-	}
-	var _removeClass = $.fn.removeClass;
-	$.fn.removeClass = function() {
-		var result = _removeClass.apply( this, arguments );
-		if (this.prop('tagName') == 'BODY' && arguments[0] == 'folded') { calculatePositionAndSize(); }
-		return result;
-	}
-	$(window).load(function(){$(window).resize();});
+				setTimeout(function() {
+					$button.removeAttr('disabled');
+					$save_status.stop(true, true).fadeOut(1000, function() {
+						$save_status.removeClass('success').removeClass('failed');
+					});
+				}, 3000);
+			}, 'JSON');
+		});
 
-	function calculatePositionAndSize() {
-		var $overlay = $('#vp-overlay'),
-		    $loading = $('#vp-loading'),
-		    $panel = $('#vp-option-panel'),
-		    $right = $('.vp-right-panel'),
-		    $submit = $('#vp-submit'),
-		    $copyright = $('#vp-copyright');
-		$overlay.css('height', $panel.innerHeight());
-		$overlay.css('width', $panel.innerWidth());
-		$submit.css('width', $right.innerWidth());
-		$loading.css('top', $(this).height() / 2);
-		$loading.css('left', $panel.innerWidth() / 2 + $panel.offset().left);
-	}
+		// Overlay
+		$(window).resize(function() {
+			calculatePositionAndSize();
+		});
+		var _addClass = $.fn.addClass;
+		$.fn.addClass = function() {
+			var result = _addClass.apply( this, arguments );
+			if (this.prop('tagName') == 'BODY' && arguments[0] == 'folded') { calculatePositionAndSize(); }
+			return result;
+		};
+		var _removeClass = $.fn.removeClass;
+		$.fn.removeClass = function() {
+			var result = _removeClass.apply( this, arguments );
+			if (this.prop('tagName') == 'BODY' && arguments[0] == 'folded') { calculatePositionAndSize(); }
+			return result;
+		};
+		$(window).load(function(){$(window).resize();});
 
-	// Validation Functions
+		function calculatePositionAndSize() {
+			var $overlay = $('#vp-overlay'),
+				$loading = $('#vp-loading'),
+				$panel = $('#vp-option-panel'),
+				$right = $('.vp-right-panel'),
+				$submit = $('#vp-submit'),
+				$copyright = $('#vp-copyright');
+			$overlay.css('height', $panel.innerHeight());
+			$overlay.css('width', $panel.innerWidth());
+			$submit.css('width', $right.innerWidth());
+			$loading.css('top', $(this).height() / 2);
+			$loading.css('left', $panel.innerWidth() / 2 + $panel.offset().left);
+		}
 
-	$.fn.validationVal = function() {
-		var $this = this,
-		    val = '',
-		    tagName = this.prop('tagName');
-		
-		if (($this.length > 1 && $this.attr('type') != 'radio') || $this.attr('multiple')) { val = []; }
+		// Validation Functions
 
-		$this.each(function(i) {
-			var $field = $(this);
+		$.fn.validationVal = function() {
+			var $this = this,
+				val = '',
+				tagName = this.prop('tagName'),
+				checked;
+			
+			if (($this.length > 1 && $this.attr('type') != 'radio') || $this.attr('multiple')) { val = []; }
 
-			switch (tagName) {
-				case 'SELECT':
-					if ($field.has('[multiple]')) {
-						val = $field.val();
-					} else {
-						val = $field.val();
-					}
-					break;
-				case 'INPUT':
-					switch ($this.attr('type')) {
-						case 'text':
+			var initialVal = val;
+
+			$this.each(function(i) {
+				var $field = $(this);
+
+				switch (tagName) {
+					case 'SELECT':
+						if ($field.has('[multiple]')) {
 							val = $field.val();
-							break;
-						case 'radio':
-							var checked = $field.attr('checked');
-							if(typeof checked !== 'undefined' && checked !== false)
+						} else {
+							val = $field.val();
+						}
+						break;
+					case 'INPUT':
+						switch ($this.attr('type')) {
+							case 'text':
 								val = $field.val();
-							break;
-						case 'checkbox':
-							var checked = $field.attr('checked');
-							if ($this.length > 1) {
-								if (typeof checked !== 'undefined' && checked !== false) { val.push($field.val()); } // multiple
-							} else {
-								val = $field.val(); // single
-							}
-							break;
-					}
-					break;
-				case 'TEXTAREA':
-					val = $field.val();
-					break;
-			}
-		})
-		return val;
-	}
+								break;
+							case 'radio':
+								checked = $field.attr('checked');
+								if(typeof checked !== 'undefined' && checked !== false)
+									val = $field.val();
+								break;
+							case 'checkbox':
+								checked = $field.attr('checked');
+								if ($this.length > 1) {
+									if (typeof checked !== 'undefined' && checked !== false) { val.push($field.val()); } // multiple
+								} else {
+									val = $field.val(); // single
+								}
+								break;
+						}
+						break;
+					case 'TEXTAREA':
+						val = $field.val();
+						break;
+				}
+			});
 
-	function validateAlphabet(type, val) {
-		// ignore array
-		if ($.isArray(val) || $.inArray(type, ['vp-textbox', 'vp-textarea']) == -1) { return true; }
-		var regex = new RegExp(/^[A-Z]+$/i);
-		return regex.test(val);
-	}
+			// quick fix trial
+			if(val === null)
+				val = initialVal;
+			return val;
+		};
 
-	function validateAlphaNumeric(type, val) {
-		// ignore array
-		if ($.isArray(val) || $.inArray(type, ['vp-textbox', 'vp-textarea']) == -1) { return true; }
+		$('#vp-js-import').bind('click', function(e){
+			e.preventDefault();
 
-		var regex = new RegExp(/^[A-Z0-9]+$/i);
-		return regex.test(val);
-	}
+			var $textarea      = $('#vp-js-import_text'),
+				$import_status = $('#vp-js-import-status'),
+				$import_loader = $('#vp-js-import-loader'),
+				$button        = $(this);
+				data           = {action: 'vp_ajax_import_option', option: $textarea.val()};
 
-	function validateNumeric(type, val) {
-		// ignore array
-		if ($.isArray(val) || $.inArray(type, ['vp-textbox', 'vp-textarea']) == -1) { return true; }
+			$button.attr('disabled', 'disabled');
+			$import_loader.fadeIn(100);
 
-		var regex = new RegExp(/^[-+]?[0-9]*\.?[0-9]+$/);
-		return regex.test(val);
-	}
+			$.post(ajaxurl, data, function(response)
+			{
+				$import_loader.fadeOut(0);
+				if (response.status) {
+					$import_status.html(vp_wp.impexp_msg.import_success);
+				} else {
+					$import_status.html(vp_wp.impexp_msg.export_failed + ': ' + response.message);
+				}
+				$import_status.fadeIn(100);
+				setTimeout(function() {
+					$import_status.fadeOut(1000, function() {
+						$button.removeAttr('disabled');
+						$import_status.fadeOut(500);
+						if(response.status)
+							location.reload();
+					});
+				}, 2000);
+			}, 'JSON');
+		});
 
-	function validateEmail(type, val) {
-		// ignore array
-		if ($.isArray(val) || $.inArray(type, ['vp-textbox', 'vp-textarea']) == -1) { return true; }
+		$('#vp-js-export').bind('click', function(e){
+			e.preventDefault();
 
-		var regex = new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i);
-		return regex.test(val);
-	}
+			var $export_status = $('#vp-js-export-status'),
+				$export_loader = $('#vp-js-export-loader'),
+				$button        = $(this);
+				data           = {action: 'vp_ajax_export_option'},
 
-	function validateURL(type, val) {
-		// ignore array
-		if ($.isArray(val) || $.inArray(type, ['vp-textbox', 'vp-textarea']) == -1) { return true; }
-
-		var regex = new RegExp(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i);
-		return regex.test(val);
-	}
-
-	function validateMaxLength(type, val, n) {
-		// ignore array
-		if ($.inArray(type, ['vp-toggle', 'vp-radiobutton', 'vp-radioimage', 'vp-select']) != -1) { return true; }
-
-		return (val.length <= n) ? true : false;
-	}
-
-	function validateMinLength(type, val, n) {
-		// ignore array
-		if ($.inArray(type, ['vp-toggle', 'vp-radiobutton', 'vp-radioimage', 'vp-select']) != -1) { return true; }
-
-		return (val.length >= n) ? true : false;
-	}
-
-	function validateRequired(type, val) {
-		// only check if it's empty array, if it's not, it will go true anyway..
-		if($.isArray(val) && $.isEmptyObject(val)) return false;
-		return (val) ? true : false;
-	}
-
-	$('#vp-js-import').bind('click', function(e){
-		e.preventDefault();
-
-		var $textarea      = $('#vp-js-import_text'),
-			$import_status = $('#vp-js-import-status'),
-		    $import_loader = $('#vp-js-import-loader'),
-		    $button        = $(this);
-			data           = {action: 'vp_ajax_import_option', option: $textarea.val()};
-
-		$button.attr('disabled', 'disabled');
-		$import_loader.fadeIn(100);
-
-		$.post(ajaxurl, data, function(response)
-		{
-			$import_loader.fadeOut(0);
-			if (response.status) {
-				$import_status.html(vp.impexp_msg.import_success);
-			} else {
-				$import_status.html(vp.impexp_msg.export_failed);
-			};
-			$import_status.fadeIn(100);
-			setTimeout(function() {
-				$import_status.fadeOut(1000, function() {
-					$button.removeAttr('disabled');
-					$import_status.fadeOut(500);
-					location.reload();
-				});
-			}, 2000);
-		}, 'JSON');
+			$button.attr('disabled', 'disabled');
+			$export_loader.fadeIn(100);
+			$.post(ajaxurl, data, function(response)
+			{
+				$export_loader.fadeOut(0);
+				if (!$.isEmptyObject(response)) {
+					$('#vp-js-export_text').val(response.option);
+					$export_status.html(vp_wp.impexp_msg.export_success);
+				} else {
+					$export_status.html(vp_wp.impexp_msg.export_failed);
+				}
+				$export_status.fadeIn(100);				
+				setTimeout(function() {
+					$export_status.fadeOut(1000, function() {
+						$button.removeAttr('disabled');
+						$export_status.fadeOut(500);
+					});
+				}, 3000);
+			}, 'JSON');
+		});
 	});
-
-	$('#vp-js-export').bind('click', function(e){
-		e.preventDefault();
-
-		var $export_status = $('#vp-js-export-status'),
-		    $export_loader = $('#vp-js-export-loader'),
-			$button        = $(this);
-			data           = {action: 'vp_ajax_export_option'},
-
-		$button.attr('disabled', 'disabled');
-		$export_loader.fadeIn(100);
-		$.post(ajaxurl, data, function(response)
-		{
-			$export_loader.fadeOut(0);
-			if (!$.isEmptyObject(response)) {
-				$('#vp-js-export_text').val(response.option);
-				$export_status.html(vp.impexp_msg.export_success);
-			} else {
-				$export_status.html(vp.impexp_msg.export_failed);
-			};
-			$export_status.fadeIn(100);				
-			setTimeout(function() {
-				$export_status.fadeOut(1000, function() {
-					$button.removeAttr('disabled');
-					$export_status.fadeOut(500);
-				});
-			}, 3000);
-		}, 'JSON');
-	});
-
 }(jQuery));

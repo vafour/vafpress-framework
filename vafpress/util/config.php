@@ -39,8 +39,15 @@ class VP_Util_Config
 		else
 		{
 			$config = $this->_path . '/' . $config_name . '.php';
-			$config = require($config);
-			$this->_views[$config_name] = $config;
+			if(file_exists($config))
+			{
+				$config = require($config);
+				$this->_configs[$config_name] = $config;
+			}
+			else
+			{
+				throw new Exception("$config_name file not found.\n", 1);
+			}
 		}
 		$temp = $config;
 		if($key !== '')

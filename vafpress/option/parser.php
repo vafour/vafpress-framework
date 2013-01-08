@@ -6,8 +6,8 @@ class VP_Option_Parser
 	public function parse_array_options($arr)
 	{
 		// Parse XML String with SimpleXML
-		$set = new VP_Option_Set();
-		$auto_group_naming = VP_Util_Config::get_instance()->load('vafpress', 'auto_group_naming');
+		$set = new VP_Option_Control_Set();
+		$auto_group_naming = VP_Util_Config::get_instance()->load('option/main', 'auto_group_naming');
 
 		if(empty($arr['title']))
 			$arr['title'] = 'Vafpress';
@@ -25,7 +25,7 @@ class VP_Option_Parser
 		if (!empty($arr['menus'])) foreach ($arr['menus'] as $menu)
 		{
 			// Create menu object and add to set
-			$vp_menu = new VP_Option_Group_Menu();
+			$vp_menu = new VP_Option_Control_Group_Menu();
 
 			if($auto_group_naming)
 			{
@@ -48,7 +48,7 @@ class VP_Option_Parser
 			// Loops through every submenu in each menu
 			if (!empty($menu['menus'])) foreach ($menu['menus'] as $submenu)
 			{
-				$vp_submenu = new VP_Option_Group_Menu();
+				$vp_submenu = new VP_Option_Control_Group_Menu();
 
 				if($auto_group_naming)
 				{
@@ -71,7 +71,7 @@ class VP_Option_Parser
 				// Loops through every section in each submenu
 				if (!empty($submenu['sections'])) foreach ($submenu['sections'] as $section)
 				{
-					$vp_sec = new VP_Option_Group_Section();
+					$vp_sec = new VP_Option_Control_Group_Section();
 					$vp_sec->set_name(isset($section['name']) ? $section['name'] : '')
 					       ->set_title(isset($section['title']) ? $section['title'] : '')
 					       ->set_description(isset($section['description']) ? $section['description'] : '');
@@ -81,7 +81,7 @@ class VP_Option_Parser
 					// Loops through every field in each submenu
 					if (!empty($section['fields'])) foreach ($section['fields'] as $field)
 					{
-						$make     = 'VP_Option_Field_' . $field['type'];
+						$make     = 'VP_Control_Field_' . $field['type'];
 						$vp_field = call_user_func("$make::withArray", $field);
 						$vp_sec->add_field($vp_field);
 					}
@@ -92,7 +92,7 @@ class VP_Option_Parser
 				// Loops through every section in each submenu
 				if (!empty($menu['sections'])) foreach ($menu['sections'] as $section)
 				{
-					$vp_sec = new VP_Option_Group_Section();
+					$vp_sec = new VP_Option_Control_Group_Section();
 					$vp_sec->set_name(isset($section['name']) ? $section['name'] : '')
 					       ->set_title(isset($section['title']) ? $section['title'] : '')
 					       ->set_description(isset($section['description']) ? $section['description'] : '');
@@ -102,8 +102,8 @@ class VP_Option_Parser
 					// Loops through every field in each submenu
 					if (!empty($section['fields'])) foreach ($section['fields'] as $field)
 					{
-						$make     = 'VP_Option_Field_' . $field['type'];
-						$vp_field = call_user_func("$make::withArray", $field);
+						$class    = VP_Util_Text::field_class_from_type($field['type']);
+						$vp_field = call_user_func("$class::withArray", $field);
 						$vp_sec->add_field($vp_field);
 					}
 				}
