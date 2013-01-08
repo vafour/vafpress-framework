@@ -115,6 +115,7 @@
 	padding: 4px;
 	border: 1px solid #dddddd;
 	border-radius: 3px;
+	max-width: 100%;
 }
 
 .vp-metabox .fields .input {
@@ -151,13 +152,16 @@
 	right: 0px;
 }
 
+.vp-metabox .vp-upload .image{
+	max-width: 60%;
+}
+
 .vp-metabox .vp-upload .image img{
 	line-height: 0em;
 }
 
 .vp-metabox .vp-upload .image img:not([src=""]) {
 	margin-top: 10px;
-	max-width: 60%;
 }
 
 .vp-metabox .vp-checkimage .input label,

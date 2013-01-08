@@ -86,6 +86,7 @@ body {
 
 .vp-option-panel img {
 	vertical-align: bottom;
+	max-width: 100%;
 }
 
 .vp-left-panel {
@@ -598,11 +599,11 @@ body {
 
 .vp-section tr.vp-upload .fields .image {
 	line-height: 0em;
+	max-width: 60%;
 }
 
 .vp-section tr.vp-upload .fields .image img:not([src=""]) {
 	margin-top: 10px;
-	max-width: 60%;
 }
 
 .vp-section tr.vp-select .fields select,

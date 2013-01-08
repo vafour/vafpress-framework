@@ -590,7 +590,7 @@ return array(
 									'name' => 'up_1',
 									'label' => __('Upload', 'vp_textdomain'),
 									'description' => __('Media uploader, using the powerful WP Media Upload', 'vp_textdomain'),
-									'default' => 'http://placehold.it/70x70',
+									'default' => 'http://lorempixel.com/500/400/animals/',
 								),
 								array(
 									'type' => 'color',

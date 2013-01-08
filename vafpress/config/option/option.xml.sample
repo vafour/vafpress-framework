@@ -333,7 +333,7 @@
 							<name>up_1</name>
 							<label>Upload</label>
 							<description>Media uploader, using the powerful WP Media Upload</description>
-							<default>http://placehold.it/70x70</default>
+							<default>http://lorempixel.com/500/400/animals/</default>
 						</upload>
 						<color>
 							<name>cl_1</name>
