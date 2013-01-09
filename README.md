@@ -2,7 +2,7 @@
 
 Wordpress theme options framework you'll love.
 
-## Avaiable Field Types
+## Available Field Types
 
 * TextBox
 * TextArea
@@ -18,7 +18,7 @@ Wordpress theme options framework you'll love.
 * DatePicker
 * ColorPicker
 
-## Avaiable Validation
+## Available Validation
 
 * alphabet
 * alphanumeric
@@ -39,8 +39,8 @@ Include the bootstrap.php into your functions.php, configure everything under va
 
 For now please checkout our options.xml example, we tried to put everything into the example.
 The framework actually uses options.php to build the options panel, but to make it lot easier, you can build the options
-on options.xml, and then under vafpress directory, you'll find 'vp', a CLI helper tool to convert options.xml to options.php
-just by running 'php vp convert' in your console.
+on options.xml, and then under vafpress directory, you'll find `vp`, a CLI helper tool to convert `options.xml` to options.php
+just by running `php vp convert` in your console.
 
 ## Contact Us
 
