@@ -1,9 +1,58 @@
 ;(function($) {
 
-	$.getScript(vp_wp.public_url + "/js/shared.js", function(data, textStatus, jqxhr) {
+	// jQuery hacks
+	var _addClass = $.fn.addClass;
+	$.fn.addClass = function() {
+		var result = _addClass.apply( this, arguments );
+		if (this.prop('tagName') == 'BODY' && arguments[0] == 'folded') { calculatePositionAndSize(); }
+		return result;
+	};
+	var _removeClass = $.fn.removeClass;
+	$.fn.removeClass = function() {
+		var result = _removeClass.apply( this, arguments );
+		if (this.prop('tagName') == 'BODY' && arguments[0] == 'folded') { calculatePositionAndSize(); }
+		return result;
+	};
 
-		// console.log(vp_wp);
-		vp_wp.nonce = 'adsf';
+	// Overlay
+	$(window).resize(function() {
+		calculatePositionAndSize();
+	});
+	$(window).load(function(){
+		$(window).resize();
+	});
+	function calculatePositionAndSize() {
+		var $overlay = $('#vp-overlay'),
+			$loading = $('#vp-loading'),
+			$panel = $('#vp-option-panel'),
+			$right = $('.vp-right-panel'),
+			$submit = $('#vp-submit'),
+			$copyright = $('#vp-copyright');
+		$overlay.css('height', $panel.innerHeight());
+		$overlay.css('width', $panel.innerWidth());
+		$submit.css('width', $right.innerWidth());
+		$loading.css('top', $(this).height() / 2);
+		$loading.css('left', $panel.innerWidth() / 2 + $panel.offset().left);
+	}
+
+	// Scrollspy
+	var $submit = $('.vp-submit');
+	$(window).load(function() {
+		var initTop = parseInt($submit.offset().top - 28, 10);
+		$submit.scrollspy({
+			min: initTop,
+			max: $(document).height(),
+			onEnter: function(element, position) {
+				$submit.addClass('floating');
+			},
+			onLeave: function(element, position) {
+				$submit.removeClass('floating');
+			}
+		});
+		$(window).scroll();
+	});
+
+	$.getScript(vp_wp.public_url + "/js/shared.js", function(data, textStatus, jqxhr) {
 
 		/* BEGIN FETCHING ALL FIELDS' VALIDATION RULES */
 		var validation = [];
@@ -70,23 +119,6 @@
 			$sub.children('li.vp-current').children('a').click();
 		});
 
-		// Scrollspy
-		var $submit = $('.vp-submit');
-		$(window).load(function() {
-			var initTop = parseInt($submit.offset().top - 28, 10);
-			$submit.scrollspy({
-				min: initTop,
-				max: $(document).height(),
-				onEnter: function(element, position) {
-					$submit.addClass('floating');
-				},
-				onLeave: function(element, position) {
-					$submit.removeClass('floating');
-				}
-			});
-			$(window).scroll();
-		});
-
 		// Ajax Saving
 		$('.vp-js-save').bind('click', function(e) {
 			e.preventDefault();
@@ -99,21 +131,21 @@
 				menuNotifHTML = '<span class="validation-notif error"></span>',
 				allError = 0;
 
-		for (var i=0; i<validation.length; i++) {
-			var panel = validation[i];
+			for (var i=0; i<validation.length; i++) {
+				var panel = validation[i];
 
-		panel.nError = 0;
-		for (var j=0; j<panel.fields.length; j++) {
-			var field = panel.fields[j],
-				$tr = $('#' + field.name),
-					$msgs = $tr.children('td.fields').children('.validation-msgs').children('ul'),
-					$input = $('[name="' + field.name + '"]'),
-					val = $input.validationVal(),
-					type = field.type,
-					rules = field.rules.split('|');
+				panel.nError = 0;
+				for (var j=0; j<panel.fields.length; j++) {
+					var field = panel.fields[j],
+						$tr = $('#' + field.name),
+						$msgs = $tr.children('td.fields').children('.validation-msgs').children('ul'),
+						$input = $('[name="' + field.name + '"]'),
+						val = $input.validationVal(),
+						type = field.type,
+						rules = field.rules.split('|');
 
 					field.nError = 0;
-					for (k=0; k<rules.length; k++) {
+					for (var k=0; k<rules.length; k++) {
 						var rule = rules[k],
 							q1 = rule.indexOf('['),
 							q2 = rule.indexOf(']'),
@@ -165,32 +197,32 @@
 							allError += 1;
 
 							// set message
-						var $msg = $(msgHTML);
-							$msg.html(res);
-							$msg.appendTo($msgs);
+							var $msg = $(msgHTML);
+								$msg.html(res);
+								$msg.appendTo($msgs);
 						}
 					}
 
-			if (field.nError > 0) {
-				$tr.addClass('error');
-			}
-		}
-			if (panel.nError > 0) {
-				// notify the menu which has the href
-				var $notif = $(menuNotifHTML),
-					$anchor = $('[href="' + panel.name +'"]'),
-					$grandparent = $anchor.parent('li').parent('ul');
-				$notif.appendTo($anchor);
-				if ($grandparent.hasClass('vp-menu-level-2')) {
-					if ($grandparent.siblings('a').children('.validation-notif.error').length === 0) {
-						$notif.clone().appendTo($grandparent.siblings('a'));
+					if (field.nError > 0) {
+						$tr.addClass('error');
+					}
+				}
+				if (panel.nError > 0) {
+					// notify the menu which has the href
+					var $notif = $(menuNotifHTML),
+						$anchor = $('[href="' + panel.name +'"]'),
+						$grandparent = $anchor.parent('li').parent('ul');
+					$notif.appendTo($anchor);
+					if ($grandparent.hasClass('vp-menu-level-2')) {
+						if ($grandparent.siblings('a').children('.validation-notif.error').length === 0) {
+							$notif.clone().appendTo($grandparent.siblings('a'));
+						}
 					}
 				}
 			}
-		}
 
-		// do not saving it any error occurs
-		if (allError > 0) { return; }
+			// do not saving it any error occurs
+			if (allError > 0) { return; }
 
 			// otherwise, do saving
 			var $overlay = $('#vp-overlay'),
@@ -199,7 +231,7 @@
 				$form = $('#vp-option-form'),
 				option = $form.serializeArray(),
 				data = {
-						action: 'vp_ajax_admin',
+						action: 'vp_ajax_save',
 						option: option,
 						nonce : vp_wp.nonce
 					};
@@ -230,45 +262,10 @@
 					});
 				}, 3000);
 			}, 'JSON');
-		});
 
-		// Overlay
-		$(window).resize(function() {
-			calculatePositionAndSize();
 		});
-		var _addClass = $.fn.addClass;
-		$.fn.addClass = function() {
-			var result = _addClass.apply( this, arguments );
-			if (this.prop('tagName') == 'BODY' && arguments[0] == 'folded') { calculatePositionAndSize(); }
-			return result;
-		};
-		var _removeClass = $.fn.removeClass;
-		$.fn.removeClass = function() {
-			var result = _removeClass.apply( this, arguments );
-			if (this.prop('tagName') == 'BODY' && arguments[0] == 'folded') { calculatePositionAndSize(); }
-			return result;
-		};
-
-		$(window).load(function(){
-			$(window).resize();
-		});
-
-		function calculatePositionAndSize() {
-			var $overlay = $('#vp-overlay'),
-				$loading = $('#vp-loading'),
-				$panel = $('#vp-option-panel'),
-				$right = $('.vp-right-panel'),
-				$submit = $('#vp-submit'),
-				$copyright = $('#vp-copyright');
-			$overlay.css('height', $panel.innerHeight());
-			$overlay.css('width', $panel.innerWidth());
-			$submit.css('width', $right.innerWidth());
-			$loading.css('top', $(this).height() / 2);
-			$loading.css('left', $panel.innerWidth() / 2 + $panel.offset().left);
-		}
 
 		// Validation Functions
-
 		$.fn.validationVal = function() {
 			var $this = this,
 				val = '',
@@ -329,7 +326,7 @@
 				$import_status = $('#vp-js-import-status'),
 				$import_loader = $('#vp-js-import-loader'),
 				$button        = $(this);
-				data           = {action: 'vp_ajax_import_option', option: $textarea.val()};
+				data           = {action: 'vp_ajax_import_option', option: $textarea.val(), nonce : vp_wp.nonce};
 
 			$button.attr('disabled', 'disabled');
 			$import_loader.fadeIn(100);
@@ -340,7 +337,7 @@
 				if (response.status) {
 					$import_status.html(vp_wp.impexp_msg.import_success);
 				} else {
-					$import_status.html(vp_wp.impexp_msg.export_failed + ': ' + response.message);
+					$import_status.html(vp_wp.impexp_msg.import_failed + ': ' + response.message);
 				}
 				$import_status.fadeIn(100);
 				setTimeout(function() {
@@ -360,18 +357,18 @@
 			var $export_status = $('#vp-js-export-status'),
 				$export_loader = $('#vp-js-export-loader'),
 				$button        = $(this);
-				data           = {action: 'vp_ajax_export_option'},
+				data           = {action: 'vp_ajax_export_option', nonce : vp_wp.nonce},
 
 			$button.attr('disabled', 'disabled');
 			$export_loader.fadeIn(100);
 			$.post(ajaxurl, data, function(response)
 			{
 				$export_loader.fadeOut(0);
-				if (!$.isEmptyObject(response)) {
+				if (!$.isEmptyObject(response.option) && response.status) {
 					$('#vp-js-export_text').val(response.option);
 					$export_status.html(vp_wp.impexp_msg.export_success);
 				} else {
-					$export_status.html(vp_wp.impexp_msg.export_failed);
+					$export_status.html(vp_wp.impexp_msg.export_failed + ': ' + response.message);
 				}
 				$export_status.fadeIn(100);				
 				setTimeout(function() {

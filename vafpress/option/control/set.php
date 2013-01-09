@@ -13,7 +13,7 @@ class VP_Option_Control_Set
 
 	public function __construct()
 	{
-
+		$this->_menus = array();
 	}
 
 	public function render()

@@ -40,18 +40,21 @@ class VP_Util_Array
 	public static function unite($array, $left, $right)
 	{
 		$result = array();
-		foreach ($array as $item)
+		if(is_array($array))
 		{
-			if(isset($result[$item[$left]]))
+			foreach ($array as $item)
 			{
-				if(is_array($result[$item[$left]]))
-					$result[$item[$left]][] = $item[$right];
+				if(isset($result[$item[$left]]))
+				{
+					if(is_array($result[$item[$left]]))
+						$result[$item[$left]][] = $item[$right];
+					else
+						$result[$item[$left]]   = array($result[$item[$left]], $item[$right]);
+				}
 				else
-					$result[$item[$left]]   = array($result[$item[$left]], $item[$right]);
-			}
-			else
-			{
-				$result[$item[$left]] = $item[$right];
+				{
+					$result[$item[$left]] = $item[$right];
+				}
 			}
 		}
 		return $result;

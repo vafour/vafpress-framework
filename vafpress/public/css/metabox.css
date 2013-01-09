@@ -98,7 +98,6 @@
 }
 
 .vp-metabox .vp-wpa-group-add a {
-	width: 100%;
 	display: block;
 	text-align: center;
 }
@@ -112,7 +111,7 @@
 }
 
 .vp-metabox .fields img {
-	padding: 4px;
+	padding: 3px;
 	border: 1px solid #dddddd;
 	border-radius: 3px;
 	max-width: 100%;

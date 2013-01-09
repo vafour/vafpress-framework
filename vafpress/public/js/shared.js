@@ -148,44 +148,47 @@ vp.validateRequired = function(type, val) {
  * =============================================================
  */
 
-jQuery('.vp-js-slider').each(function(i, el)
+if (jQuery.fn.slider)
 {
-	var $slider = jQuery(this);
-	var options = jQuery(this).getDatas();
-	options = vp.parseOpt(options.opt);
-	options.range = 'min';
-	options.slide = function(event, ui) {
-		$slider.prev('.slideinput').val(ui.value);
-	};
-	$slider.slider(options);
-
-	$slider.prev('.slideinput').keypress(function(e) {
-		var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
-		if(e.altKey || e.ctrlKey || e.shiftKey)
-			return true;
-		if (jQuery.inArray(charCode, [45, 46, 8, 0]) != -1 || (charCode >= 48 && charCode <= 57) )
-			return true;
-		return false;
-	}).blur(function(e) {
-		var $this = jQuery(this),
-		    val = $this.val();
-		if( !vp.validateNumeric('vp-textbox', val) ){
-			$this.val(options.min);
-			$slider.slider('value', options.min);
-		}
-		if (val > options.max) {
-			$this.val(options.max);
-			$slider.slider('value', options.max);
-			e.preventDefault();
-		} else if (val < options.min) {
-			$this.val(options.min);
-			$slider.slider('value', options.min);
-			e.preventDefault();
-		} else {
-			$slider.slider('value', $this.val());
+	jQuery('.vp-js-slider').each(function(i, el)
+	{
+		var $slider = jQuery(this);
+		var options = jQuery(this).getDatas();
+		options = vp.parseOpt(options.opt);
+		options.range = 'min';
+		options.slide = function(event, ui) {
+			$slider.prev('.slideinput').val(ui.value);
 		};
+		$slider.slider(options);
+
+		$slider.prev('.slideinput').keypress(function(e) {
+			var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
+			if(e.altKey || e.ctrlKey || e.shiftKey)
+				return true;
+			if (jQuery.inArray(charCode, [45, 46, 8, 0]) != -1 || (charCode >= 48 && charCode <= 57) )
+				return true;
+			return false;
+		}).blur(function(e) {
+			var $this = jQuery(this),
+			    val = $this.val();
+			if( !vp.validateNumeric('vp-textbox', val) ){
+				$this.val(options.min);
+				$slider.slider('value', options.min);
+			}
+			if (val > options.max) {
+				$this.val(options.max);
+				$slider.slider('value', options.max);
+				e.preventDefault();
+			} else if (val < options.min) {
+				$this.val(options.min);
+				$slider.slider('value', options.min);
+				e.preventDefault();
+			} else {
+				$slider.slider('value', $this.val());
+			};
+		});
 	});
-});
+}
 
 
 vp.upload_callback = function(){};
@@ -253,53 +256,62 @@ else
 
 jQuery('.vp-js-upload').click(vp.upload_callback);
 
-jQuery('.vp-js-colorpicker').each(function(){
-	var colorpicker  = this;
-	jQuery(colorpicker).ColorPicker({
-		color: jQuery(colorpicker).attr('value'),
-		onSubmit: function(hsb, hex, rgb, el) {
-			jQuery(el).val(hex);
-			jQuery(el).ColorPickerHide();
-		},
-		onBeforeShow: function () {
-			jQuery(colorpicker).ColorPickerSetColor(this.value);
-		},
-		onShow: function (cp) {
-			jQuery(cp).stop(true, true).fadeIn(500);
-			return false;
-		},
-		onHide: function (cp) {
-			jQuery(cp).stop(true, true).fadeOut(500);
-			return false;
-		},
-		onChange: function (hsb, hex, rgb) {
-			jQuery(colorpicker).prev('label').css('background-color', '#' + hex);
-			jQuery(colorpicker).attr('value', '#' + hex);
-		}
-	}).bind('keyup', function(e){
-		var val = this.value.trimChar('#');
-		if(this.value != ('#' + val))
-		{
-			jQuery(colorpicker).attr('value', '#' + val);
-		}
-		jQuery(this).ColorPickerSetColor(val);
-		jQuery(this).prev('label').css('background-color', '#' + val);
+if (jQuery.fn.ColorPicker)
+{
+	jQuery('.vp-js-colorpicker').each(function(){
+		var colorpicker  = this;
+		jQuery(colorpicker).ColorPicker({
+			color: jQuery(colorpicker).attr('value'),
+			onSubmit: function(hsb, hex, rgb, el) {
+				jQuery(el).val(hex);
+				jQuery(el).ColorPickerHide();
+			},
+			onBeforeShow: function () {
+				jQuery(colorpicker).ColorPickerSetColor(this.value);
+			},
+			onShow: function (cp) {
+				jQuery(cp).stop(true, true).fadeIn(500);
+				return false;
+			},
+			onHide: function (cp) {
+				jQuery(cp).stop(true, true).fadeOut(500);
+				return false;
+			},
+			onChange: function (hsb, hex, rgb) {
+				jQuery(colorpicker).prev('label').css('background-color', '#' + hex);
+				jQuery(colorpicker).attr('value', '#' + hex);
+			}
+		}).bind('keyup', function(e){
+			var val = this.value.trimChar('#');
+			if(this.value != ('#' + val))
+			{
+				jQuery(colorpicker).attr('value', '#' + val);
+			}
+			jQuery(this).ColorPickerSetColor(val);
+			jQuery(this).prev('label').css('background-color', '#' + val);
+		});
 	});
-});
+}
 
 // Date Picker
-jQuery('.vp-js-datepicker').each(function()
+if (jQuery.fn.datepicker)
 {
-	var options = jQuery(this).getDatas();
-	options     = vp.parseOpt(options.opt);
-	jQuery(this).datepicker(options);
-	jQuery(this).datepicker('setDate', options.value);
-});
+	jQuery('.vp-js-datepicker').each(function()
+	{
+		var options = jQuery(this).getDatas();
+		options     = vp.parseOpt(options.opt);
+		jQuery(this).datepicker(options);
+		jQuery(this).datepicker('setDate', options.value);
+	});
+}
 
 // Tipsy
-jQuery('.vp-js-tipsy.description').each(function() { jQuery(this).tipsy({ gravity : 'e' }); });
-jQuery('.vp-js-tipsy.slideinput').each(function() { jQuery(this).tipsy({ trigger : 'focus' }); });
-jQuery('.vp-js-tipsy.image-item').each(function() { jQuery(this).tipsy(); });
+if (jQuery.fn.tipsy)
+{
+	jQuery('.vp-js-tipsy.description').each(function() { jQuery(this).tipsy({ gravity : 'e' }); });
+	jQuery('.vp-js-tipsy.slideinput').each(function() { jQuery(this).tipsy({ trigger : 'focus' }); });
+	jQuery('.vp-js-tipsy.image-item').each(function() { jQuery(this).tipsy(); });
+}
 
 /*
  * =============================================================

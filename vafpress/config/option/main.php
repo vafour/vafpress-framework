@@ -13,6 +13,11 @@ return array(
 	'dev_mode'			=> true,
 
 	/**
+	 * Whether to use import and export menu
+	 */
+	'impexp'            => true,
+
+	/**
 	 * Automatically assign 'name' to each grouping class
 	 */
 	'auto_group_naming' => true,

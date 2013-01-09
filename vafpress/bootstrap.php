@@ -66,19 +66,22 @@ $set	 = $parser->parse_array_options($options);
 ////////////////////////////////////////////////
 // Add Import and Export Option Functionality //
 ////////////////////////////////////////////////
-$ie_menu    = new VP_Option_Control_Group_Menu();
-$ie_section = new VP_Option_Control_Group_Section();
-$ie_field   = new VP_Option_Control_Field_ImpExp();
+if(VP_Util_Config::get_instance()->load('option/main', 'impexp'))
+{
+	$ie_menu    = new VP_Option_Control_Group_Menu();
+	$ie_section = new VP_Option_Control_Group_Section();
+	$ie_field   = new VP_Option_Control_Field_ImpExp();
 
-$ie_menu->set_title(__('Import and Export', 'vp_textdomain'));
-$ie_menu->set_name('impexp');
-$ie_menu->set_icon('/icon/impexp.png');
+	$ie_menu->set_title(__('Import and Export', 'vp_textdomain'));
+	$ie_menu->set_name('impexp');
+	$ie_menu->set_icon('/icon/impexp.png');
 
-$ie_section->set_name('impexpt_section');
+	$ie_section->set_name('impexpt_section');
 
-$ie_section->add_field($ie_field);
-$ie_menu->add_section($ie_section);
-$set->add_menu($ie_menu);
+	$ie_section->add_field($ie_field);
+	$ie_menu->add_section($ie_section);
+	$set->add_menu($ie_menu);
+}
 
 ////////////////////
 // Load Metaboxes //
@@ -178,11 +181,11 @@ function vp_opt_notice_devmode($hook_suffix)
 //////////////////////
 // Ajax Admin Logic //
 //////////////////////
-add_action('wp_ajax_vp_ajax_admin', 'vp_ajax_admin');
+add_action('wp_ajax_vp_ajax_save', 'vp_ajax_save');
 add_action('wp_ajax_vp_ajax_export_option', 'vp_ajax_export_option');
 add_action('wp_ajax_vp_ajax_import_option', 'vp_ajax_import_option');
 
-function vp_ajax_admin()
+function vp_ajax_save()
 {
 	global $set;
 	global $config;
@@ -194,16 +197,13 @@ function vp_ajax_admin()
 	$option = $set->normalize_values($option);
 	$set->populate_values($option);
 
-	$verify = check_ajax_referer('vafpress', 'nonce', false);
-	if($verify)
+	$result = vp_verify_nonce();
+	
+	if($result['status'])
 	{
 		$result = $set->save($config['option_key'], true);
 	}
-	else
-	{
-		$result['status']  = false;
-		$result['message'] = __("Unverified Access.", 'vp_textdomain');
-	}
+
 	header('Content-type: application/json');
 	echo json_encode($result);
 	die();
@@ -216,24 +216,29 @@ function vp_ajax_import_option()
 
 	header('Content-type: application/json');
 
-	$option = $_POST['option'];
-	if(empty($option))
+	$result = vp_verify_nonce();
+	
+	if($result['status'])
 	{
-		$result['status']  = false;
-		$result['message'] = "Can't be empty.";
-	}
-	else
-	{
-		$option = maybe_unserialize(stripslashes($option));
-		if( is_array($option) )
+		$option = $_POST['option'];
+		if(empty($option))
 		{
-			$set->populate_values($option);
-			$result = $set->save($config['option_key'], true);
+			$result['status']  = false;
+			$result['message'] = __("Can't be empty.", 'vp_textdomain');
 		}
 		else
 		{
-			$result['status']  = false;
-			$result['message'] = "Invalid data.";
+			$option = maybe_unserialize(stripslashes($option));
+			if( is_array($option) )
+			{
+				$set->populate_values($option);
+				$result = $set->save($config['option_key'], true);
+			}
+			else
+			{
+				$result['status']  = false;
+				$result['message'] = __("Invalid data.", 'vp_textdomain');
+			}
 		}
 	}
 
@@ -244,12 +249,39 @@ function vp_ajax_import_option()
 function vp_ajax_export_option()
 {
 	global $config;
-	$db_options = get_option($config['option_key']);
-	$db_options = serialize($db_options);
-	header('Content-type: application/json');
-	$result = array('option' => $db_options);
+
+	$result = vp_verify_nonce();
+	
+	if($result['status'])
+	{
+		$db_options = get_option($config['option_key']);
+		$db_options = serialize($db_options);
+		header('Content-type: application/json');
+		$result = array(
+			'status' => true,
+			'message'=> __("", 'vp_textdomain'),
+			'option' => $db_options
+		);
+	}
 	echo json_encode($result);
 	die();
+}
+
+function vp_verify_nonce()
+{
+	$nonce  = $_POST['nonce'];
+	$verify = check_ajax_referer('vafpress', 'nonce', false);
+	if($verify)
+	{
+		$result['status']  = true;
+		$result['message'] = __("", 'vp_textdomain');	
+	}
+	else
+	{
+		$result['status']  = false;
+		$result['message'] = __("Unverified Access.", 'vp_textdomain');
+	}
+	return $result;
 }
 
 /**
