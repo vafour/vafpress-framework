@@ -22,7 +22,7 @@ class VP_Option_Depsloader
 				'use_upload'           => false,
 				'use_new_media_upload' => false,
 				'public_url'           => VP_PUBLIC_URL,
-				'nonce'                => wp_create_nonce( 'vafpress' ),
+				'nonce'                => wp_create_nonce( 'vafpress' )
 			),
 			'main_js'              => array(
 				'name' => 'vp-option-js',
@@ -61,9 +61,9 @@ class VP_Option_Depsloader
 
 		// build localize
 		$messages = VP_Util_Config::get_instance()->load('messages');
-		$result['vp_public_url']          = VP_PUBLIC_URL;
-		$result['localize']['val_msg']    = $messages['validation'];
-		$result['localize']['impexp_msg'] = $messages['impexp'];
+
+		$result['localize']['val_msg']     = $messages['validation'];
+		$result['localize']['impexp_msg']  = $messages['impexp'];
 
 		return $result;
 	}

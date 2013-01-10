@@ -69,8 +69,6 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 				echo $this->_render_field($field, $mb);
 			}
 		}
-		// print_r($this);
-		// print_r($this->_get_scheme());
 	}
 
 	function _render_field($field, $mb, $in_group = false)
@@ -95,10 +93,6 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		$value    = $mb->get_the_value();
 		// get default from array
 		$default  = $vp_field->get_default();
-
-		// echo $mb->get_the_name();
-		// var_dump($default);
-		// var_dump($value);
 
 		// if value is null and default exist, use default
 		if( is_null($value) and !empty($default) )

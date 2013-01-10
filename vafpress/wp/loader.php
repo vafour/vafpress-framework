@@ -25,6 +25,41 @@ class VP_WP_Loader
 		do_action('vp_loader_register_' . $this->id, $this->args, $hook_suffix);
 	}
 
+	private function unit_register($name)
+	{
+		global $wp_scripts;
+
+		// dynamically registering scripts
+		$scripts     = VP_Util_Config::get_instance()->load('dependencies', 'scripts.paths');
+
+		$registered  = wp_script_is($name, 'registered');
+		$is_older    = false;
+		$available   = isset($scripts[$name]);
+
+		if($available)
+		{
+			$script      = $scripts[$name];
+			if($registered)
+			{
+				$is_older    = version_compare($script['ver'], $wp_scripts->registered[$name]->ver) == 1;
+			}
+			if(!$registered or $is_older)
+			{
+				if(!empty($script['deps']))
+				{
+					foreach ($script['deps'] as $dep)
+					{
+						$this->unit_register($dep);
+					}
+				}
+				if($is_older)
+					wp_deregister_script($name);
+
+				wp_register_script($name, $script['path'], $script['deps'], $script['ver']);
+			}
+		}
+	}
+
 	public function register_real($loader, $hook_suffix)
 	{
 		// check if we should oupout
@@ -54,12 +89,11 @@ class VP_WP_Loader
 		$scripts     = VP_Util_Config::get_instance()->load('dependencies', 'scripts.paths');
 		$styles      = VP_Util_Config::get_instance()->load('dependencies', 'styles.paths');
 
-		foreach ($scripts as $script) 
+		global $wp_scripts;
+
+		foreach ($deps['scripts'] as $dep)
 		{
-			if(in_array($script['name'], $deps['scripts']) and ! wp_script_is($script['name'], 'registered'))
-			{
-				wp_register_script($script['name'], $script['path'], $script['deps'], '', true);
-			}
+			$this->unit_register($dep);
 		}
 
 		foreach ($styles as $style) 
@@ -72,13 +106,12 @@ class VP_WP_Loader
 
 		// register, enqueue and localized scripts
 		wp_register_script($deps['main_js']['name'], $deps['main_js']['path'], $deps['scripts'], '', true);
-		wp_enqueue_script($deps['main_js']['name']);
 		wp_localize_script($deps['main_js']['name'], 'vp_wp', $deps['localize']);
+		wp_enqueue_script($deps['main_js']['name']);
 
 		// register and enqueue styles
 		wp_register_style($deps['main_css']['name'], $deps['main_css']['path'], $deps['styles']);
 		wp_enqueue_style($deps['main_css']['name']);
-
 	}
 
 }

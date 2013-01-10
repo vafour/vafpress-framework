@@ -45,3 +45,7 @@ just by running `php vp convert` in your console.
 ## Contact Us
 
 And you can contact us at contact [@] vafour.com
+
+## Credits
+
+Metabox Support made with WPAlchemy MetaBox PHP Class by Dimas Begunoff, read more about it at [WPAlchmey Site](http://www.farinspace.com/wpalchemy-metabox/).

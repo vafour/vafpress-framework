@@ -31,22 +31,24 @@
 		$overlay.css('height', $panel.innerHeight());
 		$overlay.css('width', $panel.innerWidth());
 		$submit.css('width', $right.innerWidth());
-		$loading.css('top', $(this).height() / 2);
+		$loading.css('top', $(this).innerHeight() / 2);
 		$loading.css('left', $panel.innerWidth() / 2 + $panel.offset().left);
 	}
 
 	// Scrollspy
 	var $submit = $('.vp-submit');
 	$(window).load(function() {
-		var initTop = parseInt($submit.offset().top - 28, 10);
+		var initTop = parseInt($submit.offset().top - $('#wpadminbar').innerHeight(), 10);
 		$submit.scrollspy({
 			min: initTop,
 			max: $(document).height(),
 			onEnter: function(element, position) {
 				$submit.addClass('floating');
+				$submit.css('top', $('#wpadminbar').innerHeight());
 			},
 			onLeave: function(element, position) {
 				$submit.removeClass('floating');
+				$submit.css('top', '0px');
 			}
 		});
 		$(window).scroll();
@@ -123,12 +125,12 @@
 		$('.vp-js-save').bind('click', function(e) {
 			e.preventDefault();
 
-			$('.vp-option-form tr').removeClass('error');
-			$('.validation-notif.error').remove();
-			$('.validation-msg.error').remove();
+			$('.vp-option-form tr').removeClass('vp-error');
+			$('.validation-notif.vp-error').remove();
+			$('.validation-msg.vp-error').remove();
 
-			var msgHTML = '<li class="validation-msg error"></li>',
-				menuNotifHTML = '<span class="validation-notif error"></span>',
+			var msgHTML = '<li class="validation-msg vp-error"></li>',
+				menuNotifHTML = '<span class="validation-notif vp-error"></span>',
 				allError = 0;
 
 			for (var i=0; i<validation.length; i++) {
@@ -204,7 +206,7 @@
 					}
 
 					if (field.nError > 0) {
-						$tr.addClass('error');
+						$tr.addClass('vp-error');
 					}
 				}
 				if (panel.nError > 0) {
@@ -214,7 +216,7 @@
 						$grandparent = $anchor.parent('li').parent('ul');
 					$notif.appendTo($anchor);
 					if ($grandparent.hasClass('vp-menu-level-2')) {
-						if ($grandparent.siblings('a').children('.validation-notif.error').length === 0) {
+						if ($grandparent.siblings('a').children('.validation-notif.vp-error').length === 0) {
 							$notif.clone().appendTo($grandparent.siblings('a'));
 						}
 					}
@@ -269,7 +271,7 @@
 		$.fn.validationVal = function() {
 			var $this = this,
 				val = '',
-				tagName = this.prop('tagName'),
+				tagName = $this.prop('tagName'),
 				checked;
 			
 			if (($this.length > 1 && $this.attr('type') != 'radio') || $this.attr('multiple')) { val = []; }

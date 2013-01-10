@@ -21,12 +21,12 @@ function vp_get_categories()
 function vp_get_users()
 {
 
-	$wp_users = get_users();
+	$wp_users = VP_WP_User::get_users();
 
 	$result = array();
 	foreach ($wp_users as $user)
 	{
-		$result[] = array('value' => $user->data->ID, 'label' => $user->data->display_name);
+		$result[] = array('value' => $user['id'], 'label' => $user['display_name']);
 	}
 	return $result;
 }
@@ -71,12 +71,8 @@ function vp_get_tags()
 
 function vp_get_roles()
 {
-	global $wp_roles;
-
-	$result = array();
-
-	$all_roles      = $wp_roles->roles;
-	$editable_roles = apply_filters('editable_roles', $all_roles);
+	$result         = array();
+	$editable_roles = VP_WP_User::get_editable_roles();
 
 	foreach ($editable_roles as $key => $role)
 	{

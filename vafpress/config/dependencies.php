@@ -17,30 +17,60 @@ return array(
 	'scripts' => array(
 		'always' => array('jquery', 'prefixfree-js', 'scrollspy-js', 'tipsy-js'),
 		'paths' => array(
-			array(
-				'name' => 'colorpicker-js',
+			'jquery' => array(
+				'path' => VP_PUBLIC_URL . '/js/vendor/jquery-1.8.3.min.js',
+				'deps' => array(),
+				'ver'  => '1.8.3'
+			),
+			'colorpicker-js' => array(
 				'path' => VP_PUBLIC_URL . '/js/vendor/colorpicker.js',
-				'deps' => array('jquery')
+				'deps' => array('jquery'),
+				'ver'  => false
 			),
-			array(
-				'name' => 'tipsy-js',
+			'tipsy-js' => array(
 				'path' => VP_PUBLIC_URL . '/js/vendor/jquery.tipsy.js',
-				'deps' => array('jquery')
+				'deps' => array('jquery'),
+				'ver'  => false
 			),
-			array(
-				'name' => 'chosen-js',
+			'chosen-js' => array(
 				'path' => VP_PUBLIC_URL . '/js/vendor/chosen.jquery.min.js',
-				'deps' => array('jquery')
+				'deps' => array('jquery'),
+				'ver'  => false
 			),
-			array(
-				'name' => 'prefixfree-js',
+			'prefixfree-js' => array(
 				'path' => VP_PUBLIC_URL . '/js/vendor/prefixfree.min.js',
-				'deps' => array('jquery')
+				'deps' => array(),
+				'ver'  => false
 			),
-			array(
-				'name' => 'scrollspy-js',
+			'scrollspy-js' => array(
 				'path' => VP_PUBLIC_URL . '/js/vendor/jquery-scrollspy.js',
-				'deps' => array('jquery')
+				'deps' => array('jquery'),
+				'ver'  => false
+			),
+			'jquery-ui-core' => array(
+				'path' => VP_PUBLIC_URL . '/js/vendor/jquery.ui.core.js',
+				'deps' => array(),
+				'ver'  => '1.9.2'
+			),
+			'jquery-ui-widget' => array(
+				'path' => VP_PUBLIC_URL . '/js/vendor/jquery.ui.widget.js',
+				'deps' => array(),
+				'ver'  => '1.9.2'
+			),
+			'jquery-ui-mouse' => array(
+				'path' => VP_PUBLIC_URL . '/js/vendor/jquery.ui.mouse.js',
+				'deps' => array('jquery-ui-widget'),
+				'ver'  => '1.9.2'
+			),
+			'jquery-ui-slider' => array(
+				'path' => VP_PUBLIC_URL . '/js/vendor/jquery.ui.slider.js',
+				'deps' => array('jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-mouse'),
+				'ver'  => '1.9.2'
+			),
+			'jquery-ui-datepicker' => array(
+				'path' => VP_PUBLIC_URL . '/js/vendor/jquery.ui.datepicker.js',
+				'deps' => array('jquery', 'jquery-ui-core', 'jquery-ui-widget'),
+				'ver'  => '1.9.2'
 			),
 		),
 	),

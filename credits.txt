@@ -1,0 +1,5 @@
+Metabox Support:
+
+- WPAlchemy MetaBox PHP Class
+  by Dimas Begunoff
+  http://www.farinspace.com/wpalchemy-metabox/

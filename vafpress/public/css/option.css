@@ -20,7 +20,7 @@ body {
 	display: none;
 }
 
-.validation-notif.error {
+.validation-notif.vp-error {
 	background-image: url('../img/vp-sprite.png');
 	background-repeat: no-repeat;
 	background-position: 0px -320px;
@@ -229,7 +229,7 @@ body {
 	overflow: hidden;
 }
 
-.vp-menus a .validation-notif.error {
+.vp-menus a .validation-notif.vp-error {
 	position: absolute;
 	margin: -8px 25px 0px 0px;
 	top: 50%;
@@ -266,7 +266,6 @@ body {
 	box-shadow: 0px 1px 2px rgba(0,0,0,0.1);
 	border-radius: 0px;
 	position: fixed;
-	top: 28px;
 	z-index: 1;
 }
 
@@ -367,7 +366,7 @@ body {
 	vertical-align: top;
 }
 
-.vp-section tr.error {
+.vp-section tr.vp-error {
 	background-color: rgba(255,0,0,0.05);
 }
 
@@ -376,7 +375,7 @@ body {
 	box-shadow: inset 0px 1px rgba(255,255,255,1);
 }
 
-.vp-section tr.error td {
+.vp-section tr.vp-error td {
 	box-shadow: inset 0px 1px rgba(255,255,255,0.5);
 }
 

@@ -11,7 +11,7 @@ return array(
 			'name' => 'up_1',
 			'label' => __('Upload Image', 'vp_textdomain'),
 			'description' => __('Built in WP media upload', 'vp_textdomain'),
-			'default' => 'http://placehold.it/200x200',
+			'default' => 'http://lorempixel.com/500/400/animals/',
 		),
 		array(
 			'type' => 'checkbox',

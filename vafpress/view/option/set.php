@@ -62,7 +62,7 @@
 				<?php endforeach; ?>
 				</form>
 				<div id="vp-copyright" class="vp-copyright">
-					<?php printf(__('This option panel is built using <a href="http://vafpress.com">Vafpress Framework %s</a> powered by <a href="http://vafour.com">Vafour</a>', 'vp_textdomain'), VP_VERSION); ?>
+					<?php printf(__('This option panel is built using <a href="http://vafpress.com">Vafpress Framework %s</a> powered by <a href="http://vafpress.com">Vafpress</a>', 'vp_textdomain'), VP_VERSION); ?>
 				</div>
 			</div>
 		</div>
