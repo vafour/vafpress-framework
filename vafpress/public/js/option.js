@@ -1,5 +1,4 @@
 ;(function($) {
-
 	// jQuery hacks
 	var _addClass = $.fn.addClass;
 	$.fn.addClass = function() {
@@ -18,16 +17,16 @@
 	$(window).resize(function() {
 		calculatePositionAndSize();
 	});
-	$(window).load(function(){
+	$(window).load(function() {
 		$(window).resize();
 	});
-	function calculatePositionAndSize() {
+	var calculatePositionAndSize = function()	{
 		var $overlay = $('#vp-overlay'),
-			$loading = $('#vp-loading'),
-			$panel = $('#vp-option-panel'),
-			$right = $('.vp-right-panel'),
-			$submit = $('#vp-submit'),
-			$copyright = $('#vp-copyright');
+		    $loading = $('#vp-loading'),
+		    $panel = $('#vp-option-panel'),
+		    $right = $('.vp-right-panel'),
+		    $submit = $('#vp-submit'),
+		    $copyright = $('#vp-copyright');
 		$overlay.css('height', $panel.innerHeight());
 		$overlay.css('width', $panel.innerWidth());
 		$submit.css('width', $right.innerWidth());
@@ -37,7 +36,7 @@
 
 	// Scrollspy
 	var $submit = $('.vp-submit');
-	$(window).load(function() {
+	$(window).load(function()	{
 		var initTop = parseInt($submit.offset().top - $('#wpadminbar').innerHeight(), 10);
 		$submit.scrollspy({
 			min: initTop,
@@ -60,8 +59,8 @@
 		var validation = [];
 		$('.vp-menu-goto').each(function(i) {
 			var href = $(this).attr('href'),
-				$panel = $(href),
-				fields = [];
+			    $panel = $(href),
+			    fields = [];
 
 			$panel.children('.vp-section').each(function(i) {
 				var $section = $(this);
@@ -77,19 +76,18 @@
 				});
 			});
 
-			if (fields.length > 0) validation.push({name: href.trim('#'), fields: fields});
+			if (fields.length > 0) validation.push({ name: href.trim('#'), fields: fields });
 		});
 		/* END FETCHING ALL FIELDS' VALIDATION RULES */
 
 		// get and click current hash
-		$('.vp-js-menu-goto').click(function(e)
-		{
+		$('.vp-js-menu-goto').click(function(e) {
 			e.preventDefault();
 			window.location.hash = $(this).attr('href');
 			var $this = $(this),
-				$parent = $this.parent('li'),
-				$li = $parent.siblings('li'),
-				$panel = $($this.attr('href'));
+			    $parent = $this.parent('li'),
+			    $li = $parent.siblings('li'),
+			    $panel = $($this.attr('href'));
 			$li.removeClass('vp-current');
 			$parent.addClass('vp-current');
 			$panel.siblings('.vp-panel').removeClass('vp-current');
@@ -101,20 +99,21 @@
 
 		// goto current menu
 		var hash = window.location.hash;
-		if(hash !== ''){
+		if (hash !== '')
+		{
 			$('a[href="' + hash + '"]').trigger('click');
 		}
-		else{
+		else
+		{
 			$('.vp-current > .vp-js-menu-goto').click();
 		}
 
-		$('.vp-js-menu-dropdown').click(function(e)
-		{
+		$('.vp-js-menu-dropdown').click(function(e) {
 			e.preventDefault();
 			var $this = $(this),
-				$parent = $this.parent('li'),
-				$li = $parent.siblings('li'),
-				$sub = $this.next('ul');
+			    $parent = $this.parent('li'),
+			    $li = $parent.siblings('li'),
+			    $sub = $this.next('ul');
 			if ($parent.hasClass('vp-current')) return;
 			$li.removeClass('vp-current');
 			$parent.addClass('vp-current');
@@ -130,32 +129,36 @@
 			$('.validation-msg.vp-error').remove();
 
 			var msgHTML = '<li class="validation-msg vp-error"></li>',
-				menuNotifHTML = '<span class="validation-notif vp-error"></span>',
-				allError = 0;
+			    menuNotifHTML = '<span class="validation-notif vp-error"></span>',
+			    allError = 0;
 
-			for (var i=0; i<validation.length; i++) {
+			for (var i=0; i<validation.length; i++)
+			{
 				var panel = validation[i];
 
 				panel.nError = 0;
-				for (var j=0; j<panel.fields.length; j++) {
+				for (var j=0; j<panel.fields.length; j++)
+				{
 					var field = panel.fields[j],
-						$tr = $('#' + field.name),
-						$msgs = $tr.children('td.fields').children('.validation-msgs').children('ul'),
-						$input = $('[name="' + field.name + '"]'),
-						val = $input.validationVal(),
-						type = field.type,
-						rules = field.rules.split('|');
+					    $tr = $('#' + field.name),
+					    $msgs = $tr.children('td.fields').children('.validation-msgs').children('ul'),
+					    $input = $('[name="' + field.name + '"]'),
+					    val = $input.validationVal(),
+					    type = field.type,
+					    rules = field.rules.split('|');
 
 					field.nError = 0;
-					for (var k=0; k<rules.length; k++) {
+					for (var k=0; k<rules.length; k++)
+					{
 						var rule = rules[k],
-							q1 = rule.indexOf('['),
-							q2 = rule.indexOf(']'),
-							def = (q1 >= 0) ? rule.substring(0, q1) : rule,
-							res = '',
-							n;
+						    q1 = rule.indexOf('['),
+						    q2 = rule.indexOf(']'),
+						    def = (q1 >= 0) ? rule.substring(0, q1) : rule,
+						    res = '',
+						    n;
 
-						switch (def) {
+						switch (def)
+						{
 							case 'alphabet':
 								if (!vp.validateAlphabet(type, val)) { res = vp_wp.val_msg.alphabet.format(); }
 								break;
@@ -192,7 +195,8 @@
 								break;
 						}
 
-						if (res !== '') {
+						if (res !== '')
+						{
 							// push into errors pool
 							field.nError += 1;
 							panel.nError += 1;
@@ -200,23 +204,27 @@
 
 							// set message
 							var $msg = $(msgHTML);
-								$msg.html(res);
-								$msg.appendTo($msgs);
+							    $msg.html(res);
+							    $msg.appendTo($msgs);
 						}
 					}
 
-					if (field.nError > 0) {
+					if (field.nError > 0)
+					{
 						$tr.addClass('vp-error');
 					}
 				}
-				if (panel.nError > 0) {
+				if (panel.nError > 0)
+				{
 					// notify the menu which has the href
 					var $notif = $(menuNotifHTML),
-						$anchor = $('[href="' + panel.name +'"]'),
-						$grandparent = $anchor.parent('li').parent('ul');
+					    $anchor = $('[href="' + panel.name +'"]'),
+					    $grandparent = $anchor.parent('li').parent('ul');
 					$notif.appendTo($anchor);
-					if ($grandparent.hasClass('vp-menu-level-2')) {
-						if ($grandparent.siblings('a').children('.validation-notif.vp-error').length === 0) {
+					if ($grandparent.hasClass('vp-menu-level-2'))
+					{
+						if ($grandparent.siblings('a').children('.validation-notif.vp-error').length === 0)
+						{
 							$notif.clone().appendTo($grandparent.siblings('a'));
 						}
 					}
@@ -233,22 +241,24 @@
 				$form = $('#vp-option-form'),
 				option = $form.serializeArray(),
 				data = {
-						action: 'vp_ajax_save',
-						option: option,
-						nonce : vp_wp.nonce
-					};
+					action: 'vp_ajax_save',
+					option: option,
+					nonce : vp_wp.nonce
+				};
 
 			$button.attr('disabled', 'disabled');
 			$overlay.stop(true, true).fadeIn(100, function() {
 				$overlay.removeClass('stop');
 			});
 
-			$.post(ajaxurl, data, function(response)
-			{
+			$.post(ajaxurl, data, function(response) {
 				$save_status.html(response.message);
-				if (response.status) {
+				if (response.status)
+				{
 					$save_status.addClass('success');
-				} else {
+				}
+				else
+				{
 					$save_status.addClass('failed');
 				}
 				$save_status.stop(true, true).fadeIn(100);
@@ -270,9 +280,9 @@
 		// Validation Functions
 		$.fn.validationVal = function() {
 			var $this = this,
-				val = '',
-				tagName = $this.prop('tagName'),
-				checked;
+			    val = '',
+			    tagName = $this.prop('tagName'),
+			    checked;
 			
 			if (($this.length > 1 && $this.attr('type') != 'radio') || $this.attr('multiple')) { val = []; }
 
@@ -281,29 +291,37 @@
 			$this.each(function(i) {
 				var $field = $(this);
 
-				switch (tagName) {
+				switch (tagName)
+				{
 					case 'SELECT':
-						if ($field.has('[multiple]')) {
+						if ($field.has('[multiple]'))
+						{
 							val = $field.val();
-						} else {
+						}
+						else
+						{
 							val = $field.val();
 						}
 						break;
 					case 'INPUT':
-						switch ($this.attr('type')) {
+						switch ($this.attr('type'))
+						{
 							case 'text':
 								val = $field.val();
 								break;
 							case 'radio':
 								checked = $field.attr('checked');
-								if(typeof checked !== 'undefined' && checked !== false)
+								if (typeof checked !== 'undefined' && checked !== false)
 									val = $field.val();
 								break;
 							case 'checkbox':
 								checked = $field.attr('checked');
-								if ($this.length > 1) {
+								if ($this.length > 1)
+								{
 									if (typeof checked !== 'undefined' && checked !== false) { val.push($field.val()); } // multiple
-								} else {
+								}
+								else
+								{
 									val = $field.val(); // single
 								}
 								break;
@@ -316,29 +334,31 @@
 			});
 
 			// quick fix trial
-			if(val === null)
+			if (val === null)
 				val = initialVal;
 			return val;
 		};
 
-		$('#vp-js-import').bind('click', function(e){
+		$('#vp-js-import').bind('click', function(e) {
 			e.preventDefault();
 
 			var $textarea      = $('#vp-js-import_text'),
-				$import_status = $('#vp-js-import-status'),
-				$import_loader = $('#vp-js-import-loader'),
-				$button        = $(this);
-				data           = {action: 'vp_ajax_import_option', option: $textarea.val(), nonce : vp_wp.nonce};
+			    $import_status = $('#vp-js-import-status'),
+			    $import_loader = $('#vp-js-import-loader'),
+			    $button        = $(this);
+			    data           = {action: 'vp_ajax_import_option', option: $textarea.val(), nonce : vp_wp.nonce};
 
 			$button.attr('disabled', 'disabled');
 			$import_loader.fadeIn(100);
 
-			$.post(ajaxurl, data, function(response)
-			{
+			$.post(ajaxurl, data, function(response) {
 				$import_loader.fadeOut(0);
-				if (response.status) {
+				if (response.status)
+				{
 					$import_status.html(vp_wp.impexp_msg.import_success);
-				} else {
+				}
+				else
+				{
 					$import_status.html(vp_wp.impexp_msg.import_failed + ': ' + response.message);
 				}
 				$import_status.fadeIn(100);
@@ -346,30 +366,32 @@
 					$import_status.fadeOut(1000, function() {
 						$button.removeAttr('disabled');
 						$import_status.fadeOut(500);
-						if(response.status)
+						if (response.status)
 							location.reload();
 					});
 				}, 2000);
 			}, 'JSON');
 		});
 
-		$('#vp-js-export').bind('click', function(e){
+		$('#vp-js-export').bind('click', function(e) {
 			e.preventDefault();
 
 			var $export_status = $('#vp-js-export-status'),
-				$export_loader = $('#vp-js-export-loader'),
-				$button        = $(this);
-				data           = {action: 'vp_ajax_export_option', nonce : vp_wp.nonce},
+			    $export_loader = $('#vp-js-export-loader'),
+			    $button        = $(this);
+			    data           = {action: 'vp_ajax_export_option', nonce : vp_wp.nonce},
 
 			$button.attr('disabled', 'disabled');
 			$export_loader.fadeIn(100);
-			$.post(ajaxurl, data, function(response)
-			{
+			$.post(ajaxurl, data, function(response) {
 				$export_loader.fadeOut(0);
-				if (!$.isEmptyObject(response.option) && response.status) {
+				if (!$.isEmptyObject(response.option) && response.status)
+				{
 					$('#vp-js-export_text').val(response.option);
 					$export_status.html(vp_wp.impexp_msg.export_success);
-				} else {
+				}
+				else
+				{
 					$export_status.html(vp_wp.impexp_msg.export_failed + ': ' + response.message);
 				}
 				$export_status.fadeIn(100);				

@@ -13,8 +13,8 @@ jQuery.fn.getAttributes = function() {
 	return attributes;
 }
 jQuery.fn.getDatas = function() {
-	var attributes = {};
-	var prefix = "data-vp-";
+	var attributes = {},
+	    prefix = "data-vp-";
 	if (!this.length)
 		return this;
 	jQuery.each(this[0].attributes, function(index, attr) {
@@ -58,8 +58,7 @@ var vp = {};
 vp.isNumber = function(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
-vp.parseOpt = function(optString)
-{
+vp.parseOpt = function(optString) {
 	var openIdx, closeIdx, temp, tempArr, opt = {};
 	for (var i = 0; i < optString.length; i++)
 	{
@@ -133,7 +132,7 @@ vp.validateMinLength = function(type, val, n) {
 
 vp.validateRequired = function(type, val) {
 	// only check if it's empty array, if it's not, it will go true anyway..
-	if(jQuery.isArray(val) && jQuery.isEmptyObject(val)) return false;
+	if (jQuery.isArray(val) && jQuery.isEmptyObject(val)) return false;
 	return (val) ? true : false;
 }
 /*
@@ -150,10 +149,9 @@ vp.validateRequired = function(type, val) {
 
 if (jQuery.fn.slider)
 {
-	jQuery('.vp-js-slider').each(function(i, el)
-	{
-		var $slider = jQuery(this);
-		var options = jQuery(this).getDatas();
+	jQuery('.vp-js-slider').each(function(i, el) {
+		var $slider = jQuery(this),
+		    options = jQuery(this).getDatas();
 		options = vp.parseOpt(options.opt);
 		options.range = 'min';
 		options.slide = function(event, ui) {
@@ -163,7 +161,7 @@ if (jQuery.fn.slider)
 
 		$slider.prev('.slideinput').keypress(function(e) {
 			var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
-			if(e.altKey || e.ctrlKey || e.shiftKey)
+			if (e.altKey || e.ctrlKey || e.shiftKey)
 				return true;
 			if (jQuery.inArray(charCode, [45, 46, 8, 0]) != -1 || (charCode >= 48 && charCode <= 57) )
 				return true;
@@ -171,19 +169,25 @@ if (jQuery.fn.slider)
 		}).blur(function(e) {
 			var $this = jQuery(this),
 			    val = $this.val();
-			if( !vp.validateNumeric('vp-textbox', val) ){
+			if (!vp.validateNumeric('vp-textbox', val))
+			{
 				$this.val(options.min);
 				$slider.slider('value', options.min);
 			}
-			if (val > options.max) {
+			if (val > options.max)
+			{
 				$this.val(options.max);
 				$slider.slider('value', options.max);
 				e.preventDefault();
-			} else if (val < options.min) {
+			}
+			else if (val < options.min)
+			{
 				$this.val(options.min);
 				$slider.slider('value', options.min);
 				e.preventDefault();
-			} else {
+			}
+			else
+			{
 				$slider.slider('value', $this.val());
 			};
 		});
@@ -191,18 +195,18 @@ if (jQuery.fn.slider)
 }
 
 
-vp.upload_callback = function(){};
+vp.upload_callback = function() {};
 
-if( vp_wp.use_new_media_upload )
+if ( vp_wp.use_new_media_upload )
 {
 	var _orig_send_attachment = wp.media.editor.send.attachment,
-		_orig_send_link       = wp.media.editor.send.link,
-		_orig_send_to_editor  = window.send_to_editor;
+	    _orig_send_link       = wp.media.editor.send.link,
+	    _orig_send_to_editor  = window.send_to_editor;
 
 	vp.upload_callback = function(e) {
 		var $this = jQuery(this),
-			$input = $this.prev('input'),
-			$preview = $this.parent().next().find('img');
+		    $input = $this.prev('input'),
+		    $preview = $this.parent().next().find('img');
 
 		// handler for attachment
 		wp.media.editor.send.attachment = function(props, attachment) {
@@ -214,7 +218,8 @@ if( vp_wp.use_new_media_upload )
 
 		// handler for link
 		window.send_to_editor = function(html) {
-			if (html != '') {
+			if (html != '')
+			{
 				// targetting only link, since attachment is already handled separately
 				var imgurl = jQuery(html).attr('src');
 				$input.val(imgurl);
@@ -237,10 +242,11 @@ else
 		$preview   = jQuery(this).parent().next().find('img');
 		tb_show('Upload Image', 'media-upload.php?type=image&amp;TB_iframe=true');
 
-		window.send_to_editor = function(html){
-			if (html != '') {
+		window.send_to_editor = function(html) {
+			if (html != '')
+			{
 				var imgurl = jQuery(html).find('img').attr('src');
-				if( typeof imgurl == 'undefined' )
+				if (typeof imgurl == 'undefined')
 				{
 					imgurl = jQuery(html).attr('src');
 				}
@@ -258,7 +264,7 @@ jQuery('.vp-js-upload').click(vp.upload_callback);
 
 if (jQuery.fn.ColorPicker)
 {
-	jQuery('.vp-js-colorpicker').each(function(){
+	jQuery('.vp-js-colorpicker').each(function() {
 		var colorpicker  = this;
 		jQuery(colorpicker).ColorPicker({
 			color: jQuery(colorpicker).attr('value'),
@@ -266,24 +272,24 @@ if (jQuery.fn.ColorPicker)
 				jQuery(el).val(hex);
 				jQuery(el).ColorPickerHide();
 			},
-			onBeforeShow: function () {
+			onBeforeShow: function() {
 				jQuery(colorpicker).ColorPickerSetColor(this.value);
 			},
-			onShow: function (cp) {
+			onShow: function(cp) {
 				jQuery(cp).stop(true, true).fadeIn(500);
 				return false;
 			},
-			onHide: function (cp) {
+			onHide: function(cp) {
 				jQuery(cp).stop(true, true).fadeOut(500);
 				return false;
 			},
-			onChange: function (hsb, hex, rgb) {
+			onChange: function(hsb, hex, rgb) {
 				jQuery(colorpicker).prev('label').css('background-color', '#' + hex);
 				jQuery(colorpicker).attr('value', '#' + hex);
 			}
-		}).bind('keyup', function(e){
+		}).bind('keyup', function(e) {
 			var val = this.value.trimChar('#');
-			if(this.value != ('#' + val))
+			if (this.value != ('#' + val))
 			{
 				jQuery(colorpicker).attr('value', '#' + val);
 			}
@@ -296,8 +302,7 @@ if (jQuery.fn.ColorPicker)
 // Date Picker
 if (jQuery.fn.datepicker)
 {
-	jQuery('.vp-js-datepicker').each(function()
-	{
+	jQuery('.vp-js-datepicker').each(function() {
 		var options = jQuery(this).getDatas();
 		options     = vp.parseOpt(options.opt);
 		jQuery(this).datepicker(options);

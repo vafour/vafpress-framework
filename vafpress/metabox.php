@@ -57,11 +57,11 @@ foreach ($metas as $meta)
  * 
  * easy way to get metabox values using dot notation
  * example:
- * vp_mb_get('meta_name.field_name')
- * vp_mb_get('meta_name.group_name')
- * vp_mb_get('meta_name.group_name.0.field_name')
+ * vp_metabox('meta_name.field_name')
+ * vp_metabox('meta_name.group_name')
+ * vp_metabox('meta_name.group_name.0.field_name')
  */
-function vp_mb_get($key)
+function vp_metabox($key)
 {
 	global $vp_metaboxes;
 	$keys = explode('.', $key);
