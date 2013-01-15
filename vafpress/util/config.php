@@ -13,7 +13,6 @@ class VP_Util_Config
 
 	private $_configs;
 
-
 	private function __construct()
 	{
 		$this->_path    = VP_CONFIG_DIR;

@@ -1,10 +1,9 @@
 <?php
 
 return array(
-	'name'        => 'vp_meta_sample_1',
+	'id'          => 'vp_meta_sample_1',
 	'types'       => array('post'),
 	'title'       => __('VP Metabox 1', 'vp_textdomain'),
-	'description' => __('Sample metabox powered by WPAlchemy', 'vp_textdomain'),
 	'fields'      => array(
 		array(
 			'type' => 'group',
@@ -22,7 +21,6 @@ return array(
 					'name' => 'cb_1',
 					'label' => __('Checkbox', 'vp_textdomain'),
 					'description' => __('Checkbox inside repeater field group.', 'vp_textdomain'),
-					'validation' => 'minselected[2]|maxselected[2]',
 					'items' => array(
 						array(
 							'value' => 'value_1',

@@ -1,10 +1,9 @@
 <?php
 
 return array(
-	'name'        => 'vp_meta_sample_2',
+	'id'          => 'vp_meta_sample_2',
 	'types'       => array('post'),
 	'title'       => __('VP Metabox 2', 'vp_textdomain'),
-	'description' => __('Sample metabox powered by WPAlchemy 2', 'vp_textdomain'),
 	'fields'      => array(
 		array(
 			'type' => 'upload',
