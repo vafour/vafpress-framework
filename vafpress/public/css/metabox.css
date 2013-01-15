@@ -72,25 +72,20 @@
 }
 
 .vp-metabox .vp-wpa-group .vp-wpa-group-remove {
-	width: 0px;
-	position: relative;
+	width: 20px;
+	padding-top: 5px;
 }
 
 .vp-metabox .vp-wpa-group .vp-wpa-group-remove a {
-	border-radius: 0px 0px 0px 6px;
 	border: 1px solid #dddddd;
 	background-color: #ffffff;
 	color: #999999;
-	font-size: 0.9em;
+	font-size: 0.8em;
 	font-weight: bold;
 	line-height: 1em;
-	margin: 2px 2px 0px 0px;
-	padding: 4px 8px;
-	position: absolute;
+	padding: 2px 5px;
 	text-transform: uppercase;
 	text-decoration: none;
-	top: 0px;
-	right: 0px;
 }
 
 .vp-metabox .vp-wpa-group .vp-wpa-group-remove a:hover {
