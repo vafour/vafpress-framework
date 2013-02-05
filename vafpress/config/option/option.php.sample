@@ -813,6 +813,73 @@ return array(
 						),
 					),
 		),
+		array(
+			'name' => 'dependancing_field',
+			'title' => __('Dependancing Field', 'vp_textdomain'),
+			'icon' => '/icon/binding.png',
+					'controls' => array(
+								array(
+									'type' => 'toggle',
+									'name' => 'use_custom_font',
+									'label' => __('Use Custom Font', 'vp_textdomain'),
+									'description' => __('Use custom font or not', 'vp_textdomain'),
+								),
+						array(
+							'type' => 'section',
+							'title' => __('Custom Font', 'vp_textdomain'),
+							'name' => 'section_custom_font',
+							'fields' => array(
+								array(
+									'type' => 'select',
+									'name' => 'dep_font_face',
+									'label' => __('Font Face', 'vp_textdomain'),
+									'description' => __('Select Font', 'vp_textdomain'),
+									'items' => array(
+										'data' => array(
+											array(
+												'source' => 'function',
+												'value' => 'vp_get_gwf_family',
+											),
+										),
+									),
+								),
+								array(
+									'type' => 'radiobutton',
+									'name' => 'dep_font_style',
+									'label' => __('Font Style', 'vp_textdomain'),
+									'description' => __('Select Font Style', 'vp_textdomain'),
+									'items' => array(
+										'data' => array(
+											array(
+												'source' => 'bind',
+												'field' => 'dep_font_face',
+												'value' => 'vp_get_gwf_style',
+											),
+										),
+									),
+									'default' => array(
+										'{{first}}',
+									),
+								),
+								array(
+									'type' => 'radiobutton',
+									'name' => 'dep_font_weight',
+									'label' => __('Font Weight', 'vp_textdomain'),
+									'description' => __('Select Font Weight', 'vp_textdomain'),
+									'items' => array(
+										'data' => array(
+											array(
+												'source' => 'bind',
+												'field' => 'dep_font_face',
+												'value' => 'vp_get_gwf_weight',
+											),
+										),
+									),
+								),
+							),
+						),
+					),
+		),
 	)
 );
 

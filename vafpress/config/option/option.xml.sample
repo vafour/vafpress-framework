@@ -488,26 +488,52 @@
 			</controls>
 		</menu>
 
-<!-- 		<menu>
+		<menu>
 			<name>dependancing_field</name>
 			<title>Dependancing Field</title>
 			<icon>/icon/binding.png</icon>
 			<controls>
+				<toggle>
+					<name>use_custom_font</name>
+					<label>Use Custom Font</label>
+					<description>Use custom font or not</description>
+				</toggle>
 				<section>
-					<title>Deps ajah</title>
+					<title>Custom Font</title>
+					<name>section_custom_font</name>
+					<dependancies field="use_custom_font">vp_dep_basic</dependancies>
 					<fields>
 						<select>
-							<name>logo_font_face</name>
-							<label>Logo Font Face</label>
+							<name>dep_font_face</name>
+							<label>Font Face</label>
 							<description>Select Font</description>
 							<items>
 								<data source="function">vp_get_gwf_family</data>
 							</items>	
 						</select>
+						<radiobutton>
+							<name>dep_font_style</name>
+							<label>Font Style</label>
+							<description>Select Font Style</description>
+							<items>
+								<data source="bind" field="dep_font_face">vp_get_gwf_style</data>
+							</items>
+							<default>
+								<item>{{first}}</item>
+							</default>
+						</radiobutton>
+						<radiobutton>
+							<name>dep_font_weight</name>
+							<label>Font Weight</label>
+							<description>Select Font Weight</description>
+							<items>
+								<data source="bind" field="dep_font_face">vp_get_gwf_weight</data>
+							</items>
+						</radiobutton>
 					</fields>
 				</section>
 			</controls>
-		</menu> -->
+		</menu>
 
 	</menus>
 </option>

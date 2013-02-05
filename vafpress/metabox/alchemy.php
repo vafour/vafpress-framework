@@ -179,7 +179,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		$vp_field->set_value($value);
 
 		if (!$in_group) {
-			$vp_field->set_container_extra_classes('vp-meta-row vp-single');
+			$vp_field->set_container_extra_classes('vp-meta-row vp-meta-single');
 		}
 
 		return $vp_field;

@@ -5,7 +5,7 @@
 		// Chosen
 		if (jQuery().chosen)
 		{
-			jQuery('.vp-metabox .vp-wpa-group:not(.tocopy) .vp-js-chosen, .vp-single .vp-js-chosen').chosen();
+			jQuery('.vp-metabox .vp-wpa-group:not(.tocopy) .vp-js-chosen, .vp-meta-single .vp-js-chosen').chosen();
 	 	}
 
 	 	// Bindings
