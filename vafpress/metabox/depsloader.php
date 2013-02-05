@@ -22,6 +22,7 @@ class VP_Metabox_Depsloader
 				'use_upload'           => false,
 				'use_new_media_upload' => false,
 				'public_url'           => VP_PUBLIC_URL,
+				'wp_include_url'       => includes_url(),
 			),
 			'main_js'              => array(
 				'name' => 'vp-metabox',

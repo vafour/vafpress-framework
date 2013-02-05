@@ -55,8 +55,9 @@
 
 	$.getScript(vp_wp.public_url + "/js/shared.js", function(data, textStatus, jqxhr) {
 
-		/* BEGIN FETCHING ALL FIELDS' VALIDATION RULES */
+		/* BEGIN FETCHING ALL FIELDS' VALIDATION and BINDING RULES */
 		var validation = [];
+		var bindings   = [];
 		$('.vp-menu-goto').each(function(i) {
 			var href = $(this).attr('href'),
 			    $panel = $(href),
@@ -66,19 +67,20 @@
 				var $section = $(this);
 				$section.find('tr').each(function(j) {
 					var $field = $(this),
-						name = $field.attr('id'),
-						rules = $field.attr('data-vp-validation'),
-						type = $field.getDatas().type,
+						name   = $field.attr('id'),
+						rules  = $field.attr('data-vp-validation'),
+						bind   = $field.attr('data-vp-bind'),
+						type   = $field.getDatas().type,
 						$input = $('[name="' + name + '"]');
 
-					if (! rules) return;
-					else fields.push({name: name, rules: rules, type: type});
+					bind  && bindings.push({bind: bind, type: type, source: name});
+					rules && fields.push({name: name, rules: rules, type: type});
 				});
 			});
 
 			if (fields.length > 0) validation.push({ name: href.trim('#'), fields: fields });
 		});
-		/* END FETCHING ALL FIELDS' VALIDATION RULES */
+		/* END FETCHING ALL FIELDS' VALIDATION and BINDING RULES */
 
 		// get and click current hash
 		$('.vp-js-menu-goto').click(function(e) {
@@ -119,6 +121,29 @@
 			$parent.addClass('vp-current');
 			$sub.children('li.vp-current').children('a').click();
 		});
+
+		// Bindings
+		for (var i = 0; i < bindings.length; i++)
+		{
+			var field = bindings[i],
+			    temp  = field.bind.split('|'),
+			    func  = temp[0],
+			    dest  = temp[1],
+			    ids   = [];
+
+			dest = dest.split(',');
+
+			for (var j = 0; j < dest.length; j++)
+			{
+				ids.push(dest[j]);
+			}
+
+			for (var j = 0; j < ids.length; j++)
+			{
+				vp.binding_event(ids, j, field, func, '.vp-wrap');
+			}
+		}
+		/* ============================================================ */
 
 		// Ajax Saving
 		$('.vp-js-save').bind('click', function(e) {
@@ -277,68 +302,6 @@
 
 		});
 
-		// Validation Functions
-		$.fn.validationVal = function() {
-			var $this = this,
-			    val = '',
-			    tagName = $this.prop('tagName'),
-			    checked;
-			
-			if (($this.length > 1 && $this.attr('type') != 'radio') || $this.attr('multiple')) { val = []; }
-
-			var initialVal = val;
-
-			$this.each(function(i) {
-				var $field = $(this);
-
-				switch (tagName)
-				{
-					case 'SELECT':
-						if ($field.has('[multiple]'))
-						{
-							val = $field.val();
-						}
-						else
-						{
-							val = $field.val();
-						}
-						break;
-					case 'INPUT':
-						switch ($this.attr('type'))
-						{
-							case 'text':
-								val = $field.val();
-								break;
-							case 'radio':
-								checked = $field.attr('checked');
-								if (typeof checked !== 'undefined' && checked !== false)
-									val = $field.val();
-								break;
-							case 'checkbox':
-								checked = $field.attr('checked');
-								if ($this.length > 1)
-								{
-									if (typeof checked !== 'undefined' && checked !== false) { val.push($field.val()); } // multiple
-								}
-								else
-								{
-									val = $field.val(); // single
-								}
-								break;
-						}
-						break;
-					case 'TEXTAREA':
-						val = $field.val();
-						break;
-				}
-			});
-
-			// quick fix trial
-			if (val === null)
-				val = initialVal;
-			return val;
-		};
-
 		$('#vp-js-import').bind('click', function(e) {
 			e.preventDefault();
 
@@ -403,6 +366,7 @@
 				}, 3000);
 			}, 'JSON');
 		});
+
 	});
 
 }(jQuery));

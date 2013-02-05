@@ -13,7 +13,7 @@
 				$result    = file_put_contents($opt['dest'], $opt['opt_arr']);
 				if($result !== FALSE)
 				{
-					echo "Conversion Succes\n";
+					echo "Conversion Success\n";
 					echo "Source: " . $opt['source'] . "\n";
 					echo "Dest  : " . $opt['dest'] . "\n";
 				}

@@ -76,16 +76,23 @@ abstract class VP_Control_Field implements iFactory
 	 */
 	protected function _setup_data()
 	{
+		// Set Basic Data
 		$this->add_data('name', $this->get_name());
-		$this->add_data('label', $this->get_label());
 		$this->add_data('default', $this->get_default());
 		$this->add_data('value', $this->get_value());
-		$this->add_data('container_extra_classes', $this->get_container_extra_classes());
 
-		// Apply markdown
-		$this->add_data('description', VP_Util_Text::parse_md($this->get_description()));
+		// Determine Type
+		$type = 'vp-' . strtolower(substr(get_class($this), strrpos(get_class($this), '_') + 1));
 
-		$this->add_data('validation', $this->get_validation());
+		// Set Control Head Data
+		$this->add_data('head_info', array(
+			'name'                    => $this->get_name(),
+			'type'                    => $type,
+			'container_extra_classes' => $this->get_container_extra_classes(),
+			'validation'              => $this->get_validation(),
+			'label'                   => $this->get_label(),
+			'description'             => VP_Util_Text::parse_md($this->get_description())
+		));
 	}
 
 	/**
@@ -129,6 +136,34 @@ abstract class VP_Control_Field implements iFactory
 	public function set_data($_data) {
 	    $this->_data = $_data;
 	    return $this;
+	}
+
+	/**
+	 * Set single render data
+	 *
+	 * @param Array $_data Render data array
+	 */
+	public function set_single_data($key, $_data) {
+	    $this->_data[$key] = $_data;
+	    return $this;
+	}
+
+	/**
+	 * Get single render data
+	 *
+	 * @param Array $_data Render data array
+	 */
+	public function get_single_data($key) {
+	   	return $this->_data[$key];
+	}
+
+	/**
+	 * Add value to render data array
+	 * @param Mixed $item Value to be added to render data arary
+	 */
+	public function add_single_data($p_key, $key, $value)
+	{
+		$this->_data[$p_key][$key] = $value;
 	}
 
 	/**

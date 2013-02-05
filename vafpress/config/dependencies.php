@@ -15,7 +15,7 @@ return array(
 	 * Scripts.
 	 */
 	'scripts' => array(
-		'always' => array('jquery', 'prefixfree-js', 'scrollspy-js', 'tipsy-js'),
+		'always' => array('jquery', 'prefixfree-js', 'scrollspy-js', 'tipsy-js', 'jquery-typing'),
 		'paths' => array(
 			'jquery' => array(
 				'path' => VP_PUBLIC_URL . '/js/vendor/jquery-1.8.3.min.js',
@@ -71,6 +71,11 @@ return array(
 				'path' => VP_PUBLIC_URL . '/js/vendor/jquery.ui.datepicker.js',
 				'deps' => array('jquery', 'jquery-ui-core', 'jquery-ui-widget'),
 				'ver'  => '1.9.2'
+			),
+			'jquery-typing' => array(
+				'path' => VP_PUBLIC_URL . '/js/vendor/jquery.typing-0.2.0.min.js',
+				'deps' => array('jquery'),
+				'ver'  => '0.2'
 			),
 		),
 	),

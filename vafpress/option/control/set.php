@@ -106,7 +106,38 @@ class VP_Option_Control_Set
 
 	public function get_fields()
 	{
+		if(!function_exists('loop_controls'))
+		{
+			function loop_controls($menu)
+			{
+				$fields = array();
+				foreach ( $menu->get_controls() as $control )
+				{
+					if( get_class($control) === 'VP_Option_Control_Group_Section' )
+					{
+						foreach ( $control->get_fields() as $field )
+						{
+							if( VP_Util_Text::field_type_from_class(get_class($field)) != 'impexp' )
+							{
+								$fields[$field->get_name()] = $field;
+							}
+						}
+					}
+					else
+					{
+						if( VP_Util_Text::field_type_from_class(get_class($control)) != 'impexp' )
+						{
+							$fields[$control->get_name()] = $control;
+						}
+					}
+				}
+				// print_r($fields);
+				return $fields;
+			}
+		}
+
 		$fields = array();
+
 		foreach ( $this->_menus as $menu )
 		{
 			$submenus = $menu->get_menus();
@@ -114,34 +145,64 @@ class VP_Option_Control_Set
 			{
 				foreach ( $submenus as $submenu )
 				{
-					foreach ( $submenu->get_sections() as $section )
-					{
-						foreach ( $section->get_fields() as $field )
-						{
-							if( VP_Util_Text::field_type_from_class(get_class($field)) != 'impexp' )
-								$fields[$field->get_name()] = $field;
-						}
-					}
+					// $fields += loop_controls($submenu);
+					$fields = array_merge($fields, loop_controls($submenu));
 				}
 			}
 			else
 			{
-				foreach ( $menu->get_sections() as $section )
+				// $fields += loop_controls($menu);
+				$fields = array_merge($fields, loop_controls($menu));
+			}
+		}
+		// print_r($fields);
+		return $fields;
+	}
+
+	public function get_field($name)
+	{
+		$fields = $this->get_fields();
+		if(array_key_exists($name, $fields))
+		{
+			return $fields[$name];
+		}
+		return null;
+	}
+
+	public function process_binding()
+	{
+		$fields = $this->get_fields();
+
+		foreach ($fields as $field)
+		{
+			if($field instanceof VP_Control_FieldMulti)
+			{
+				$bind = $field->get_bind();
+				if(!empty($bind))
 				{
-					foreach ( $section->get_fields() as $field )
+					$bind   = explode('|', $bind);
+					$func   = $bind[0];
+					$params = $bind[1];
+					$params = explode(',', $params);
+					$values = array();
+					foreach ($params as $param)
 					{
-						if( VP_Util_Text::field_type_from_class(get_class($field)) != 'impexp' )
-							$fields[$field->get_name()] = $field;
+						if(array_key_exists($param, $fields))
+						{
+							$values[] = $fields[$param]->get_value();
+						}
 					}
+					$items  = call_user_func_array($func, $values);
+					$field->set_items_from_array($items);
 				}
 			}
 		}
-		return $fields;
 	}
 
 	public function normalize_values($opt_arr)
 	{
 		$fields        = $this->get_fields();
+		// fields whose items can be chosen in multiple way
 		$multi_classes = array( 'checkbox', 'checkimage', 'multiselect' );
 
 		foreach ($opt_arr as $key => $value)

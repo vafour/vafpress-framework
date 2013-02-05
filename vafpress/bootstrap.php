@@ -30,7 +30,7 @@ require VP_DIR . '/autoload.php';
 //////////////////////////
 // Include Data Source  //
 //////////////////////////
-require_once VP_DIR . '/datasources.php';
+require_once VP_DIR . '/data/sources.php';
 
 
 ////////////////////////
@@ -69,17 +69,13 @@ $set	 = $parser->parse_array_options($options);
 if(VP_Util_Config::get_instance()->load('option/main', 'impexp'))
 {
 	$ie_menu    = new VP_Option_Control_Group_Menu();
-	$ie_section = new VP_Option_Control_Group_Section();
 	$ie_field   = new VP_Option_Control_Field_ImpExp();
 
 	$ie_menu->set_title(__('Import and Export', 'vp_textdomain'));
 	$ie_menu->set_name('impexp');
 	$ie_menu->set_icon('/icon/impexp.png');
+	$ie_menu->add_control($ie_field);
 
-	$ie_section->set_name('impexpt_section');
-
-	$ie_section->add_field($ie_field);
-	$ie_menu->add_section($ie_section);
 	$set->add_menu($ie_menu);
 }
 
@@ -118,8 +114,13 @@ else
 if($config['dev_mode'])
 	$opt = $set->get_defaults();
 
+// print_r($opt);
+
 // populate option to fields' values
 $set->populate_values($opt);
+
+// process binding
+$set->process_binding();
 
 function vp_option($key)
 {
@@ -184,6 +185,23 @@ function vp_opt_notice_devmode($hook_suffix)
 add_action('wp_ajax_vp_ajax_save', 'vp_ajax_save');
 add_action('wp_ajax_vp_ajax_export_option', 'vp_ajax_export_option');
 add_action('wp_ajax_vp_ajax_import_option', 'vp_ajax_import_option');
+add_action('wp_ajax_vp_ajax_binding', 'vp_ajax_binding');
+
+function vp_ajax_binding()
+{
+	$function = $_POST['function'];
+	$params   = $_POST['params'];
+
+	if(!is_array($params))
+		$params = array($params);
+
+	$result['data']    = call_user_func_array($function, $params);
+	$result['status']  = true;
+	$result['message'] = __("Nice.", 'vp_textdomain');
+
+	echo json_encode($result);
+	die();
+}
 
 function vp_ajax_save()
 {
@@ -195,13 +213,14 @@ function vp_ajax_save()
 
 	$option = VP_Util_Array::unite( $option, 'name', 'value' );
 	$option = $set->normalize_values($option);
-	$set->populate_values($option);
+
+	$set->populate_values($option, true);
 
 	$result = vp_verify_nonce();
 	
 	if($result['status'])
 	{
-		$result = $set->save($config['option_key'], true);
+		$result = $set->save($config['option_key']);
 	}
 
 	header('Content-type: application/json');
@@ -231,8 +250,8 @@ function vp_ajax_import_option()
 			$option = maybe_unserialize(stripslashes($option));
 			if( is_array($option) )
 			{
-				$set->populate_values($option);
-				$result = $set->save($config['option_key'], true);
+				$set->populate_values($option, true);
+				$result = $set->save($config['option_key']);
 			}
 			else
 			{

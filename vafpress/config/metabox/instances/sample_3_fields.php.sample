@@ -1,15 +1,15 @@
 <?php
 
 return array(
-	'id'          => 'vp_meta_sample_2',
+	'id'          => 'vp_meta_sample_3',
 	'types'       => array('post'),
-	'title'       => __('VP Metabox 2', 'vp_textdomain'),
+	'title'       => __('VP All Fields Metabox', 'vp_textdomain'),
 	'fields'      => array(
 		array(
 			'type' => 'upload',
 			'name' => 'up_1',
-			'label' => __('Upload Image', 'vp_textdomain'),
-			'description' => __('Built in WP media upload', 'vp_textdomain'),
+			'label' => __('Upload', 'vp_textdomain'),
+			'description' => __('Built in WP media upload, upload any media', 'vp_textdomain'),
 			'default' => 'http://lorempixel.com/500/400/animals/',
 		),
 		array(
@@ -137,8 +137,8 @@ return array(
 			'items' => array(
 				'data' => array(
 					array(
-						'type' => 'function',
-						'name' => 'vp_get_roles',
+						'source' => 'function',
+						'value'  => 'vp_get_roles',
 					),
 				),
 			),
@@ -154,8 +154,8 @@ return array(
 			'items' => array(
 				'data' => array(
 					array(
-						'type' => 'function',
-						'name' => 'vp_get_pages',
+						'source' => 'function',
+						'value'  => 'vp_get_pages',
 					),
 				),
 			),
@@ -185,8 +185,8 @@ return array(
 			'items' => array(
 				'data' => array(
 					array(
-						'type' => 'function',
-						'name' => 'vp_get_categories',
+						'source' => 'function',
+						'value'  => 'vp_get_categories',
 					),
 				),
 			),

@@ -25,9 +25,10 @@ abstract class VP_Control_FieldMultiImage extends VP_Control_FieldMulti
 		if (!empty($arr['items']))
 		{
 			$assoc = array();
-			foreach ($arr['items'] as $item)
+			foreach ($arr['items'] as $key => $item)
 			{
-				$assoc[$item['value']] = $item['img'];
+				if(is_numeric($key))
+					$assoc[$item['value']] = $item['img'];
 			}
 			$items = $this->get_items();
 			foreach ($items as &$item)
@@ -43,6 +44,17 @@ abstract class VP_Control_FieldMultiImage extends VP_Control_FieldMulti
 		parent::_setup_data();
 		$this->add_data('item_max_height', $this->get_item_max_height());
 		$this->add_data('item_max_width', $this->get_item_max_width());
+	}
+
+	public function set_items_from_array($_items){
+		foreach ($_items as $item)
+		{
+			$the_item = new VP_Control_Field_Item_Generic();
+			$the_item->value($item['value'])
+				 	 ->label($item['label'])
+				 	 ->img($item['img']);
+			$this->add_item($the_item);
+		}
 	}
 
 	/**

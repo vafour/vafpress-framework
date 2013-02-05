@@ -418,7 +418,7 @@ body {
 	padding: 15px 30px 15px 20px;
 }
 
-.vp-section tr > .fields img {
+.vp-section tr > .fields .input img {
 	border: 1px solid #dddddd;
 	border-radius: 3px;
 	padding: 3px;

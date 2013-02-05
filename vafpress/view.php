@@ -40,7 +40,7 @@ class VP_View
 	 * @param	Array $data Array of data to be binded on the view
 	 * @return String The result view
 	 */
-	public function load($field_view_file, Array $data)
+	public function load($field_view_file, $data = array())
 	{
 		if (array_key_exists('field_view_file', $data))
 		{

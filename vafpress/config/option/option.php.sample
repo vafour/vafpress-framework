@@ -14,9 +14,10 @@ return array(
 					'title' => __('Regular', 'vp_textdomain'),
 					'name' => 'submenu_1',
 					'icon' => '/icon/standard-regular.png',
-					'sections' => array(
+					'controls' => array(
 						array(
-							'title' => __('TextBox and TextArea', 'vp_textdomain'),
+							'type' => 'section',
+							'title' => __('TextBox', 'vp_textdomain'),
 							'name' => 'section_1',
 							'description' => __('TextBox and TextArea Showcase', 'vp_textdomain'),
 							'fields' => array(
@@ -60,6 +61,8 @@ return array(
 									'default' => 'http://vafpress.com',
 									'validation' => 'url',
 								),
+							),
+						),
 								array(
 									'type' => 'textarea',
 									'name' => 'ta_1',
@@ -67,9 +70,8 @@ return array(
 									'description' => __('Everytime you need long text..', 'vp_textdomain'),
 									'default' => 'lorem ipsum',
 								),
-							),
-						),
 						array(
+							'type' => 'section',
 							'name' => 'section_2',
 							'title' => __('Multiple Choices', 'vp_textdomain'),
 							'description' => __('Controls with multiple specified options.', 'vp_textdomain'),
@@ -171,8 +173,8 @@ return array(
 									'items' => array(
 										'data' => array(
 											array(
-												'type' => 'function',
-												'name' => 'vp_get_categories(test,ting)',
+												'source' => 'function',
+												'value' => 'vp_get_categories',
 											),
 										),
 									),
@@ -217,8 +219,9 @@ return array(
 					'title' => __('Image', 'vp_textdomain'),
 					'name' => 'submenu_2',
 					'icon' => '/icon/standard-image.png',
-					'sections' => array(
+					'controls' => array(
 						array(
+							'type' => 'section',
 							'title' => __('Check Images', 'vp_textdomain'),
 							'fields' => array(
 								array(
@@ -386,6 +389,7 @@ return array(
 							),
 						),
 						array(
+							'type' => 'section',
 							'title' => __('Radio Images', 'vp_textdomain'),
 							'fields' => array(
 								array(
@@ -554,8 +558,9 @@ return array(
 			'title' => __('Special Controls', 'vp_textdomain'),
 			'name' => 'menu_2',
 			'icon' => '/icon/special.png',
-					'sections' => array(
+					'controls' => array(
 						array(
+							'type' => 'section',
 							'title' => __('Section 1', 'vp_textdomain'),
 							'fields' => array(
 								array(
@@ -641,8 +646,9 @@ return array(
 			'title' => __('Custom Data Source', 'vp_textdomain'),
 			'name' => 'menu_3',
 			'icon' => '/icon/datasources.png',
-					'sections' => array(
+					'controls' => array(
 						array(
+							'type' => 'section',
 							'title' => __('Data Source and Special Default', 'vp_textdomain'),
 							'fields' => array(
 								array(
@@ -653,8 +659,8 @@ return array(
 									'items' => array(
 										'data' => array(
 											array(
-												'type' => 'function',
-												'name' => 'vp_get_categories',
+												'source' => 'function',
+												'value' => 'vp_get_categories',
 											),
 										),
 									),
@@ -671,8 +677,8 @@ return array(
 									'items' => array(
 										'data' => array(
 											array(
-												'type' => 'function',
-												'name' => 'vp_get_pages',
+												'source' => 'function',
+												'value' => 'vp_get_pages',
 											),
 										),
 									),
@@ -685,8 +691,9 @@ return array(
 									'items' => array(
 										'data' => array(
 											array(
-												'type' => 'function',
-												'name' => 'vp_get_users',
+												'source' => 'function',
+												'params' => 'admin',
+												'value' => 'vp_get_users',
 											),
 										),
 									),
@@ -702,8 +709,8 @@ return array(
 									'items' => array(
 										'data' => array(
 											array(
-												'type' => 'function',
-												'name' => 'vp_get_roles',
+												'source' => 'function',
+												'value' => 'vp_get_roles',
 											),
 										),
 									),
@@ -719,8 +726,8 @@ return array(
 									'items' => array(
 										'data' => array(
 											array(
-												'type' => 'function',
-												'name' => 'vp_get_tags',
+												'source' => 'function',
+												'value' => 'vp_get_tags',
 											),
 										),
 									),
@@ -736,8 +743,68 @@ return array(
 									'items' => array(
 										'data' => array(
 											array(
-												'type' => 'function',
-												'name' => 'vp_get_posts',
+												'source' => 'function',
+												'value' => 'vp_get_posts',
+											),
+										),
+									),
+								),
+							),
+						),
+					),
+		),
+		array(
+			'name' => 'binding_data_source',
+			'title' => __('Binding Data Source', 'vp_textdomain'),
+			'icon' => '/icon/binding.png',
+					'controls' => array(
+						array(
+							'type' => 'section',
+							'title' => __('Choose Font', 'vp_textdomain'),
+							'fields' => array(
+								array(
+									'type' => 'select',
+									'name' => 'logo_font_face',
+									'label' => __('Logo Font Face', 'vp_textdomain'),
+									'description' => __('Select Font', 'vp_textdomain'),
+									'items' => array(
+										'data' => array(
+											array(
+												'source' => 'function',
+												'value' => 'vp_get_gwf_family',
+											),
+										),
+									),
+								),
+								array(
+									'type' => 'radiobutton',
+									'name' => 'logo_font_style',
+									'label' => __('Logo Font Style', 'vp_textdomain'),
+									'description' => __('Select Font Style', 'vp_textdomain'),
+									'items' => array(
+										'data' => array(
+											array(
+												'source' => 'bind',
+												'field' => 'logo_font_face',
+												'value' => 'vp_get_gwf_style',
+											),
+										),
+									),
+									'default' => array(
+										'{{first}}',
+									),
+								),
+								array(
+									'type' => 'radiobutton',
+									'name' => 'logo_font_weight',
+									'label' => __('Logo Font Weight', 'vp_textdomain'),
+									'description' => __('Select Font Weight', 'vp_textdomain'),
+									'items' => array(
+										'data' => array(
+											array(
+												'source' => 'bind',
+												'field' => 'logo_font_face',
+												'value' => 'vp_get_gwf_weight',
 											),
 										),
 									),

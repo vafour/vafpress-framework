@@ -8,6 +8,8 @@ abstract class VP_Control_FieldMulti extends VP_Control_Field
 
 	protected $_items = array();
 
+	protected $_bind;
+
 	/**
 	 * Basic self setup of the object
 	 * @param  SimpleXMLElement $simpleXML SimpleXML object representation of the field
@@ -23,25 +25,22 @@ abstract class VP_Control_FieldMulti extends VP_Control_Field
 			{
 				foreach ($arr['items']['data'] as $data)
 				{
-					if($data['type'] == 'function')
+					if($data['source'] == 'function')
 					{
-						$first    = strpos($data['name'], '(');
-						$last     = strpos($data['name'], ')');
-						if( $first && $last )
-						{
-							$function = substr($data['name'], 0, $first);
-							$params   = explode(',', substr($data['name'], $first + 1, $last - $first - 1));					
-						}
-						else
-						{
-							$function = $data['name'];
-							$params   = array();
-						}
+						$function = $data['value'];
+						$params   = explode(',', !empty($data['params']) ? $data['params'] : '');
+
 						if(function_exists($function))
 						{
 							$items = call_user_func_array($function, $params);
 							$arr['items'] = array_merge($arr['items'], $items);
 						}
+					}
+					else if($data['source'] == 'bind')
+					{
+						$function = $data['value'];
+						$field    = $data['field'];
+						$this->set_bind($function . '|' . $field);
 					}
 				}
 				unset($arr['items']['data']);
@@ -91,6 +90,7 @@ abstract class VP_Control_FieldMulti extends VP_Control_Field
 	protected function _setup_data()
 	{
 		parent::_setup_data();
+		$this->add_single_data('head_info', 'bind', $this->get_bind());
 		$this->add_data('items', $this->get_items());
 	}
 
@@ -125,6 +125,38 @@ abstract class VP_Control_FieldMulti extends VP_Control_Field
 	public function set_items($_items) {
 		$this->_items = $_items;
 		return $this;
+	}
+
+	public function set_items_from_array($_items) {
+		if(is_array($_items))
+		{
+			foreach ($_items as $item)
+			{
+				$the_item = new VP_Control_Field_Item_Generic();
+				$the_item->value($item['value'])
+					 	 ->label($item['label']);
+				$this->add_item($the_item);
+			}
+		}
+	}
+
+	/**
+	 * Get $_bind
+	 *
+	 * @return String bind rule string
+	 */
+	public function get_bind() {
+	    return $this->_bind;
+	}
+	
+	/**
+	 * Set $_bind
+	 *
+	 * @param String $_bind bind rule string
+	 */
+	public function set_bind($_bind) {
+	    $this->_bind = $_bind;
+	    return $this;
 	}
 
 }

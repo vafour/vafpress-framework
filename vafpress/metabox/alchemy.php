@@ -37,10 +37,13 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		}
 		else
 		{
+			$fields = $this->_enfactor($this->template);
+			$this->_enbind($fields);
+
 			echo '<div class="vp-metabox">';
 			echo '<table>';
 			echo '<tbody>';
-			$this->_enview($this->template);
+			$this->_enview($fields);
 			echo '</tbody>';
 			echo '</table>';
 			echo '</div>';
@@ -52,26 +55,91 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		$this->in_template = FALSE;
 	}
 
-	function _enview($arr)
+	function _enfactor($arr)
 	{
-		$mb       =& $this;
-		$fields   = $arr['fields'];
+		$mb            =& $this;
+		$fields        = $arr['fields'];
+		$field_objects = array();
 
 		foreach ($fields as $field)
 		{
 			// if it's a group
 			if( $field['type'] == 'group' )
 			{
-				echo $this->_render_group($field, $mb);
+				$field_objects[$field['name']] = $this->_enfactor_group($field, $mb);
 			}
 			else
 			{
-				echo $this->_render_field($field, $mb);
+				$field_objects[$field['name']] = $this->_enfactor_field($field, $mb);
+			}
+		}
+
+		return $field_objects;
+	}
+
+	function _enbind($fields)
+	{
+		foreach ($fields as $field)
+		{
+			if(is_array($field))
+			{
+				foreach ($field as $group)
+				{
+					foreach ($group as $f)
+					{
+						if($f instanceof VP_Control_FieldMulti)
+						{
+							$bind = $f->get_bind();
+							if(!empty($bind))
+							{
+								$bind   = explode('|', $bind);
+								$func   = $bind[0];
+								$params = $bind[1];
+								$params = explode(',', $params);
+								$values = array();
+								foreach ($params as $param)
+								{
+									if(array_key_exists($param, $group))
+									{
+										$values[] = $group[$param]->get_value();
+									}
+								}
+								$items  = call_user_func_array($func, $values);
+								$f->set_items_from_array($items);
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				if($field instanceof VP_Control_FieldMulti)
+				{
+					$bind = $field->get_bind();
+					if(!empty($bind))
+					{
+
+						$bind   = explode('|', $bind);
+						$func   = $bind[0];
+						$params = $bind[1];
+						$params = explode(',', $params);
+						$values = array();
+						foreach ($params as $param)
+						{
+							if(array_key_exists($param, $fields))
+							{
+								$values[] = $fields[$param]->get_value();
+							}
+						}
+						$items  = call_user_func_array($func, $values);
+						$field->set_items_from_array($items);
+					}
+				}
 			}
 		}
 	}
 
-	function _render_field($field, $mb, $in_group = false)
+	function _enfactor_field($field, $mb, $in_group = false)
 	{
 		$multiple = array('checkbox', 'checkimage', 'multiselect');
 
@@ -111,31 +179,68 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		$vp_field->set_value($value);
 
 		if (!$in_group) {
-			$vp_field->set_container_extra_classes('vp-meta-row');
+			$vp_field->set_container_extra_classes('vp-meta-row vp-single');
 		}
 
-		return $vp_field->render();
-
+		return $vp_field;
 	}
 
-	function _render_group($field, $mb) {
+	function _enfactor_group($field, $mb)
+	{
+		$groups = array();
+		while($mb->have_fields_and_multi($field['name']))
+		{
+			$fields = array();
+			foreach ($field['fields'] as $f)
+			{
+ 				$fields[$f['name']] = $this->_enfactor_field($f, $mb, true);
+			}
+			$groups[] = $fields;
+		}
+		return $groups;
+	}
 
+	function _enview($fields)
+	{
+		foreach ($fields as $name => $field)
+		{
+			if( is_array($field) )
+			{
+				echo $this->_render_group($name, $field);
+			}
+			else
+			{
+				echo $this->_render_field($field);
+			}
+		}
+	}
+
+	function _render_field($field)
+	{
+		return $field->render();
+	}
+
+	function _render_group($name, $group)
+	{
 		$html  = '';
-		$html .= '<tr id="wpa_loop-' . $field['name'] . '" class="vp-wpa-loop vp-meta-row wpa_loop wpa_loop-' . $field['name'] . '">';
+		$html .= '<tr id="wpa_loop-' . $name . '" class="vp-wpa-loop vp-meta-row wpa_loop wpa_loop-' . $name . '">';
 		$html .= '<td colspan="2">';
 			$html .= '<table>';
 			$html .= '<tbody>';
 
-			while($mb->have_fields_and_multi($field['name']))
+			foreach ($group as $g)
 			{
 				$class = '';
-				if ($this->is_last()) $class = ' last tocopy';
-				if ($this->is_first()) $class = ' first';
-				$html .= '<tr class="vp-wpa-group wpa_group wpa_group-' . $field['name'] . $class . '">';
+				if ($g === end($group))   $class = ' last tocopy';
+				if ($g === reset($group)) $class = ' first';
+				$html .= '<tr class="vp-wpa-group wpa_group wpa_group-' . $name . $class . '">';
 				$html .= '<td>';
 					$html .= '<table>';
 					$html .= '</tbody>';
-					foreach ($field['fields'] as $f) { $html .= $this->_render_field($f, $mb, true); }
+					foreach ($g as $f)
+					{
+						$html .= $this->_render_field($f);
+					}
 					$html .= '</tbody>';
 					$html .= '</table>';
 				$html .= '</td>';
@@ -147,7 +252,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 
 				$html .= '<tr>';
 				$html .= '<td class="vp-wpa-group-add">';
-				$html .= '<a href="#" class="button button-large docopy-' . $field['name'] . '">Add More</a>';
+				$html .= '<a href="#" class="button button-large docopy-' . $name . '">Add More</a>';
 				$html .= '</td>';
 				$html .= '<td></td>';
 				$html .= '</tr>';

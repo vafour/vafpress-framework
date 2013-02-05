@@ -10,17 +10,17 @@ class VP_Option_Control_Group_Menu extends VP_Option_Control_Group
 	private $_menus;
 
 	/**
-	 * Collection of sections
+	 * Collection of controls
 	 * @var VP_Control_Field
 	 */	
-	private $_sections;
+	private $_controls;
 
 	private $_icon;
 
 	public function __construct()
 	{
 		$this->_menus    = array();
-		$this->_sections = array();
+		$this->_controls = array();
 	}
 
 	public function render($extra = array())
@@ -60,29 +60,29 @@ class VP_Option_Control_Group_Menu extends VP_Option_Control_Group
 		return $this;
 	}
 
-	public function add_section($section)
+	public function add_control($control)
 	{
-		$this->_sections[] = $section;
+		$this->_controls[] = $control;
 	}
 
 	/**
-	 * Getter of sections
+	 * Getter of controls
 	 *
-	 * @return Array Collection of sections object
+	 * @return Array Collection of controls object
 	 */
-	public function get_sections()
+	public function get_controls()
 	{
-		return $this->_sections;
+		return $this->_controls;
 	}
 	
 	/**
-	 * Setter of sections
+	 * Setter of controls
 	 *
-	 * @param Array $_sections Collection of sections object
+	 * @param Array $_controls Collection of controls object
 	 */
-	public function set_sections($_sections)
+	public function set_controls($_controls)
 	{
-		$this->_sections = $_sections;
+		$this->_controls = $_controls;
 		return $this;
 	}
 

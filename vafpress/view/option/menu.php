@@ -6,8 +6,8 @@
 	<?php endforeach; ?>
 <?php else: ?>
 <div id="<?php echo $menu->get_name(); ?>" class="vp-panel<?php if((isset($sub_current) and $sub_current) or (!isset($sub_current) and $current)) echo ' vp-current'; ?>">
-	<?php foreach ($menu->get_sections() as $section): ?>
-	<?php echo $section->render(); ?>
+	<?php foreach ($menu->get_controls() as $control): ?>
+	<?php echo $control->render(); ?>
 	<?php endforeach; ?>
 </div>
 <?php endif; ?>

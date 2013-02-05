@@ -5,6 +5,7 @@ class VP_Option_Parser
 
 	public function parse_array_options($arr)
 	{
+
 		// Parse XML String with SimpleXML
 		$set = new VP_Option_Control_Set();
 		$auto_group_naming = VP_Util_Config::get_instance()->load('option/main', 'auto_group_naming');
@@ -68,49 +69,54 @@ class VP_Option_Parser
 
 				$vp_menu->add_menu($vp_submenu);
 				
-				// Loops through every section in each submenu
-				if (!empty($submenu['sections'])) foreach ($submenu['sections'] as $section)
+				// Loops through every control in each submenu
+				if (!empty($submenu['controls'])) foreach ($submenu['controls'] as $control)
 				{
-					$vp_sec = new VP_Option_Control_Group_Section();
-					$vp_sec->set_name(isset($section['name']) ? $section['name'] : '')
-					       ->set_title(isset($section['title']) ? $section['title'] : '')
-					       ->set_description(isset($section['description']) ? $section['description'] : '');
-						   
-					$vp_submenu->add_section($vp_sec);
-
-					// Loops through every field in each submenu
-					if (!empty($section['fields'])) foreach ($section['fields'] as $field)
-					{
-						$make     = 'VP_Control_Field_' . $field['type'];
-						$vp_field = call_user_func("$make::withArray", $field);
-						$vp_sec->add_field($vp_field);
-					}
+					if($control['type'] === 'section')
+						$control = $this->parse_section($control);
+					else
+						$control = $this->parse_field($control);
+					$vp_submenu->add_control($control);
 				}
 			}
 			else
 			{
-				// Loops through every section in each submenu
-				if (!empty($menu['sections'])) foreach ($menu['sections'] as $section)
+				// Loops through every control in each submenu
+				if (!empty($menu['controls'])) foreach ($menu['controls'] as $control)
 				{
-					$vp_sec = new VP_Option_Control_Group_Section();
-					$vp_sec->set_name(isset($section['name']) ? $section['name'] : '')
-					       ->set_title(isset($section['title']) ? $section['title'] : '')
-					       ->set_description(isset($section['description']) ? $section['description'] : '');
-						   
-					$vp_menu->add_section($vp_sec);
-
-					// Loops through every field in each submenu
-					if (!empty($section['fields'])) foreach ($section['fields'] as $field)
-					{
-						$class    = VP_Util_Text::field_class_from_type($field['type']);
-						$vp_field = call_user_func("$class::withArray", $field);
-						$vp_sec->add_field($vp_field);
-					}
+					if($control['type'] === 'section')
+						$control = $this->parse_section($control);
+					else
+						$control = $this->parse_field($control);
+					$vp_menu->add_control($control);
 				}
 			}
 		}
 
 		return $set;
+	}
+
+	private function parse_section($section)
+	{
+		$vp_sec = new VP_Option_Control_Group_Section();
+		$vp_sec->set_name(isset($section['name']) ? $section['name'] : '')
+		       ->set_title(isset($section['title']) ? $section['title'] : '')
+		       ->set_description(isset($section['description']) ? $section['description'] : '');
+
+		// Loops through every field in each submenu
+		if (!empty($section['fields'])) foreach ($section['fields'] as $field)
+		{
+			$vp_field = $this->parse_field($field);
+			$vp_sec->add_field($vp_field);
+		}
+		return $vp_sec;
+	}
+
+	private function parse_field($field)
+	{
+		$class    = VP_Util_Text::field_class_from_type($field['type']);
+		$vp_field = call_user_func("$class::withArray", $field);
+		return $vp_field;
 	}
 
 }

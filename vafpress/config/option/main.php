@@ -28,9 +28,9 @@ return array(
 	'option_key'        => 'vp_option',
 
 	/**
-	 * Minimum Role to access the option page
+	 * Minimum Capabilities to access the option page
 	 */
-	'role'              => 'administrator',
+	'role'              => 'edit_theme_options',
 
 	/**
 	 * Slug of option page menu under appereance

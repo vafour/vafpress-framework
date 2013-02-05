@@ -13,9 +13,9 @@
 					<title>Regular</title>
 					<name>submenu_1</name>
 					<icon>/icon/standard-regular.png</icon>
-					<sections>
+					<controls>
 						<section>
-							<title>TextBox and TextArea</title>
+							<title>TextBox</title>
 							<name>section_1</name>
 							<description>TextBox and TextArea Showcase</description>
 							<fields>
@@ -54,14 +54,14 @@
 									<default>http://vafpress.com</default>
 									<validation>url</validation>
 								</textbox>
-								<textarea>
-									<name>ta_1</name>
-									<label>Textarea</label>
-									<description>Everytime you need long text..</description>
-									<default>lorem ipsum</default>
-								</textarea>
 							</fields>
 						</section>
+						<textarea>
+							<name>ta_1</name>
+							<label>Textarea</label>
+							<description>Everytime you need long text..</description>
+							<default>lorem ipsum</default>
+						</textarea>
 						<section>
 							<name>section_2</name>
 							<title>Multiple Choices</title>
@@ -121,7 +121,7 @@
 									<name>ss_2</name>
 									<label>Select Box with Get Categories Data Source</label>
 									<items>
-										<data source="function">vp_get_categories(test,ting)</data>
+										<data source="function">vp_get_categories</data>
 									</items>
 									<default>
 										<item>{{last}}</item>
@@ -145,13 +145,13 @@
 								</multiselect>
 							</fields>
 						</section>
-					</sections>
+					</controls>
 				</menu>
 				<menu>
 					<title>Image</title>
 					<name>submenu_2</name>
 					<icon>/icon/standard-image.png</icon>
-					<sections>
+					<controls>
 						<section>
 							<title>Check Images</title>
 							<fields>
@@ -293,7 +293,7 @@
 								</radioimage>
 							</fields>
 						</section>
-					</sections>
+					</controls>
 				</menu>
 			</menus>
 		</menu>
@@ -301,7 +301,7 @@
 			<title>Special Controls</title>
 			<name>menu_2</name>
 			<icon>/icon/special.png</icon>
-			<sections>
+			<controls>
 				<section>
 					<title>Section 1</title>
 					<fields>
@@ -373,13 +373,13 @@
 						</date>
 					</fields>
 				</section>
-			</sections>
+			</controls>
 		</menu>
 		<menu>
 			<title>Custom Data Source</title>
 			<name>menu_3</name>
 			<icon>/icon/datasources.png</icon>
-			<sections>
+			<controls>	
 				<section>
 					<title>Data Source and Special Default</title>
 					<fields>
@@ -408,7 +408,7 @@
 							<label>Users Data Source</label>
 							<description>Checkbox field with WP Users Data Source and **{{all}}** default items.</description>
 							<items>
-								<data source="function">vp_get_users</data>
+								<data source="function" params="admin">vp_get_users</data>
 							</items>
 							<default>
 								<item>{{all}}</item>
@@ -446,7 +446,68 @@
 						</select>
 					</fields>
 				</section>
-			</sections>
+			</controls>
 		</menu>
+		<menu>
+			<name>binding_data_source</name>
+			<title>Binding Data Source</title>
+			<icon>/icon/binding.png</icon>
+			<controls>
+				<section>
+					<title>Choose Font</title>
+					<fields>
+						<select>
+							<name>logo_font_face</name>
+							<label>Logo Font Face</label>
+							<description>Select Font</description>
+							<items>
+								<data source="function">vp_get_gwf_family</data>
+							</items>	
+						</select>
+						<radiobutton>
+							<name>logo_font_style</name>
+							<label>Logo Font Style</label>
+							<description>Select Font Style</description>
+							<items>
+								<data source="bind" field="logo_font_face">vp_get_gwf_style</data>
+							</items>
+							<default>
+								<item>{{first}}</item>
+							</default>
+						</radiobutton>
+						<radiobutton>
+							<name>logo_font_weight</name>
+							<label>Logo Font Weight</label>
+							<description>Select Font Weight</description>
+							<items>
+								<data source="bind" field="logo_font_face">vp_get_gwf_weight</data>
+							</items>
+						</radiobutton>
+					</fields>
+				</section>
+			</controls>
+		</menu>
+
+<!-- 		<menu>
+			<name>dependancing_field</name>
+			<title>Dependancing Field</title>
+			<icon>/icon/binding.png</icon>
+			<controls>
+				<section>
+					<title>Deps ajah</title>
+					<fields>
+						<select>
+							<name>logo_font_face</name>
+							<label>Logo Font Face</label>
+							<description>Select Font</description>
+							<items>
+								<data source="function">vp_get_gwf_family</data>
+							</items>	
+						</select>
+					</fields>
+				</section>
+			</controls>
+		</menu> -->
+
 	</menus>
 </option>
