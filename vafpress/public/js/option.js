@@ -56,15 +56,22 @@
 	$.getScript(vp_wp.public_url + "/js/shared.js", function(data, textStatus, jqxhr) {
 
 		/* BEGIN FETCHING ALL FIELDS' VALIDATION and BINDING RULES */
-		var validation = [];
-		var bindings   = [];
+		var validation   = [];
+		var bindings     = [];
+		var dependancies = [];
+		var dep;
 		$('.vp-menu-goto').each(function(i) {
 			var href = $(this).attr('href'),
 			    $panel = $(href),
 			    fields = [];
 
+
 			$panel.children('.vp-section').each(function(i) {
 				var $section = $(this);
+
+				dep = $section.attr('data-vp-dependancy');
+				dep && dependancies.push({dep: dep, type: 'section', source: $section.attr('id')});
+
 				$section.find('tr').each(function(j) {
 					var $field = $(this),
 						name   = $field.attr('id'),
@@ -73,6 +80,9 @@
 						type   = $field.getDatas().type,
 						$input = $('[name="' + name + '"]');
 
+					dep = $field.attr('data-vp-dependancy');
+
+					dep   && dependancies.push({dep: dep, type: 'field', source: $field.attr('id')});
 					bind  && bindings.push({bind: bind, type: type, source: name});
 					rules && fields.push({name: name, rules: rules, type: type});
 				});
@@ -140,10 +150,32 @@
 
 			for (var j = 0; j < ids.length; j++)
 			{
-				vp.binding_event(ids, j, field, func, '.vp-wrap');
+				vp.binding_event(ids, j, field, func, '.vp-wrap', 'option');
 			}
 		}
 		/* ============================================================ */
+
+		// DEPENDANCY
+		for (var i = 0; i < dependancies.length; i++)
+		{
+			var field = dependancies[i],
+			    temp  = field.dep.split('|'),
+			    func  = temp[0],
+			    dest  = temp[1],
+			    ids   = [];
+
+			dest = dest.split(',');
+
+			for (var j = 0; j < dest.length; j++)
+			{
+				ids.push(dest[j]);
+			}
+
+			for (var j = 0; j < ids.length; j++)
+			{
+				vp.dependancy_event(ids, j, field, func, '.vp-wrap');
+			}
+		}
 
 		// Ajax Saving
 		$('.vp-js-save').bind('click', function(e) {

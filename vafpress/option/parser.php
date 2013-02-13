@@ -103,6 +103,13 @@ class VP_Option_Parser
 		       ->set_title(isset($section['title']) ? $section['title'] : '')
 		       ->set_description(isset($section['description']) ? $section['description'] : '');
 
+		if(isset($section['dependancy']))
+		{
+			$func  = $section['dependancy']['value'];
+			$field = $section['dependancy']['field'];
+			$vp_sec->set_dependancy($func . '|' . $field);
+		}
+
 		// Loops through every field in each submenu
 		if (!empty($section['fields'])) foreach ($section['fields'] as $field)
 		{

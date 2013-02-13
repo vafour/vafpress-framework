@@ -9,7 +9,10 @@ class VP_Control_Field_Date extends VP_Control_Field
 
 	private $_format;
 
-	public function __construct(){}
+	public function __construct()
+	{
+		parent::__construct();
+	}
 
 	public static function withArray($arr)
 	{

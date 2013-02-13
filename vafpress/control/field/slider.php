@@ -9,7 +9,10 @@ class VP_Control_Field_Slider extends VP_Control_Field
 
 	private $_step;
 
-	public function __construct(){}
+	public function __construct()
+	{
+		parent::__construct();
+	}
 
 	public static function withArray($arr)
 	{

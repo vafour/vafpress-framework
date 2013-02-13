@@ -493,15 +493,23 @@
 			<title>Dependancing Field</title>
 			<icon>/icon/binding.png</icon>
 			<controls>
-				<toggle>
-					<name>use_custom_font</name>
-					<label>Use Custom Font</label>
-					<description>Use custom font or not</description>
-				</toggle>
+
+				<section>
+					<title>Decider</title>
+					<name>section_custom_font_decider</name>
+					<fields>
+						<toggle>
+							<name>use_custom_font</name>
+							<label>Use Custom Font</label>
+							<description>Use custom font or not</description>
+						</toggle>
+					</fields>
+				</section>
+
 				<section>
 					<title>Custom Font</title>
 					<name>section_custom_font</name>
-					<dependancies field="use_custom_font">vp_dep_basic</dependancies>
+					<dependancy field="use_custom_font">vp_dep_basic</dependancy>
 					<fields>
 						<select>
 							<name>dep_font_face</name>
@@ -532,6 +540,25 @@
 						</radiobutton>
 					</fields>
 				</section>
+
+				<section>
+					<title>Single Field Dependancy</title>
+					<name>section_single_field_deps</name>
+					<fields>
+						<toggle>
+							<name>use_custom_logo</name>
+							<label>Use Custom Logo</label>
+							<description>Use custom logo or not</description>
+						</toggle>
+						<upload>
+							<name>custom_logo</name>
+							<label>Custom Logo</label>
+							<dependancy field="use_custom_logo">vp_dep_basic</dependancy>
+							<description>Upload or choose custom logo</description>
+						</upload>
+					</fields>
+				</section>
+
 			</controls>
 		</menu>
 

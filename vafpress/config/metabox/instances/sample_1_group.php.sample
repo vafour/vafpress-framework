@@ -6,37 +6,64 @@ return array(
 	'title'       => __('VP Group Metabox', 'vp_textdomain'),
 	'fields'      => array(
 		array(
-			'type' => 'group',
-			'name' => 'tb_1_g',
-			'fields' => array(
+			'type' => 'toggle',
+			'name' => 'toggle_filtering',
+			'label' => __('Use Filtering', 'vp_textdomain'),
+			'description' => __('Checking this will show filtering option group.', 'vp_textdomain'),
+		),
+		array(
+			'type'      => 'group',
+			'repeating' => false,
+			'length'    => 1,
+			'name'      => 'filtering_group',
+			'dependancy' => array(
+				'field' => 'toggle_filtering',
+				'value' => 'vp_dep_basic',
+			),
+			'fields'    => array(
 				array(
-					'type' => 'textbox',
-					'name' => 'tb_1_name',
-					'label' => __('Textbox', 'vp_textdomain'),
-					'description' => __('Textbox inside repeater field group.', 'vp_textdomain'),
-					'default' => 'abcdefg',
-				),
-				array(
-					'type' => 'checkbox',
-					'name' => 'cb_1',
-					'label' => __('Checkbox', 'vp_textdomain'),
-					'description' => __('Checkbox inside repeater field group.', 'vp_textdomain'),
+					'type' => 'radiobutton',
+					'name' => 'filter_type',
+					'label' => __('Filter By', 'vp_textdomain'),
+					'description' => __('Different type will show different type of field', 'vp_textdomain'),
 					'items' => array(
 						array(
-							'value' => 'value_1',
-							'label' => __('Label 1', 'vp_textdomain'),
+							'value' => 'keyword',
+							'label' => __('Keyword', 'vp_textdomain'),
 						),
 						array(
-							'value' => 'value_2',
-							'label' => __('Label 2', 'vp_textdomain'),
-						),
-						array(
-							'value' => 'value_3',
-							'label' => __('Label 3', 'vp_textdomain'),
+							'value' => 'tags',
+							'label' => __('Tags', 'vp_textdomain'),
 						),
 					),
-					'default' => array(
-						'value_1',
+				),
+				array(
+					'type' => 'textbox',
+					'name' => 'filter_keyword',
+					'label' => __('Keyword', 'vp_textdomain'),
+					'description' => __('Keyword to filter.', 'vp_textdomain'),
+					'default' => 'abcdefg',
+					'dependancy' => array(
+						'field' => 'filter_type',
+						'value' => 'vp_dep_is_keyword',
+					),
+				),
+				array(
+					'type' => 'multiselect',
+					'name' => 'filter_tags',
+					'label' => __('Choose Tag(s)', 'vp_textdomain'),
+					'description' => __('Tag(s) to filter.', 'vp_textdomain'),
+					'items' => array(
+						'data' => array(
+							array(
+								'source' => 'function',
+								'value'  => 'vp_get_tags',
+							),
+						),
+					),
+					'dependancy' => array(
+						'field' => 'filter_type',
+						'value' => 'vp_dep_is_tags',
 					),
 				),
 			),

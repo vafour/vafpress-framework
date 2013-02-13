@@ -198,6 +198,35 @@ vp.wp_ext2type = function ( ext ) {
 vp.jqid = function(id) {
 	return '#' + id.replace(/([:\.\[\]])/g,'\\$1');
 }
+vp.jqidwild = function(id) {
+	id = id.replace(/([:\.\[\]])/g,'\\$1');
+	id = '[id*=' + id + ']';
+	return id;
+}
+
+vp.jqname = function(name) {
+	return '[name="' + name + '"]';
+}
+
+vp.jqnamewild = function(name) {
+	return '[name*="' + name + '"]';
+}
+
+vp.thejqid = function(id, thecase) {
+	if(thecase === 'option')
+		return vp.jqid(id);
+	if(thecase === 'metabox')
+		return vp.jqidwild(id);
+	return id;
+}
+
+vp.thejqname = function(name, thecase) {
+	if(thecase === 'option')
+		return vp.jqname(name);
+	if(thecase === 'metabox')
+		return vp.jqnamewild(name);
+	return name;
+}
 
 vp.validateAlphabet = function(type, val) {
 	// ignore array
@@ -259,18 +288,20 @@ vp.validateRequired = function(type, val) {
 }
 
 // vafpress binding related functions
-vp.binding_action =	function(ids, field, func) {
+vp.binding_action =	function(ids, field, func, thecase) {
 	var $source_tr = jQuery(vp.jqid(field.source)),
 	    $source    = jQuery('[name="' + field.source + '"]'),
 	    values     = [];
 
 	for (var i = 0; i < ids.length; i++)
 	{
-		values.push(jQuery('[name*="' + ids[i] + '"]').validationVal());
+		values.push(jQuery(vp.thejqname(ids[i], thecase)).validationVal());
 	}
 
+	console.log(values);
+
 	var data = {
-		action   : 'vp_ajax_binding',
+		action   : 'vp_ajax_wrapper',
 		function : func,
 		params   : values
 	};
@@ -340,27 +371,27 @@ vp.binding_action =	function(ids, field, func) {
 					vp.init_tipsy();
 					break;
 			}
-			$source.change();
+			jQuery('[name="' + field.source + '"]').change();
 		}
 	}, 'JSON');
 }
 
-vp.binding_event = function(ids, idx, field, func, parent)
+vp.binding_event = function(ids, idx, field, func, parent, thecase)
 {
 	var change    = ['vp-select', 'vp-checkbox', 'vp-checkimage', 'vp-radiobutton', 'vp-radioimage', 'vp-multiselect', 'vp-toggle', 'vp-upload'],
 	    typing    = ['vp-textbox', 'vp-slider', 'vp-color', 'vp-date'],
-	    name      = '[name*="' + ids[idx] + '"]',
-	    dest_type = jQuery(vp.jqid(ids[idx])).attr('data-vp-type');
+	    name      = vp.thejqname(ids[idx], thecase),
+	    dest_type = jQuery(vp.thejqid(ids[idx], thecase)).attr('data-vp-type');
 
 	if(jQuery.inArray(dest_type, change) !== -1 )
 	{
-		jQuery(parent).delegate(name, 'change', function(){vp.binding_action(ids, field, func)});
+		jQuery(parent).delegate(name, 'change', function(){vp.binding_action(ids, field, func, thecase)});
 	}
 	else if(jQuery.inArray(dest_type, typing) !== -1 )
 	{
 		jQuery(name).typing({
 			stop: function(event, $elem){
-				vp.binding_action(ids, field, func);
+				vp.binding_action(ids, field, func, thecase);
 			},
 			delay: 400
 		});
@@ -372,6 +403,76 @@ vp.binding_event = function(ids, idx, field, func, parent)
  */
 
 
+// vafpress dependancies related functions
+vp.dependancy_action =	function(ids, field, func) {
+
+	var $source_tr = jQuery(vp.jqid(field.source)),
+	    $source    = jQuery('[name="' + field.source + '"]'),
+	    values     = [],
+	    targets    = [];
+
+	for (var i = 0; i < ids.length; i++)
+	{
+		targets.push(jQuery(vp.jqid(ids[i])));
+		values.push(jQuery('[name="' + ids[i] + '"]').validationVal());
+	}
+
+	var data = {
+		action   : 'vp_ajax_wrapper',
+		function : func,
+		params   : values
+	};
+
+	// get loader
+	jQuery.each(targets, function(idx, val){
+		var $loader = val.find('.vp-js-bind-loader');
+		$loader.fadeIn(100);
+	});
+
+	jQuery.post(ajaxurl, data, function(response) {
+		jQuery.each(targets, function(idx, val){
+			var $loader = val.find('.vp-js-bind-loader');
+			$loader.fadeOut(100);
+		});
+
+		if (response.status)
+		{
+			if(response.data)
+			{
+				$source_tr.fadeIn();
+			}
+			else
+			{
+				$source_tr.fadeOut();
+			}
+		}
+	}, 'JSON');
+}
+
+vp.dependancy_event = function(ids, idx, field, func, parent){
+
+	var change    = ['vp-select', 'vp-checkbox', 'vp-checkimage', 'vp-radiobutton', 'vp-radioimage', 'vp-multiselect', 'vp-toggle', 'vp-upload'],
+	    typing    = ['vp-textbox', 'vp-slider', 'vp-color', 'vp-date'],
+	    name      = vp.thejqname(ids[idx], 'option'),
+	    dest_type = jQuery(vp.thejqid(ids[idx], 'option')).attr('data-vp-type');
+
+	if(jQuery.inArray(dest_type, change) !== -1 )
+	{
+		jQuery(parent).delegate(name, 'change', function(){vp.dependancy_action(ids, field, func)});
+	}
+	else if(jQuery.inArray(dest_type, typing) !== -1 )
+	{
+		jQuery(name).typing({
+			stop: function(event, $elem){
+				vp.dependancy_action(ids, field, func);
+			},
+			delay: 400
+		});
+	}
+}
+/*
+ * =============================================================
+ */
 
 /**
  * =============================================================

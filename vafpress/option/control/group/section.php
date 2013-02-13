@@ -9,8 +9,15 @@ class VP_Option_Control_Group_Section extends VP_Option_Control_Group
 	 */	
 	private $_fields;
 
+	/**
+	 * Dependancy pattern string
+	 * @var String
+	 */
+	protected $_dependancy;
+
 	public function __construct()
 	{
+		parent::__construct();
 		$this->_fields = array();
 	}
 
@@ -19,6 +26,7 @@ class VP_Option_Control_Group_Section extends VP_Option_Control_Group
 		// Setup data
 		$this->_setup_data();
 		$this->add_data('section', $this);
+		$this->add_data('container_extra_classes', implode(',', $this->get_container_extra_classes()));
 		foreach ($extra as $key => $value)
 		{
 			$this->add_data($key, $value);
@@ -47,6 +55,25 @@ class VP_Option_Control_Group_Section extends VP_Option_Control_Group
 	 */
 	public function set_fields($_fields) {
 		$this->_fields = $_fields;
+		return $this;
+	}
+
+	/**
+	 * Getter for $_dependancy
+	 *
+	 * @return String dependancy pattern in string
+	 */
+	public function get_dependancy() {
+		return $this->_dependancy;
+	}
+	
+	/**
+	 * Setter for $_dependancy
+	 *
+	 * @param String $_dependancy dependancy pattern in string
+	 */
+	public function set_dependancy($_dependancy) {
+		$this->_dependancy = $_dependancy;
 		return $this;
 	}
 

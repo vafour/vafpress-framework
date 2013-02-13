@@ -19,6 +19,7 @@ class VP_Option_Control_Group_Menu extends VP_Option_Control_Group
 
 	public function __construct()
 	{
+		parent::__construct();
 		$this->_menus    = array();
 		$this->_controls = array();
 	}

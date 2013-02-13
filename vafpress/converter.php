@@ -166,10 +166,22 @@ class VP_Converter
 			// Print Section Attributes
 			if(!$section->hasChildren() and !in_array($section->key(), $this->group))
 			{
-				if(in_array($section->key(), $this->localized))
-					$opt_arr .= "\t\t\t\t\t\t\t'{$section->key()}' => __('{$section->current()}', 'vp_textdomain'),\n";
+				if($section->key() == 'dependancy')
+				{
+					$current = $section->current();
+
+					$opt_arr .= "\t\t\t\t\t\t\t'dependancy' => array(\n";
+					$opt_arr .= "\t\t\t\t\t\t\t\t'field' => '{$current[field]}',\n";
+					$opt_arr .= "\t\t\t\t\t\t\t\t'value' => '{$current}',\n";
+					$opt_arr .= "\t\t\t\t\t\t\t),\n";
+				}
 				else
-					$opt_arr .= "\t\t\t\t\t\t\t'{$section->key()}' => '{$section->current()}',\n";
+				{
+					if(in_array($section->key(), $this->localized))
+						$opt_arr .= "\t\t\t\t\t\t\t'{$section->key()}' => __('{$section->current()}', 'vp_textdomain'),\n";
+					else
+						$opt_arr .= "\t\t\t\t\t\t\t'{$section->key()}' => '{$section->current()}',\n";
+				}
 			}
 			if($section->key() == 'fields')
 			{
@@ -201,12 +213,25 @@ class VP_Converter
 			// Print Tab Attributes
 			if(!$field->hasChildren())
 			{
-				if($field->key() == 'default')
-					echo '';
-				if(in_array($field->key(), $this->localized))
-					$opt_arr .= "\t\t\t\t\t\t\t\t\t'{$field->key()}' => __('{$field->current()}', 'vp_textdomain'),\n";
+				if($field->key() == 'dependancy')
+				{
+
+					$current  = $field->current();
+
+					$opt_arr .= "\t\t\t\t\t\t\t\t\t'dependancy' => array(\n";
+					$opt_arr .= "\t\t\t\t\t\t\t\t\t\t'field' => '{$current[field]}',\n";
+					$opt_arr .= "\t\t\t\t\t\t\t\t\t\t'value' => '{$current}',\n";
+					$opt_arr .= "\t\t\t\t\t\t\t\t\t),\n";
+
+				}
 				else
-					$opt_arr .= "\t\t\t\t\t\t\t\t\t'{$field->key()}' => '{$field->current()}',\n";
+				{
+					if(in_array($field->key(), $this->localized))
+						$opt_arr .= "\t\t\t\t\t\t\t\t\t'{$field->key()}' => __('{$field->current()}', 'vp_textdomain'),\n";
+					else
+						$opt_arr .= "\t\t\t\t\t\t\t\t\t'{$field->key()}' => '{$field->current()}',\n";
+				}
+
 			}
 		}
 

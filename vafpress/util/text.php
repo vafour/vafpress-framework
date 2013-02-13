@@ -34,6 +34,20 @@ class VP_Util_Text
 		}	
 	}
 
+	public static function return_if_exists($value, $format)
+	{
+		$result = '';
+		if (!empty($value))
+		{
+			if (is_array($value))
+			{
+				$value = implode($value, ', ');
+			}
+			$result = call_user_func('sprintf', $format, $value);
+		}
+		return $result;
+	}
+
 	public static function out($string, $default)
 	{
 		if( empty($string) )

@@ -31,6 +31,12 @@ abstract class VP_Control_Field implements iFactory
 	protected $_validation;
 
 	/**
+	 * Dependancy pattern string
+	 * @var String
+	 */
+	protected $_dependancy;
+
+	/**
 	 * Default value for the field
 	 * @var String|Array
 	 */
@@ -56,7 +62,7 @@ abstract class VP_Control_Field implements iFactory
 
 	/**
 	 * Extra Classes for the container
-	 * @var String
+	 * @var Array
 	 */
 	protected $_container_extra_classes;
 
@@ -66,6 +72,7 @@ abstract class VP_Control_Field implements iFactory
 	public function __construct()
 	{
 		$this->_data = array();
+		$this->_container_extra_classes = array();
 	}
 
 	abstract public function render();
@@ -88,8 +95,9 @@ abstract class VP_Control_Field implements iFactory
 		$this->add_data('head_info', array(
 			'name'                    => $this->get_name(),
 			'type'                    => $type,
-			'container_extra_classes' => $this->get_container_extra_classes(),
+			'container_extra_classes' => implode(' ', $this->get_container_extra_classes()),
 			'validation'              => $this->get_validation(),
+			'dependancy'              => $this->get_dependancy(),
 			'label'                   => $this->get_label(),
 			'description'             => VP_Util_Text::parse_md($this->get_description())
 		));
@@ -107,6 +115,14 @@ abstract class VP_Control_Field implements iFactory
 			 ->set_default(isset($arr['default']) ? $arr['default'] : '')
 			 ->set_description(isset($arr['description']) ? $arr['description'] : '')
 			 ->set_validation(isset($arr['validation']) ? $arr['validation'] : '');
+
+		if(isset($arr['dependancy']))
+		{
+			$func  = $arr['dependancy']['value'];
+			$field = $arr['dependancy']['field'];
+			$this->set_dependancy($func . '|' . $field);
+		}
+
 		return $this;
 	}
 
@@ -243,6 +259,25 @@ abstract class VP_Control_Field implements iFactory
 	}
 
 	/**
+	 * Getter for $_dependancy
+	 *
+	 * @return String dependancy pattern in string
+	 */
+	public function get_dependancy() {
+		return $this->_dependancy;
+	}
+	
+	/**
+	 * Setter for $_dependancy
+	 *
+	 * @param String $_dependancy dependancy pattern in string
+	 */
+	public function set_dependancy($_dependancy) {
+		$this->_dependancy = $_dependancy;
+		return $this;
+	}
+
+	/**
 	 * Getter for $_default
 	 *
 	 * @return mixed default value of the field
@@ -302,7 +337,7 @@ abstract class VP_Control_Field implements iFactory
 	/**
 	 * Getter of $_container_extra_classes
 	 *
-	 * @return String Extra Classes for the container
+	 * @return Array of Extra Classes for the container
 	 */
 	public function get_container_extra_classes() {
 		return $this->_container_extra_classes;
@@ -311,11 +346,24 @@ abstract class VP_Control_Field implements iFactory
 	/**
 	 * Setter of $_container_extra_classes
 	 *
-	 * @param Integer $_container_extra_classes Extra Classes for the container
+	 * @param Array $_container_extra_classes Extra Classes for the container
 	 */
 	public function set_container_extra_classes($_container_extra_classes) {
 		$this->_container_extra_classes = $_container_extra_classes;
 		return $this;
+	}
+
+	public function add_container_extra_classes($class)
+	{
+		if(is_array($class))
+		{
+			$this->_container_extra_classes = array_merge($this->_container_extra_classes, $class);
+		}
+		else if(!in_array($class, $this->_container_extra_classes))
+		{
+			$this->_container_extra_classes[] = $class;
+		}
+		return $this->_container_extra_classes;
 	}
 
 }

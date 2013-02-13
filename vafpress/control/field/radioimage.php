@@ -5,6 +5,7 @@ class VP_Control_Field_RadioImage extends VP_Control_FieldMultiImage
 
 	public function __construct()
 	{
+		parent::__construct();
 		$this->_value = array();
 	}
 

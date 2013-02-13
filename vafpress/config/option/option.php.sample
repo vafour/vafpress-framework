@@ -818,16 +818,27 @@ return array(
 			'title' => __('Dependancing Field', 'vp_textdomain'),
 			'icon' => '/icon/binding.png',
 					'controls' => array(
+						array(
+							'type' => 'section',
+							'title' => __('Decider', 'vp_textdomain'),
+							'name' => 'section_custom_font_decider',
+							'fields' => array(
 								array(
 									'type' => 'toggle',
 									'name' => 'use_custom_font',
 									'label' => __('Use Custom Font', 'vp_textdomain'),
 									'description' => __('Use custom font or not', 'vp_textdomain'),
 								),
+							),
+						),
 						array(
 							'type' => 'section',
 							'title' => __('Custom Font', 'vp_textdomain'),
 							'name' => 'section_custom_font',
+							'dependancy' => array(
+								'field' => 'use_custom_font',
+								'value' => 'vp_dep_basic',
+							),
 							'fields' => array(
 								array(
 									'type' => 'select',
@@ -875,6 +886,29 @@ return array(
 											),
 										),
 									),
+								),
+							),
+						),
+						array(
+							'type' => 'section',
+							'title' => __('Single Field Dependancy', 'vp_textdomain'),
+							'name' => 'section_single_field_deps',
+							'fields' => array(
+								array(
+									'type' => 'toggle',
+									'name' => 'use_custom_logo',
+									'label' => __('Use Custom Logo', 'vp_textdomain'),
+									'description' => __('Use custom logo or not', 'vp_textdomain'),
+								),
+								array(
+									'type' => 'upload',
+									'name' => 'custom_logo',
+									'label' => __('Custom Logo', 'vp_textdomain'),
+									'dependancy' => array(
+										'field' => 'use_custom_logo',
+										'value' => 'vp_dep_basic',
+									),
+									'description' => __('Upload or choose custom logo', 'vp_textdomain'),
 								),
 							),
 						),

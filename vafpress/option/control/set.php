@@ -104,17 +104,21 @@ class VP_Option_Control_Set
 		return $this;
 	}
 
-	public function get_fields()
+	public function get_fields($include_section = false)
 	{
 		if(!function_exists('loop_controls'))
 		{
-			function loop_controls($menu)
+			function loop_controls($menu, $include_section)
 			{
 				$fields = array();
 				foreach ( $menu->get_controls() as $control )
 				{
 					if( get_class($control) === 'VP_Option_Control_Group_Section' )
 					{
+						if($include_section)
+						{
+							$fields[$control->get_name()] = $control;
+						}
 						foreach ( $control->get_fields() as $field )
 						{
 							if( VP_Util_Text::field_type_from_class(get_class($field)) != 'impexp' )
@@ -131,7 +135,6 @@ class VP_Option_Control_Set
 						}
 					}
 				}
-				// print_r($fields);
 				return $fields;
 			}
 		}
@@ -145,17 +148,14 @@ class VP_Option_Control_Set
 			{
 				foreach ( $submenus as $submenu )
 				{
-					// $fields += loop_controls($submenu);
-					$fields = array_merge($fields, loop_controls($submenu));
+					$fields = array_merge($fields, loop_controls($submenu, $include_section));
 				}
 			}
 			else
 			{
-				// $fields += loop_controls($menu);
-				$fields = array_merge($fields, loop_controls($menu));
+				$fields = array_merge($fields, loop_controls($menu, $include_section));
 			}
 		}
-		// print_r($fields);
 		return $fields;
 	}
 
@@ -198,6 +198,37 @@ class VP_Option_Control_Set
 			}
 		}
 	}
+
+	public function process_dependancies()
+	{
+		$fields = $this->get_fields(true);
+
+		foreach ($fields as $field)
+		{
+			$dependancy = $field->get_dependancy();
+			if(!empty($dependancy))
+			{
+				$dependancy = explode('|', $dependancy);
+				$func       = $dependancy[0];
+				$params     = $dependancy[1];
+				$params     = explode(',', $params);
+				$values     = array();
+				foreach ($params as $param)
+				{
+					if(array_key_exists($param, $fields))
+					{
+						$values[] = $fields[$param]->get_value();
+					}
+				}
+				$result  = call_user_func_array($func, $values);
+				if(!$result)
+				{
+					$field->add_container_extra_classes('hidden');
+				}
+			}
+		}
+	}
+
 
 	public function normalize_values($opt_arr)
 	{

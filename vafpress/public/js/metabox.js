@@ -8,6 +8,15 @@
 			jQuery('.vp-metabox .vp-wpa-group:not(.tocopy) .vp-js-chosen, .vp-meta-single .vp-js-chosen').chosen();
 	 	}
 
+	 	vp.is_multianswer = function(type){
+	 		var multi = ['vp-checkbox', 'vp-checkimage', 'vp-multiselect'];
+	 		if(jQuery.inArray(type, multi) !== -1 )
+			{
+				return true;
+			}
+			return false;
+	 	}
+
 	 	// Bindings
 	 	var bindings = [];
 	 	$('.vp-field[data-vp-bind]').each(function(idx, el){
@@ -41,19 +50,79 @@
 
 				for (var j = 0; j < ids.length; j++)
 				{
-					vp.binding_event(ids, j, field, func, '.vp-metabox');
+					vp.binding_event(ids, j, field, func, '.vp-metabox', 'metabox');
 				}
 			}
 		}
 
 		process_binding(bindings);
 
-		$('[class*=docopy-]').click(function(e)
+		// Dependancy
+		// Get array of dependancies single field or group
+	 	var dependancies = [];
+	 	$('.vp-field[data-vp-dependancy]').each(function(idx, el){
+ 			var dep  = $(el).attr('data-vp-dependancy'),
+				type = $(el).getDatas().type,
+				name = $(el).attr('id');
+
+			dep && dependancies.push({dep: dep, type: 'field', source: name});
+	 	});
+	 	$('.vp-meta-group[data-vp-dependancy]').each(function(idx, el){
+ 			var dep  = $(el).attr('data-vp-dependancy'),
+				type = $(el).getDatas().type,
+				name = $(el).attr('id');
+
+			dep && dependancies.push({dep: dep, type: 'section', source: name});
+	 	});
+
+	 	function process_dependancy(dependancies)
+	 	{
+	 		for (var i = 0; i < dependancies.length; i++)
+	 		{
+				var field  = dependancies[i];
+				var temp   = field.dep.split('|');
+				var func   = temp[0];
+				var dest   = temp[1];
+				var ids    = [];
+				var prefix = '';
+
+				if(field.type === 'field')
+				{
+					// strip [] (which multiple option field has)
+					prefix = field.source.replace('[]', '');
+					prefix = prefix.substring(0, prefix.lastIndexOf('['));
+				}
+				else if(field.type === 'section')
+				{
+					// get the closest 'postbox' class parent id
+					prefix = jQuery(vp.jqid(field.source)).parents('.postbox').attr('id');
+					// strip the '_metabox'
+					prefix = prefix.substring(0, prefix.lastIndexOf('_'));
+				}
+
+				dest = dest.split(',');
+
+				for (var j = 0; j < dest.length; j++)
+				{
+					dest[j] = prefix + '[' + dest[j] + ']';
+					ids.push(dest[j]);
+				}
+
+				for (var j = 0; j < ids.length; j++)
+				{
+					vp.dependancy_event(ids, j, field, func, '.vp-metabox');
+				}
+	 		}
+	 	}
+	 	process_dependancy(dependancies);
+
+	 	$('[class*=docopy-]').click(function(e)
 		{
-			var p = $(this).parents('.postbox'); /*wp*/
-			var the_name = $(this).attr('class').match(/docopy-([a-zA-Z0-9_-]*)/i)[1];
+			var p         = $(this).parents('.postbox'); /*wp*/
+			var the_name  = $(this).attr('class').match(/docopy-([a-zA-Z0-9_-]*)/i)[1];
 			var the_group = $('.wpa_group-'+ the_name +'.tocopy', p).first().prev();
-		 	bindings = [];
+		 	bindings      = [];
+			dependancies  = [];
 			the_group.find('.vp-field[data-vp-bind]').each(function(idx, el){
 	 			var bind = $(el).attr('data-vp-bind'),
 					type = $(el).getDatas().type,
@@ -61,9 +130,18 @@
 
 				bind && bindings.push({bind: bind, type: type, source: name});
 		 	});
+		 	the_group.find('.vp-field[data-vp-dependancy]').each(function(idx, el){
+	 			var dep  = $(el).attr('data-vp-dependancy'),
+					type = $(el).getDatas().type,
+					name = $(el).attr('id');
+
+				dep && dependancies.push({dep: dep, type: 'field', source: name});
+		 	});
 		 	if ($.fn.chosen) the_group.find('.vp-js-chosen').chosen();
 		 	process_binding(bindings);
+		 	process_dependancy(dependancies);
 		});
+
 
 	});
 }(jQuery));

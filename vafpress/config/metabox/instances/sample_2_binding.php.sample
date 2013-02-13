@@ -7,6 +7,7 @@ return array(
 	'fields'      => array(
 		array(
 			'type' => 'group',
+			'repeating' => true,
 			'name' => 'binding_group',
 			'fields' => array(
 				array(
@@ -27,7 +28,7 @@ return array(
 					),
 				),
 				array(
-					'type' => 'select',
+					'type' => 'radiobutton',
 					'name' => 'continent',
 					'label' => __('Continent', 'vp_textdomain'),
 					'description' => __('Continent', 'vp_textdomain'),

@@ -114,14 +114,14 @@ else
 if($config['dev_mode'])
 	$opt = $set->get_defaults();
 
-// print_r($opt);
-
 // populate option to fields' values
 $set->populate_values($opt);
 
 // process binding
 $set->process_binding();
+$set->process_dependancies();
 
+// helper function to obtain option value
 function vp_option($key)
 {
 	global $opt;
@@ -185,9 +185,9 @@ function vp_opt_notice_devmode($hook_suffix)
 add_action('wp_ajax_vp_ajax_save', 'vp_ajax_save');
 add_action('wp_ajax_vp_ajax_export_option', 'vp_ajax_export_option');
 add_action('wp_ajax_vp_ajax_import_option', 'vp_ajax_import_option');
-add_action('wp_ajax_vp_ajax_binding', 'vp_ajax_binding');
+add_action('wp_ajax_vp_ajax_wrapper', 'vp_ajax_wrapper');
 
-function vp_ajax_binding()
+function vp_ajax_wrapper()
 {
 	$function = $_POST['function'];
 	$params   = $_POST['params'];
@@ -195,10 +195,17 @@ function vp_ajax_binding()
 	if(!is_array($params))
 		$params = array($params);
 
-	$result['data']    = call_user_func_array($function, $params);
-	$result['status']  = true;
-	$result['message'] = __("Nice.", 'vp_textdomain');
+	try {
+		$result['data']    = call_user_func_array($function, $params);
+		$result['status']  = true;
+		$result['message'] = __("", 'vp_textdomain');
+	} catch (Exception $e) {
+		$result['data']    = '';
+		$result['status']  = false;
+		$result['message'] = $e->getMessage();		
+	}
 
+	header('Content-type: application/json');
 	echo json_encode($result);
 	die();
 }
@@ -233,8 +240,6 @@ function vp_ajax_import_option()
 	global $set;
 	global $config;
 
-	header('Content-type: application/json');
-
 	$result = vp_verify_nonce();
 	
 	if($result['status'])
@@ -261,6 +266,7 @@ function vp_ajax_import_option()
 		}
 	}
 
+	header('Content-type: application/json');
 	echo json_encode($result);
 	die();
 }
@@ -275,13 +281,13 @@ function vp_ajax_export_option()
 	{
 		$db_options = get_option($config['option_key']);
 		$db_options = serialize($db_options);
-		header('Content-type: application/json');
 		$result = array(
 			'status' => true,
 			'message'=> __("", 'vp_textdomain'),
 			'option' => $db_options
 		);
 	}
+	header('Content-type: application/json');
 	echo json_encode($result);
 	die();
 }

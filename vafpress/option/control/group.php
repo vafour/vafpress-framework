@@ -12,9 +12,16 @@ abstract class VP_Option_Control_Group
 
 	protected $_data;
 
+	/**
+	 * Extra Classes for the container
+	 * @var Array
+	 */
+	protected $_container_extra_classes;
+
+
 	public function __construct()
 	{
-
+		$this->_container_extra_classes = array();
 	}
 
 	public abstract function render($extra = array());
@@ -105,6 +112,38 @@ abstract class VP_Option_Control_Group
 	public function set_data($_data) {
 	    $this->_data = $_data;
 	    return $this;
+	}
+
+	/**
+	 * Getter of $_container_extra_classes
+	 *
+	 * @return Array of Extra Classes for the container
+	 */
+	public function get_container_extra_classes() {
+		return $this->_container_extra_classes;
+	}
+	
+	/**
+	 * Setter of $_container_extra_classes
+	 *
+	 * @param Array $_container_extra_classes Extra Classes for the container
+	 */
+	public function set_container_extra_classes($_container_extra_classes) {
+		$this->_container_extra_classes = $_container_extra_classes;
+		return $this;
+	}
+
+	public function add_container_extra_classes($class)
+	{
+		if(is_array($class))
+		{
+			$this->_container_extra_classes = array_merge($this->_container_extra_classes, $class);
+		}
+		else if(!in_array($class, $this->_container_extra_classes))
+		{
+			$this->_container_extra_classes[] = $class;
+		}
+		return $this->_container_extra_classes;
 	}
 
 }

@@ -180,7 +180,7 @@ function vp_bind_bigcontinents()
 	return $result;
 }
 
-function vp_bind_continents($param = null)
+function vp_bind_continents($param = '')
 {
 	$continents = array(
 		'Eurafrasia' => array(
@@ -203,6 +203,9 @@ function vp_bind_continents($param = null)
 	$result = array();
 	$datas  = array();
 
+	if(is_array($param))
+		$param = reset($param);
+
 	if(array_key_exists($param, $continents))
 		$datas = $continents[$param];
 
@@ -214,7 +217,7 @@ function vp_bind_continents($param = null)
 	return $result;
 }
 
-function vp_bind_countries($param = null)
+function vp_bind_countries($param = '')
 {
 	$countries = array(
 		'Africa' => array(
@@ -273,6 +276,15 @@ function vp_bind_countries($param = null)
 	$result = array();
 	$datas  = array();
 
+	if(is_null($param))
+		$param = '';
+
+	if(is_array($param) and !empty($param))
+		$param = reset($param);
+
+	if(empty($param))
+		$param = '';
+
 	if(array_key_exists($param, $countries))
 		$datas = $countries[$param];
 
@@ -282,6 +294,32 @@ function vp_bind_countries($param = null)
 	}
 
 	return $result;
+}
+
+function vp_dep_basic($value)
+{
+	$args   = func_get_args();
+	$result = true;
+
+	foreach ($args as $val)
+	{
+		$result = ($result and !empty($val));
+	}
+	return $result;
+}
+
+function vp_dep_is_keyword($value)
+{
+	if($value === 'keyword')
+		return true;
+	return false;
+}
+
+function vp_dep_is_tags($value)
+{
+	if($value === 'tags')
+		return true;
+	return false;
 }
 
 ?>

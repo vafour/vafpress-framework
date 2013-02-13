@@ -5,6 +5,7 @@ class VP_Control_Field_MultiSelect extends VP_Control_FieldMulti
 
 	public function __construct()
 	{
+		parent::__construct();
 		$this->_value = array();
 	}
 
