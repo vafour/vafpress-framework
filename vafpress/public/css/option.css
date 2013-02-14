@@ -232,7 +232,7 @@ body {
 	display: table-cell;
 	overflow: hidden;
 	position: relative;
-	padding: 63px 0px 56px;
+	padding: 63px 0px 0px;
 }
 
 .vp-right-panel .vp-option-form {
@@ -245,6 +245,7 @@ body {
 	border-radius: 0px 4px 0px 0px;
 	position: absolute;
 	top: 0px;
+	margin-top: 1px;
 	width: 100%;
 }
 
@@ -717,12 +718,15 @@ body {
 	color: #888888;
 	font-size: 11px;
 	line-height: 1.4em;
-	padding: 20px 20px;
 	text-align: right;
-	position: absolute;
 	bottom: 0px;
 	right: 0px;
 	width: 100%;
+}
+
+.vp-copyright p {
+	padding: 20px 20px;
+	margin: 0px;
 }
 
 .vp-copyright a {
