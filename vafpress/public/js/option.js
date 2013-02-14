@@ -58,7 +58,7 @@
 		/* BEGIN FETCHING ALL FIELDS' VALIDATION and BINDING RULES */
 		var validation   = [];
 		var bindings     = [];
-		var dependancies = [];
+		var dependencies = [];
 		var dep;
 		$('.vp-menu-goto').each(function(i) {
 			var href = $(this).attr('href'),
@@ -69,8 +69,8 @@
 			$panel.children('.vp-section').each(function(i) {
 				var $section = $(this);
 
-				dep = $section.attr('data-vp-dependancy');
-				dep && dependancies.push({dep: dep, type: 'section', source: $section.attr('id')});
+				dep = $section.attr('data-vp-dependency');
+				dep && dependencies.push({dep: dep, type: 'section', source: $section.attr('id')});
 
 				$section.find('tr').each(function(j) {
 					var $field = $(this),
@@ -80,9 +80,9 @@
 						type   = $field.getDatas().type,
 						$input = $('[name="' + name + '"]');
 
-					dep = $field.attr('data-vp-dependancy');
+					dep = $field.attr('data-vp-dependency');
 
-					dep   && dependancies.push({dep: dep, type: 'field', source: $field.attr('id')});
+					dep   && dependencies.push({dep: dep, type: 'field', source: $field.attr('id')});
 					bind  && bindings.push({bind: bind, type: type, source: name});
 					rules && fields.push({name: name, rules: rules, type: type});
 				});
@@ -155,10 +155,10 @@
 		}
 		/* ============================================================ */
 
-		// DEPENDANCY
-		for (var i = 0; i < dependancies.length; i++)
+		// DEPENDENCY
+		for (var i = 0; i < dependencies.length; i++)
 		{
-			var field = dependancies[i],
+			var field = dependencies[i],
 			    temp  = field.dep.split('|'),
 			    func  = temp[0],
 			    dest  = temp[1],
@@ -173,7 +173,7 @@
 
 			for (var j = 0; j < ids.length; j++)
 			{
-				vp.dependancy_event(ids, j, field, func, '.vp-wrap');
+				vp.dependency_event(ids, j, field, func, '.vp-wrap');
 			}
 		}
 

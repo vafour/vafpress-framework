@@ -1,11 +1,11 @@
-<tr class="vp-field vp-textarea" data-vp-type="vp-textarea">
-	<td class="label">
+<div class="vp-field vp-textarea" data-vp-type="vp-textarea">
+	<div class="label">
 		<label>
 			<?php _e('Import', 'vp_textdomain') ?>
 			<p class="description"><?php _e('Import Options', 'vp_textdomain') ?></p>
 		</label>
-	</td>
-	<td class="fields">
+	</div>
+	<div class="field">
 		<div class="input">
 			<textarea id="vp-js-import_text"></textarea>
 			<div class="buttons">
@@ -16,17 +16,17 @@
 				</span>
 			</div>
 		</div>
-	</td>
-</tr>
+	</div>
+</div>
 
-<tr class="vp-field vp-textarea" data-vp-type="vp-textarea">
-	<td class="label">
+<div class="vp-field vp-textarea" data-vp-type="vp-textarea">
+	<div class="label">
 		<label>
 			<?php _e('Export', 'vp_textdomain') ?>
 			<p class="description"><?php _e('Export Options', 'vp_textdomain') ?></p>
 		</label>
-	</td>
-	<td class="fields">
+	</div>
+	<div class="field">
 		<div class="input">
 			<textarea id="vp-js-export_text" onclick="this.focus();this.select()" readonly="readonly"></textarea>
 			<div class="buttons">
@@ -37,5 +37,5 @@
 				</span>
 			</div>
 		</div>
-	</td>
-</tr>
+	</div>
+</div>

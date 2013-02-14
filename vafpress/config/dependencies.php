@@ -106,11 +106,16 @@ return array(
 				'path' => VP_PUBLIC_URL . '/css/vendor/jqueryui/themes/' . $jqui_theme . '/jquery-ui-1.9.2.custom.min.css',
 				'deps' => array()
 			),
+			array(
+				'name' => 'font-awesome',
+				'path' => VP_PUBLIC_URL . '/css/vendor/font-awesome.min.css',
+				'deps' => array()
+			),
 		),
 	),
 
 	/**
-	 * Rules for dynamic loading of dependancies, load only what needed.
+	 * Rules for dynamic loading of dependencies, load only what needed.
 	 */
 	'rules'   => array(
 		'color'       => array( 'js' => array('colorpicker-js'), 'css' => array('colorpicker-css') ),

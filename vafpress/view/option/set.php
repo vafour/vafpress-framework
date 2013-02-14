@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="<?php echo VP_PUBLIC_URL; ?>/css/vendor/font-awesome.min.css">
 <div class="wrap">
 	<h2><?php echo $set->get_title(); ?></h2>
 	<div id="vp-wrap" class="vp-wrap">
@@ -19,9 +20,16 @@
 							<?php else: ?>
 							<a href="#<?php echo $menu->get_name(); ?>" class="vp-js-menu-goto vp-menu-goto">
 							<?php endif; ?>
-								<?php $icon = VP_Util_Res::img($menu->get_icon()); ?>
-								<?php VP_Util_Text::print_if_exists($icon, '<div class="vp-menu-image"><img src="%s" alt="' . $menu->get_title() . '" /></div>'); ?>
-								<div class="vp-menu-text"><?php echo $menu->get_title(); ?></div>
+								<?php
+								$icon = $menu->get_icon();
+								$font_awesome = VP_Util_Res::is_font_awesome($icon);
+								if ($font_awesome !== false):
+									VP_Util_Text::print_if_exists($font_awesome, '<i class="%s"></i>');
+								else:
+									VP_Util_Text::print_if_exists(VP_Util_Res::img($icon), '<i class="custom-menu-icon" style="background-image: url(\'%s\');"></i>');
+								endif;
+								?>
+								<span><?php echo $menu->get_title(); ?></span>
 							</a>
 							<?php if ($menu->get_menus()): ?>
 							<ul class="vp-menu-level-2">
@@ -32,9 +40,16 @@
 								<li>
 								<?php endif; ?>
 									<a href="#<?php echo $submenu->get_name(); ?>" class="vp-js-menu-goto vp-menu-goto">
-										<?php $sub_icon = VP_Util_Res::img($submenu->get_icon()); ?>
-										<?php VP_Util_Text::print_if_exists($sub_icon, '<div class="vp-menu-image"><img src="%s" alt="' . $submenu->get_title() . '" /></div>'); ?>
-										<div class="vp-menu-text"><?php echo $submenu->get_title(); ?></div>
+										<?php
+										$sub_icon = $submenu->get_icon();
+										$font_awesome = VP_Util_Res::is_font_awesome($sub_icon);
+										if ($font_awesome !== false):
+											VP_Util_Text::print_if_exists($font_awesome, '<i class="%s"></i>');
+										else:
+											VP_Util_Text::print_if_exists(VP_Util_Res::img($sub_icon), '<i class="custom-menu-icon" style="background-image: url(\'%s\');"></i>');
+										endif;
+										?>
+										<span><?php echo $submenu->get_title(); ?></span>
 									</a>
 								</li>
 								<?php endforeach; ?>
@@ -62,7 +77,7 @@
 				<?php endforeach; ?>
 				</form>
 				<div id="vp-copyright" class="vp-copyright">
-					<?php printf(__('This option panel is built using <a href="http://vafpress.com">Vafpress Framework %s</a> powered by <a href="http://vafpress.com">Vafpress</a>', 'vp_textdomain'), VP_VERSION); ?>
+					<?php printf(__('This option panel is built using <a href="http://vafpress.com/vafpress-framework">Vafpress Framework %s</a> powered by <a href="http://vafpress.com">Vafpress</a>', 'vp_textdomain'), VP_VERSION); ?>
 				</div>
 			</div>
 		</div>

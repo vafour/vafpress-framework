@@ -199,18 +199,18 @@ class VP_Option_Control_Set
 		}
 	}
 
-	public function process_dependancies()
+	public function process_dependencies()
 	{
 		$fields = $this->get_fields(true);
 
 		foreach ($fields as $field)
 		{
-			$dependancy = $field->get_dependancy();
-			if(!empty($dependancy))
+			$dependency = $field->get_dependency();
+			if(!empty($dependency))
 			{
-				$dependancy = explode('|', $dependancy);
-				$func       = $dependancy[0];
-				$params     = $dependancy[1];
+				$dependency = explode('|', $dependency);
+				$func       = $dependency[0];
+				$params     = $dependency[1];
 				$params     = explode(',', $params);
 				$values     = array();
 				foreach ($params as $param)

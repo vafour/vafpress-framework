@@ -3,6 +3,15 @@
 class VP_Util_Res
 {
 
+	public static function is_font_awesome($icon)
+	{
+		if (strpos($icon, 'font-awesome:') === 0)
+		{
+			return trim(str_replace('font-awesome:', '', $icon));
+		}
+		return false;
+	}
+
 	public static function img($url)
 	{
 		// empty parameter

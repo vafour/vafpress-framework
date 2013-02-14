@@ -166,11 +166,11 @@ class VP_Converter
 			// Print Section Attributes
 			if(!$section->hasChildren() and !in_array($section->key(), $this->group))
 			{
-				if($section->key() == 'dependancy')
+				if($section->key() == 'dependency')
 				{
 					$current = $section->current();
 
-					$opt_arr .= "\t\t\t\t\t\t\t'dependancy' => array(\n";
+					$opt_arr .= "\t\t\t\t\t\t\t'dependency' => array(\n";
 					$opt_arr .= "\t\t\t\t\t\t\t\t'field' => '{$current[field]}',\n";
 					$opt_arr .= "\t\t\t\t\t\t\t\t'value' => '{$current}',\n";
 					$opt_arr .= "\t\t\t\t\t\t\t),\n";
@@ -213,12 +213,12 @@ class VP_Converter
 			// Print Tab Attributes
 			if(!$field->hasChildren())
 			{
-				if($field->key() == 'dependancy')
+				if($field->key() == 'dependency')
 				{
 
 					$current  = $field->current();
 
-					$opt_arr .= "\t\t\t\t\t\t\t\t\t'dependancy' => array(\n";
+					$opt_arr .= "\t\t\t\t\t\t\t\t\t'dependency' => array(\n";
 					$opt_arr .= "\t\t\t\t\t\t\t\t\t\t'field' => '{$current[field]}',\n";
 					$opt_arr .= "\t\t\t\t\t\t\t\t\t\t'value' => '{$current}',\n";
 					$opt_arr .= "\t\t\t\t\t\t\t\t\t),\n";

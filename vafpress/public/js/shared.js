@@ -403,8 +403,8 @@ vp.binding_event = function(ids, idx, field, func, parent, thecase)
  */
 
 
-// vafpress dependancies related functions
-vp.dependancy_action =	function(ids, field, func) {
+// vafpress dependencies related functions
+vp.dependency_action =	function(ids, field, func) {
 
 	var $source_tr = jQuery(vp.jqid(field.source)),
 	    $source    = jQuery('[name="' + field.source + '"]'),
@@ -449,7 +449,7 @@ vp.dependancy_action =	function(ids, field, func) {
 	}, 'JSON');
 }
 
-vp.dependancy_event = function(ids, idx, field, func, parent){
+vp.dependency_event = function(ids, idx, field, func, parent){
 
 	var change    = ['vp-select', 'vp-checkbox', 'vp-checkimage', 'vp-radiobutton', 'vp-radioimage', 'vp-multiselect', 'vp-toggle', 'vp-upload'],
 	    typing    = ['vp-textbox', 'vp-slider', 'vp-color', 'vp-date'],
@@ -458,13 +458,13 @@ vp.dependancy_event = function(ids, idx, field, func, parent){
 
 	if(jQuery.inArray(dest_type, change) !== -1 )
 	{
-		jQuery(parent).delegate(name, 'change', function(){vp.dependancy_action(ids, field, func)});
+		jQuery(parent).delegate(name, 'change', function(){vp.dependency_action(ids, field, func)});
 	}
 	else if(jQuery.inArray(dest_type, typing) !== -1 )
 	{
 		jQuery(name).typing({
 			stop: function(event, $elem){
-				vp.dependancy_action(ids, field, func);
+				vp.dependency_action(ids, field, func);
 			},
 			delay: 400
 		});

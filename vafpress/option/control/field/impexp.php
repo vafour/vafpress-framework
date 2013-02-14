@@ -3,7 +3,10 @@
 class VP_Option_Control_Field_ImpExp extends VP_Control_Field
 {
 
-	public function __construct(){}
+	public function __construct()
+	{
+		parent::__construct();
+	}
 
 	public static function withArray($arr)
 	{

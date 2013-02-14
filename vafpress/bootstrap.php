@@ -73,7 +73,7 @@ if(VP_Util_Config::get_instance()->load('option/main', 'impexp'))
 
 	$ie_menu->set_title(__('Import and Export', 'vp_textdomain'));
 	$ie_menu->set_name('impexp');
-	$ie_menu->set_icon('/icon/impexp.png');
+	$ie_menu->set_icon('font-awesome:icon-wrench');
 	$ie_menu->add_control($ie_field);
 
 	$set->add_menu($ie_menu);
@@ -119,7 +119,7 @@ $set->populate_values($opt);
 
 // process binding
 $set->process_binding();
-$set->process_dependancies();
+$set->process_dependencies();
 
 // helper function to obtain option value
 function vp_option($key)

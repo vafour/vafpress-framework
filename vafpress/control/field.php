@@ -31,10 +31,10 @@ abstract class VP_Control_Field implements iFactory
 	protected $_validation;
 
 	/**
-	 * Dependancy pattern string
+	 * dependency pattern string
 	 * @var String
 	 */
-	protected $_dependancy;
+	protected $_dependency;
 
 	/**
 	 * Default value for the field
@@ -97,7 +97,7 @@ abstract class VP_Control_Field implements iFactory
 			'type'                    => $type,
 			'container_extra_classes' => implode(' ', $this->get_container_extra_classes()),
 			'validation'              => $this->get_validation(),
-			'dependancy'              => $this->get_dependancy(),
+			'dependency'              => $this->get_dependency(),
 			'label'                   => $this->get_label(),
 			'description'             => VP_Util_Text::parse_md($this->get_description())
 		));
@@ -116,11 +116,11 @@ abstract class VP_Control_Field implements iFactory
 			 ->set_description(isset($arr['description']) ? $arr['description'] : '')
 			 ->set_validation(isset($arr['validation']) ? $arr['validation'] : '');
 
-		if(isset($arr['dependancy']))
+		if(isset($arr['dependency']))
 		{
-			$func  = $arr['dependancy']['value'];
-			$field = $arr['dependancy']['field'];
-			$this->set_dependancy($func . '|' . $field);
+			$func  = $arr['dependency']['value'];
+			$field = $arr['dependency']['field'];
+			$this->set_dependency($func . '|' . $field);
 		}
 
 		return $this;
@@ -259,21 +259,21 @@ abstract class VP_Control_Field implements iFactory
 	}
 
 	/**
-	 * Getter for $_dependancy
+	 * Getter for $_dependency
 	 *
-	 * @return String dependancy pattern in string
+	 * @return String dependency pattern in string
 	 */
-	public function get_dependancy() {
-		return $this->_dependancy;
+	public function get_dependency() {
+		return $this->_dependency;
 	}
 	
 	/**
-	 * Setter for $_dependancy
+	 * Setter for $_dependency
 	 *
-	 * @param String $_dependancy dependancy pattern in string
+	 * @param String $_dependency dependency pattern in string
 	 */
-	public function set_dependancy($_dependancy) {
-		$this->_dependancy = $_dependancy;
+	public function set_dependency($_dependency) {
+		$this->_dependency = $_dependency;
 		return $this;
 	}
 

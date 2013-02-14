@@ -5,14 +5,14 @@
 	<logo></logo>
 	<menus>
 		<menu>
-			<title>Standard HTML Controls</title>
+			<title>Standard Controls</title>
 			<name>menu_1</name>
-			<icon>/icon/standard.png</icon>
+			<icon>font-awesome:icon-magic</icon>
 			<menus>
 				<menu>
 					<title>Regular</title>
 					<name>submenu_1</name>
-					<icon>/icon/standard-regular.png</icon>
+					<icon>font-awesome:icon-th-large</icon>
 					<controls>
 						<section>
 							<title>TextBox</title>
@@ -150,7 +150,7 @@
 				<menu>
 					<title>Image</title>
 					<name>submenu_2</name>
-					<icon>/icon/standard-image.png</icon>
+					<icon>font-awesome:icon-picture</icon>
 					<controls>
 						<section>
 							<title>Check Images</title>
@@ -300,7 +300,7 @@
 		<menu>
 			<title>Special Controls</title>
 			<name>menu_2</name>
-			<icon>/icon/special.png</icon>
+			<icon>font-awesome:icon-gift</icon>
 			<controls>
 				<section>
 					<title>Section 1</title>
@@ -378,7 +378,7 @@
 		<menu>
 			<title>Custom Data Source</title>
 			<name>menu_3</name>
-			<icon>/icon/datasources.png</icon>
+			<icon>font-awesome:icon-th-list</icon>
 			<controls>	
 				<section>
 					<title>Data Source and Special Default</title>
@@ -451,7 +451,7 @@
 		<menu>
 			<name>binding_data_source</name>
 			<title>Binding Data Source</title>
-			<icon>/icon/binding.png</icon>
+			<icon>font-awesome:icon-link</icon>
 			<controls>
 				<section>
 					<title>Choose Font</title>
@@ -489,9 +489,9 @@
 		</menu>
 
 		<menu>
-			<name>dependancing_field</name>
-			<title>Dependancing Field</title>
-			<icon>/icon/binding.png</icon>
+			<name>dependent_field</name>
+			<title>Dependent Field</title>
+			<icon>font-awesome:icon-key</icon>
 			<controls>
 
 				<section>
@@ -509,7 +509,7 @@
 				<section>
 					<title>Custom Font</title>
 					<name>section_custom_font</name>
-					<dependancy field="use_custom_font">vp_dep_basic</dependancy>
+					<dependency field="use_custom_font">vp_dep_basic</dependency>
 					<fields>
 						<select>
 							<name>dep_font_face</name>
@@ -542,7 +542,7 @@
 				</section>
 
 				<section>
-					<title>Single Field Dependancy</title>
+					<title>Single Field dependency</title>
 					<name>section_single_field_deps</name>
 					<fields>
 						<toggle>
@@ -553,7 +553,7 @@
 						<upload>
 							<name>custom_logo</name>
 							<label>Custom Logo</label>
-							<dependancy field="use_custom_logo">vp_dep_basic</dependancy>
+							<dependency field="use_custom_logo">vp_dep_basic</dependency>
 							<description>Upload or choose custom logo</description>
 						</upload>
 					</fields>

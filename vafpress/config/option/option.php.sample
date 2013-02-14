@@ -6,14 +6,14 @@ return array(
 	'logo' => '',
 	'menus' => array(
 		array(
-			'title' => __('Standard HTML Controls', 'vp_textdomain'),
+			'title' => __('Standard Controls', 'vp_textdomain'),
 			'name' => 'menu_1',
-			'icon' => '/icon/standard.png',
+			'icon' => 'font-awesome:icon-magic',
 			'menus' => array(
 				array(
 					'title' => __('Regular', 'vp_textdomain'),
 					'name' => 'submenu_1',
-					'icon' => '/icon/standard-regular.png',
+					'icon' => 'font-awesome:icon-th-large',
 					'controls' => array(
 						array(
 							'type' => 'section',
@@ -218,7 +218,7 @@ return array(
 				array(
 					'title' => __('Image', 'vp_textdomain'),
 					'name' => 'submenu_2',
-					'icon' => '/icon/standard-image.png',
+					'icon' => 'font-awesome:icon-picture',
 					'controls' => array(
 						array(
 							'type' => 'section',
@@ -557,7 +557,7 @@ return array(
 		array(
 			'title' => __('Special Controls', 'vp_textdomain'),
 			'name' => 'menu_2',
-			'icon' => '/icon/special.png',
+			'icon' => 'font-awesome:icon-gift',
 					'controls' => array(
 						array(
 							'type' => 'section',
@@ -645,7 +645,7 @@ return array(
 		array(
 			'title' => __('Custom Data Source', 'vp_textdomain'),
 			'name' => 'menu_3',
-			'icon' => '/icon/datasources.png',
+			'icon' => 'font-awesome:icon-th-list',
 					'controls' => array(
 						array(
 							'type' => 'section',
@@ -756,7 +756,7 @@ return array(
 		array(
 			'name' => 'binding_data_source',
 			'title' => __('Binding Data Source', 'vp_textdomain'),
-			'icon' => '/icon/binding.png',
+			'icon' => 'font-awesome:icon-link',
 					'controls' => array(
 						array(
 							'type' => 'section',
@@ -814,9 +814,9 @@ return array(
 					),
 		),
 		array(
-			'name' => 'dependancing_field',
-			'title' => __('Dependancing Field', 'vp_textdomain'),
-			'icon' => '/icon/binding.png',
+			'name' => 'dependent_field',
+			'title' => __('Dependent Field', 'vp_textdomain'),
+			'icon' => 'font-awesome:icon-key',
 					'controls' => array(
 						array(
 							'type' => 'section',
@@ -835,7 +835,7 @@ return array(
 							'type' => 'section',
 							'title' => __('Custom Font', 'vp_textdomain'),
 							'name' => 'section_custom_font',
-							'dependancy' => array(
+							'dependency' => array(
 								'field' => 'use_custom_font',
 								'value' => 'vp_dep_basic',
 							),
@@ -891,7 +891,7 @@ return array(
 						),
 						array(
 							'type' => 'section',
-							'title' => __('Single Field Dependancy', 'vp_textdomain'),
+							'title' => __('Single Field dependency', 'vp_textdomain'),
 							'name' => 'section_single_field_deps',
 							'fields' => array(
 								array(
@@ -904,7 +904,7 @@ return array(
 									'type' => 'upload',
 									'name' => 'custom_logo',
 									'label' => __('Custom Logo', 'vp_textdomain'),
-									'dependancy' => array(
+									'dependency' => array(
 										'field' => 'use_custom_logo',
 										'value' => 'vp_dep_basic',
 									),

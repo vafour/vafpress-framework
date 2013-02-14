@@ -10,10 +10,10 @@ class VP_Option_Control_Group_Section extends VP_Option_Control_Group
 	private $_fields;
 
 	/**
-	 * Dependancy pattern string
+	 * dependency pattern string
 	 * @var String
 	 */
-	protected $_dependancy;
+	protected $_dependency;
 
 	public function __construct()
 	{
@@ -59,21 +59,21 @@ class VP_Option_Control_Group_Section extends VP_Option_Control_Group
 	}
 
 	/**
-	 * Getter for $_dependancy
+	 * Getter for $_dependency
 	 *
-	 * @return String dependancy pattern in string
+	 * @return String dependency pattern in string
 	 */
-	public function get_dependancy() {
-		return $this->_dependancy;
+	public function get_dependency() {
+		return $this->_dependency;
 	}
 	
 	/**
-	 * Setter for $_dependancy
+	 * Setter for $_dependency
 	 *
-	 * @param String $_dependancy dependancy pattern in string
+	 * @param String $_dependency dependency pattern in string
 	 */
-	public function set_dependancy($_dependancy) {
-		$this->_dependancy = $_dependancy;
+	public function set_dependency($_dependency) {
+		$this->_dependency = $_dependency;
 		return $this;
 	}
 

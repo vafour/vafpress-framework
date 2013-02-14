@@ -42,11 +42,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 			$fields = $this->_endep($fields);
 
 			echo '<div class="vp-metabox">';
-			echo '<table>';
-			echo '<tbody>';
 			$this->_enview($fields);
-			echo '</tbody>';
-			echo '</table>';
 			echo '</div>';
 		}
 	 
@@ -162,33 +158,33 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 						}
 					}
 
-					$dependancy = '';
+					$dependency = '';
 					if($field instanceof VP_Control_Field)
 					{
-						$dependancy = $field->get_dependancy();
-						if(!empty($dependancy))
+						$dependency = $field->get_dependency();
+						if(!empty($dependency))
 						{
-							$dependancy = explode('|', $dependancy);
-							$func       = $dependancy[0];
-							$params     = $dependancy[1];
+							$dependency = explode('|', $dependency);
+							$func       = $dependency[0];
+							$params     = $dependency[1];
 						}
 					}
 					else
 					{
-						if(isset($field['dependancy']))
+						if(isset($field['dependency']))
 						{
-							if(!empty($field['dependancy']))
+							if(!empty($field['dependency']))
 							{
-								$dependancy = $field['dependancy'];
-								$func       = $dependancy['value'];
-								$params     = $dependancy['field'];
+								$dependency = $field['dependency'];
+								$func       = $dependency['value'];
+								$params     = $dependency['field'];
 							}
 						}
 					}
 
-					if(!empty($dependancy))
+					if(!empty($dependency))
 					{
-						// print_r($dependancy);
+						// print_r($dependency);
 						
 						$params     = explode(',', $params);
 						$values     = array();
@@ -266,7 +262,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 
 		if (!$in_group)
 		{
-			$vp_field->add_container_extra_classes(array('vp-meta-row', 'vp-meta-single'));
+			$vp_field->add_container_extra_classes(array('vp-meta-single'));
 		}
 
 		return $vp_field;
@@ -342,92 +338,70 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 	function _render_group($group)
 	{
 		$name       = $group['name'];
-		// print_r($group);
-		$dependancy = isset($group['dependancy']) ? $group['dependancy']['value'] . '|' . $group['dependancy']['field'] : '';
+		$dependency = isset($group['dependency']) ? $group['dependency']['value'] . '|' . $group['dependency']['field'] : '';
 
 		$html  = '';
-		$html .= '<tr id="wpa_loop-' . $name . '" class="vp-meta-group'
-		         . (isset($group['container_extra_classes']) ? (' ' . implode(',', $group['container_extra_classes'])) : '')
-		         . '"'
-		         . VP_Util_Text::return_if_exists(isset($dependancy) ? $dependancy : '', ' data-vp-dependancy="%s"')
-                 . '>';
-		$html .= '<td colspan="2">';
-			$html .= '<table>';
-			$html .= '<tbody>';
+		$html .= '<div id="wpa_loop-' . $name . '" class="vp-wpa-loop vp-fixed-loop vp-meta-group'
+				. (isset($group['container_extra_classes']) ? (' ' . implode(',', $group['container_extra_classes'])) : '')
+				. '"'
+				. VP_Util_Text::return_if_exists(isset($dependency) ? $dependency : '', ' data-vp-dependency="%s"')
+				. '>';
+		$html .= '<h4>' . 'WPA Loop Title' . '</h4>';
 
-			foreach ($group['groups'] as $g)
+		foreach ($group['groups'] as $g)
+		{
+			$html .= '<div class="vp-wpa-group wpa_group wpa_group-' . $name . '">';
+			$html .= '<div class="vp-controls">';
+			foreach ($g as $f)
 			{
-				$html .= '<tr class="vp-wpa-group wpa_group wpa_group-' . $name . '">';
-				$html .= '<td>';
-					$html .= '<table>';
-					$html .= '</tbody>';
-					foreach ($g as $f)
-					{
-						$html .= $this->_render_field($f);
-					}
-					$html .= '</tbody>';
-					$html .= '</table>';
-				$html .= '</td>';
-				$html .= '</tr>';
+				$html .= $this->_render_field($f);
 			}
+			$html .= '</div>';
+			$html .= '</div>';
+		}
 
-			$html .= '</tbody>';
-			$html .= '</table>';
-		$html .= '</td>';
-		$html .= '</tr>';
+		$html .= '</div>';
 
 		return $html;
 	}
 
 	function _render_repeating_group($group)
 	{
-		$name  = $group['name'];
-
-		$dependancy = isset($group['dependancy']) ? $group['dependancy']['value'] . '|' . $group['dependancy']['field'] : '';
+		$name       = $group['name'];
+		$dependency = isset($group['dependency']) ? $group['dependency']['value'] . '|' . $group['dependency']['field'] : '';
 
 		$html  = '';
-		$html .= '<tr id="wpa_loop-' . $name
-		         . '" class="vp-wpa-loop vp-meta-row wpa_loop wpa_loop-' . $name . ' vp-meta-group'
-		         . (isset($group['container_extra_classes']) ? (' ' . implode(',', $group['container_extra_classes'])) : '')
-		         . '"'
-		         . VP_Util_Text::return_if_exists(isset($dependancy) ? $dependancy : '', 'data-vp-dependancy="%s"')
-		         . '>';
-		$html .= '<td colspan="2">';
-			$html .= '<table>';
-			$html .= '<tbody>';
+		$html .= '<div id="wpa_loop-' . $name
+				. '" class="vp-wpa-loop wpa_loop wpa_loop-' . $name . ' vp-repeating-loop vp-meta-group'
+				. (isset($group['container_extra_classes']) ? (' ' . implode(',', $group['container_extra_classes'])) : '')
+				. '"'
+				. VP_Util_Text::return_if_exists(isset($dependency) ? $dependency : '', 'data-vp-dependency="%s"')
+				. '>';
+		$html .= '<h4>' . 'WPA Loop Title' . '</h4>';
 
-			foreach ($group['groups'] as $g)
+		foreach ($group['groups'] as $g)
+		{
+			$class = '';
+			if ($g === end($group['groups']))   $class = ' last tocopy';
+			if ($g === reset($group['groups'])) $class = ' first';
+			$html .= '<div class="vp-wpa-group wpa_group wpa_group-' . $name . $class . '">';
+			$html .= '<div class="vp-controls">';
+			foreach ($g as $f)
 			{
-				$class = '';
-				if ($g === end($group['groups']))   $class = ' last tocopy';
-				if ($g === reset($group['groups'])) $class = ' first';
-				$html .= '<tr class="vp-wpa-group wpa_group wpa_group-' . $name . $class . '">';
-				$html .= '<td>';
-					$html .= '<table>';
-					$html .= '</tbody>';
-					foreach ($g as $f)
-					{
-						$html .= $this->_render_field($f);
-					}
-					$html .= '</tbody>';
-					$html .= '</table>';
-				$html .= '</td>';
-				$html .= '<td class="vp-wpa-group-remove">';
-				$html .= '<a href="#" class="dodelete" title="Remove">X</a>';
-				$html .= '</td>';
-				$html .= '</tr>';
+				$html .= $this->_render_field($f);
 			}
+			$html .= '</div>';
+			$html .= '<div class="vp-wpa-group-remove">';
+			$html .= '<a href="#" class="dodelete" title="Remove">X</a>';
+			$html .= '</div>';
+			$html .= '</div>';
+		}
 
-				$html .= '<tr>';
-				$html .= '<td class="vp-wpa-group-add">';
-				$html .= '<a href="#" class="button button-large docopy-' . $name . '">Add More</a>';
-				$html .= '</td>';
-				$html .= '<td></td>';
-				$html .= '</tr>';
-			$html .= '</tbody>';
-			$html .= '</table>';
-		$html .= '</td>';
-		$html .= '</tr>';
+		$html .= '<div class="vp-wpa-group-add">';
+		$html .= '<a href="#" class="button button-large docopy-' . $name . '">Add More</a>';
+		$html .= '</div>';
+
+		$html .= '</div>';
 
 		return $html;
 	}

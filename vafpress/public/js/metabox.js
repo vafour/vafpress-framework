@@ -57,29 +57,29 @@
 
 		process_binding(bindings);
 
-		// Dependancy
-		// Get array of dependancies single field or group
-	 	var dependancies = [];
-	 	$('.vp-field[data-vp-dependancy]').each(function(idx, el){
- 			var dep  = $(el).attr('data-vp-dependancy'),
+		// dependency
+		// Get array of dependencies single field or group
+	 	var dependencies = [];
+	 	$('.vp-field[data-vp-dependency]').each(function(idx, el){
+ 			var dep  = $(el).attr('data-vp-dependency'),
 				type = $(el).getDatas().type,
 				name = $(el).attr('id');
 
-			dep && dependancies.push({dep: dep, type: 'field', source: name});
+			dep && dependencies.push({dep: dep, type: 'field', source: name});
 	 	});
-	 	$('.vp-meta-group[data-vp-dependancy]').each(function(idx, el){
- 			var dep  = $(el).attr('data-vp-dependancy'),
+	 	$('.vp-meta-group[data-vp-dependency]').each(function(idx, el){
+ 			var dep  = $(el).attr('data-vp-dependency'),
 				type = $(el).getDatas().type,
 				name = $(el).attr('id');
 
-			dep && dependancies.push({dep: dep, type: 'section', source: name});
+			dep && dependencies.push({dep: dep, type: 'section', source: name});
 	 	});
 
-	 	function process_dependancy(dependancies)
+	 	function process_dependency(dependencies)
 	 	{
-	 		for (var i = 0; i < dependancies.length; i++)
+	 		for (var i = 0; i < dependencies.length; i++)
 	 		{
-				var field  = dependancies[i];
+				var field  = dependencies[i];
 				var temp   = field.dep.split('|');
 				var func   = temp[0];
 				var dest   = temp[1];
@@ -110,11 +110,11 @@
 
 				for (var j = 0; j < ids.length; j++)
 				{
-					vp.dependancy_event(ids, j, field, func, '.vp-metabox');
+					vp.dependency_event(ids, j, field, func, '.vp-metabox');
 				}
 	 		}
 	 	}
-	 	process_dependancy(dependancies);
+	 	process_dependency(dependencies);
 
 	 	$('[class*=docopy-]').click(function(e)
 		{
@@ -122,7 +122,7 @@
 			var the_name  = $(this).attr('class').match(/docopy-([a-zA-Z0-9_-]*)/i)[1];
 			var the_group = $('.wpa_group-'+ the_name +'.tocopy', p).first().prev();
 		 	bindings      = [];
-			dependancies  = [];
+			dependencies  = [];
 			the_group.find('.vp-field[data-vp-bind]').each(function(idx, el){
 	 			var bind = $(el).attr('data-vp-bind'),
 					type = $(el).getDatas().type,
@@ -130,16 +130,16 @@
 
 				bind && bindings.push({bind: bind, type: type, source: name});
 		 	});
-		 	the_group.find('.vp-field[data-vp-dependancy]').each(function(idx, el){
-	 			var dep  = $(el).attr('data-vp-dependancy'),
+		 	the_group.find('.vp-field[data-vp-dependency]').each(function(idx, el){
+	 			var dep  = $(el).attr('data-vp-dependency'),
 					type = $(el).getDatas().type,
 					name = $(el).attr('id');
 
-				dep && dependancies.push({dep: dep, type: 'field', source: name});
+				dep && dependencies.push({dep: dep, type: 'field', source: name});
 		 	});
 		 	if ($.fn.chosen) the_group.find('.vp-js-chosen').chosen();
 		 	process_binding(bindings);
-		 	process_dependancy(dependancies);
+		 	process_dependency(dependencies);
 		});
 
 
