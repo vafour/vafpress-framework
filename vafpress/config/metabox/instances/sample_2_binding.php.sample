@@ -4,7 +4,7 @@ return array(
 	'id'          => 'vp_meta_sample_2',
 	'types'       => array('post'),
 	'title'       => __('VP Binding Group Metabox', 'vp_textdomain'),
-	'fields'      => array(
+	'template'    => array(
 		array(
 			'type' => 'group',
 			'repeating' => true,

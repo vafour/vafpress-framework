@@ -43,12 +43,7 @@ function vp_mb_notice_devmode()
 // instantiate metaboxes object
 foreach ($metas as $meta)
 {
-	$vp_metaboxes[ $meta['id'] ] = new VP_MetaBox_Alchemy(array(
-		'id'       => $meta['id'],
-		'title'    => $meta['title'],
-		'types'    => $meta['types'],
-		'template' => $meta
-	));
+	$vp_metaboxes[ $meta['id'] ] = new VP_MetaBox_Alchemy($meta);
 }
 
 

@@ -43,7 +43,7 @@ class VP_Metabox_Depsloader
 		{
 			if($metabox->can_output())
 			{
-				foreach ($metabox->template['fields'] as $field)
+				foreach ($metabox->template as $field)
 				{
 					if($field['type'] == 'group')
 					{

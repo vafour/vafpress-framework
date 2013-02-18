@@ -55,7 +55,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 	function _enfactor($arr)
 	{
 		$mb            =& $this;
-		$fields        = $arr['fields'];
+		$fields        = $arr;
 		$field_objects = array();
 
 		foreach ($fields as $field)
@@ -79,8 +79,6 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 
 	function _enbind($fields)
 	{
-		// print_r($fields);
-		// print_r($metas);
 		foreach ($fields as $name => $field)
 		{
 			if(is_array($field))
@@ -182,23 +180,18 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 						}
 					}
 
-					if(!empty($dependency))
+					if(!empty($dependancy))
 					{
-						// print_r($dependency);
-						
 						$params     = explode(',', $params);
 						$values     = array();
 						foreach ($params as $param)
 						{
 							if(array_key_exists($param, $fields))
 							{
-								// print_r($fields[$param]);
 								$values[] = $fields[$param]->get_value();
 							}
 						}
-						// print_r($values);
 						$result  = call_user_func_array($func, $values);
-						// echo 'result'; var_dump($result);
 						if(!$result)
 						{
 							if($field instanceof VP_Control_Field)
@@ -209,7 +202,6 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 							{
 								$field['container_extra_classes'][] = 'hidden';
 							}
-							// print_r($field);
 						}
 					}
 				}
@@ -338,7 +330,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 	function _render_group($group)
 	{
 		$name       = $group['name'];
-		$dependency = isset($group['dependency']) ? $group['dependency']['value'] . '|' . $group['dependency']['field'] : '';
+		$dependancy = isset($group['dependancy']) ? $group['dependancy']['value'] . '|' . $group['dependancy']['field'] : '';
 
 		$html  = '';
 		$html .= '<div id="wpa_loop-' . $name . '" class="vp-wpa-loop vp-fixed-loop vp-meta-group'
@@ -478,8 +470,6 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		// try to normalize data, since alchemy clean any empty value, it will
 		// throw away empty checkbox value, making unchecked checkbox not being saved
 		$scheme = $this->_get_scheme();
-		// echo 'scheme before';
-		// print_r($scheme);
 		foreach ($scheme as $key => &$value)
 		{
 			if( in_array($key, $groups) and is_array($value) )
@@ -493,15 +483,8 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 				}
 			}
 		}
-		// echo 'scheme after';
-		// print_r($scheme);
-	 
-	 	// echo 'data before cleaning';
-		// print_r($new_data);
-		// WPAlchemy_MetaBox::clean($new_data);
 
-	 	// echo 'data after cleaning';
-		// print_r($new_data);
+		// WPAlchemy_MetaBox::clean($new_data);
 
 		if (empty($new_data))
 		{
@@ -510,9 +493,6 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 
 		// continuation of normalizing data
 		$new_data = VP_Util_Array::array_merge_recursive_all($scheme, $new_data);
-
-		// echo 'mergerd';
-		// print_r($new_data);
 
 		// filter: save
 		if ($this->has_filter('save'))
