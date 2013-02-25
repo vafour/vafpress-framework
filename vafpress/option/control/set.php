@@ -223,7 +223,7 @@ class VP_Option_Control_Set
 				$result  = call_user_func_array($func, $values);
 				if(!$result)
 				{
-					$field->add_container_extra_classes('hidden');
+					$field->is_hidden(true);
 				}
 			}
 		}

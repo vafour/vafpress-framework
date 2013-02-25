@@ -49,9 +49,9 @@ if (!String.prototype.replaceAll){
 		if((str = this.toString()) && typeof token === "string") {
 			_token = ignoreCase === true? token.toLowerCase() : undefined;
 			while((i = (
-				_token !== undefined? 
+				_token !== undefined?
 					str.toLowerCase().indexOf(
-								_token, 
+								_token,
 								i >= 0? i + newToken.length : 0
 					) : str.indexOf(
 								token,
@@ -545,9 +545,9 @@ if ( vp_wp.use_new_media_upload )
 	    _orig_send_to_editor  = window.send_to_editor;
 
 	vp.upload_callback = function(e) {
-		var $this = jQuery(this),
-		    $input = $this.prev('input'),
-		    $preview = $this.parent().next().find('img');
+		var $this    = jQuery(this),
+		    $input   = $this.prev('input'),
+		    $preview = $this.siblings('.image').find('img');
 
 		// handler for attachment
 		wp.media.editor.send.attachment = function(props, attachment) {
@@ -585,9 +585,10 @@ else
 	var _orig_send_to_editor = window.send_to_editor;
 
 	vp.upload_callback = function(e) {
-		var _custom_media = true;
-		$input     = jQuery(this).prev('input');
-		$preview   = jQuery(this).parent().next().find('img');
+		var _custom_media = true,
+		       $input     = jQuery(this).prev('input'),
+		       $preview   = jQuery(this).siblings('.image').find('img');
+
 		tb_show('Upload Image', 'media-upload.php?referer=vafpress&TB_iframe=true&post_id=0');
 
 		window.send_to_editor = function(html) {

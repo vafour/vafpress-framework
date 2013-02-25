@@ -67,6 +67,11 @@ abstract class VP_Control_Field implements iFactory
 	protected $_container_extra_classes;
 
 	/**
+	 * Whether to hide this control in first rendering
+	 */
+	protected $_is_hidden;
+
+	/**
 	 * Class Constructor
 	 */
 	public function __construct()
@@ -96,6 +101,7 @@ abstract class VP_Control_Field implements iFactory
 			'name'                    => $this->get_name(),
 			'type'                    => $type,
 			'container_extra_classes' => implode(' ', $this->get_container_extra_classes()),
+			'is_hidden'               => $this->is_hidden(),
 			'validation'              => $this->get_validation(),
 			'dependency'              => $this->get_dependency(),
 			'label'                   => $this->get_label(),
@@ -364,6 +370,18 @@ abstract class VP_Control_Field implements iFactory
 			$this->_container_extra_classes[] = $class;
 		}
 		return $this->_container_extra_classes;
+	}
+
+
+	/**
+	 * Get is_hidden status, will set the status if a boolean passed
+	 *
+	 * @return bool is_hidden status
+	 */
+	public function is_hidden($_is_hidden = null) {
+		if(!is_null($_is_hidden))
+	    	$this->_is_hidden = (bool) $_is_hidden;
+		return $this->_is_hidden;
 	}
 
 }

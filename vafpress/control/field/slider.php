@@ -31,7 +31,7 @@ class VP_Control_Field_Slider extends VP_Control_Field
 		$opt = array(
 			'min'   => $this->get_min(),
 			'max'   => $this->get_max(),
-			'step' => $this->get_step(),
+			'step'  => $this->get_step(),
 			'value' => $this->get_value(),
 		);
 		$this->add_data('opt', VP_Util_Text::make_opt($opt));
@@ -39,9 +39,9 @@ class VP_Control_Field_Slider extends VP_Control_Field
 		return VP_View::get_instance()->load('control/slider', $this->get_data());
 	}
 
-	protected function _basic_make($simpleXML)
+	protected function _basic_make($arr)
 	{
-		parent::_basic_make($simpleXML);
+		parent::_basic_make($arr);
 		$default = $this->get_default();
 		if (empty($default))
 		{

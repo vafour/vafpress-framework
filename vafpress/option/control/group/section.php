@@ -15,6 +15,11 @@ class VP_Option_Control_Group_Section extends VP_Option_Control_Group
 	 */
 	protected $_dependency;
 
+	/**
+	 * Whether to hide this control in first rendering
+	 */
+	protected $_is_hidden;
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -27,6 +32,7 @@ class VP_Option_Control_Group_Section extends VP_Option_Control_Group
 		$this->_setup_data();
 		$this->add_data('section', $this);
 		$this->add_data('container_extra_classes', implode(',', $this->get_container_extra_classes()));
+
 		foreach ($extra as $key => $value)
 		{
 			$this->add_data($key, $value);
@@ -75,6 +81,17 @@ class VP_Option_Control_Group_Section extends VP_Option_Control_Group
 	public function set_dependency($_dependency) {
 		$this->_dependency = $_dependency;
 		return $this;
+	}
+
+	/**
+	 * Get is_hidden status, will set the status if a boolean passed
+	 *
+	 * @return bool is_hidden status
+	 */
+	public function is_hidden($_is_hidden = null) {
+		if(!is_null($_is_hidden))
+	    	$this->_is_hidden = (bool) $_is_hidden;
+		return $this->_is_hidden;
 	}
 
 }

@@ -6,10 +6,11 @@ return array(
 	'title'       => __('VP Binding Group Metabox', 'vp_textdomain'),
 	'template'    => array(
 		array(
-			'type' => 'group',
+			'type'      => 'group',
 			'repeating' => true,
-			'name' => 'binding_group',
-			'fields' => array(
+			'name'      => 'binding_group',
+			'title'     => __('Location', 'vp_textdomain'),
+			'fields'    => array(
 				array(
 					'type' => 'select',
 					'name' => 'big_continent',

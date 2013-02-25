@@ -77,6 +77,11 @@ return array(
 				'deps' => array('jquery'),
 				'ver'  => '0.2'
 			),
+			'ace-editor' => array(
+				'path' => VP_PUBLIC_URL . '/js/vendor/ace/ace.js',
+				'deps' => array(),
+				'ver'  => '1.0.0'
+			),
 		),
 	),
 
@@ -123,6 +128,7 @@ return array(
 		'multiselect' => array( 'js' => array('chosen-js'), 'css' => array('chosen-css') ),
 		'slider'      => array( 'js' => array('jquery-ui-slider'), 'css' => array('jqui') ),
 		'date'        => array( 'js' => array('jquery-ui-datepicker'), 'css' => array('jqui') ),
+		'codeeditor'  => array( 'js' => array('ace-editor'), 'css' => array() ),
 	)
 
 );

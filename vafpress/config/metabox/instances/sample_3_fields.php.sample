@@ -6,11 +6,26 @@ return array(
 	'title'       => __('VP All Fields Metabox', 'vp_textdomain'),
 	'template'    => array(
 		array(
+			'type' => 'notebox',
+			'name' => 'nb_1',
+			'label'=> 'Hey!',
+			'description' => 'Blah blah blah',
+			'status' => 'warning'
+		),
+		array(
 			'type' => 'upload',
 			'name' => 'up_1',
 			'label' => __('Upload', 'vp_textdomain'),
 			'description' => __('Built in WP media upload, upload any media', 'vp_textdomain'),
 			'default' => 'http://lorempixel.com/500/400/animals/',
+		),
+		array(
+			'type'        => 'codeeditor',
+			'name'        => 'ce_1',
+			'label'       => 'Custom CSS',
+			'description' => 'Define your custom CSS',
+			'mode'        => 'css',
+			'theme'       => 'solarized_light'
 		),
 		array(
 			'type' => 'checkbox',

@@ -14,11 +14,22 @@
 					<name>submenu_1</name>
 					<icon>font-awesome:icon-th-large</icon>
 					<controls>
+						<notebox>
+							<name>nb_1</name>
+							<label>Attention!</label>
+							<description>Gain attention of your user with this box!</description>
+							<status>warning</status>
+						</notebox>
 						<section>
 							<title>TextBox</title>
 							<name>section_1</name>
 							<description>TextBox and TextArea Showcase</description>
 							<fields>
+								<notebox>
+									<name>nb_2</name>
+									<label>Attention!</label>
+									<description>Gain attention of your user with this box!</description>
+								</notebox>
 								<textbox>
 									<name>tb_1</name>
 									<label>Alphabet</label>
@@ -371,6 +382,20 @@
 							<format>yy-mm-dd</format>
 							<default>-1W</default>
 						</date>
+						<codeeditor>
+							<name>ce_1</name>
+							<label>Custom CSS</label>
+							<description>Write your custom css here.</description>
+							<theme>github</theme>
+							<mode>css</mode>
+						</codeeditor>
+						<codeeditor>
+							<name>ce_2</name>
+							<label>Custom JS</label>
+							<description>Write your custom js here.</description>
+							<theme>twilight</theme>
+							<mode>javascript</mode>
+						</codeeditor>
 					</fields>
 				</section>
 			</controls>

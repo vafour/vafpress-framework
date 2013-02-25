@@ -357,7 +357,6 @@ body {
 	border-radius: 4px;
 	border: 1px solid rgba(0,0,0,0.15);
 	box-shadow: inset 0px 1px 0px rgba(255,255,255,1), 0px 1px 0px rgba(255,255,255,1);
-	overflow: hidden;
 	padding-top: 10px;
 	position: relative;
 	width: 100%;
@@ -595,6 +594,10 @@ body {
 	max-width: 60%;
 }
 
+.vp-field.vp-upload .field .image img[src=""] {
+	display: none;
+}
+
 .vp-field.vp-upload .field .image img:not([src=""]) {
 	margin-top: 10px;
 }
@@ -725,7 +728,7 @@ body {
 }
 
 .vp-copyright p {
-	padding: 20px 20px;
+	padding: 30px 20px;
 	margin: 0px;
 }
 
@@ -792,3 +795,27 @@ body {
 
 /* jQuery UI Datepicker bottom div bug */
 #ui-datepicker-div { display:none }
+
+/**
+ * Notebox styling
+ * (normal, warning, info, error, succed)
+ */
+.vp-field.vp-notebox.warning {
+	color: red;
+	background-color: yellow;
+}
+
+.vp-field.vp-notebox.normal {
+	color: blue;
+	background-color: white;
+}
+
+/**
+ * Code Editor styling
+ */
+.ace_editor {
+	height: 300px;
+	padding: 10px;
+	margin: 10px;
+	border: 1px solid #ffffff;
+}

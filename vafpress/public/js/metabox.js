@@ -6,25 +6,25 @@
 		if (jQuery().chosen)
 		{
 			jQuery('.vp-metabox .vp-wpa-group:not(.tocopy) .vp-js-chosen, .vp-meta-single .vp-js-chosen').chosen();
-	 	}
+		}
 
-	 	vp.is_multianswer = function(type){
-	 		var multi = ['vp-checkbox', 'vp-checkimage', 'vp-multiselect'];
-	 		if(jQuery.inArray(type, multi) !== -1 )
+		vp.is_multianswer = function(type){
+			var multi = ['vp-checkbox', 'vp-checkimage', 'vp-multiselect'];
+			if(jQuery.inArray(type, multi) !== -1 )
 			{
 				return true;
 			}
 			return false;
-	 	}
+		};
 
-	 	// Bindings
-	 	var bindings = [];
-	 	$('.vp-field[data-vp-bind]').each(function(idx, el){
- 			var bind = $(el).attr('data-vp-bind'),
+		// Bindings
+		var bindings = [];
+		$('.vp-field[data-vp-bind]').each(function(idx, el){
+			var bind = $(el).attr('data-vp-bind'),
 				type = $(el).getDatas().type,
 				name = $(el).attr('id');
 				bind && bindings.push({bind: bind, type: type, source: name});
-	 	});
+		});
 
 		function process_binding(bindings)
 		{
@@ -48,7 +48,7 @@
 					ids.push(dest[j]);
 				}
 
-				for (var j = 0; j < ids.length; j++)
+				for (j = 0; j < ids.length; j++)
 				{
 					vp.binding_event(ids, j, field, func, '.vp-metabox', 'metabox');
 				}
@@ -59,26 +59,56 @@
 
 		// dependency
 		// Get array of dependencies single field or group
-	 	var dependencies = [];
-	 	$('.vp-field[data-vp-dependency]').each(function(idx, el){
- 			var dep  = $(el).attr('data-vp-dependency'),
+		var dependencies = [];
+		$('.vp-field[data-vp-dependency]').each(function(idx, el){
+			var dep  = $(el).attr('data-vp-dependency'),
 				type = $(el).getDatas().type,
 				name = $(el).attr('id');
 
 			dep && dependencies.push({dep: dep, type: 'field', source: name});
-	 	});
-	 	$('.vp-meta-group[data-vp-dependency]').each(function(idx, el){
- 			var dep  = $(el).attr('data-vp-dependency'),
+		});
+		$('.vp-meta-group[data-vp-dependency]').each(function(idx, el){
+			var dep  = $(el).attr('data-vp-dependency'),
 				type = $(el).getDatas().type,
 				name = $(el).attr('id');
 
 			dep && dependencies.push({dep: dep, type: 'section', source: name});
-	 	});
+		});
 
-	 	function process_dependency(dependencies)
-	 	{
-	 		for (var i = 0; i < dependencies.length; i++)
-	 		{
+		jQuery('.vp-js-codeeditor').each(function() {
+
+			var editor   = ace.edit(jQuery(this).get(0));
+			var textarea = jQuery(this).prev();
+
+			var options = jQuery(this).getDatas();
+			options     = vp.parseOpt(options.opt);
+
+			editor.setTheme("ace/theme/" + options.theme);
+			editor.getSession().setMode("ace/mode/" + options.mode);
+			editor.getSession().setUseWrapMode( true );
+            editor.setShowPrintMargin( false );
+
+			editor.getSession().setValue(textarea.val());
+			editor.getSession().on('change', function(){
+				var editorDoc = editor.getSession().getDocument();
+				textarea.text(editor.getSession().getValue());
+			});
+
+			// var options = jQuery(this).getDatas();
+			// options     = vp.parseOpt(options.opt);
+			// options.onSelect = function(){
+			//	jQuery(this).trigger('keypress');
+			//	jQuery(this).trigger('keyup');
+			//	jQuery(this).trigger('blur');
+			// };
+			// jQuery(this).datepicker(options);
+			// jQuery(this).datepicker('setDate', options.value);
+		});
+
+		function process_dependency(dependencies)
+		{
+			for (var i = 0; i < dependencies.length; i++)
+			{
 				var field  = dependencies[i];
 				var temp   = field.dep.split('|');
 				var func   = temp[0];
@@ -108,38 +138,38 @@
 					ids.push(dest[j]);
 				}
 
-				for (var j = 0; j < ids.length; j++)
+				for (j = 0; j < ids.length; j++)
 				{
 					vp.dependency_event(ids, j, field, func, '.vp-metabox');
 				}
-	 		}
-	 	}
-	 	process_dependency(dependencies);
+			}
+		}
+		process_dependency(dependencies);
 
-	 	$('[class*=docopy-]').click(function(e)
+		$('[class*=docopy-]').click(function(e)
 		{
 			var p         = $(this).parents('.postbox'); /*wp*/
 			var the_name  = $(this).attr('class').match(/docopy-([a-zA-Z0-9_-]*)/i)[1];
 			var the_group = $('.wpa_group-'+ the_name +'.tocopy', p).first().prev();
-		 	bindings      = [];
+			bindings      = [];
 			dependencies  = [];
 			the_group.find('.vp-field[data-vp-bind]').each(function(idx, el){
-	 			var bind = $(el).attr('data-vp-bind'),
+				var bind = $(el).attr('data-vp-bind'),
 					type = $(el).getDatas().type,
 					name = $(el).attr('id');
 
 				bind && bindings.push({bind: bind, type: type, source: name});
-		 	});
-		 	the_group.find('.vp-field[data-vp-dependency]').each(function(idx, el){
-	 			var dep  = $(el).attr('data-vp-dependency'),
+			});
+			the_group.find('.vp-field[data-vp-dependency]').each(function(idx, el){
+				var dep  = $(el).attr('data-vp-dependency'),
 					type = $(el).getDatas().type,
 					name = $(el).attr('id');
 
 				dep && dependencies.push({dep: dep, type: 'field', source: name});
-		 	});
-		 	if ($.fn.chosen) the_group.find('.vp-js-chosen').chosen();
-		 	process_binding(bindings);
-		 	process_dependency(dependencies);
+			});
+			if ($.fn.chosen) the_group.find('.vp-js-chosen').chosen();
+			process_binding(bindings);
+			process_dependency(dependencies);
 		});
 
 

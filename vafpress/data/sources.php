@@ -56,7 +56,6 @@ function vp_get_pages()
 function vp_get_tags()
 {
 	$wp_tags = get_tags(array('hide_empty' => 0));
-
 	$result = array();
 	foreach ($wp_tags as $tag)
 	{

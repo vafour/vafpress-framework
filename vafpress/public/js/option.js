@@ -72,7 +72,7 @@
 				dep = $section.attr('data-vp-dependency');
 				dep && dependencies.push({dep: dep, type: 'section', source: $section.attr('id')});
 
-				$section.find('tr').each(function(j) {
+				$section.find('.vp-field').each(function(j) {
 					var $field = $(this),
 						name   = $field.attr('id'),
 						rules  = $field.attr('data-vp-validation'),
@@ -131,6 +131,37 @@
 			$parent.addClass('vp-current');
 			$sub.children('li.vp-current').children('a').click();
 		});
+
+		jQuery('.vp-js-codeeditor').each(function() {
+
+			var editor   = ace.edit(jQuery(this).get(0));
+			var textarea = jQuery(this).prev();
+
+			var options = jQuery(this).getDatas();
+			options     = vp.parseOpt(options.opt);
+
+			editor.setTheme("ace/theme/" + options.theme);
+			editor.getSession().setMode("ace/mode/" + options.mode);
+			editor.getSession().setUseWrapMode( true );
+            editor.setShowPrintMargin( false );
+
+			editor.getSession().setValue(textarea.val());
+			editor.getSession().on('change', function(){
+				var editorDoc = editor.getSession().getDocument();
+				textarea.text(editor.getSession().getValue());
+			});
+
+			// var options = jQuery(this).getDatas();
+			// options     = vp.parseOpt(options.opt);
+			// options.onSelect = function(){
+			//	jQuery(this).trigger('keypress');
+			//	jQuery(this).trigger('keyup');
+			//	jQuery(this).trigger('blur');
+			// };
+			// jQuery(this).datepicker(options);
+			// jQuery(this).datepicker('setDate', options.value);
+		});
+
 
 		// Bindings
 		for (var i = 0; i < bindings.length; i++)
@@ -198,7 +229,7 @@
 				{
 					var field = panel.fields[j],
 					    $tr = $('#' + field.name),
-					    $msgs = $tr.children('td.fields').children('.validation-msgs').children('ul'),
+					    $msgs = $tr.children('div.field').children('.validation-msgs').children('ul'),
 					    $input = $('[name="' + field.name + '"]'),
 					    val = $input.validationVal(),
 					    type = field.type,

@@ -15,12 +15,25 @@ return array(
 					'name' => 'submenu_1',
 					'icon' => 'font-awesome:icon-th-large',
 					'controls' => array(
+								array(
+									'type' => 'notebox',
+									'name' => 'nb_1',
+									'label' => __('Attention!', 'vp_textdomain'),
+									'description' => __('Gain attention of your user with this box!', 'vp_textdomain'),
+									'status' => 'warning',
+								),
 						array(
 							'type' => 'section',
 							'title' => __('TextBox', 'vp_textdomain'),
 							'name' => 'section_1',
 							'description' => __('TextBox and TextArea Showcase', 'vp_textdomain'),
 							'fields' => array(
+								array(
+									'type' => 'notebox',
+									'name' => 'nb_2',
+									'label' => __('Attention!', 'vp_textdomain'),
+									'description' => __('Gain attention of your user with this box!', 'vp_textdomain'),
+								),
 								array(
 									'type' => 'textbox',
 									'name' => 'tb_1',
@@ -637,6 +650,22 @@ return array(
 									'max_date' => 'today',
 									'format' => 'yy-mm-dd',
 									'default' => '-1W',
+								),
+								array(
+									'type' => 'codeeditor',
+									'name' => 'ce_1',
+									'label' => __('Custom CSS', 'vp_textdomain'),
+									'description' => __('Write your custom css here.', 'vp_textdomain'),
+									'theme' => 'github',
+									'mode' => 'css',
+								),
+								array(
+									'type' => 'codeeditor',
+									'name' => 'ce_2',
+									'label' => __('Custom JS', 'vp_textdomain'),
+									'description' => __('Write your custom js here.', 'vp_textdomain'),
+									'theme' => 'twilight',
+									'mode' => 'javascript',
 								),
 							),
 						),

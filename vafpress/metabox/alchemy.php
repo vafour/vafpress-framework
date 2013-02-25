@@ -180,7 +180,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 						}
 					}
 
-					if(!empty($dependancy))
+					if(!empty($dependency))
 					{
 						$params     = explode(',', $params);
 						$values     = array();
@@ -196,11 +196,11 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 						{
 							if($field instanceof VP_Control_Field)
 							{
-								$field->add_container_extra_classes('hidden');
+								$field->is_hidden(true);
 							}
 							else
 							{
-								$field['container_extra_classes'][] = 'hidden';
+								$field['is_hidden'] = true;
 							}
 						}
 					}
@@ -330,15 +330,16 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 	function _render_group($group)
 	{
 		$name       = $group['name'];
-		$dependancy = isset($group['dependancy']) ? $group['dependancy']['value'] . '|' . $group['dependancy']['field'] : '';
+		$dependency = isset($group['dependency']) ? $group['dependency']['value'] . '|' . $group['dependency']['field'] : '';
 
 		$html  = '';
 		$html .= '<div id="wpa_loop-' . $name . '" class="vp-wpa-loop vp-fixed-loop vp-meta-group'
 				. (isset($group['container_extra_classes']) ? (' ' . implode(',', $group['container_extra_classes'])) : '')
 				. '"'
 				. VP_Util_Text::return_if_exists(isset($dependency) ? $dependency : '', ' data-vp-dependency="%s"')
+				. ((isset($group['is_hidden']) and $group['is_hidden']) ? ' style="display: none;"' : '')
 				. '>';
-		$html .= '<h4>' . 'WPA Loop Title' . '</h4>';
+		$html .= '<h4>' . $group['title'] . '</h4>';
 
 		foreach ($group['groups'] as $g)
 		{
@@ -368,8 +369,9 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 				. (isset($group['container_extra_classes']) ? (' ' . implode(',', $group['container_extra_classes'])) : '')
 				. '"'
 				. VP_Util_Text::return_if_exists(isset($dependency) ? $dependency : '', 'data-vp-dependency="%s"')
+				. (isset($group['is_hidden']) and $group['is_hidden'] ? ' style="display: none;"' : '')
 				. '>';
-		$html .= '<h4>' . 'WPA Loop Title' . '</h4>';
+		$html .= '<h4>' . $group['title'] . '</h4>';
 
 		foreach ($group['groups'] as $g)
 		{
@@ -402,7 +404,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 	function _get_groups_idx()
 	{
 		$groups = array();
-		foreach ($this->template['fields'] as $field)
+		foreach ($this->template as $field)
 		{
 			if( $field['type'] == 'group' )
 			{
@@ -415,7 +417,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 	function _get_repeating_groups_idx()
 	{
 		$groups = array();
-		foreach ($this->template['fields'] as $field)
+		foreach ($this->template as $field)
 		{
 			if( $field['type'] == 'group' and $field['repeating'] )
 			{
@@ -599,7 +601,6 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		$multiple = array('checkbox', 'checkimage', 'multiselect');
 
 		$fields = $this->template;
-		$fields = $fields['fields'];
 
 		foreach ($fields as $field)
 		{

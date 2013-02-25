@@ -1,12 +1,7 @@
-.inside {
-	overflow: hidden;
-}
-
 .vp-metabox {
 	border: none;
 	margin-top: -6px;
 	margin-bottom: -8px;
-	overflow: hidden;
 	position: relative;
 	width: 100%;
 }
@@ -69,7 +64,6 @@
 }
 
 .vp-metabox > .vp-wpa-loop .vp-wpa-group .vp-controls {
-	overflow: hidden;
 	position: relative;
 	margin-bottom: -1px;
 }
@@ -280,3 +274,10 @@
 
 /* Override width */
 .chzn-container { width:250px !important; }
+
+/**
+ * Code Editor styling
+ */
+.ace_editor {
+	height: 300px;
+}

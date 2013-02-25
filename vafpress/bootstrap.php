@@ -26,7 +26,6 @@ defined('VP_START_MEM')  or define('VP_START_MEM',  memory_get_usage());
 //////////////////////////
 require VP_DIR . '/autoload.php';
 
-
 //////////////////////////
 // Include Data Source  //
 //////////////////////////
@@ -119,6 +118,8 @@ $set->populate_values($opt);
 
 // process binding
 $set->process_binding();
+
+// process dependencies
 $set->process_dependencies();
 
 // helper function to obtain option value
@@ -182,10 +183,10 @@ function vp_opt_notice_devmode($hook_suffix)
 //////////////////////
 // Ajax Admin Logic //
 //////////////////////
-add_action('wp_ajax_vp_ajax_save', 'vp_ajax_save');
+add_action('wp_ajax_vp_ajax_save'         , 'vp_ajax_save');
 add_action('wp_ajax_vp_ajax_export_option', 'vp_ajax_export_option');
 add_action('wp_ajax_vp_ajax_import_option', 'vp_ajax_import_option');
-add_action('wp_ajax_vp_ajax_wrapper', 'vp_ajax_wrapper');
+add_action('wp_ajax_vp_ajax_wrapper'      , 'vp_ajax_wrapper');
 
 function vp_ajax_wrapper()
 {
