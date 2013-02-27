@@ -9,7 +9,7 @@ class VP_Control_Field_NoteBox extends VP_Control_Field
 	 * - info
 	 * - warning
 	 * - error
-	 * - succed
+	 * - success
 	 * @var String
 	 */
 	protected $_status;
@@ -32,27 +32,32 @@ class VP_Control_Field_NoteBox extends VP_Control_Field
 		$this->set_status(isset($arr['status']) ? $arr['status'] : '');
 	}
 
+	protected function _setup_data() {
+		parent::_setup_data();
+		$this->add_data('status', $this->get_status());
+	}
+
 	public function render()
 	{
 		// Setup Data
 		switch ($this->get_status()) {
 			case 'normal':
-				$this->add_container_extra_classes('normal');
+				$this->add_container_extra_classes('note-normal');
 				break;
 			case 'info':
-				$this->add_container_extra_classes('info');
+				$this->add_container_extra_classes('note-info');
 				break;
 			case 'warning':
-				$this->add_container_extra_classes('warning');
+				$this->add_container_extra_classes('note-warning');
 				break;
 			case 'error':
-				$this->add_container_extra_classes('error');
+				$this->add_container_extra_classes('note-error');
 				break;
-			case 'succed':
-				$this->add_container_extra_classes('succed');
+			case 'success':
+				$this->add_container_extra_classes('note-success');
 				break;
 			default:
-				$this->add_container_extra_classes('normal');
+				$this->add_container_extra_classes('note-normal');
 				break;
 		}
 		$this->_setup_data();

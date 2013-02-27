@@ -217,7 +217,7 @@
 			$('.validation-msg.vp-error').remove();
 
 			var msgHTML = '<li class="validation-msg vp-error"></li>',
-			    menuNotifHTML = '<span class="validation-notif vp-error"></span>',
+			    menuNotifHTML = '<em class="validation-notif vp-error"></em>',
 			    allError = 0;
 
 			for (var i=0; i<validation.length; i++)

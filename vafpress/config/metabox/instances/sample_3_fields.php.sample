@@ -6,13 +6,6 @@ return array(
 	'title'       => __('VP All Fields Metabox', 'vp_textdomain'),
 	'template'    => array(
 		array(
-			'type' => 'notebox',
-			'name' => 'nb_1',
-			'label'=> 'Hey!',
-			'description' => 'Blah blah blah',
-			'status' => 'warning'
-		),
-		array(
 			'type' => 'upload',
 			'name' => 'up_1',
 			'label' => __('Upload', 'vp_textdomain'),

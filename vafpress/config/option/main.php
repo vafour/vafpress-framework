@@ -37,6 +37,11 @@ return array(
 	 */
 	'menu_page_slug'    => 'vp_theme_option',
 
+	/**
+	 * Whether to use fixed layout or fluid layout for Option Panel
+	 */
+	'fixed_layout'      => true,
+
 );
 
 /**

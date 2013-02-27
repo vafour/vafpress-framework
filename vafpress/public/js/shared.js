@@ -546,8 +546,8 @@ if ( vp_wp.use_new_media_upload )
 
 	vp.upload_callback = function(e) {
 		var $this    = jQuery(this),
-		    $input   = $this.prev('input'),
-		    $preview = $this.siblings('.image').find('img');
+		    $input   = $this.parent('.buttons').prev('input'),
+		    $preview = $this.parent('.buttons').siblings('.image').find('img');
 
 		// handler for attachment
 		wp.media.editor.send.attachment = function(props, attachment) {
@@ -586,8 +586,8 @@ else
 
 	vp.upload_callback = function(e) {
 		var _custom_media = true,
-		       $input     = jQuery(this).prev('input'),
-		       $preview   = jQuery(this).siblings('.image').find('img');
+		       $input     = jQuery(this).parent('.buttons').prev('input'),
+		       $preview   = jQuery(this).parent('.buttons').siblings('.image').find('img');
 
 		tb_show('Upload Image', 'media-upload.php?referer=vafpress&TB_iframe=true&post_id=0');
 
@@ -628,7 +628,17 @@ function get_url_info(html)
 	return {imgurl: imgurl, iconurl: iconurl};
 }
 
+vp.remove_upload_callback = function(e) {
+	var $this    = jQuery(this),
+	    $input   = $this.parent('.buttons').prev('input'),
+	    $preview = $this.parent('.buttons').siblings('.image').find('img');
+
+	$input.val('');
+	$preview.attr('src', '');
+}
+
 jQuery('.vp-js-upload').click(vp.upload_callback);
+jQuery('.vp-js-remove-upload').click(vp.remove_upload_callback);
 
 if (jQuery.fn.ColorPicker)
 {

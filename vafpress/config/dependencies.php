@@ -89,7 +89,7 @@ return array(
 	 * Styles.
 	 */
 	'styles' => array(
-		'always' => array('tipsy-css'),
+		'always' => array('tipsy-css', 'font-awesome'),
 		'paths' => array(
 			array(
 				'name' => 'colorpicker-css',
