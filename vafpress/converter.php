@@ -1,24 +1,26 @@
 <?php
 
-include_once('../../../../wp-load.php');
+/**
+ * Since converter will be called via CLI that means it will be out of Wordpress Environment,
+ * but 
+ */
 
 class VP_Converter
 {
 
-	protected $group = array('fields', 'sections', 'menus');
+	protected $group     = array('fields', 'sections', 'menus');
 	protected $localized = array('page', 'label', 'title', 'description');
 
 	public function to_array()
 	{
-		// Parse XML String with SimpleXML
-		
 		// Loading the file, if doesn't exists try to load .sample version
-		$option_path        = VP_CONFIG_DIR . '/option';
+		$config_dir         = 'builder';
+		$option_path        = $config_dir  . '/option';
 
-		$source_path        = $option_path  . '/option.xml';
-		$source_path_sample = $source_path  . '.sample';
-		$dest_path          = $option_path  . '/option.php';
-		$dest_path_sample   = $dest_path    . '.sample';
+		$source_path        = $option_path . '/option.xml';
+		$source_path_sample = $source_path . '.sample';
+		$dest_path          = $option_path . '/option.php';
+		$dest_path_sample   = $dest_path   . '.sample';
 
 		if(file_exists($source_path))
 		{
@@ -30,7 +32,6 @@ class VP_Converter
 			$spath = $source_path_sample;
 			$dpath = $dest_path_sample;	
 		}
-
 		$options = file_get_contents($spath);
 
 		// Open root array
@@ -103,7 +104,7 @@ class VP_Converter
 						}
 					}
 
-					$opt_arr = $this->process_sections($sections, $opt_arr);
+					$opt_arr = $this->process_sections($sections, $opt_arr, 5);
 
 					$opt_arr .= "\t\t\t\t),\n";
 				}
@@ -114,7 +115,7 @@ class VP_Converter
 			{
 				if(!empty($sections))
 				{
-					$opt_arr = $this->process_sections($sections, $opt_arr);
+					$opt_arr = $this->process_sections($sections, $opt_arr, 3);
 				}
 			}
 
@@ -138,30 +139,36 @@ class VP_Converter
 		return $result;
 	}
 
-	private function process_sections($sections, $opt_arr)
+	private function process_sections($sections, $opt_arr, $ntabs)
 	{
 		// Loop Sections
-		$opt_arr .= "\t\t\t\t\t'controls' => array(\n";
+		$tabs = str_repeat("\t", $ntabs);
+		$opt_arr .= "$tabs'controls' => array(\n";
 		foreach ($sections as $key => $section)
 		{
 			// var_dump($key);
 			if($key === 'section')
-				$opt_arr = $this->process_section($section, $opt_arr);
+			{
+				$opt_arr = $this->process_section($section, $opt_arr, $ntabs);
+			}
 			else
-				$opt_arr = $this->process_field($key, $section, $opt_arr);
+			{
+				$opt_arr = $this->process_field($key, $section, $opt_arr, $ntabs);
+			}
 		}
-		$opt_arr .= "\t\t\t\t\t),\n";
+		$opt_arr .= "$tabs),\n";
 
 		return $opt_arr;
 	}
 
-	private function process_section($section, $opt_arr)
+	private function process_section($section, $opt_arr, $ntabs)
 	{
 		// Section Open
-		$opt_arr .= "\t\t\t\t\t\tarray(\n";
+		$tabs     = str_repeat("\t", $ntabs);
+		$opt_arr .= "$tabs\tarray(\n";
 		$fields   = array();
 
-		$opt_arr .= "\t\t\t\t\t\t\t'type' => 'section',\n";
+		$opt_arr .= "$tabs\t\t'type' => 'section',\n";
 		for($section->rewind(); $section->valid(); $section->next()) {
 			// Print Section Attributes
 			if(!$section->hasChildren() and !in_array($section->key(), $this->group))
@@ -170,17 +177,17 @@ class VP_Converter
 				{
 					$current = $section->current();
 
-					$opt_arr .= "\t\t\t\t\t\t\t'dependency' => array(\n";
-					$opt_arr .= "\t\t\t\t\t\t\t\t'field' => '{$current[field]}',\n";
-					$opt_arr .= "\t\t\t\t\t\t\t\t'value' => '{$current}',\n";
-					$opt_arr .= "\t\t\t\t\t\t\t),\n";
+					$opt_arr .= "$tabs\t\t'dependency' => array(\n";
+					$opt_arr .= "$tabs\t\t\t'field' => '{$current['field']}',\n";
+					$opt_arr .= "$tabs\t\t\t'value' => '{$current}',\n";
+					$opt_arr .= "$tabs\t\t),\n";
 				}
 				else
 				{
 					if(in_array($section->key(), $this->localized))
-						$opt_arr .= "\t\t\t\t\t\t\t'{$section->key()}' => __('{$section->current()}', 'vp_textdomain'),\n";
+						$opt_arr .= "$tabs\t\t'{$section->key()}' => __('{$section->current()}', 'vp_textdomain'),\n";
 					else
-						$opt_arr .= "\t\t\t\t\t\t\t'{$section->key()}' => '{$section->current()}',\n";
+						$opt_arr .= "$tabs\t\t'{$section->key()}' => '{$section->current()}',\n";
 				}
 			}
 			if($section->key() == 'fields')
@@ -190,24 +197,26 @@ class VP_Converter
 		}
 
 		// Loop Fields
-		$opt_arr .= "\t\t\t\t\t\t\t'fields' => array(\n";
+		$opt_arr .= "$tabs\t\t'fields' => array(\n";
 		foreach ($fields as $key => $field)
 		{
-			$opt_arr = $this->process_field($key, $field, $opt_arr);
+			$opt_arr = $this->process_field($key, $field, $opt_arr, $ntabs + 2);
 		}
-		$opt_arr .= "\t\t\t\t\t\t\t),\n";
+		$opt_arr .= "$tabs\t\t),\n";
 		// End Loop Fields
 		
 		// Section Close
-		$opt_arr .= "\t\t\t\t\t\t),\n";
+		$opt_arr .= "$tabs\t),\n";
 
 		return $opt_arr;
 	}
 
-	private function process_field($key, $field, $opt_arr)
+	private function process_field($key, $field, $opt_arr, $ntabs)
 	{
-		$opt_arr .= "\t\t\t\t\t\t\t\tarray(\n";
-		$opt_arr .= "\t\t\t\t\t\t\t\t\t'type' => '$key',\n";
+		$tabs     = str_repeat("\t", $ntabs);
+
+		$opt_arr .= "$tabs\tarray(\n";
+		$opt_arr .= "$tabs\t\t'type' => '$key',\n";
 		for($field->rewind(); $field->valid(); $field->next())
 		{
 			// Print Tab Attributes
@@ -218,18 +227,18 @@ class VP_Converter
 
 					$current  = $field->current();
 
-					$opt_arr .= "\t\t\t\t\t\t\t\t\t'dependency' => array(\n";
-					$opt_arr .= "\t\t\t\t\t\t\t\t\t\t'field' => '{$current[field]}',\n";
-					$opt_arr .= "\t\t\t\t\t\t\t\t\t\t'value' => '{$current}',\n";
-					$opt_arr .= "\t\t\t\t\t\t\t\t\t),\n";
+					$opt_arr .= "$tabs\t\t'dependency' => array(\n";
+					$opt_arr .= "$tabs\t\t\t'field' => '{$current['field']}',\n";
+					$opt_arr .= "$tabs\t\t\t'value' => '{$current}',\n";
+					$opt_arr .= "$tabs\t\t),\n";
 
 				}
 				else
 				{
 					if(in_array($field->key(), $this->localized))
-						$opt_arr .= "\t\t\t\t\t\t\t\t\t'{$field->key()}' => __('{$field->current()}', 'vp_textdomain'),\n";
+						$opt_arr .= "$tabs\t\t'{$field->key()}' => __('{$field->current()}', 'vp_textdomain'),\n";
 					else
-						$opt_arr .= "\t\t\t\t\t\t\t\t\t'{$field->key()}' => '{$field->current()}',\n";
+						$opt_arr .= "$tabs\t\t'{$field->key()}' => '{$field->current()}',\n";
 				}
 
 			}
@@ -294,39 +303,39 @@ class VP_Converter
 		// processing items
 		if(!empty($items) || !empty($datasources))
 		{
-			$opt_arr  .= "\t\t\t\t\t\t\t\t\t'items' => array(\n";
+			$opt_arr  .= "$tabs\t\t'items' => array(\n";
 
 			// add custom datasources
 			if(!empty($datasources))
 			{
 
-				$opt_arr .= "\t\t\t\t\t\t\t\t\t\t'data' => array(\n";
+				$opt_arr .= "$tabs\t\t\t'data' => array(\n";
 				foreach ($datasources as $data)
 				{
-					$opt_arr .= "\t\t\t\t\t\t\t\t\t\t\tarray(\n";
+					$opt_arr .= "$tabs\t\t\t\tarray(\n";
 					foreach ($data as $key => $value) {
-						$opt_arr .= "\t\t\t\t\t\t\t\t\t\t\t\t'$key' => '{$value}',\n";
+						$opt_arr .= "$tabs\t\t\t\t\t'$key' => '{$value}',\n";
 					}
-					$opt_arr .= "\t\t\t\t\t\t\t\t\t\t\t),\n";
+					$opt_arr .= "$tabs\t\t\t\t),\n";
 				}
-				$opt_arr .= "\t\t\t\t\t\t\t\t\t\t),\n";
+				$opt_arr .= "$tabs\t\t\t),\n";
 			}
 
 			foreach ($items as $item)
 			{
-				$opt_arr .= "\t\t\t\t\t\t\t\t\t\tarray(\n";
+				$opt_arr .= "$tabs\t\t\tarray(\n";
 
 
 				foreach ($item as $key => $value)
 				{
 					if(in_array($key, $this->localized))
-						$opt_arr .= "\t\t\t\t\t\t\t\t\t\t\t'$key' => __('$value', 'vp_textdomain'),\n";
+						$opt_arr .= "$tabs\t\t\t\t'$key' => __('$value', 'vp_textdomain'),\n";
 					else
-						$opt_arr .= "\t\t\t\t\t\t\t\t\t\t\t'$key' => '$value',\n";
+						$opt_arr .= "$tabs\t\t\t\t'$key' => '$value',\n";
 				}
-				$opt_arr .= "\t\t\t\t\t\t\t\t\t\t),\n";
+				$opt_arr .= "$tabs\t\t\t),\n";
 			}
-			$opt_arr .= "\t\t\t\t\t\t\t\t\t),\n";
+			$opt_arr .= "$tabs\t\t),\n";
 		}
 
 		// processing defaaults
@@ -336,16 +345,16 @@ class VP_Converter
 			$defaults = $emb_defaults;
 		if(!empty($defaults))
 		{
-			$opt_arr  .= "\t\t\t\t\t\t\t\t\t'default' => array(\n";
+			$opt_arr  .= "$tabs\t\t'default' => array(\n";
 			foreach ($defaults as $def)
 			{
-				$opt_arr .= "\t\t\t\t\t\t\t\t\t\t'$def',\n";
+				$opt_arr .= "$tabs\t\t\t'$def',\n";
 			}
-			$opt_arr .= "\t\t\t\t\t\t\t\t\t),\n";
+			$opt_arr .= "$tabs\t\t),\n";
 		}
 
 
-		$opt_arr .= "\t\t\t\t\t\t\t\t),\n";
+		$opt_arr .= "$tabs\t),\n";
 
 		return $opt_arr;
 	

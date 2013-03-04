@@ -8,7 +8,7 @@ class VP_Option_Parser
 
 		// Parse XML String with SimpleXML
 		$set = new VP_Option_Control_Set();
-		$auto_group_naming = VP_Util_Config::get_instance()->load('option/main', 'auto_group_naming');
+		$auto_group_naming = VP_Util_Config::get_instance()->load('option', 'auto_group_naming');
 
 		if(empty($arr['title']))
 			$arr['title'] = 'Vafpress';

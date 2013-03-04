@@ -72,7 +72,7 @@ class VP_Option_Depsloader
 	public function can_output($hook_suffix = '')
 	{
 		// if not in option page, don't load
-		$menu_page_slug = VP_Util_Config::get_instance()->load('option/main', 'menu_page_slug');
+		$menu_page_slug = VP_Util_Config::get_instance()->load('option', 'menu_page_slug');
 		if( $hook_suffix == ('appearance_page_' . $menu_page_slug) )
 			return true;
 		return false;

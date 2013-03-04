@@ -32,10 +32,10 @@ return array(
 				'deps' => array('jquery'),
 				'ver'  => false
 			),
-			'chosen-js' => array(
+			'chosen-jquery' => array(
 				'path' => VP_PUBLIC_URL . '/js/vendor/chosen.jquery.min.js',
 				'deps' => array('jquery'),
-				'ver'  => false
+				'ver'  => '0.9.11'
 			),
 			'prefixfree-js' => array(
 				'path' => VP_PUBLIC_URL . '/js/vendor/prefixfree.min.js',
@@ -124,8 +124,8 @@ return array(
 	 */
 	'rules'   => array(
 		'color'       => array( 'js' => array('colorpicker-js'), 'css' => array('colorpicker-css') ),
-		'select'      => array( 'js' => array('chosen-js'), 'css' => array('chosen-css') ),
-		'multiselect' => array( 'js' => array('chosen-js'), 'css' => array('chosen-css') ),
+		'select'      => array( 'js' => array('chosen-jquery'), 'css' => array('chosen-css') ),
+		'multiselect' => array( 'js' => array('chosen-jquery'), 'css' => array('chosen-css') ),
 		'slider'      => array( 'js' => array('jquery-ui-slider'), 'css' => array('jqui') ),
 		'date'        => array( 'js' => array('jquery-ui-datepicker'), 'css' => array('jqui') ),
 		'codeeditor'  => array( 'js' => array('ace-editor'), 'css' => array() ),

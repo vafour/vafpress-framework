@@ -630,6 +630,12 @@ body {
 	height: 25px;
 }
 
+.vp-field .field .chzn-container-single .chzn-single div {
+	background-color: transparent;
+	background-image: none;
+	border-left: none;
+}
+
 .vp-section .field .chzn-container {
 	font-size: 12px;
 }

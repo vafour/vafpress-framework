@@ -10,7 +10,7 @@ return array(
 	 * Will always load option values from option.php/xml default values, not DB,
 	 * so you can play with the option.php/xml freely.
 	 */
-	'dev_mode'          => true,
+	'dev_mode'          => false,
 
 	/**
 	 * Whether to use import and export menu

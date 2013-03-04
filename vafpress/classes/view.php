@@ -20,7 +20,7 @@ class VP_View
 
 	private function __construct()
 	{
-		$this->_view_dir = VP_THEME_DIR . '/vafpress/view/';
+		$this->_view_dir = VP_VIEWS_DIR . '/';
 		$this->_view_ext = '.php';
 		$this->_views    = array();
 	}

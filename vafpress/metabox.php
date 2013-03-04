@@ -10,13 +10,13 @@ global $vp_metaboxes;
 
 // load all files from metaboxes
 $metas = array();
-foreach (glob(VP_CONFIG_DIR . "/metabox/instances/*.php") as $filename)
+foreach (glob(VP_BUILDER_DIR . "/metabox/*.php") as $filename)
 {
 	$metas[] = include($filename);
 }
 if(empty($metas))
 {
-	foreach (glob(VP_CONFIG_DIR . "/metabox/instances/*.php.sample") as $filename)
+	foreach (glob(VP_BUILDER_DIR . "/metabox/*.php.sample") as $filename)
 	{
 		$metas[] = include($filename);
 	}
@@ -26,7 +26,7 @@ if(empty($metas))
 if(!empty($metas))
 {	
 	// development mode notice
-	if(VP_Util_Config::get_instance()->load('metabox/main', 'dev_mode'))
+	if(VP_Util_Config::get_instance()->load('metabox', 'dev_mode'))
 	{
 		if ( WPAlchemy_MetaBox::_is_post() or WPAlchemy_MetaBox::_is_page() )
 		{

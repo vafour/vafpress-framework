@@ -14,7 +14,7 @@ function vp_autoload($className)
 	$className = strtolower($className);
 	$fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
 
-	require VP_THEME_DIR . '/vafpress/' . $fileName;
+	require VP_CLASSES_DIR . '/' . $fileName;
 }
 
 spl_autoload_register('vp_autoload');

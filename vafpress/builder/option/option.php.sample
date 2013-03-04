@@ -63,13 +63,13 @@ return array(
 								),
 							),
 						),
-								array(
-									'type' => 'textarea',
-									'name' => 'ta_1',
-									'label' => __('Textarea', 'vp_textdomain'),
-									'description' => __('Everytime you need long text..', 'vp_textdomain'),
-									'default' => 'lorem ipsum',
-								),
+						array(
+							'type' => 'textarea',
+							'name' => 'ta_1',
+							'label' => __('Textarea', 'vp_textdomain'),
+							'description' => __('Everytime you need long text..', 'vp_textdomain'),
+							'default' => 'lorem ipsum',
+						),
 						array(
 							'type' => 'section',
 							'name' => 'section_2',
@@ -558,377 +558,377 @@ return array(
 			'title' => __('Special Controls', 'vp_textdomain'),
 			'name' => 'menu_2',
 			'icon' => 'font-awesome:icon-gift',
-					'controls' => array(
+			'controls' => array(
+				array(
+					'type' => 'section',
+					'title' => __('Section 1', 'vp_textdomain'),
+					'fields' => array(
 						array(
-							'type' => 'section',
-							'title' => __('Section 1', 'vp_textdomain'),
-							'fields' => array(
-								array(
-									'type' => 'toggle',
-									'name' => 'tg_1',
-									'label' => __('Toggle', 'vp_textdomain'),
-									'description' => __('Suits the need to ask user a yes or no option.', 'vp_textdomain'),
-									'default' => '1',
-								),
-								array(
-									'type' => 'slider',
-									'name' => 'sl_1',
-									'label' => __('Decimal Slider', 'vp_textdomain'),
-									'description' => __('This slider has minimum value of -10, maximum value of 17.5, sliding step of 0.1 and default value 15.9, everything can be customized.', 'vp_textdomain'),
-									'min' => '-10',
-									'max' => '17.5',
-									'step' => '0.1',
-									'default' => '15.9',
-								),
-								array(
-									'type' => 'slider',
-									'name' => 'sl_2',
-									'label' => __('Custom Step Slider', 'vp_textdomain'),
-									'description' => __('This slider has minimum value of 100, maximum value of 1000, sliding step of 5 and default value 275, everything can be customized.', 'vp_textdomain'),
-									'min' => '100',
-									'max' => '1000',
-									'step' => '5',
-									'default' => '275',
-								),
-								array(
-									'type' => 'upload',
-									'name' => 'up_1',
-									'label' => __('Upload', 'vp_textdomain'),
-									'description' => __('Media uploader, using the powerful WP Media Upload', 'vp_textdomain'),
-									'default' => 'http://lorempixel.com/500/400/animals/',
-								),
-								array(
-									'type' => 'color',
-									'name' => 'cl_1',
-									'label' => __('Color 1', 'vp_textdomain'),
-									'description' => __('Color Picker, you can set the default color.', 'vp_textdomain'),
-									'default' => '#3eb9e6',
-								),
-								array(
-									'type' => 'color',
-									'name' => 'cl_2',
-									'label' => __('Color 2', 'vp_textdomain'),
-									'description' => __('Color Picker, you can set the default color.', 'vp_textdomain'),
-									'default' => '#98ed28',
-								),
-								array(
-									'type' => 'date',
-									'name' => 'dt_1',
-									'label' => __('International Date Format', 'vp_textdomain'),
-									'description' => __('Date Picker with International date format.', 'vp_textdomain'),
-									'format' => 'yy-mm-dd',
-									'default' => '2012-12-12',
-								),
-								array(
-									'type' => 'date',
-									'name' => 'dt_2',
-									'label' => __('Asian Date Format', 'vp_textdomain'),
-									'description' => __('Date Picker with Asian date format.', 'vp_textdomain'),
-									'format' => 'dd-mm-yy',
-									'default' => '',
-									'validation' => 'required',
-								),
-								array(
-									'type' => 'date',
-									'name' => 'dt_3',
-									'label' => __('Ranged Date Picker', 'vp_textdomain'),
-									'description' => __('The range can be exact date or formatted string to define the offset from today, for example "+1D" will be parsed as tommorow date, or "+1D +1W", please refer to [jQueryUI Datepicker Docs](http://jqueryui.com/datepicker/#min-max)', 'vp_textdomain'),
-									'min_date' => '1-1-2000',
-									'max_date' => 'today',
-									'format' => 'yy-mm-dd',
-									'default' => '-1W',
-								),
-								array(
-									'type' => 'codeeditor',
-									'name' => 'ce_1',
-									'label' => __('Custom CSS', 'vp_textdomain'),
-									'description' => __('Write your custom css here.', 'vp_textdomain'),
-									'theme' => 'github',
-									'mode' => 'css',
-								),
-								array(
-									'type' => 'codeeditor',
-									'name' => 'ce_2',
-									'label' => __('Custom JS', 'vp_textdomain'),
-									'description' => __('Write your custom js here.', 'vp_textdomain'),
-									'theme' => 'twilight',
-									'mode' => 'javascript',
-								),
-							),
+							'type' => 'toggle',
+							'name' => 'tg_1',
+							'label' => __('Toggle', 'vp_textdomain'),
+							'description' => __('Suits the need to ask user a yes or no option.', 'vp_textdomain'),
+							'default' => '1',
+						),
+						array(
+							'type' => 'slider',
+							'name' => 'sl_1',
+							'label' => __('Decimal Slider', 'vp_textdomain'),
+							'description' => __('This slider has minimum value of -10, maximum value of 17.5, sliding step of 0.1 and default value 15.9, everything can be customized.', 'vp_textdomain'),
+							'min' => '-10',
+							'max' => '17.5',
+							'step' => '0.1',
+							'default' => '15.9',
+						),
+						array(
+							'type' => 'slider',
+							'name' => 'sl_2',
+							'label' => __('Custom Step Slider', 'vp_textdomain'),
+							'description' => __('This slider has minimum value of 100, maximum value of 1000, sliding step of 5 and default value 275, everything can be customized.', 'vp_textdomain'),
+							'min' => '100',
+							'max' => '1000',
+							'step' => '5',
+							'default' => '275',
+						),
+						array(
+							'type' => 'upload',
+							'name' => 'up_1',
+							'label' => __('Upload', 'vp_textdomain'),
+							'description' => __('Media uploader, using the powerful WP Media Upload', 'vp_textdomain'),
+							'default' => 'http://lorempixel.com/500/400/animals/',
+						),
+						array(
+							'type' => 'color',
+							'name' => 'cl_1',
+							'label' => __('Color 1', 'vp_textdomain'),
+							'description' => __('Color Picker, you can set the default color.', 'vp_textdomain'),
+							'default' => '#3eb9e6',
+						),
+						array(
+							'type' => 'color',
+							'name' => 'cl_2',
+							'label' => __('Color 2', 'vp_textdomain'),
+							'description' => __('Color Picker, you can set the default color.', 'vp_textdomain'),
+							'default' => '#98ed28',
+						),
+						array(
+							'type' => 'date',
+							'name' => 'dt_1',
+							'label' => __('International Date Format', 'vp_textdomain'),
+							'description' => __('Date Picker with International date format.', 'vp_textdomain'),
+							'format' => 'yy-mm-dd',
+							'default' => '2012-12-12',
+						),
+						array(
+							'type' => 'date',
+							'name' => 'dt_2',
+							'label' => __('Asian Date Format', 'vp_textdomain'),
+							'description' => __('Date Picker with Asian date format.', 'vp_textdomain'),
+							'format' => 'dd-mm-yy',
+							'default' => '',
+							'validation' => 'required',
+						),
+						array(
+							'type' => 'date',
+							'name' => 'dt_3',
+							'label' => __('Ranged Date Picker', 'vp_textdomain'),
+							'description' => __('The range can be exact date or formatted string to define the offset from today, for example "+1D" will be parsed as tommorow date, or "+1D +1W", please refer to [jQueryUI Datepicker Docs](http://jqueryui.com/datepicker/#min-max)', 'vp_textdomain'),
+							'min_date' => '1-1-2000',
+							'max_date' => 'today',
+							'format' => 'yy-mm-dd',
+							'default' => '-1W',
+						),
+						array(
+							'type' => 'codeeditor',
+							'name' => 'ce_1',
+							'label' => __('Custom CSS', 'vp_textdomain'),
+							'description' => __('Write your custom css here.', 'vp_textdomain'),
+							'theme' => 'github',
+							'mode' => 'css',
+						),
+						array(
+							'type' => 'codeeditor',
+							'name' => 'ce_2',
+							'label' => __('Custom JS', 'vp_textdomain'),
+							'description' => __('Write your custom js here.', 'vp_textdomain'),
+							'theme' => 'twilight',
+							'mode' => 'javascript',
 						),
 					),
+				),
+			),
 		),
 		array(
 			'title' => __('Custom Data Source', 'vp_textdomain'),
 			'name' => 'menu_3',
 			'icon' => 'font-awesome:icon-th-list',
-					'controls' => array(
+			'controls' => array(
+				array(
+					'type' => 'section',
+					'title' => __('Data Source and Special Default', 'vp_textdomain'),
+					'fields' => array(
 						array(
-							'type' => 'section',
-							'title' => __('Data Source and Special Default', 'vp_textdomain'),
-							'fields' => array(
-								array(
-									'type' => 'multiselect',
-									'name' => 'ms_categories',
-									'label' => __('Categories', 'vp_textdomain'),
-									'description' => __('MultiSelect field with WP Categories Data Source and **{{first}}** **{{last}}** default items.', 'vp_textdomain'),
-									'items' => array(
-										'data' => array(
-											array(
-												'source' => 'function',
-												'value' => 'vp_get_categories',
-											),
-										),
-									),
-									'default' => array(
-										'{{first}}',
-										'{{last}}',
+							'type' => 'multiselect',
+							'name' => 'ms_categories',
+							'label' => __('Categories', 'vp_textdomain'),
+							'description' => __('MultiSelect field with WP Categories Data Source and **{{first}}** **{{last}}** default items.', 'vp_textdomain'),
+							'items' => array(
+								'data' => array(
+									array(
+										'source' => 'function',
+										'value' => 'vp_get_categories',
 									),
 								),
-								array(
-									'type' => 'select',
-									'name' => 'se_pages',
-									'label' => __('Pages', 'vp_textdomain'),
-									'description' => __('Select field with WP Pages Data Source', 'vp_textdomain'),
-									'items' => array(
-										'data' => array(
-											array(
-												'source' => 'function',
-												'value' => 'vp_get_pages',
-											),
-										),
+							),
+							'default' => array(
+								'{{first}}',
+								'{{last}}',
+							),
+						),
+						array(
+							'type' => 'select',
+							'name' => 'se_pages',
+							'label' => __('Pages', 'vp_textdomain'),
+							'description' => __('Select field with WP Pages Data Source', 'vp_textdomain'),
+							'items' => array(
+								'data' => array(
+									array(
+										'source' => 'function',
+										'value' => 'vp_get_pages',
 									),
 								),
-								array(
-									'type' => 'checkbox',
-									'name' => 'cb_users',
-									'label' => __('Users Data Source', 'vp_textdomain'),
-									'description' => __('Checkbox field with WP Users Data Source and **{{all}}** default items.', 'vp_textdomain'),
-									'items' => array(
-										'data' => array(
-											array(
-												'source' => 'function',
-												'params' => 'admin',
-												'value' => 'vp_get_users',
-											),
-										),
-									),
-									'default' => array(
-										'{{all}}',
+							),
+						),
+						array(
+							'type' => 'checkbox',
+							'name' => 'cb_users',
+							'label' => __('Users Data Source', 'vp_textdomain'),
+							'description' => __('Checkbox field with WP Users Data Source and **{{all}}** default items.', 'vp_textdomain'),
+							'items' => array(
+								'data' => array(
+									array(
+										'source' => 'function',
+										'params' => 'admin',
+										'value' => 'vp_get_users',
 									),
 								),
-								array(
-									'type' => 'radiobutton',
-									'name' => 'rb_roles',
-									'label' => __('Roles', 'vp_textdomain'),
-									'description' => __('RadioButton field with WP Roles Data Source and **{{last}}** default item.', 'vp_textdomain'),
-									'items' => array(
-										'data' => array(
-											array(
-												'source' => 'function',
-												'value' => 'vp_get_roles',
-											),
-										),
-									),
-									'default' => array(
-										'{{last}}',
-									),
-								),
-								array(
-									'type' => 'multiselect',
-									'name' => 'ms_tags',
-									'label' => __('Tags', 'vp_textdomain'),
-									'description' => __('MultiSelect field with WP Tags Data Source and **{{first}}** default items.', 'vp_textdomain'),
-									'items' => array(
-										'data' => array(
-											array(
-												'source' => 'function',
-												'value' => 'vp_get_tags',
-											),
-										),
-									),
-									'default' => array(
-										'{{first}}',
+							),
+							'default' => array(
+								'{{all}}',
+							),
+						),
+						array(
+							'type' => 'radiobutton',
+							'name' => 'rb_roles',
+							'label' => __('Roles', 'vp_textdomain'),
+							'description' => __('RadioButton field with WP Roles Data Source and **{{last}}** default item.', 'vp_textdomain'),
+							'items' => array(
+								'data' => array(
+									array(
+										'source' => 'function',
+										'value' => 'vp_get_roles',
 									),
 								),
-								array(
-									'type' => 'select',
-									'name' => 'se_posts',
-									'label' => __('Posts', 'vp_textdomain'),
-									'description' => __('Select field with WP Post Data Source', 'vp_textdomain'),
-									'items' => array(
-										'data' => array(
-											array(
-												'source' => 'function',
-												'value' => 'vp_get_posts',
-											),
-										),
+							),
+							'default' => array(
+								'{{last}}',
+							),
+						),
+						array(
+							'type' => 'multiselect',
+							'name' => 'ms_tags',
+							'label' => __('Tags', 'vp_textdomain'),
+							'description' => __('MultiSelect field with WP Tags Data Source and **{{first}}** default items.', 'vp_textdomain'),
+							'items' => array(
+								'data' => array(
+									array(
+										'source' => 'function',
+										'value' => 'vp_get_tags',
+									),
+								),
+							),
+							'default' => array(
+								'{{first}}',
+							),
+						),
+						array(
+							'type' => 'select',
+							'name' => 'se_posts',
+							'label' => __('Posts', 'vp_textdomain'),
+							'description' => __('Select field with WP Post Data Source', 'vp_textdomain'),
+							'items' => array(
+								'data' => array(
+									array(
+										'source' => 'function',
+										'value' => 'vp_get_posts',
 									),
 								),
 							),
 						),
 					),
+				),
+			),
 		),
 		array(
 			'name' => 'binding_data_source',
 			'title' => __('Binding Data Source', 'vp_textdomain'),
 			'icon' => 'font-awesome:icon-link',
-					'controls' => array(
+			'controls' => array(
+				array(
+					'type' => 'section',
+					'title' => __('Choose Font', 'vp_textdomain'),
+					'fields' => array(
 						array(
-							'type' => 'section',
-							'title' => __('Choose Font', 'vp_textdomain'),
-							'fields' => array(
-								array(
-									'type' => 'select',
-									'name' => 'logo_font_face',
-									'label' => __('Logo Font Face', 'vp_textdomain'),
-									'description' => __('Select Font', 'vp_textdomain'),
-									'items' => array(
-										'data' => array(
-											array(
-												'source' => 'function',
-												'value' => 'vp_get_gwf_family',
-											),
-										),
+							'type' => 'select',
+							'name' => 'logo_font_face',
+							'label' => __('Logo Font Face', 'vp_textdomain'),
+							'description' => __('Select Font', 'vp_textdomain'),
+							'items' => array(
+								'data' => array(
+									array(
+										'source' => 'function',
+										'value' => 'vp_get_gwf_family',
 									),
 								),
-								array(
-									'type' => 'radiobutton',
-									'name' => 'logo_font_style',
-									'label' => __('Logo Font Style', 'vp_textdomain'),
-									'description' => __('Select Font Style', 'vp_textdomain'),
-									'items' => array(
-										'data' => array(
-											array(
-												'source' => 'bind',
-												'field' => 'logo_font_face',
-												'value' => 'vp_get_gwf_style',
-											),
-										),
-									),
-									'default' => array(
-										'{{first}}',
+							),
+						),
+						array(
+							'type' => 'radiobutton',
+							'name' => 'logo_font_style',
+							'label' => __('Logo Font Style', 'vp_textdomain'),
+							'description' => __('Select Font Style', 'vp_textdomain'),
+							'items' => array(
+								'data' => array(
+									array(
+										'source' => 'bind',
+										'field' => 'logo_font_face',
+										'value' => 'vp_get_gwf_style',
 									),
 								),
-								array(
-									'type' => 'radiobutton',
-									'name' => 'logo_font_weight',
-									'label' => __('Logo Font Weight', 'vp_textdomain'),
-									'description' => __('Select Font Weight', 'vp_textdomain'),
-									'items' => array(
-										'data' => array(
-											array(
-												'source' => 'bind',
-												'field' => 'logo_font_face',
-												'value' => 'vp_get_gwf_weight',
-											),
-										),
+							),
+							'default' => array(
+								'{{first}}',
+							),
+						),
+						array(
+							'type' => 'radiobutton',
+							'name' => 'logo_font_weight',
+							'label' => __('Logo Font Weight', 'vp_textdomain'),
+							'description' => __('Select Font Weight', 'vp_textdomain'),
+							'items' => array(
+								'data' => array(
+									array(
+										'source' => 'bind',
+										'field' => 'logo_font_face',
+										'value' => 'vp_get_gwf_weight',
 									),
 								),
 							),
 						),
 					),
+				),
+			),
 		),
 		array(
 			'name' => 'dependent_field',
 			'title' => __('Dependent Field', 'vp_textdomain'),
 			'icon' => 'font-awesome:icon-key',
-					'controls' => array(
+			'controls' => array(
+				array(
+					'type' => 'section',
+					'title' => __('Decider', 'vp_textdomain'),
+					'name' => 'section_custom_font_decider',
+					'fields' => array(
 						array(
-							'type' => 'section',
-							'title' => __('Decider', 'vp_textdomain'),
-							'name' => 'section_custom_font_decider',
-							'fields' => array(
-								array(
-									'type' => 'toggle',
-									'name' => 'use_custom_font',
-									'label' => __('Use Custom Font', 'vp_textdomain'),
-									'description' => __('Use custom font or not', 'vp_textdomain'),
-								),
-							),
+							'type' => 'toggle',
+							'name' => 'use_custom_font',
+							'label' => __('Use Custom Font', 'vp_textdomain'),
+							'description' => __('Use custom font or not', 'vp_textdomain'),
 						),
+					),
+				),
+				array(
+					'type' => 'section',
+					'title' => __('Custom Font', 'vp_textdomain'),
+					'name' => 'section_custom_font',
+					'dependency' => array(
+						'field' => 'use_custom_font',
+						'value' => 'vp_dep_basic',
+					),
+					'fields' => array(
 						array(
-							'type' => 'section',
-							'title' => __('Custom Font', 'vp_textdomain'),
-							'name' => 'section_custom_font',
-							'dependency' => array(
-								'field' => 'use_custom_font',
-								'value' => 'vp_dep_basic',
-							),
-							'fields' => array(
-								array(
-									'type' => 'select',
-									'name' => 'dep_font_face',
-									'label' => __('Font Face', 'vp_textdomain'),
-									'description' => __('Select Font', 'vp_textdomain'),
-									'items' => array(
-										'data' => array(
-											array(
-												'source' => 'function',
-												'value' => 'vp_get_gwf_family',
-											),
-										),
-									),
-								),
-								array(
-									'type' => 'radiobutton',
-									'name' => 'dep_font_style',
-									'label' => __('Font Style', 'vp_textdomain'),
-									'description' => __('Select Font Style', 'vp_textdomain'),
-									'items' => array(
-										'data' => array(
-											array(
-												'source' => 'bind',
-												'field' => 'dep_font_face',
-												'value' => 'vp_get_gwf_style',
-											),
-										),
-									),
-									'default' => array(
-										'{{first}}',
-									),
-								),
-								array(
-									'type' => 'radiobutton',
-									'name' => 'dep_font_weight',
-									'label' => __('Font Weight', 'vp_textdomain'),
-									'description' => __('Select Font Weight', 'vp_textdomain'),
-									'items' => array(
-										'data' => array(
-											array(
-												'source' => 'bind',
-												'field' => 'dep_font_face',
-												'value' => 'vp_get_gwf_weight',
-											),
-										),
+							'type' => 'select',
+							'name' => 'dep_font_face',
+							'label' => __('Font Face', 'vp_textdomain'),
+							'description' => __('Select Font', 'vp_textdomain'),
+							'items' => array(
+								'data' => array(
+									array(
+										'source' => 'function',
+										'value' => 'vp_get_gwf_family',
 									),
 								),
 							),
 						),
 						array(
-							'type' => 'section',
-							'title' => __('Single Field dependency', 'vp_textdomain'),
-							'name' => 'section_single_field_deps',
-							'fields' => array(
-								array(
-									'type' => 'toggle',
-									'name' => 'use_custom_logo',
-									'label' => __('Use Custom Logo', 'vp_textdomain'),
-									'description' => __('Use custom logo or not', 'vp_textdomain'),
-								),
-								array(
-									'type' => 'upload',
-									'name' => 'custom_logo',
-									'label' => __('Custom Logo', 'vp_textdomain'),
-									'dependency' => array(
-										'field' => 'use_custom_logo',
-										'value' => 'vp_dep_basic',
+							'type' => 'radiobutton',
+							'name' => 'dep_font_style',
+							'label' => __('Font Style', 'vp_textdomain'),
+							'description' => __('Select Font Style', 'vp_textdomain'),
+							'items' => array(
+								'data' => array(
+									array(
+										'source' => 'bind',
+										'field' => 'dep_font_face',
+										'value' => 'vp_get_gwf_style',
 									),
-									'description' => __('Upload or choose custom logo', 'vp_textdomain'),
+								),
+							),
+							'default' => array(
+								'{{first}}',
+							),
+						),
+						array(
+							'type' => 'radiobutton',
+							'name' => 'dep_font_weight',
+							'label' => __('Font Weight', 'vp_textdomain'),
+							'description' => __('Select Font Weight', 'vp_textdomain'),
+							'items' => array(
+								'data' => array(
+									array(
+										'source' => 'bind',
+										'field' => 'dep_font_face',
+										'value' => 'vp_get_gwf_weight',
+									),
 								),
 							),
 						),
 					),
+				),
+				array(
+					'type' => 'section',
+					'title' => __('Single Field dependency', 'vp_textdomain'),
+					'name' => 'section_single_field_deps',
+					'fields' => array(
+						array(
+							'type' => 'toggle',
+							'name' => 'use_custom_logo',
+							'label' => __('Use Custom Logo', 'vp_textdomain'),
+							'description' => __('Use custom logo or not', 'vp_textdomain'),
+						),
+						array(
+							'type' => 'upload',
+							'name' => 'custom_logo',
+							'label' => __('Custom Logo', 'vp_textdomain'),
+							'dependency' => array(
+								'field' => 'use_custom_logo',
+								'value' => 'vp_dep_basic',
+							),
+							'description' => __('Upload or choose custom logo', 'vp_textdomain'),
+						),
+					),
+				),
+			),
 		),
 		array(
 			'name' => 'notebox',

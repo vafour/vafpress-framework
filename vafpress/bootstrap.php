@@ -8,6 +8,9 @@ define('VP_VERSION', '1.1');
 define('VP_THEME_DIR'  , get_template_directory());
 define('VP_DIR'        , VP_THEME_DIR . '/vafpress');
 define('VP_CONFIG_DIR' , VP_DIR . '/config');
+define('VP_BUILDER_DIR', VP_DIR . '/builder');
+define('VP_CLASSES_DIR', VP_DIR . '/classes');
+define('VP_VIEWS_DIR'  , VP_DIR . '/views');
 define('VP_IMAGE_DIR'  , VP_DIR . '/public/img');
 define('VP_INCLUDE_DIR', VP_DIR . '/includes');
 
@@ -24,7 +27,8 @@ defined('VP_START_MEM')  or define('VP_START_MEM',  memory_get_usage());
 //////////////////////////
 // Include Auotoloader  //
 //////////////////////////
-require VP_DIR . '/autoload.php';
+require_once VP_DIR . '/autoload.php';
+
 
 //////////////////////////
 // Include Data Source  //
@@ -35,7 +39,7 @@ require_once VP_DIR . '/data/sources.php';
 ////////////////////////
 // Load Theme Config  //
 ////////////////////////
-$config = VP_Util_Config::get_instance()->load('option/main');
+$config = VP_Util_Config::get_instance()->load('option');
 
 
 ////////////////////////
@@ -50,7 +54,7 @@ load_theme_textdomain('vp_textdomain', $lang_dir);
 /////////////////////////
 try {
 	// loading the file, if doesn't exists try to load .sample version
-	$option_path        = VP_CONFIG_DIR . '/option/option.php';
+	$option_path        = VP_BUILDER_DIR . '/option/option.php';
 	$option_path_sample = $option_path . '.sample';
 	if(file_exists($option_path))
 		$options = include($option_path);
@@ -65,7 +69,7 @@ $set	 = $parser->parse_array_options($options);
 ////////////////////////////////////////////////
 // Add Import and Export Option Functionality //
 ////////////////////////////////////////////////
-if(VP_Util_Config::get_instance()->load('option/main', 'impexp'))
+if(VP_Util_Config::get_instance()->load('option', 'impexp'))
 {
 	$ie_menu    = new VP_Option_Control_Group_Menu();
 	$ie_field   = new VP_Option_Control_Field_ImpExp();
@@ -87,7 +91,6 @@ require_once 'metabox.php';
 //////////////////////////////////////////
 // Load Options to be used in the Theme //
 //////////////////////////////////////////
-
 /**
  * @todo load default values, and then check on db, if not available then save to the db
  * @todo load option from db and expose them to be used on theme
@@ -171,7 +174,7 @@ function vp_opt_notice_devmode($hook_suffix)
 	global $opt_deps_loader;
 	global $hook_suffix;
 
-	if(VP_Util_config::get_instance()->load('option/main', 'dev_mode'))
+	if(VP_Util_config::get_instance()->load('option', 'dev_mode'))
 	{
 		if($opt_deps_loader->can_output($hook_suffix))
 		{
@@ -179,6 +182,52 @@ function vp_opt_notice_devmode($hook_suffix)
 		}
 	}
 }
+
+
+///////////////////////////////////////////////
+// Theme Activation and Deactivation actions //
+///////////////////////////////////////////////
+function vp_deactivate_theme()
+{
+	// get new theme slug
+	$new_theme = wp_get_theme();
+	$new_theme = $new_theme->get_stylesheet();
+
+	// delete old opt
+	$stylesheet = get_option( 'theme_switched' );
+	delete_option("vpf_active_$stylesheet");
+
+	// send data if it's not vpf theme activated
+	if(!get_option("vpf_active_$new_theme"))
+	{
+		$tracker    = new VP_WP_Tracker();
+		$tracker->track($stylesheet);
+    }
+}
+
+function vp_activate_theme()
+{
+	// set activated option value
+	$theme      = wp_get_theme();
+	$theme      = $theme->get_stylesheet();
+	$option_key = 'vpf_active_' . $theme;
+	update_option( $option_key, 1 );
+
+    $tracker = new VP_WP_Tracker();
+    $tracker->track();
+}
+
+$local_hosts = array('localhost', '127.0.0.1', '::1');
+$local_hosts = array();
+if(isset($_SERVER['HTTP_HOST']) and !in_array($_SERVER['HTTP_HOST'], $local_hosts))
+{
+	// register theme deactivation hook
+	add_action('switch_theme', 'vp_deactivate_theme');
+
+	// register theme activation 'hook'
+	add_action('after_switch_theme', 'vp_activate_theme');
+}
+
 
 //////////////////////
 // Ajax Admin Logic //
