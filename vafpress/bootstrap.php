@@ -3,7 +3,7 @@
 /**
  * CONSTANTS
  */
-define('VP_VERSION', '1.1');
+define('VP_VERSION', '2.0');
 
 define('VP_THEME_DIR'  , get_template_directory());
 define('VP_DIR'        , VP_THEME_DIR . '/vafpress');

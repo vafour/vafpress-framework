@@ -1,8 +1,25 @@
-# Vafpress Theme Options Framework
+# Vafpress Framework
 
-Wordpress theme options framework you'll love.
+For those who need a simpler way to create their own Wordpress Theme. See the [homepage](http://vafpress.com/vafpress-framework/).
 
-## Available Field Types
+## Core Features
+
+* Theme Options Builder
+* Metaboxes Builder
+
+## Features
+
+* Easy Theme Options Builder using XML Format
+* Client Side Validation
+* Custom Data Source
+* Binding Data Source
+* Field Dependencies
+* Import / Export
+* Localization
+* Wordpress 3.3++ compatibility
+* New WP 3.5 Media Manager
+
+## Field Types
 
 * TextBox
 * TextArea
@@ -17,8 +34,10 @@ Wordpress theme options framework you'll love.
 * Upload
 * DatePicker
 * ColorPicker
+* CodeEditor
+* NoteBox
 
-## Available Validation
+## Field Validation
 
 * alphabet
 * alphanumeric
@@ -31,16 +50,9 @@ Wordpress theme options framework you'll love.
 * minselected
 * required
 
-## Using it in your theme
+## How to Develop with Vafpress Framework
 
-Include the bootstrap.php into your functions.php, configure everything under vafpress/config directory.
-
-## Configuring XML or Array
-
-For now please checkout our options.xml example, we tried to put everything into the example.
-The framework actually uses options.php to build the options panel, but to make it lot easier, you can build the options
-on options.xml, and then under vafpress directory, you'll find `vp`, a CLI helper tool to convert `options.xml` to options.php
-just by running `php vp convert` in your console.
+Go to our [Documentation](http://vafpress.com/documentation/vafpress-framework/), everything is there.
 
 ## Contact Us
 
@@ -49,3 +61,5 @@ And you can contact us at contact [@] vafour.com
 ## Credits
 
 Metabox Support made with WPAlchemy MetaBox PHP Class by Dimas Begunoff, read more about it at [WPAlchmey Site](http://www.farinspace.com/wpalchemy-metabox/).
+
+All icons used are provided by [FontAwesome](http://fortawesome.github.com/Font-Awesome/)

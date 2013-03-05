@@ -3,3 +3,10 @@ Metabox Support:
 - WPAlchemy MetaBox PHP Class
   by Dimas Begunoff
   http://www.farinspace.com/wpalchemy-metabox/
+
+
+Icons:
+
+- FontAwesome
+  by Dave Gandy
+  http://fortawesome.github.com/Font-Awesome/
