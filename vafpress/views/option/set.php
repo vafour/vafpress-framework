@@ -1,7 +1,7 @@
 <div class="wrap">
 	<h2><?php echo $set->get_title(); ?></h2>
 	<div id="vp-wrap" class="vp-wrap">
-		<div id="vp-option-panel"class="vp-option-panel <?php echo (VP_Util_Config::get_instance()->load('option/main', 'fixed_layout')) ? 'fixed-layout' : 'fluid-layout' ; ?>">
+		<div id="vp-option-panel"class="vp-option-panel <?php echo (VP_Util_Config::get_instance()->load('option', 'fixed_layout')) ? 'fixed-layout' : 'fluid-layout' ; ?>">
 			<div class="vp-left-panel">
 				<div id="vp-logo" class="vp-logo">
 					<img src="<?php echo VP_Util_Res::img($set->get_logo()); ?>" alt="<?php echo $set->get_title(); ?>" />

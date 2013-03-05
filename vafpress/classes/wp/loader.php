@@ -7,6 +7,8 @@ class VP_WP_Loader
 
 	private $id;
 
+	private $localize;
+
 	public function __construct()
 	{
 		$args     = null;
@@ -38,10 +40,10 @@ class VP_WP_Loader
 
 		if($available)
 		{
-			$script      = $scripts[$name];
+			$script  = $scripts[$name];
 			if($registered)
 			{
-				$is_older    = version_compare($script['ver'], $wp_scripts->registered[$name]->ver) == 1;
+				$is_older = version_compare($script['ver'], $wp_scripts->registered[$name]->ver) == 1;
 			}
 			if(!$registered or $is_older)
 			{
@@ -55,7 +57,20 @@ class VP_WP_Loader
 				if($is_older)
 					wp_deregister_script($name);
 
-				wp_register_script($name, $script['path'], $script['deps'], $script['ver']);
+				wp_register_script($name, $script['path'], $script['deps'], $script['ver'], true);
+
+				if(isset($script['localize']))
+				{
+					$localize = array();
+					foreach ($script['localize']['keys'] as $key)
+					{
+						if(array_key_exists($key, $this->localize))
+						{
+							$localize[$key] = $this->localize[$key];
+						}
+					}
+					wp_localize_script($name, $script['localize']['name'], $localize);
+				}
 			}
 		}
 	}
@@ -85,9 +100,11 @@ class VP_WP_Loader
 			}
 		}
 
-		// dynamically registering scripts
-		$scripts     = VP_Util_Config::get_instance()->load('dependencies', 'scripts.paths');
-		$styles      = VP_Util_Config::get_instance()->load('dependencies', 'styles.paths');
+		// assign localize to be used in further process
+		$this->localize = $deps['localize'];
+
+		// dynamically registering scripts and styles
+		$styles = VP_Util_Config::get_instance()->load('dependencies', 'styles.paths');
 
 		global $wp_scripts;
 
@@ -103,6 +120,10 @@ class VP_WP_Loader
 				wp_register_style($style['name'], $style['path'], $style['deps']);
 			}
 		}
+
+		// register and add shared-js at the end of dependencies
+		$this->unit_register('shared-js');
+		$deps['scripts'][] = 'shared-js';
 
 		// register, enqueue and localized scripts
 		wp_register_script($deps['main_js']['name'], $deps['main_js']['path'], $deps['scripts'], '', true);

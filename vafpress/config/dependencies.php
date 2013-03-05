@@ -18,70 +18,83 @@ return array(
 		'always' => array('jquery', 'prefixfree-js', 'scrollspy-js', 'tipsy-js', 'jquery-typing'),
 		'paths' => array(
 			'jquery' => array(
-				'path' => VP_PUBLIC_URL . '/js/vendor/jquery-1.8.3.min.js',
-				'deps' => array(),
-				'ver'  => '1.8.3'
+				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery-1.8.3.min.js',
+				'deps'     => array(),
+				'ver'      => '1.8.3'
 			),
 			'colorpicker-js' => array(
-				'path' => VP_PUBLIC_URL . '/js/vendor/colorpicker.js',
-				'deps' => array('jquery'),
-				'ver'  => false
+				'path'     => VP_PUBLIC_URL . '/js/vendor/colorpicker.js',
+				'deps'     => array('jquery'),
+				'ver'      => false
 			),
 			'tipsy-js' => array(
-				'path' => VP_PUBLIC_URL . '/js/vendor/jquery.tipsy.js',
-				'deps' => array('jquery'),
-				'ver'  => false
+				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery.tipsy.js',
+				'deps'     => array('jquery'),
+				'ver'      => false
 			),
 			'chosen-jquery' => array(
-				'path' => VP_PUBLIC_URL . '/js/vendor/chosen.jquery.min.js',
-				'deps' => array('jquery'),
-				'ver'  => '0.9.11'
+				'path'     => VP_PUBLIC_URL . '/js/vendor/chosen.jquery.min.js',
+				'deps'     => array('jquery'),
+				'ver'      => '0.9.11'
 			),
 			'prefixfree-js' => array(
-				'path' => VP_PUBLIC_URL . '/js/vendor/prefixfree.min.js',
-				'deps' => array(),
-				'ver'  => false
+				'path'     => VP_PUBLIC_URL . '/js/vendor/prefixfree.min.js',
+				'deps'     => array(),
+				'ver'      => false
 			),
 			'scrollspy-js' => array(
-				'path' => VP_PUBLIC_URL . '/js/vendor/jquery-scrollspy.js',
-				'deps' => array('jquery'),
-				'ver'  => false
+				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery-scrollspy.js',
+				'deps'     => array('jquery'),
+				'ver'      => false
 			),
 			'jquery-ui-core' => array(
-				'path' => VP_PUBLIC_URL . '/js/vendor/jquery.ui.core.js',
-				'deps' => array(),
-				'ver'  => '1.9.2'
+				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery.ui.core.js',
+				'deps'     => array(),
+				'ver'      => '1.9.2'
 			),
 			'jquery-ui-widget' => array(
-				'path' => VP_PUBLIC_URL . '/js/vendor/jquery.ui.widget.js',
-				'deps' => array(),
-				'ver'  => '1.9.2'
+				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery.ui.widget.js',
+				'deps'     => array(),
+				'ver'      => '1.9.2'
 			),
 			'jquery-ui-mouse' => array(
-				'path' => VP_PUBLIC_URL . '/js/vendor/jquery.ui.mouse.js',
-				'deps' => array('jquery-ui-widget'),
-				'ver'  => '1.9.2'
+				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery.ui.mouse.js',
+				'deps'     => array('jquery-ui-widget'),
+				'ver'      => '1.9.2'
 			),
 			'jquery-ui-slider' => array(
-				'path' => VP_PUBLIC_URL . '/js/vendor/jquery.ui.slider.js',
-				'deps' => array('jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-mouse'),
-				'ver'  => '1.9.2'
+				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery.ui.slider.js',
+				'deps'     => array('jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-mouse'),
+				'ver'      => '1.9.2'
 			),
 			'jquery-ui-datepicker' => array(
-				'path' => VP_PUBLIC_URL . '/js/vendor/jquery.ui.datepicker.js',
-				'deps' => array('jquery', 'jquery-ui-core', 'jquery-ui-widget'),
-				'ver'  => '1.9.2'
+				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery.ui.datepicker.js',
+				'deps'     => array('jquery', 'jquery-ui-core', 'jquery-ui-widget'),
+				'ver'      => '1.9.2'
 			),
 			'jquery-typing' => array(
-				'path' => VP_PUBLIC_URL . '/js/vendor/jquery.typing-0.2.0.min.js',
-				'deps' => array('jquery'),
-				'ver'  => '0.2'
+				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery.typing-0.2.0.min.js',
+				'deps'     => array('jquery'),
+				'ver'      => '0.2'
 			),
 			'ace-editor' => array(
-				'path' => VP_PUBLIC_URL . '/js/vendor/ace/ace.js',
-				'deps' => array(),
-				'ver'  => '1.0.0'
+				'path'     => VP_PUBLIC_URL . '/js/vendor/ace/ace.js',
+				'deps'     => array(),
+				'ver'      => '1.0.0'
 			),
+			'shared-js' => array(
+				'path'     => VP_PUBLIC_URL . '/js/shared.js',
+				'deps'     => array(),
+				'ver'      => '1.1',
+				'localize' => array(
+					'name' => 'vp_wp_shared',
+					'keys' => array(
+						'wp_include_url',
+						'use_media_upload',
+						'use_new_media_upload'
+					)
+				),
+			)
 		),
 	),
 

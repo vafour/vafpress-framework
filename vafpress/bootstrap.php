@@ -239,7 +239,7 @@ add_action('wp_ajax_vp_ajax_wrapper'      , 'vp_ajax_wrapper');
 
 function vp_ajax_wrapper()
 {
-	$function = $_POST['function'];
+	$function = $_POST['func'];
 	$params   = $_POST['params'];
 
 	if(!is_array($params))

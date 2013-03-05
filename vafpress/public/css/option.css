@@ -251,7 +251,6 @@ body {
 	border-radius: 0px 4px 0px 0px;
 	position: absolute;
 	top: 0px;
-	margin-top: 1px;
 	width: 100%;
 }
 
@@ -282,6 +281,7 @@ body {
 }
 
 .vp-submit .vp-button:hover {
+	color: #ffffff !important;
 	background-color: #7dd5f9;
 	border-color: #7dd5f9;
 }

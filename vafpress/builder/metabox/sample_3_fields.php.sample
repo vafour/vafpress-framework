@@ -4,6 +4,7 @@ return array(
 	'id'          => 'vp_meta_sample_3',
 	'types'       => array('post'),
 	'title'       => __('VP All Fields Metabox', 'vp_textdomain'),
+	'priority'    => 'high',
 	'template'    => array(
 		array(
 			'type' => 'upload',

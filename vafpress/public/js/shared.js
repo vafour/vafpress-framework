@@ -4,14 +4,14 @@
  * =============================================================
  */
 jQuery.fn.getAttributes = function() {
-	var attributes = {}; 
+	var attributes = {};
 	if (!this.length)
 		return this;
 	jQuery.each(this[0].attributes, function(index, attr) {
 		attributes[attr.name] = attr.value;
 	});
 	return attributes;
-}
+};
 jQuery.fn.getDatas = function() {
 	var attributes = {},
 	    prefix = "data-vp-";
@@ -24,18 +24,15 @@ jQuery.fn.getDatas = function() {
 		}
 	});
 	return attributes;
-}
+};
 if (!String.prototype.trimChar) {
-	String.prototype.trimChar =  function(string) { return this.replace(new RegExp('^' + string + '+|' + string + '+$', 'g'), '') };
+	String.prototype.trimChar =  function(string) { return this.replace(new RegExp('^' + string + '+|' + string + '+$', 'g'), ''); };
 }
 if (!String.prototype.format) {
 	String.prototype.format = function() {
 		var args = arguments;
 		return this.replace(/{(\d+)}/g, function(match, number) {
-			return typeof args[number] != 'undefined'
-				? args[number]
-				: match
-			;
+			return typeof args[number] != 'undefined' ? args[number] : match;
 		});
 	};
 }
@@ -72,7 +69,7 @@ jQuery.fn.validationVal = function() {
 	    val = '',
 	    tagName = $this.prop('tagName'),
 	    checked;
-	
+
 	if (($this.length > 1 && $this.attr('type') != 'radio') || $this.attr('multiple')) { val = []; }
 
 	var initialVal = val;
@@ -146,7 +143,7 @@ var vp = {};
 
 vp.isNumber = function(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
-}
+};
 vp.parseOpt = function(optString) {
 	var openIdx, closeIdx, temp, tempArr, opt = {};
 	for (var i = 0; i < optString.length; i++)
@@ -164,7 +161,7 @@ vp.parseOpt = function(optString) {
 		}
 	}
 	return opt;
-}
+};
 
 vp.wp_ext2type = function ( ext ) {
 	var ext2type = {
@@ -193,24 +190,25 @@ vp.wp_ext2type = function ( ext ) {
 		}
 	}
 	return result;
-}
+};
 
 vp.jqid = function(id) {
 	return '#' + id.replace(/([:\.\[\]])/g,'\\$1');
-}
+};
+
 vp.jqidwild = function(id) {
 	id = id.replace(/([:\.\[\]])/g,'\\$1');
 	id = '[id*=' + id + ']';
 	return id;
-}
+};
 
 vp.jqname = function(name) {
 	return '[name="' + name + '"]';
-}
+};
 
 vp.jqnamewild = function(name) {
 	return '[name*="' + name + '"]';
-}
+};
 
 vp.thejqid = function(id, thecase) {
 	if(thecase === 'option')
@@ -218,7 +216,7 @@ vp.thejqid = function(id, thecase) {
 	if(thecase === 'metabox')
 		return vp.jqidwild(id);
 	return id;
-}
+};
 
 vp.thejqname = function(name, thecase) {
 	if(thecase === 'option')
@@ -226,14 +224,14 @@ vp.thejqname = function(name, thecase) {
 	if(thecase === 'metabox')
 		return vp.jqnamewild(name);
 	return name;
-}
+};
 
 vp.validateAlphabet = function(type, val) {
 	// ignore array
 	if (jQuery.isArray(val) || jQuery.inArray(type, ['vp-textbox', 'vp-textarea']) == -1) { return true; }
 	var regex = new RegExp(/^[A-Z]+$/i);
 	return regex.test(val);
-}
+};
 
 vp.validateAlphaNumeric = function(type, val) {
 	// ignore array
@@ -241,7 +239,7 @@ vp.validateAlphaNumeric = function(type, val) {
 
 	var regex = new RegExp(/^[A-Z0-9]+$/i);
 	return regex.test(val);
-}
+};
 
 vp.validateNumeric = function(type, val) {
 	// ignore array
@@ -249,7 +247,7 @@ vp.validateNumeric = function(type, val) {
 
 	var regex = new RegExp(/^[-+]?[0-9]*\.?[0-9]+$/);
 	return regex.test(val);
-}
+};
 
 vp.validateEmail = function(type, val) {
 	// ignore array
@@ -257,7 +255,7 @@ vp.validateEmail = function(type, val) {
 
 	var regex = new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i);
 	return regex.test(val);
-}
+};
 
 vp.validateURL = function(type, val) {
 	// ignore array
@@ -265,27 +263,27 @@ vp.validateURL = function(type, val) {
 
 	var regex = new RegExp(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i);
 	return regex.test(val);
-}
+};
 
 vp.validateMaxLength = function(type, val, n) {
 	// ignore array
 	if (jQuery.inArray(type, ['vp-toggle', 'vp-radiobutton', 'vp-radioimage', 'vp-select']) != -1) { return true; }
 
 	return (val.length <= n) ? true : false;
-}
+};
 
 vp.validateMinLength = function(type, val, n) {
 	// ignore array
 	if (jQuery.inArray(type, ['vp-toggle', 'vp-radiobutton', 'vp-radioimage', 'vp-select']) != -1) { return true; }
 
 	return (val.length >= n) ? true : false;
-}
+};
 
 vp.validateRequired = function(type, val) {
 	// only check if it's empty array, if it's not, it will go true anyway..
 	if (jQuery.isArray(val) && jQuery.isEmptyObject(val)) return false;
 	return (val) ? true : false;
-}
+};
 
 // vafpress binding related functions
 vp.binding_action =	function(ids, field, func, thecase) {
@@ -298,11 +296,9 @@ vp.binding_action =	function(ids, field, func, thecase) {
 		values.push(jQuery(vp.thejqname(ids[i], thecase)).validationVal());
 	}
 
-	console.log(values);
-
 	var data = {
 		action   : 'vp_ajax_wrapper',
-		function : func,
+		func     : func,
 		params   : values
 	};
 
@@ -332,7 +328,7 @@ vp.binding_action =	function(ids, field, func, thecase) {
 						$source
 							.append(jQuery("<option></option>")
 							.attr("value",value.value)
-							.text(value.label)); 
+							.text(value.label));
 					});
 					$source.trigger('liszt:updated');
 					break;
@@ -374,7 +370,7 @@ vp.binding_action =	function(ids, field, func, thecase) {
 			jQuery('[name="' + field.source + '"]').change();
 		}
 	}, 'JSON');
-}
+};
 
 vp.binding_event = function(ids, idx, field, func, parent, thecase)
 {
@@ -385,7 +381,7 @@ vp.binding_event = function(ids, idx, field, func, parent, thecase)
 
 	if(jQuery.inArray(dest_type, change) !== -1 )
 	{
-		jQuery(parent).delegate(name, 'change', function(){vp.binding_action(ids, field, func, thecase)});
+		jQuery(parent).delegate(name, 'change', function(){vp.binding_action(ids, field, func, thecase);});
 	}
 	else if(jQuery.inArray(dest_type, typing) !== -1 )
 	{
@@ -396,7 +392,7 @@ vp.binding_event = function(ids, idx, field, func, parent, thecase)
 			delay: 400
 		});
 	}
-}
+};
 
 /*
  * =============================================================
@@ -419,7 +415,7 @@ vp.dependency_action =	function(ids, field, func) {
 
 	var data = {
 		action   : 'vp_ajax_wrapper',
-		function : func,
+		func     : func,
 		params   : values
 	};
 
@@ -447,7 +443,7 @@ vp.dependency_action =	function(ids, field, func) {
 			}
 		}
 	}, 'JSON');
-}
+};
 
 vp.dependency_event = function(ids, idx, field, func, parent){
 
@@ -458,7 +454,7 @@ vp.dependency_event = function(ids, idx, field, func, parent){
 
 	if(jQuery.inArray(dest_type, change) !== -1 )
 	{
-		jQuery(parent).delegate(name, 'change', function(){vp.dependency_action(ids, field, func)});
+		jQuery(parent).delegate(name, 'change', function(){vp.dependency_action(ids, field, func);});
 	}
 	else if(jQuery.inArray(dest_type, typing) !== -1 )
 	{
@@ -469,7 +465,8 @@ vp.dependency_event = function(ids, idx, field, func, parent){
 			delay: 400
 		});
 	}
-}
+};
+
 /*
  * =============================================================
  */
@@ -504,7 +501,7 @@ function theValidate(elem, options, $slider)
 	else
 	{
 		$slider.slider('value', $this.val());
-	};
+	}
 }
 
 if (jQuery.fn.slider)
@@ -554,7 +551,7 @@ if ( vp_wp.use_new_media_upload )
 
 			$input.val(attachment.url);
 			$input.trigger('change');
-			
+
 			if(attachment.type === 'image')
 				$preview.attr('src', attachment.url);
 			else
@@ -562,11 +559,11 @@ if ( vp_wp.use_new_media_upload )
 
 			wp.media.editor.send.attachment = _orig_send_attachment;
 			window.send_to_editor = _orig_send_to_editor;
-		}
+		};
 
 		// handler for link
 		window.send_to_editor = function(html) {
-			if (html != '')
+			if (html !== '')
 			{
 				var info = get_url_info(html);
 				$input.val(info.imgurl);
@@ -575,10 +572,10 @@ if ( vp_wp.use_new_media_upload )
 			}
 			window.send_to_editor = _orig_send_to_editor;
 			wp.media.editor.send.attachment = _orig_send_attachment;
-		}
+		};
 		wp.media.editor.open($this);
 		return false;
-	}
+	};
 }
 else
 {
@@ -592,7 +589,7 @@ else
 		tb_show('Upload Image', 'media-upload.php?referer=vafpress&TB_iframe=true&post_id=0');
 
 		window.send_to_editor = function(html) {
-			if (html != '')
+			if (html !== '')
 			{
 				var info = get_url_info(html);
 				$input.val(info.imgurl);
@@ -601,7 +598,7 @@ else
 			}
 			window.send_to_editor = _orig_send_to_editor;
 			tb_remove();
-		}
+		};
 		return false;
 	};
 }
@@ -635,7 +632,7 @@ vp.remove_upload_callback = function(e) {
 
 	$input.val('');
 	$preview.attr('src', '');
-}
+};
 
 jQuery('.vp-js-upload').click(vp.upload_callback);
 jQuery('.vp-js-remove-upload').click(vp.remove_upload_callback);
@@ -689,7 +686,7 @@ if (jQuery.fn.datepicker)
 			jQuery(this).trigger('keypress');
 			jQuery(this).trigger('keyup');
 			jQuery(this).trigger('blur');
-		}
+		};
 		jQuery(this).datepicker(options);
 		jQuery(this).datepicker('setDate', options.value);
 	});
@@ -706,6 +703,32 @@ vp.init_tipsy = function()
 	}
 };
 vp.init_tipsy();
+
+// Ace Editor
+if(ace !== 'undefined')
+{
+	jQuery('.vp-js-codeeditor').each(function() {
+
+		var editor   = ace.edit(jQuery(this).get(0));
+		var textarea = jQuery(this).prev();
+
+		var options = jQuery(this).getDatas();
+		options     = vp.parseOpt(options.opt);
+
+		editor.setTheme("ace/theme/" + options.theme);
+		editor.getSession().setMode("ace/mode/" + options.mode);
+		editor.getSession().setUseWrapMode( true );
+            editor.setShowPrintMargin( false );
+
+		editor.getSession().setValue(textarea.val());
+		editor.getSession().on('change', function(){
+			var editorDoc = editor.getSession().getDocument();
+			textarea.text(editor.getSession().getValue());
+		});
+
+	});
+}
+
 /*
  * =============================================================
  */

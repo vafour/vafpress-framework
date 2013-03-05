@@ -25,11 +25,12 @@ class VP_Option_Depsloader
 				'wp_include_url'       => includes_url(),
 				'nonce'                => wp_create_nonce( 'vafpress' )
 			),
-			'main_js'              => array(
+			'main_js'  => array(
 				'name' => 'vp-option-js',
-				'path' => VP_PUBLIC_URL . '/js/option.js'
+				'path' => VP_PUBLIC_URL . '/js/option.js',
+				'deps' => 'shared-js'
 			),
-			'main_css'             => array(
+			'main_css' => array(
 				'name' => 'vp-option-css',
 				'path' => VP_PUBLIC_URL . '/css/option.css'
 			),

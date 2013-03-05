@@ -14,7 +14,7 @@
 					<name>submenu_1</name>
 					<icon>font-awesome:icon-th-large</icon>
 					<controls>
-						
+
 						<section>
 							<title>TextBox</title>
 							<name>section_1</name>
@@ -585,31 +585,31 @@
 
 				<notebox>
 					<name>nb_1</name>
-					<label>Normal Notification</label>
+					<label>Normal Announcement</label>
 					<description>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</description>
 					<status>normal</status>
 				</notebox>
 				<notebox>
 					<name>nb_2</name>
-					<label>Info Notification</label>
+					<label>Info Announcement</label>
 					<description>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</description>
 					<status>info</status>
 				</notebox>
 				<notebox>
 					<name>nb_3</name>
-					<label>Success Notification</label>
+					<label>Success Announcement</label>
 					<description>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</description>
 					<status>success</status>
 				</notebox>
 				<notebox>
 					<name>nb_4</name>
-					<label>Warning Notification</label>
+					<label>Warning Announcement</label>
 					<description>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</description>
 					<status>warning</status>
 				</notebox>
 				<notebox>
 					<name>nb_5</name>
-					<label>Error Notification</label>
+					<label>Critical Announcement</label>
 					<description>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</description>
 					<status>error</status>
 				</notebox>
@@ -620,31 +620,31 @@
 					<fields>
 						<notebox>
 							<name>nb_6</name>
-							<label>Normal Notification</label>
+							<label>Normal Announcement</label>
 							<description>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</description>
 							<status>normal</status>
 						</notebox>
 						<notebox>
 							<name>nb_7</name>
-							<label>Info Notification</label>
+							<label>Info Announcement</label>
 							<description>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</description>
 							<status>info</status>
 						</notebox>
 						<notebox>
 							<name>nb_8</name>
-							<label>Success Notification</label>
+							<label>Success Announcement</label>
 							<description>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</description>
 							<status>success</status>
 						</notebox>
 						<notebox>
 							<name>nb_9</name>
-							<label>Warning Notification</label>
+							<label>Warning Announcement</label>
 							<description>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</description>
 							<status>warning</status>
 						</notebox>
 						<notebox>
 							<name>nb_10</name>
-							<label>Error Notification</label>
+							<label>Critical Announcement</label>
 							<description>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</description>
 							<status>error</status>
 						</notebox>
@@ -657,7 +657,7 @@
 					<fields>
 						<notebox>
 							<name>nb_11</name>
-							<label>Info Notification</label>
+							<label>Info Announcement</label>
 							<description>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</description>
 							<status>info</status>
 						</notebox>
