@@ -77,6 +77,10 @@ body {
 	cursor: pointer;
 }
 
+.vp-option-panel .vp-button:disabled {
+	opacity: 0.5;
+}
+
 .vp-option-panel input,
 .vp-option-panel select,
 .vp-option-panel textarea {
@@ -289,7 +293,6 @@ body {
 .vp-submit .vp-button:disabled {
 	color: #ffffff !important;
 	border-color: #6cc4e8 !important;
-	opacity: 0.5;
 }
 
 .vp-submit .save-status {
@@ -412,7 +415,9 @@ body {
 	padding: 20px 30px 20px 20px;
 }
 
-.vp-field > .field .input img {
+.vp-field.vp-checkimage > .field .input img,
+.vp-field.vp-radioimage > .field .input img,
+.vp-field.vp-upload > .field .input img {
 	border-width: 1px;
 	border-style: solid;
 	border-color: #dddddd;

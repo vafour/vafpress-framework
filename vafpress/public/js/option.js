@@ -40,7 +40,7 @@
 		var initTop = parseInt($submit.offset().top - $('#wpadminbar').innerHeight(), 10);
 		$submit.scrollspy({
 			min: initTop,
-			max: $(document).height(),
+			max: 999999,
 			onEnter: function(element, position) {
 				$submit.addClass('floating');
 				$submit.css('top', $('#wpadminbar').innerHeight());
