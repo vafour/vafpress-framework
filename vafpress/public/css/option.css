@@ -206,6 +206,10 @@ body {
 	position: relative;
 }
 
+.vp-menus ul.vp-menu-level-2 > li a i {
+	padding-left: 25px;
+}
+
 .vp-menus a {
 	color: #444444;
 	display: table;
@@ -258,6 +262,7 @@ body {
 	background-color: #fcfcfc;
 	border-bottom: 1px solid rgba(0,0,0,0.15);
 	border-radius: 0px 4px 0px 0px;
+	margin-top: 1px;
 	position: absolute;
 	top: 0px;
 	width: 100%;
@@ -273,6 +278,7 @@ body {
 	border-radius: 0px;
 	border-left: 1px solid rgba(0,0,0,0.15);
 	margin-left: -1px;
+	margin-top: 0px;
 	position: fixed;
 	z-index: 100;
 }
@@ -300,18 +306,29 @@ body {
 	border-color: #6cc4e8 !important;
 }
 
-.vp-submit .save-status {
-	background-color: rgba(255,255,255,0.5);
-	background-image: url('../img/vp-sprite.png');
-	background-repeat: no-repeat;
+.vp-submit p {
 	border-radius: 4px;
 	color: #666666;
 	font-size: 13px;
 	font-weight: bold;
 	line-height: 20px;
-	padding: 10px 20px 10px 50px;
 	margin: 0px 30px 0px 0px;
 	overflow: hidden;
+}
+
+.vp-submit .save-loader {
+	padding: 10px 20px 10px 20px;
+}
+
+.vp-submit .save-loader img {
+	margin-right: 10px;
+	vertical-align: middle;
+}
+
+.vp-submit .save-status {
+	background-image: url('../img/vp-sprite.png');
+	background-repeat: no-repeat;
+	padding: 10px 20px 10px 50px;
 }
 
 .vp-submit .save-status.success { background-position: 0px -240px; }
@@ -363,13 +380,13 @@ body {
 
 .vp-section .vp-field {
 	margin-bottom: -1px;
-	border-bottom: 1px solid rgba(0,0,0,0.15);
+	border-bottom: 1px solid rgba(0,0,0,0.10);
 	box-shadow: 0px 1px rgba(255,255,255,1);
 }
 
 .vp-section .vp-controls {
 	border-radius: 4px;
-	border: 1px solid rgba(0,0,0,0.15);
+	border: 1px solid rgba(0,0,0,0.10);
 	box-shadow: inset 0px 1px 0px rgba(255,255,255,1), 0px 1px 0px rgba(255,255,255,1);
 	padding-top: 10px;
 	position: relative;
@@ -756,62 +773,6 @@ body {
 .vp-copyright a {
 	color: #6cc4e8;
 	text-decoration: none;
-}
-
-.vp-overlay {
-	position: absolute;
-	background-color: rgba(0,0,0,0.8);
-	top: 0px;
-	border-radius: 4px;
-	z-index: 100;
-}
-
-.vp-overlay .vp-loading {
-	height: 100px;
-	margin: -50px 0px 0px -50px;
-	position: fixed;
-	width: 100px;
-}
-
-.vp-overlay .vp-loading .anim-spin {
-	background-image: url('../img/vp-sprite.png');
-	background-position: 0px -140px;
-	position: absolute;
-	height: 100%;
-	width: 100%;
-	animation: spin 1.5s infinite linear;
-}
-
-.vp-overlay.stop .vp-loading .anim-spin {
-	animation: none;
-}
-
-.vp-overlay .vp-loading .anim-fade {
-	color: #ffffff;
-	font-size: 9px;
-	line-height: 1.5em;
-	letter-spacing: 0.3em;
-	margin-top: 44px;
-	position: absolute;
-	text-align: center;
-	text-transform: uppercase;
-	width: 100px;
-	animation: fade 1.5s infinite linear;
-}
-
-.vp-overlay.stop .vp-loading .anim-fade {
-	animation: none;
-}
-
-@keyframes spin {
-	0% { transform: rotate(0deg); }
-	100% { transform: rotate(-360deg); }
-}
-
-@keyframes fade {
-	0% { opacity: 0; }
-	50% { opacity: 1; }
-	100% { opacity: 0; }
 }
 
 /* jQuery UI Datepicker bottom div bug */

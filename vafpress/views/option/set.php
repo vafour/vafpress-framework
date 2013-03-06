@@ -63,6 +63,7 @@
 				<div id="vp-submit" class="vp-submit">
 					<div class="inner">
 						<input class="vp-js-save vp-button" type="button" value="<?php _e('Save Changes', 'vp_textdomain'); ?>" />
+						<p class="vp-js-save-loader save-loader" style="display: none;"><img src="<?php VP_Util_Res::img_out('ajax-loader.gif', ''); ?>" />Saving Now</p>
 						<p class="vp-js-save-status save-status" style="display: none;"></p>
 					</div>
 				</div>

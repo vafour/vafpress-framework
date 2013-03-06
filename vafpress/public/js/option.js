@@ -22,7 +22,6 @@
 	});
 	var calculatePositionAndSize = function()	{
 		var $overlay = $('#vp-overlay'),
-		    $loading = $('#vp-loading'),
 		    $panel = $('#vp-option-panel'),
 		    $right = $('.vp-right-panel'),
 		    $submit = $('#vp-submit'),
@@ -30,8 +29,6 @@
 		$overlay.css('height', $panel.innerHeight());
 		$overlay.css('width', $panel.innerWidth());
 		$submit.css('width', $right.innerWidth());
-		$loading.css('top', $(this).innerHeight() / 2);
-		$loading.css('left', $panel.innerWidth() / 2 + $panel.offset().left);
 	};
 
 	// Scrollspy
@@ -179,7 +176,7 @@
 	$('.vp-js-save').bind('click', function(e) {
 		e.preventDefault();
 
-		$('.vp-option-form tr').removeClass('vp-error');
+		$('.vp-option-form .vp-field').removeClass('vp-error');
 		$('.validation-notif.vp-error').remove();
 		$('.validation-msg.vp-error').remove();
 
@@ -290,7 +287,7 @@
 		if (allError > 0) { return; }
 
 		// otherwise, do saving
-		var $overlay = $('#vp-overlay'),
+		var $loading = $('.vp-js-save-loader'),
 			$button = $(this),
 			$save_status = $('.vp-js-save-status'),
 			$form = $('#vp-option-form'),
@@ -302,9 +299,7 @@
 			};
 
 		$button.attr('disabled', 'disabled');
-		$overlay.stop(true, true).fadeIn(100, function() {
-			$overlay.removeClass('stop');
-		});
+		$loading.stop(true, true).fadeIn(100);
 
 		$.post(ajaxurl, data, function(response) {
 			$save_status.html(response.message);
@@ -316,10 +311,8 @@
 			{
 				$save_status.addClass('failed');
 			}
-			$save_status.stop(true, true).fadeIn(100);
-
-			$overlay.stop(true, true).fadeOut(100, function() {
-				$overlay.addClass('stop');
+			$loading.stop(true, true).fadeOut(100, function() {
+				$save_status.stop(true, true).fadeIn(100);
 			});
 
 			setTimeout(function() {
