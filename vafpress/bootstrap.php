@@ -218,7 +218,7 @@ function vp_activate_theme()
 }
 
 $local_hosts = array('localhost', '127.0.0.1', '::1');
-$local_hosts = array();
+
 if(isset($_SERVER['HTTP_HOST']) and !in_array($_SERVER['HTTP_HOST'], $local_hosts))
 {
 	// register theme deactivation hook

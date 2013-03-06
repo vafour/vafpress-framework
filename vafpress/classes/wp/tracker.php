@@ -30,9 +30,11 @@ if(!class_exists('VP_WP_Tracker'))
 			
 			// send to server
 			$args = array(
-				'timeout' => 10,
-				'body'    => array('data' => $data),
+				'timeout'   => 10,
+				'sslverify' => false,
+				'body'      => array('data' => $data),
 			);
+
 			$response = wp_remote_post('https://api.vafpress.com/tracker/sites', $args);
 		}
 

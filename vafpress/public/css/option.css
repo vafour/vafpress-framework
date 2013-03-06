@@ -201,6 +201,11 @@ body {
 	position: relative;
 }
 
+.vp-menus ul.vp-menu-level-2 li a {
+	padding-left: 15px;
+	position: relative;
+}
+
 .vp-menus a {
 	color: #444444;
 	display: table;

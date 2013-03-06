@@ -86,14 +86,6 @@ return array(
 				'path'     => VP_PUBLIC_URL . '/js/shared.js',
 				'deps'     => array(),
 				'ver'      => '1.1',
-				'localize' => array(
-					'name' => 'vp_wp_shared',
-					'keys' => array(
-						'wp_include_url',
-						'use_media_upload',
-						'use_new_media_upload'
-					)
-				),
 			)
 		),
 	),

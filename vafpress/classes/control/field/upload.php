@@ -26,14 +26,22 @@ class VP_Control_Field_Upload extends VP_Control_Field
 		parent::_setup_data();
 
 		$preview = '';
+		$images  = array('jpg', 'jpeg', 'bmp',  'gif',  'png');
 		
 		if(filter_var($this->get_value(), FILTER_VALIDATE_URL) !== FALSE)
 		{
 			$info = pathinfo($this->get_value());
 			if(isset($info['extension']))
 			{
-				$type    = wp_ext2type( $info['extension'] );
-				$preview = includes_url() . 'images/crystal/' . $type . '.png';
+				if(in_array($info['extension'], $images))
+				{
+					$preview = 'image';
+				}
+				else
+				{
+					$type    = wp_ext2type( $info['extension'] );
+					$preview = includes_url() . 'images/crystal/' . $type . '.png';
+				}
 			}
 			else
 			{
