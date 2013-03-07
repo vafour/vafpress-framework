@@ -27,12 +27,12 @@ class VP_Option_Depsloader
 			),
 			'main_js'  => array(
 				'name' => 'vp-option-js',
-				'path' => VP_PUBLIC_URL . '/js/option.js',
+				'path' => VP_PUBLIC_URL . '/js/option.min.js',
 				'deps' => 'shared-js'
 			),
 			'main_css' => array(
 				'name' => 'vp-option-css',
-				'path' => VP_PUBLIC_URL . '/css/option.css'
+				'path' => VP_PUBLIC_URL . '/css/option.min.css'
 			),
 		);
 
