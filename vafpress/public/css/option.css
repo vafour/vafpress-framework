@@ -202,7 +202,6 @@ body {
 }
 
 .vp-menus ul.vp-menu-level-2 li a {
-	padding-left: 15px;
 	position: relative;
 }
 
@@ -328,6 +327,7 @@ body {
 .vp-submit .save-status {
 	background-image: url('../img/vp-sprite.png');
 	background-repeat: no-repeat;
+	background-position: 9999px 9999px;
 	padding: 10px 20px 10px 50px;
 }
 
