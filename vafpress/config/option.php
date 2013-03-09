@@ -42,6 +42,11 @@ return array(
 	 */
 	'fixed_layout'      => true,
 
+	/**
+	 * 
+	 */
+	'text_domain'       => 'vp_textdomain'
+
 );
 
 /**

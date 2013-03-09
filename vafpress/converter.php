@@ -8,19 +8,28 @@
 class VP_Converter
 {
 
-	protected $group     = array('fields', 'sections', 'menus');
-	protected $localized = array('page', 'label', 'title', 'description');
+	protected $group       = array('fields', 'sections', 'menus');
+	protected $localized   = array('page', 'label', 'title', 'description');
+	protected $text_domain = 'vp_textdomain';
 
 	public function to_array()
 	{
 		// Loading the file, if doesn't exists try to load .sample version
-		$config_dir         = 'builder';
-		$option_path        = $config_dir  . '/option';
+		$config_dir         = 'config';
+		$builder_dir        = 'builder';
+		$option_path        = $builder_dir . '/option';
 
 		$source_path        = $option_path . '/option.xml';
 		$source_path_sample = $source_path . '.sample';
 		$dest_path          = $option_path . '/option.php';
 		$dest_path_sample   = $dest_path   . '.sample';
+
+		// Set textdomain
+		$configs = require $config_dir . '/option.php';
+		if( isset($configs['text_domain']) )
+		{
+			$this->text_domain = $configs['text_domain'];
+		}
 
 		if(file_exists($source_path))
 		{
@@ -46,7 +55,7 @@ class VP_Converter
 			if(!$set->hasChildren())
 			{
 				if(in_array($set->key(), $this->localized))
-					$opt_arr .= "\t'{$set->key()}' => __('{$set->current()}', 'vp_textdomain'),\n";
+					$opt_arr .= "\t'{$set->key()}' => __('{$set->current()}', '{$this->text_domain}'),\n";
 				else
 					$opt_arr .= "\t'{$set->key()}' => '{$set->current()}',\n";
 			}
@@ -68,7 +77,7 @@ class VP_Converter
 				if(!$menu->hasChildren() and !in_array($menu->key(), $this->group))
 				{
 					if(in_array($menu->key(), $this->localized))
-						$opt_arr .= "\t\t\t'{$menu->key()}' => __('{$menu->current()}', 'vp_textdomain'),\n";
+						$opt_arr .= "\t\t\t'{$menu->key()}' => __('{$menu->current()}', '{$this->text_domain}'),\n";
 					else
 						$opt_arr .= "\t\t\t'{$menu->key()}' => '{$menu->current()}',\n";
 				}
@@ -94,7 +103,7 @@ class VP_Converter
 						if(!$submenu->hasChildren() and !in_array($submenu->key(), $this->group))
 						{
 							if(in_array($submenu->key(), $this->localized))
-								$opt_arr .= "\t\t\t\t\t'{$submenu->key()}' => __('{$submenu->current()}', 'vp_textdomain'),\n";
+								$opt_arr .= "\t\t\t\t\t'{$submenu->key()}' => __('{$submenu->current()}', '{$this->text_domain}'),\n";
 							else
 								$opt_arr .= "\t\t\t\t\t'{$submenu->key()}' => '{$submenu->current()}',\n";
 						}
@@ -185,7 +194,7 @@ class VP_Converter
 				else
 				{
 					if(in_array($section->key(), $this->localized))
-						$opt_arr .= "$tabs\t\t'{$section->key()}' => __('{$section->current()}', 'vp_textdomain'),\n";
+						$opt_arr .= "$tabs\t\t'{$section->key()}' => __('{$section->current()}', '{$this->text_domain}'),\n";
 					else
 						$opt_arr .= "$tabs\t\t'{$section->key()}' => '{$section->current()}',\n";
 				}
@@ -236,7 +245,7 @@ class VP_Converter
 				else
 				{
 					if(in_array($field->key(), $this->localized))
-						$opt_arr .= "$tabs\t\t'{$field->key()}' => __('{$field->current()}', 'vp_textdomain'),\n";
+						$opt_arr .= "$tabs\t\t'{$field->key()}' => __('{$field->current()}', '{$this->text_domain}'),\n";
 					else
 						$opt_arr .= "$tabs\t\t'{$field->key()}' => '{$field->current()}',\n";
 				}
@@ -329,7 +338,7 @@ class VP_Converter
 				foreach ($item as $key => $value)
 				{
 					if(in_array($key, $this->localized))
-						$opt_arr .= "$tabs\t\t\t\t'$key' => __('$value', 'vp_textdomain'),\n";
+						$opt_arr .= "$tabs\t\t\t\t'$key' => __('$value', '{$this->text_domain}'),\n";
 					else
 						$opt_arr .= "$tabs\t\t\t\t'$key' => '$value',\n";
 				}
