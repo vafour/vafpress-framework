@@ -30,7 +30,7 @@ return array(
 			'tipsy-js' => array(
 				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery.tipsy.js',
 				'deps'     => array('jquery'),
-				'ver'      => false
+				'ver'      => '1.0.0a'
 			),
 			'chosen-jquery' => array(
 				'path'     => VP_PUBLIC_URL . '/js/vendor/chosen.jquery.min.js',
@@ -40,7 +40,7 @@ return array(
 			'prefixfree-js' => array(
 				'path'     => VP_PUBLIC_URL . '/js/vendor/prefixfree.min.js',
 				'deps'     => array(),
-				'ver'      => false
+				'ver'      => '1.0.7'
 			),
 			'scrollspy-js' => array(
 				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery-scrollspy.js',
@@ -86,7 +86,12 @@ return array(
 				'path'     => VP_PUBLIC_URL . '/js/shared.min.js',
 				'deps'     => array(),
 				'ver'      => '1.1',
-			)
+			),
+			'jquery-chosen-sortable' => array(
+				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery-chosen-sortable.js',
+				'deps'     => array('jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-mouse', 'jquery-ui-sortable', 'chosen-jquery'),
+				'ver'      => '1.0.0',
+			),
 		),
 	),
 
@@ -134,6 +139,7 @@ return array(
 		'slider'      => array( 'js' => array('jquery-ui-slider'), 'css' => array('jqui') ),
 		'date'        => array( 'js' => array('jquery-ui-datepicker'), 'css' => array('jqui') ),
 		'codeeditor'  => array( 'js' => array('ace-editor'), 'css' => array() ),
+		'sorter'      => array( 'js' => array('jquery-chosen-sortable'), 'css' => array('chosen-css', 'jqui') ),
 	)
 
 );

@@ -250,7 +250,6 @@ body {
 	display: table-cell;
 	overflow: hidden;
 	position: relative;
-	padding: 63px 0px 0px;
 }
 
 .vp-right-panel .vp-option-form {
@@ -262,9 +261,7 @@ body {
 	border-bottom: 1px solid rgba(0,0,0,0.15);
 	border-radius: 0px 4px 0px 0px;
 	margin-top: 1px;
-	position: absolute;
 	top: 0px;
-	width: 100%;
 }
 
 .vp-submit .inner {
@@ -280,6 +277,10 @@ body {
 	margin-top: 0px;
 	position: fixed;
 	z-index: 100;
+}
+
+.vp-submit.floating ~ .vp-panel {
+	margin-top: 63px;
 }
 
 .vp-submit .vp-button {
@@ -396,6 +397,7 @@ body {
 .vp-field {
 	background-color: transparent;
 	display: table;
+	table-layout: fixed;
 	width: 100%;
 }
 
@@ -408,7 +410,7 @@ body {
 	font-size: 14px;
 	font-weight: bold;
 	line-height: 20px;
-	width: 30%;
+	width: 160px;
 	padding: 20px 20px 20px 30px;
 	vertical-align: top
 }
@@ -475,6 +477,7 @@ body {
 .vp-field.vp-upload .field input[type="text"],
 .vp-field.vp-date .field input[type="text"],
 .vp-field.vp-multiselect .field ul.chzn-choices,
+.vp-field.vp-sorter .field ul.chzn-choices,
 .vp-field.vp-textarea .field textarea,
 .vp-field.vp-color .field input[type="text"] {
 	margin: 0px;
@@ -483,6 +486,21 @@ body {
 	border: 1px solid #cccccc;
 	background-color: #ffffff;
 	box-shadow: inset 0px 2px 4px rgba(0,0,0,0.05);
+}
+
+.vp-field.vp-sorter .field ul.chzn-choices .search-choice {
+	display: block;
+	margin: 3px 5px;
+	float: none !important;
+	width: auto;
+	cursor: move;
+}
+
+.vp-field.vp-sorter .field ul.chzn-choices .ui-state-highlight {
+	display: block;
+	margin: 3px 5px;
+	height: 19px;
+	float: none !important;
 }
 
 .vp-field .field input[type="button"] {
@@ -636,24 +654,30 @@ body {
 
 .vp-field.vp-select .field select,
 .vp-field.vp-multiselect .field select,
+.vp-field.vp-sorter .field select,
 .vp-field.vp-select .field .chzn-container,
 .vp-field.vp-multiselect .field .chzn-container,
+.vp-field.vp-sorter .field .chzn-container,
 .vp-field.vp-select .field .chzn-container .chzn-drop,
 .vp-field.vp-multiselect .field .chzn-container .chzn-drop,
+.vp-field.vp-sorter .field .chzn-container .chzn-drop,
 .vp-field.vp-select .field .chzn-container .chzn-drop .chzn-search input,
-.vp-field.vp-multiselect .field .chzn-container .chzn-drop .chzn-search input {
+.vp-field.vp-multiselect .field .chzn-container .chzn-drop .chzn-search input,
+.vp-field.vp-sorter .field .chzn-container .chzn-drop .chzn-search input {
 	width: 100% !important;
 }
 
 .vp-field.vp-select .field .chzn-container .chzn-drop,
-.vp-field.vp-multiselect .field .chzn-container .chzn-drop {
+.vp-field.vp-multiselect .field .chzn-container .chzn-drop,
+.vp-field.vp-sorter .field .chzn-container .chzn-drop {
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box; /* Firefox, other Gecko */
 	box-sizing: border-box;	/* Opera/IE 8+ */
 }
 
 .vp-field.vp-select .field input,
-.vp-field.vp-multiselect .field input {
+.vp-field.vp-multiselect .field input,
+.vp-field.vp-sorter .field input {
 	height: 25px;
 }
 
@@ -705,7 +729,8 @@ body {
 }
 
 .vp-field.vp-multiselect .field .chzn-drop,
-.vp-field.vp-select .field .chzn-drop {
+.vp-field.vp-select .field .chzn-drop,
+.vp-field.vp-sorter .field .chzn-drop {
 	border-color: #cccccc;
 	border-radius: 0px 0px 4px 4px;
 	margin-top: -4px;
@@ -713,7 +738,8 @@ body {
 	box-shadow: inset 0px -2px 4px rgba(0,0,0,0.1);
 }
 
-.vp-field.vp-multiselect .field ul.chzn-choices {
+.vp-field.vp-multiselect .field ul.chzn-choices,
+.vp-field.vp-sorter .field ul.chzn-choices {
 	padding: 1px 0px;
 	background-image: none;
 }

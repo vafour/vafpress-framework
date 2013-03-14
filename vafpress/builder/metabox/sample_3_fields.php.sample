@@ -22,6 +22,34 @@ return array(
 			'theme'       => 'solarized_light'
 		),
 		array(
+			'type'        => 'sorter',
+			'name'        => 'so_1',
+			'label'       => 'Sorter',
+			'description' => 'Select and sort your choices',
+			'items'       => array(
+				array(
+					'value' => 'item_1',
+					'label' => __('Item 1', 'vp_textdomain'),
+				),
+				array(
+					'value' => 'item_2',
+					'label' => __('Item 2', 'vp_textdomain'),
+				),
+				array(
+					'value' => 'item_3',
+					'label' => __('Item 3', 'vp_textdomain'),
+				),
+				array(
+					'value' => 'item_4',
+					'label' => __('Item 4', 'vp_textdomain'),
+				),
+			),
+			'default'     => array(
+				'item_2',
+				'item_4',
+			),
+		),
+		array(
 			'type' => 'checkbox',
 			'name' => 'cb_1',
 			'label' => __('Checkbox', 'vp_textdomain'),

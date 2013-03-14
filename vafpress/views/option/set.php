@@ -60,21 +60,21 @@
 				</div>
 			</div>
 			<div class="vp-right-panel">
-				<div id="vp-submit" class="vp-submit">
-					<div class="inner">
-						<input class="vp-js-save vp-button" type="button" value="<?php _e('Save Changes', 'vp_textdomain'); ?>" />
-						<p class="vp-js-save-loader save-loader" style="display: none;"><img src="<?php VP_Util_Res::img_out('ajax-loader.gif', ''); ?>" />Saving Now</p>
-						<p class="vp-js-save-status save-status" style="display: none;"></p>
+				<form id="vp-option-form" class="vp-option-form vp-js-option-form">
+					<div id="vp-submit" class="vp-submit">
+						<div class="inner">
+							<input class="vp-save vp-button" type="submit" value="<?php _e('Save Changes', 'vp_textdomain'); ?>" />
+							<p class="vp-js-save-loader save-loader" style="display: none;"><img src="<?php VP_Util_Res::img_out('ajax-loader.gif', ''); ?>" />Saving Now</p>
+							<p class="vp-js-save-status save-status" style="display: none;"></p>
+						</div>
 					</div>
-				</div>
-				<form id="vp-option-form" class="vp-option-form">
-				<?php foreach ($set->get_menus() as $menu): ?>
-				<?php if ($menu === reset($set->get_menus())): ?>
-					<?php echo $menu->render(array('current' => 1)); ?>
-				<?php else: ?>
-					<?php echo $menu->render(array('current' => 0)); ?>
-				<?php endif; ?>
-				<?php endforeach; ?>
+					<?php foreach ($set->get_menus() as $menu): ?>
+					<?php if ($menu === reset($set->get_menus())): ?>
+						<?php echo $menu->render(array('current' => 1)); ?>
+					<?php else: ?>
+						<?php echo $menu->render(array('current' => 0)); ?>
+					<?php endif; ?>
+					<?php endforeach; ?>
 				</form>
 				<div id="vp-copyright" class="vp-copyright">
 					<p><?php printf(__('This option panel is built using <a href="http://vafpress.com/vafpress-framework">Vafpress Framework %s</a> powered by <a href="http://vafpress.com">Vafpress</a>', 'vp_textdomain'), VP_VERSION); ?></p>

@@ -13,7 +13,7 @@
 	display: table-cell;
 	padding: 12px 20px;
 	vertical-align: top;
-	width: 200px;
+	width: 160px;
 }
 
 .vp-metabox .label label {
@@ -38,6 +38,7 @@
 
 .vp-metabox .vp-field {
 	display: table;
+	table-layout: fixed;
 	width: 100%;
 }
 
@@ -160,7 +161,7 @@
 }
 
 .vp-metabox .vp-upload .image {
-	max-width: 60%;
+	max-width: 300px;
 }
 
 .vp-metabox .vp-upload .image img {

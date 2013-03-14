@@ -234,7 +234,7 @@ class VP_Option_Control_Set
 	{
 		$fields        = $this->get_fields();
 		// fields whose items can be chosen in multiple way
-		$multi_classes = array( 'checkbox', 'checkimage', 'multiselect' );
+		$multi_classes = array( 'checkbox', 'checkimage', 'multiselect', 'sorter' );
 
 		foreach ($opt_arr as $key => $value)
 		{
@@ -306,7 +306,7 @@ class VP_Option_Control_Set
 	public function populate_values($opt, $force_update = false)
 	{
 		$fields        = $this->get_fields();
-		$multi_classes = array( 'checkbox', 'checkimage', 'multiselect' );
+		$multi_classes = array( 'checkbox', 'checkimage', 'multiselect', 'sorter' );
 		foreach ( $fields as $field )
 		{
 			$type     = VP_Util_text::field_type_from_class(get_class($field));

@@ -100,8 +100,11 @@
 		$panel.siblings('.vp-panel').removeClass('vp-current');
 		$panel.addClass('vp-current');
 
-		// Init chosen
+		// Init Chosen
 		if ($.fn.chosen) $panel.find('.vp-js-chosen').chosen();
+
+		// Init Chosen Sortable
+		if ($.fn.chosenSortable) $panel.find('.vp-js-sorter').addClass('chzn-sortable').chosen().chosenSortable();
 	});
 
 	// goto current menu
@@ -173,10 +176,10 @@
 	}
 
 	// Ajax Saving
-	$('.vp-js-save').bind('click', function(e) {
+	$('.vp-js-option-form').bind('submit', function(e) {
 		e.preventDefault();
 
-		$('.vp-option-form .vp-field').removeClass('vp-error');
+		$('.vp-js-option-form .vp-field').removeClass('vp-error');
 		$('.validation-notif.vp-error').remove();
 		$('.validation-msg.vp-error').remove();
 
