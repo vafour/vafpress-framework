@@ -539,7 +539,7 @@
 				<section>
 					<title>Custom Font</title>
 					<name>section_custom_font</name>
-					<dependency field="use_custom_font">vp_dep_basic</dependency>
+					<dependency field="use_custom_font">vp_dep_boolean</dependency>
 					<fields>
 						<select>
 							<name>dep_font_face</name>
@@ -583,7 +583,7 @@
 						<upload>
 							<name>custom_logo</name>
 							<label>Custom Logo</label>
-							<dependency field="use_custom_logo">vp_dep_basic</dependency>
+							<dependency field="use_custom_logo">vp_dep_boolean</dependency>
 							<description>Upload or choose custom logo</description>
 						</upload>
 					</fields>

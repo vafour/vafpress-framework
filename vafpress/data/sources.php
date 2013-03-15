@@ -295,7 +295,7 @@ function vp_bind_countries($param = '')
 	return $result;
 }
 
-function vp_dep_basic($value)
+function vp_dep_boolean($value)
 {
 	$args   = func_get_args();
 	$result = true;
@@ -321,4 +321,6 @@ function vp_dep_is_tags($value)
 	return false;
 }
 
-?>
+/**
+ * EOF
+ */
