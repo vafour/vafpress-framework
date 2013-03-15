@@ -20,7 +20,7 @@ return array(
 			'title'     => __('Filtering', 'vp_textdomain'),
 			'dependency' => array(
 				'field' => 'toggle_filtering',
-				'value' => 'vp_dep_basic',
+				'value' => 'vp_dep_boolean',
 			),
 			'fields'    => array(
 				array(
