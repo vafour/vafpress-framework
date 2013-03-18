@@ -81,11 +81,5 @@
 				</div>
 			</div>
 		</div>
-		<div id="vp-overlay" class="vp-overlay hidden">
-			<div id="vp-loading" class="vp-loading">
-				<div class="anim-spin"></div>
-				<div class="anim-fade">Saving</div>
-			</div>
-		</div>
 	</div>
 </div>

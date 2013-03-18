@@ -5,6 +5,11 @@
 	{
 		jQuery('.vp-metabox .vp-wpa-group:not(.tocopy) .vp-js-chosen, .vp-meta-single .vp-js-chosen').chosen();
 	}
+	// Chosen sortable
+	if (jQuery().chosenSortable)
+	{
+		jQuery('.vp-metabox .vp-wpa-group:not(.tocopy) .vp-js-sorter, .vp-meta-single .vp-js-sorter').addClass('chzn-sortable').chosen().chosenSortable();
+	}
 
 	vp.is_multianswer = function(type){
 		var multi = ['vp-checkbox', 'vp-checkimage', 'vp-multiselect'];
@@ -133,6 +138,7 @@
 			dep && dependencies.push({dep: dep, type: 'field', source: name});
 		});
 		if ($.fn.chosen) clone.find('.vp-js-chosen').chosen();
+		if ($.fn.chosenSortable) clone.find('.vp-js-sorter').addClass('chzn-sortable').chosen().chosenSortable();
 		process_binding(bindings);
 		process_dependency(dependencies);
 	});

@@ -89,7 +89,7 @@ return array(
 			),
 			'jquery-chosen-sortable' => array(
 				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery-chosen-sortable.js',
-				'deps'     => array('jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-mouse', 'jquery-ui-sortable', 'chosen-jquery'),
+				'deps'     => array('jquery', 'jquery-ui-sortable', 'chosen-jquery'),
 				'ver'      => '1.0.0',
 			),
 		),

@@ -215,7 +215,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 
 	function _enfactor_field($field, $mb, $in_group = false)
 	{
-		$multiple = array('checkbox', 'checkimage', 'multiselect');
+		$multiple = array('checkbox', 'checkimage', 'multiselect', 'sorter');
 
 		if( !in_array($field['type'], $multiple) )
 		{
@@ -459,7 +459,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		// remove 'to-copy' item from being saved
 		$groups   = $this->_get_groups_idx();
 		$r_groups = $this->_get_repeating_groups_idx();
-		foreach ($new_data as $key => &$value)
+		if(!is_null($new_data)) foreach ($new_data as $key => &$value)
 		{
 			if( in_array($key, $r_groups) and is_array($value) )
 			{
@@ -598,7 +598,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		$scheme      = array();
 		$curr_group  = '';
 		$is_in_group = false;
-		$multiple = array('checkbox', 'checkimage', 'multiselect');
+		$multiple = array('checkbox', 'checkimage', 'multiselect', 'sorter');
 
 		$fields = $this->template;
 

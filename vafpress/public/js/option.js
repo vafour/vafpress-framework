@@ -13,43 +13,6 @@
 		return result;
 	};
 
-	// Overlay
-	$(window).resize(function() {
-		calculatePositionAndSize();
-	});
-	$(window).load(function() {
-		$(window).resize();
-	});
-	var calculatePositionAndSize = function()	{
-		var $overlay = $('#vp-overlay'),
-		    $panel = $('#vp-option-panel'),
-		    $right = $('.vp-right-panel'),
-		    $submit = $('#vp-submit'),
-		    $copyright = $('#vp-copyright');
-		$overlay.css('height', $panel.innerHeight());
-		$overlay.css('width', $panel.innerWidth());
-		$submit.css('width', $right.innerWidth());
-	};
-
-	// Scrollspy
-	var $submit = $('.vp-submit');
-	$(window).load(function()	{
-		var initTop = parseInt($submit.offset().top - $('#wpadminbar').innerHeight(), 10);
-		$submit.scrollspy({
-			min: initTop,
-			max: 999999,
-			onEnter: function(element, position) {
-				$submit.addClass('floating');
-				$submit.css('top', $('#wpadminbar').innerHeight());
-			},
-			onLeave: function(element, position) {
-				$submit.removeClass('floating');
-				$submit.css('top', '0px');
-			}
-		});
-		$(window).scroll();
-	});
-
 	/* BEGIN FETCHING ALL FIELDS' VALIDATION and BINDING RULES */
 	var validation   = [];
 	var bindings     = [];
