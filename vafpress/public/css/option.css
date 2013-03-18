@@ -1,17 +1,15 @@
+/* Main Layout
+ * ==================================================== */
+
 .vp-wrap {
 	position: relative;
 }
 
 .vp-option-panel {
 	background-color: #fcfcfc;
-	background-image: -moz-linear-gradient(top,  rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 500px); /* FF3.6+ */
-	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.2)), color-stop(500px,rgba(255,255,255,0))); /* Chrome,Safari4+ */
-	background-image: -webkit-linear-gradient(top,  rgba(255,255,255,0.2) 0%,rgba(255,255,255,0) 500px); /* Chrome10+,Safari5.1+ */
-	background-image: -o-linear-gradient(top,  rgba(255,255,255,0.2) 0%,rgba(255,255,255,0) 500px); /* Opera 11.10+ */
-	background-image: -ms-linear-gradient(top,  rgba(255,255,255,0.2) 0%,rgba(255,255,255,0) 500px); /* IE10+ */
-	background-image: linear-gradient(to bottom,  rgba(255,255,255,0.2) 0%,rgba(255,255,255,0) 500px); /* W3C */
-	box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+	box-shadow: 0px 1px 3px rgba(0,0,0,0.05);
 	border-radius: 4px;
+	border: 1px solid #dddddd;
 	border: 1px solid rgba(0,0,0,0.15);
 	color: #666666;
 	display: table;
@@ -55,12 +53,7 @@
 }
 
 .vp-option-panel .vp-button {
-	background-image: -moz-linear-gradient(top,  rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 100%); /* FF3.6+ */
-	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.05))); /* Chrome,Safari4+ */
-	background-image: -webkit-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.05) 100%); /* Chrome10+,Safari5.1+ */
-	background-image: -o-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.05) 100%); /* Opera 11.10+ */
-	background-image: -ms-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.05) 100%); /* IE10+ */
-	background-image: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.05) 100%); /* W3C */
+	background-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.05) 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#0d000000',GradientType=0 ); /* IE6-9 */
 	border-radius: 4px;
 	border-width: 1px;
@@ -82,22 +75,15 @@
 	color: #666666;
 }
 
-.vp-option-panel hr {
-	border-top: 1px solid rgba(0,0,0,0.4);
-	border-bottom: 1px solid rgba(255,255,255,0.2);
-	height: 0px;
-	background: transparent;
-	margin: 0px;
-}
-
 .vp-option-panel img {
 	max-width: 100%;
 	vertical-align: bottom;
 }
 
 .vp-left-panel {
-	background: #f3f3f3;
+	background-color: #f3f3f3;
 	border-radius: 4px 0px 0px 4px;
+	border-right: 1px solid #dddddd;
 	border-right: 1px solid rgba(0,0,0,0.15);
 	display: table-cell;
 	position: relative;
@@ -111,6 +97,20 @@
 	padding: 40px 20px 20px 20px;
 }
 
+.vp-right-panel {
+	border-radius: 0px 4px 4px 0px;
+	display: table-cell;
+	position: relative;
+}
+
+.vp-right-panel .vp-option-form {
+	background-color: #fcfcfc;
+}
+
+
+/* Menus
+ * ==================================================== */
+
 .vp-menus {
 	margin-bottom: 50px;
 }
@@ -121,7 +121,9 @@
 
 .vp-menus ul.vp-menu-level-1 {
 	position: relative;
+	border-top: 1px solid #dddddd;
 	border-top: 1px solid rgba(0,0,0,0.15);
+	border-bottom: 1px solid #ffffff;
 	border-bottom: 1px solid rgba(255,255,255,1);
 }
 
@@ -131,7 +133,9 @@
 }
 
 .vp-menus ul.vp-menu-level-1 > li > a {
+	border-bottom: 1px solid #dddddd;
 	border-bottom: 1px solid rgba(0,0,0,0.15);
+	border-top: 1px solid #ffffff;
 	border-top: 1px solid rgba(255,255,255,1);
 }
 
@@ -177,11 +181,13 @@
 
 .vp-menus li.vp-current > a.vp-menu-goto {
 	background-color: #fcfcfc;
-	box-shadow: 1px 0px #fcfcfc;
+	border-right: 1px solid #fcfcfc;
 }
 
 .vp-menus ul.vp-menu-level-2 {
+	background-color: #e9e9e9;
 	background-color: rgba(0,0,0,0.05);
+	border-bottom: 1px solid #e9e9e9;
 	border-bottom: 1px solid rgba(0,0,0,0.05);
 	margin: 0px;
 	display: none;
@@ -240,18 +246,13 @@
 	right: 0px;
 }
 
-.vp-right-panel {
-	border-radius: 0px 4px 4px 0px;
-	display: table-cell;
-	position: relative;
-}
 
-.vp-right-panel .vp-option-form {
-	background-color: #fcfcfc;
-}
+/* Submit
+ * ==================================================== */
 
 .vp-submit {
 	background-color: #fcfcfc;
+	border-bottom: 1px solid #dddddd;
 	border-bottom: 1px solid rgba(0,0,0,0.15);
 	border-radius: 0px 4px 0px 0px;
 	margin-top: 1px;
@@ -315,6 +316,10 @@
 .vp-submit .save-status.success { background-position: 0px -240px; }
 .vp-submit .save-status.failed { background-position: 0px -280px; }
 
+
+/* Panel
+ * ==================================================== */
+
 .vp-panel {
 	display: none;
 	padding: 20px;
@@ -361,6 +366,7 @@
 
 .vp-section .vp-controls {
 	border-radius: 4px;
+	border: 1px solid #eeeeee;
 	border: 1px solid rgba(0,0,0,0.1);
 	padding-top: 10px;
 	position: relative;
@@ -375,6 +381,7 @@
 }
 
 .vp-field.vp-error {
+	background-color: #f8efef;
 	background-color: rgba(255,0,0,0.05);
 }
 
@@ -489,6 +496,8 @@
 
 .vp-field.vp-checkbox .field label,
 .vp-field.vp-radiobutton .field label {
+	display: inline;
+	*zoom: 1;
 	display: inline-block;
 	margin: 0px 30px 0px 0px;
 	padding-top: 3px;
@@ -515,6 +524,8 @@
 
 .vp-field.vp-checkimage .field label,
 .vp-field.vp-radioimage .field label {
+	display: inline;
+	*zoom: 1;
 	display: inline-block;
 	margin: 5px;
 	vertical-align: top;
@@ -533,6 +544,8 @@
 }
 
 .vp-field.vp-toggle .field label {
+	display: inline;
+	*zoom: 1;
 	display: inline-block;
 }
 
@@ -644,9 +657,7 @@
 .vp-field.vp-select .field .chzn-container .chzn-drop,
 .vp-field.vp-multiselect .field .chzn-container .chzn-drop,
 .vp-field.vp-sorter .field .chzn-container .chzn-drop {
-	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-	-moz-box-sizing: border-box; /* Firefox, other Gecko */
-	box-sizing: border-box;	/* Opera/IE 8+ */
+	box-sizing: border-box;
 }
 
 .vp-field.vp-select .field input,
@@ -727,13 +738,10 @@
 
 .vp-field.vp-color .field label {
 	box-shadow: inset 0px 0px 3px 0px rgba(0,0,0,0.1), inset -3px 0px 5px rgba(0,0,0,0.05), inset 0px -6px 15px rgba(0,0,0,0.05);
-	background: -moz-linear-gradient(top,  rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.4)), color-stop(100%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  rgba(255,255,255,0.4) 0%,rgba(255,255,255,0) 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  rgba(255,255,255,0.4) 0%,rgba(255,255,255,0) 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  rgba(255,255,255,0.4) 0%,rgba(255,255,255,0) 100%); /* IE10+ */
-	background: linear-gradient(to bottom,  rgba(255,255,255,0.4) 0%,rgba(255,255,255,0) 100%); /* W3C */
+	background: linear-gradient(to bottom,  rgba(255,255,255,0.4) 0%,rgba(255,255,255,0) 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4dffffff', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
+	display: inline;
+	*zoom: 1;
 	display: inline-block;
 	font-size: 27px;
 	line-height: 1em;
@@ -745,7 +753,7 @@
 }
 
 .vp-field.vp-color .field input[type="text"] {
-	width: 100px;
+	width: 200px;
 	padding: 6px 12px 6px 35px;
 }
 
@@ -754,7 +762,7 @@
 }
 
 .vp-copyright {
-	border-top: 1px solid #cccccc;
+	border-top: 1px solid #dddddd;
 	border-radius: 0px 0px 4px 0px;
 	color: #888888;
 	font-size: 11px;
@@ -775,13 +783,9 @@
 	text-decoration: none;
 }
 
-/* jQuery UI Datepicker bottom div bug */
-#ui-datepicker-div { display:none }
 
-/**
- * Notebox styling
- * (normal, warning, info, error, success)
- */
+/* Notebox
+ * ==================================================== */
 
 .vp-field.vp-notebox {
 	border-width: 1px;
@@ -857,10 +861,11 @@
 	margin: 10px 20px;
 }
 
+/* Extension 
+ * ==================================================== */
 
-/**
- * Code Editor styling
- */
+/* Code Editor styling */
+
 .ace_editor {
 	border-width: 1px;
 	border-style: solid;
@@ -868,3 +873,29 @@
 	border-radius: 3px;
 	height: 200px;
 }
+
+/* Bootstrap Colorpicker */
+
+.dropdown-menu {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	z-index: 1000;
+	display: none;
+	float: left;
+	min-width: 160px;
+	margin: 2px 0 0;
+	list-style: none;
+	background-color: #ffffff;
+	border: 1px solid #cccccc;
+	border: 1px solid rgba(0,0,0,0.2);
+	*border-right-width: 2px;
+	*border-bottom-width: 2px;
+	border-radius: 6px;
+	box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+	background-clip: padding-box;
+}
+
+/* jQuery UI Datepicker bottom div bug */
+
+#ui-datepicker-div { display:none }

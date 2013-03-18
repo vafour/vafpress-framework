@@ -22,8 +22,8 @@ return array(
 				'deps'     => array(),
 				'ver'      => '1.8.3'
 			),
-			'colorpicker-js' => array(
-				'path'     => VP_PUBLIC_URL . '/js/vendor/colorpicker.js',
+			'bootstrap-colorpicker' => array(
+				'path'     => VP_PUBLIC_URL . '/js/vendor/bootstrap-colorpicker.js',
 				'deps'     => array('jquery'),
 				'ver'      => false
 			),
@@ -102,8 +102,8 @@ return array(
 		'always' => array('tipsy-css', 'font-awesome'),
 		'paths' => array(
 			array(
-				'name' => 'colorpicker-css',
-				'path' => VP_PUBLIC_URL . '/css/vendor/colorpicker.css',
+				'name' => 'bootstrap-colorpicker',
+				'path' => VP_PUBLIC_URL . '/css/vendor/bootstrap-colorpicker.css',
 				'deps' => array()
 			),
 			array(
@@ -133,7 +133,7 @@ return array(
 	 * Rules for dynamic loading of dependencies, load only what needed.
 	 */
 	'rules'   => array(
-		'color'       => array( 'js' => array('colorpicker-js'), 'css' => array('colorpicker-css') ),
+		'color'       => array( 'js' => array('bootstrap-colorpicker'), 'css' => array('bootstrap-colorpicker') ),
 		'select'      => array( 'js' => array('chosen-jquery'), 'css' => array('chosen-css') ),
 		'multiselect' => array( 'js' => array('chosen-jquery'), 'css' => array('chosen-css') ),
 		'slider'      => array( 'js' => array('jquery-ui-slider'), 'css' => array('jqui') ),
