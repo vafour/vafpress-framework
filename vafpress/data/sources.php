@@ -126,6 +126,40 @@ function vp_get_gwf_style($face)
 	return $result;
 }
 
+function vp_get_social_medias() {
+	$socmeds = array(
+		array('value' => 'blogger', 'label' => 'Blogger'),
+		array('value' => 'delicious', 'label' => 'Delicious'),
+		array('value' => 'deviantart', 'label' => 'DeviantArt'),
+		array('value' => 'digg', 'label' => 'Digg'),
+		array('value' => 'dribbble', 'label' => 'Dribbble'),
+		array('value' => 'email', 'label' => 'Email'),
+		array('value' => 'facebook', 'label' => 'Facebook'),
+		array('value' => 'flickr', 'label' => 'Flickr'),
+		array('value' => 'forst', 'label' => 'Forst'),
+		array('value' => 'foursquare', 'label' => 'Foursquare'),
+		array('value' => 'github', 'label' => 'Github'),
+		array('value' => 'googleplus', 'label' => 'Google+'),
+		array('value' => 'instagram', 'label' => 'Instagram'),
+		array('value' => 'lastfm', 'label' => 'Last.FM'),
+		array('value' => 'linkedin', 'label' => 'LinkedIn'),
+		array('value' => 'myspace', 'label' => 'MySpace'),
+		array('value' => 'pinterest', 'label' => 'Pinterest'),
+		array('value' => 'reddit', 'label' => 'Reddit'),
+		array('value' => 'rss', 'label' => 'RSS'),
+		array('value' => 'soundcloud', 'label' => 'SoundCloud'),
+		array('value' => 'stumbleupon', 'label' => 'StumbleUpon'),
+		array('value' => 'tumblr', 'label' => 'Tumblr'),
+		array('value' => 'twitter', 'label' => 'Twitter'),
+		array('value' => 'vimeo', 'label' => 'Vimeo'),
+		array('value' => 'wordpress', 'label' => 'WordPress'),
+		array('value' => 'yahoo', 'label' => 'Yahoo!'),
+		array('value' => 'youtube', 'label' => 'Youtube'),
+	);
+
+	return $socmeds;
+}
+
 function vp_bind_source_test($param = null)
 {
 	$result = array();

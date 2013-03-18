@@ -644,37 +644,11 @@ return array(
 							'label' => __('Sorter', 'vp_textdomain'),
 							'description' => __('Select and sort your choices', 'vp_textdomain'),
 							'items' => array(
-								array(
-									'value' => 'facebook',
-									'label' => __('Facebook', 'vp_textdomain'),
-								),
-								array(
-									'value' => 'twitter',
-									'label' => __('Twitter', 'vp_textdomain'),
-								),
-								array(
-									'value' => 'pinterest',
-									'label' => __('Pinterest', 'vp_textdomain'),
-								),
-								array(
-									'value' => 'google_plus',
-									'label' => __('Google +', 'vp_textdomain'),
-								),
-								array(
-									'value' => 'linked_in',
-									'label' => __('Linked In', 'vp_textdomain'),
-								),
-								array(
-									'value' => 'youtube',
-									'label' => __('Youtube', 'vp_textdomain'),
-								),
-								array(
-									'value' => 'dribbble',
-									'label' => __('Dribbble', 'vp_textdomain'),
-								),
-								array(
-									'value' => 'rss_feed',
-									'label' => __('RSS Feed', 'vp_textdomain'),
+								'data' => array(
+									array(
+										'source' => 'function',
+										'value' => 'vp_get_social_medias',
+									),
 								),
 							),
 						),

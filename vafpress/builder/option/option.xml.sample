@@ -377,14 +377,7 @@
 							<label>Sorter</label>
 							<description>Select and sort your choices</description>
 							<items>
-								<item value="facebook">Facebook</item>
-								<item value="twitter">Twitter</item>
-								<item value="pinterest">Pinterest</item>
-								<item value="google_plus">Google +</item>
-								<item value="linked_in">Linked In</item>
-								<item value="youtube">Youtube</item>
-								<item value="dribbble">Dribbble</item>
-								<item value="rss_feed">RSS Feed</item>
+								<data source="function">vp_get_social_medias</data>
 							</items>
 						</sorter>
 						<codeeditor>
