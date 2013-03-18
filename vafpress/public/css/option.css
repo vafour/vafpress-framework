@@ -333,7 +333,7 @@
 
 .vp-panel {
 	display: none;
-	padding: 30px 30px;
+	padding: 20px;
 }
 
 .vp-section {
@@ -345,9 +345,9 @@
 .vp-section > h3 {
 	background-color: #fcfcfc;
 	color: #6cc4e8;
-	font-size: 14px;
+	font-size: 12px;
 	line-height: 1em;
-	padding: 4px 10px;
+	padding: 5px 10px;
 	margin: 10px 0px 0px 20px;
 	position: absolute;
 	top: 0px;
@@ -375,16 +375,9 @@
 	background-position: -40px -120px;
 }
 
-.vp-section .vp-field {
-	margin-bottom: -1px;
-	border-bottom: 1px solid rgba(0,0,0,0.10);
-	box-shadow: 0px 1px rgba(255,255,255,1);
-}
-
 .vp-section .vp-controls {
 	border-radius: 4px;
-	border: 1px solid rgba(0,0,0,0.10);
-	box-shadow: inset 0px 1px 0px rgba(255,255,255,1), 0px 1px 0px rgba(255,255,255,1);
+	border: 1px solid rgba(0,0,0,0.1);
 	padding-top: 10px;
 	position: relative;
 	width: 100%;
@@ -403,17 +396,18 @@
 
 .vp-field > .label {
 	display: table-cell;
-	font-size: 14px;
+	font-size: 12px;
 	font-weight: bold;
 	line-height: 20px;
 	width: 160px;
-	padding: 20px 20px 20px 30px;
+	padding: 15px 20px;
 	vertical-align: top
 }
 
 .vp-field > .label label {
 	cursor: default;
 	display: block;
+	padding-top: 5px;
 }
 
 .vp-field > .label .description {
@@ -432,7 +426,7 @@
 .vp-field > .field {
 	display: table-cell;
 	font-weight: normal;
-	padding: 20px 30px 20px 20px;
+	padding: 15px 20px;
 }
 
 .vp-field.vp-checkimage > .field .input img,

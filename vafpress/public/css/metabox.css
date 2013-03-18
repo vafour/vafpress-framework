@@ -147,7 +147,7 @@
 }
 
 .vp-metabox .vp-upload .input {
-	padding-right: 125px;
+	padding-right: 110px;
 }
 
 .vp-metabox .vp-upload input[type="text"] {
@@ -228,31 +228,54 @@
 
 .vp-metabox .vp-select select,
 .vp-metabox .vp-multiselect select,
+.vp-metabox .vp-sorter select,
 .vp-metabox .vp-select .chzn-container,
 .vp-metabox .vp-multiselect .chzn-container,
+.vp-metabox .vp-sorter .chzn-container,
 .vp-metabox .vp-select .chzn-container .chzn-drop,
 .vp-metabox .vp-multiselect .chzn-container .chzn-drop,
+.vp-metabox .vp-sorter .chzn-container .chzn-drop,
 .vp-metabox .vp-select .chzn-container .chzn-drop .chzn-search input,
-.vp-metabox .vp-multiselect .chzn-container .chzn-drop .chzn-search input {
+.vp-metabox .vp-multiselect .chzn-container .chzn-drop .chzn-search input,
+.vp-metabox .vp-sorter .chzn-container .chzn-drop .chzn-search input {
 	width: 100% !important;
 }
 
 .vp-metabox .vp-select .chzn-container .chzn-drop,
-.vp-metabox .vp-multiselect .chzn-container .chzn-drop {
+.vp-metabox .vp-multiselect .chzn-container .chzn-drop,
+.vp-metabox .vp-sorter .chzn-container .chzn-drop {
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box; /* Firefox, other Gecko */
 	box-sizing: border-box;	/* Opera/IE 8+ */
 }
 
 .vp-metabox .vp-select .chzn-container .chzn-drop,
-.vp-metabox .vp-multiselect .chzn-container .chzn-drop {
+.vp-metabox .vp-multiselect .chzn-container .chzn-drop,
+.vp-metabox .vp-sorter .chzn-container .chzn-drop {
 	width: 100%;
 	margin-right: 10px; /* hack */
 }
 
-.vp-metabox .vp-multiselect .search-field input {
+.vp-metabox .vp-multiselect .search-field input,
+.vp-metabox .vp-sorter .search-field input {
 	height: auto;
 }
+
+.vp-metabox .vp-sorter .field ul.chzn-choices .search-choice {
+	display: block;
+	margin: 3px 5px;
+	float: none !important;
+	width: auto;
+	cursor: move;
+}
+
+.vp-metabox .vp-sorter .field ul.chzn-choices .ui-state-highlight {
+	display: block;
+	margin: 3px 5px;
+	height: 19px;
+	float: none !important;
+}
+
 
 .vp-metabox .vp-textarea textarea {
 	width: 100%;
