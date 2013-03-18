@@ -661,21 +661,21 @@
 	border-left: none;
 }
 
-.vp-section .field .chzn-container {
+.vp-field .field .chzn-container {
 	font-size: 12px;
 }
 
-.vp-section .field .chzn-results {
+.vp-field .field .chzn-results {
 	max-height: 100px;
 }
 
-.vp-section .field .chzn-results .highlighted {
+.vp-field .field .chzn-results .highlighted {
 	background-color: #cae995;
 	color: inherit;
 	background-image: none;
 }
 
-.vp-section .field .chzn-results li {
+.vp-field .field .chzn-results li {
 	border-radius: 3px;
 } 
 
