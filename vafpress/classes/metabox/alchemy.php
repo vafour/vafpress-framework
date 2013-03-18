@@ -215,9 +215,9 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 
 	function _enfactor_field($field, $mb, $in_group = false)
 	{
-		$multiple = array('checkbox', 'checkimage', 'multiselect', 'sorter');
+		$is_multi = VP_Util_Reflection::is_multiselectable($field['type']);
 
-		if( !in_array($field['type'], $multiple) )
+		if( !$is_multi )
 		{
 			$mb->the_field($field['name']);
 		}
@@ -228,7 +228,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		$field['name'] = $mb->get_the_name();
 
 		// create the object
-		$make     = 'VP_Control_Field_' . $field['type'];
+		$make     = VP_Util_Reflection::field_class_from_type($field['type']);
 		$vp_field = call_user_func("$make::withArray", $field);
 
 		// get value from mb
@@ -244,7 +244,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		// if not the set up value from mb
 		else
 		{
-			if( in_array($field['type'], $multiple) )
+			if( VP_Util_Reflection::is_multiselectable($field['type']) )
 			{
 				if( !is_array($value) )
 					$value = array( $value );
@@ -598,9 +598,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		$scheme      = array();
 		$curr_group  = '';
 		$is_in_group = false;
-		$multiple = array('checkbox', 'checkimage', 'multiselect', 'sorter');
-
-		$fields = $this->template;
+		$fields      = $this->template;
 
 		foreach ($fields as $field)
 		{
@@ -611,10 +609,10 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 				$is_in_group         = true;
 				while($this->have_fields_and_multi($curr_group))
 				{
-					$ops = array();
+					$ops      = array();
 					foreach ($field['fields'] as $f)
 					{
-						if(in_array($f['type'], $multiple))
+						if(VP_Util_Reflection::is_multiselectable($f['type']))
 							$ops[$f['name']] = array();
 						else
 							$ops[$f['name']] = '';
@@ -635,7 +633,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 					$ops = array();
 					foreach ($field['fields'] as $f)
 					{
-						if(in_array($f['type'], $multiple))
+						if(VP_Util_Reflection::is_multiselectable($f['type']))
 							$ops[$f['name']] = array();
 						else
 							$ops[$f['name']] = '';
@@ -645,7 +643,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 			}
 			else
 			{
-				if(in_array($field['type'], $multiple))
+				if(VP_Util_Reflection::is_multiselectable($field['type']))
 					$scheme[$field['name']] = array();
 				else
 					$scheme[$field['name']] = '';

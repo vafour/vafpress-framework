@@ -121,7 +121,7 @@ class VP_Option_Control_Set
 						}
 						foreach ( $control->get_fields() as $field )
 						{
-							if( VP_Util_Text::field_type_from_class(get_class($field)) != 'impexp' )
+							if( VP_Util_Reflection::field_type_from_class(get_class($field)) != 'impexp' )
 							{
 								$fields[$field->get_name()] = $field;
 							}
@@ -129,7 +129,7 @@ class VP_Option_Control_Set
 					}
 					else
 					{
-						if( VP_Util_Text::field_type_from_class(get_class($control)) != 'impexp' )
+						if( VP_Util_Reflection::field_type_from_class(get_class($control)) != 'impexp' )
 						{
 							$fields[$control->get_name()] = $control;
 						}
@@ -232,16 +232,13 @@ class VP_Option_Control_Set
 
 	public function normalize_values($opt_arr)
 	{
-		$fields        = $this->get_fields();
-		// fields whose items can be chosen in multiple way
-		$multi_classes = array( 'checkbox', 'checkimage', 'multiselect', 'sorter' );
+		$fields = $this->get_fields();
 
 		foreach ($opt_arr as $key => $value)
 		{
 			if(array_key_exists($key, $fields))
 			{
-				$type     = VP_Util_text::field_type_from_class(get_class($fields[$key]));
-				$is_multi = in_array($type, $multi_classes);
+				$is_multi = VP_Util_Reflection::is_multiselectable($fields[$key]);
 				if( $is_multi and !is_array($value) )
 				{
 					$opt_arr[$key] = array($value);
@@ -305,13 +302,10 @@ class VP_Option_Control_Set
 
 	public function populate_values($opt, $force_update = false)
 	{
-		$fields        = $this->get_fields();
-		$multi_classes = array( 'checkbox', 'checkimage', 'multiselect', 'sorter' );
+		$fields = $this->get_fields();
 		foreach ( $fields as $field )
 		{
-			$type     = VP_Util_text::field_type_from_class(get_class($field));
-			$is_multi = in_array($type, $multi_classes);
-			
+			$is_multi = VP_Util_Reflection::is_multiselectable($field);
 			if( array_key_exists($field->get_name(), $opt) )
 			{
 				if( $is_multi and is_array($opt[$field->get_name()]) )

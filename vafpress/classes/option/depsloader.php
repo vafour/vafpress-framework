@@ -46,7 +46,7 @@ class VP_Option_Depsloader
 		$fields = $set->get_fields();
 		foreach ($fields as $field)
 		{
-			$type = VP_Util_Text::field_type_from_class(get_class($field));
+			$type = VP_Util_Reflection::field_type_from_class(get_class($field));
 			if( array_key_exists($type, $rules) )
 			{
 				$result['scripts'] = array_merge($result['scripts'], $rules[$type]['js']);

@@ -121,7 +121,7 @@ class VP_Option_Parser
 
 	private function parse_field($field)
 	{
-		$class    = VP_Util_Text::field_class_from_type($field['type']);
+		$class    = VP_Util_Reflection::field_class_from_type($field['type']);
 		$vp_field = call_user_func("$class::withArray", $field);
 		return $vp_field;
 	}

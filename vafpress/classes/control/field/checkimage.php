@@ -1,6 +1,6 @@
 <?php
 
-class VP_Control_Field_CheckImage extends VP_Control_FieldMultiImage
+class VP_Control_Field_CheckImage extends VP_Control_FieldMultiImage implements VP_MultiSelectable
 {
 
 	public function __construct()

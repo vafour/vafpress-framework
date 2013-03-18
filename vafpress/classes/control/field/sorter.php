@@ -1,6 +1,6 @@
 <?php
 
-class VP_Control_Field_Sorter extends VP_Control_FieldMulti
+class VP_Control_Field_Sorter extends VP_Control_FieldMulti implements VP_MultiSelectable
 {
 
 	public function __construct()

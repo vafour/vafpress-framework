@@ -705,7 +705,7 @@ vp.init_tipsy = function()
 vp.init_tipsy();
 
 // Ace Editor
-if(ace !== 'undefined')
+if(window.ace !== 'undefined')
 {
 	jQuery('.vp-js-codeeditor').each(function() {
 

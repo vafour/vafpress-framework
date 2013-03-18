@@ -19,7 +19,6 @@
 	margin-top: 15px;
 	min-height: 100%;
 	min-width: 680px;
-	overflow: hidden;
 	position: relative;
 	width: 100%;
 }
@@ -244,7 +243,6 @@
 .vp-right-panel {
 	border-radius: 0px 4px 4px 0px;
 	display: table-cell;
-	overflow: hidden;
 	position: relative;
 }
 
@@ -263,20 +261,6 @@
 .vp-submit .inner {
 	overflow: hidden;
 	padding: 10px;
-}
-
-.vp-submit.floating {
-	box-shadow: 0px 1px 2px rgba(0,0,0,0.1);
-	border-radius: 0px;
-	border-left: 1px solid rgba(0,0,0,0.15);
-	margin-left: -1px;
-	margin-top: 0px;
-	position: fixed;
-	z-index: 100;
-}
-
-.vp-submit.floating ~ .vp-panel {
-	margin-top: 63px;
 }
 
 .vp-submit .vp-button {
@@ -782,7 +766,7 @@
 }
 
 .vp-copyright p {
-	padding: 30px 20px;
+	padding: 15px 20px;
 	margin: 0px;
 }
 
