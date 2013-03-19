@@ -47,7 +47,7 @@ class VP_Option_Parser
 			$set->add_menu($vp_menu);
 
 			// Loops through every submenu in each menu
-			if (!empty($menu['menus'])) foreach ($menu['menus'] as $submenu)
+			if (!empty($menu['menus']) and is_array($menu['menus'])) foreach ($menu['menus'] as $submenu)
 			{
 				$vp_submenu = new VP_Option_Control_Group_Menu();
 
@@ -82,7 +82,7 @@ class VP_Option_Parser
 			else
 			{
 				// Loops through every control in each submenu
-				if (!empty($menu['controls'])) foreach ($menu['controls'] as $control)
+				if (!empty($menu['controls']) and is_array($menu['controls'])) foreach ($menu['controls'] as $control)
 				{
 					if($control['type'] === 'section')
 						$control = $this->parse_section($control);
