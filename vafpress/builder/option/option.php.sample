@@ -602,7 +602,8 @@ return array(
 							'name' => 'cl_1',
 							'label' => __('Color 1', 'vp_textdomain'),
 							'description' => __('Color Picker, you can set the default color.', 'vp_textdomain'),
-							'default' => '#3eb9e6',
+							'default' => 'rgba(255,0,0,0.5)',
+							'format' => 'rgba',
 						),
 						array(
 							'type' => 'color',

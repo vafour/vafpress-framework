@@ -46,7 +46,7 @@
 .vp-option-panel .validation-notif.vp-error {
 	background-image: url('../img/vp-sprite.png');
 	background-repeat: no-repeat;
-	background-position: 0px -320px;
+	background-position: 0px -240px;
 	display: block;
 	height: 16px;
 	width: 16px;
@@ -313,8 +313,8 @@
 	padding: 10px 20px 10px 50px;
 }
 
-.vp-submit .save-status.success { background-position: 0px -240px; }
-.vp-submit .save-status.failed { background-position: 0px -280px; }
+.vp-submit .save-status.success { background-position: 0px -200px; }
+.vp-submit .save-status.failed { background-position: 0px -240px; }
 
 
 /* Panel
@@ -738,8 +738,8 @@
 
 .vp-field.vp-color .field label {
 	box-shadow: inset 0px 0px 3px 0px rgba(0,0,0,0.1), inset -3px 0px 5px rgba(0,0,0,0.05), inset 0px -6px 15px rgba(0,0,0,0.05);
-	background: linear-gradient(to bottom,  rgba(255,255,255,0.4) 0%,rgba(255,255,255,0) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4dffffff', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
+	background-image: url('../img/vp-sprite.png');
+	background-position: 0 -140px;
 	display: inline;
 	*zoom: 1;
 	display: inline-block;
@@ -752,8 +752,16 @@
 	margin: 1px 0px 0px 1px;
 }
 
+.vp-field.vp-color .field label span {
+	display: block;
+	height: 100%;
+	width: 100%;
+	background-image: linear-gradient(180deg, rgba(255,255,255,0.4) 0%,rgba(255,255,255,0) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4dffffff', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
+}
+
 .vp-field.vp-color .field input[type="text"] {
-	width: 200px;
+	width: 150px;
 	padding: 6px 12px 6px 35px;
 }
 

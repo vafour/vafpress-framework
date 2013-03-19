@@ -340,7 +340,8 @@
 							<name>cl_1</name>
 							<label>Color 1</label>
 							<description>Color Picker, you can set the default color.</description>
-							<default>#3eb9e6</default>
+							<default>rgba(255,0,0,0.5)</default>
+							<format>rgba</format>
 						</color>
 						<color>
 							<name>cl_2</name>

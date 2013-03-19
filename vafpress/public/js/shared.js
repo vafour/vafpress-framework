@@ -640,9 +640,11 @@ jQuery('.vp-js-remove-upload').click(vp.remove_upload_callback);
 if (jQuery.fn.colorpicker)
 {
 	jQuery('.vp-js-colorpicker').each(function() {
-		var colorpicker  = this;
+		var colorpicker  = this,
+		    options = jQuery(this).getDatas();
+		options = vp.parseOpt(options.opt);
 		jQuery(colorpicker).colorpicker({
-			format: 'rgba'
+			format: options.format
 		});
 
 		// jQuery(colorpicker).colorpicker({

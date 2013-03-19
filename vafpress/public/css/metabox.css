@@ -198,8 +198,9 @@
 	padding-left: 25px;
 }
 
-.vp-metabox .vp-color .input .indicator {
-	box-shadow: inset 0px 0px 0px 2px rgba(0,0,0,0.1);
+.vp-metabox .vp-color .input label {
+	background-image: url('../img/vp-sprite.png');
+	background-position: 0 -140px;
 	display: block;
 	height: 20px;
 	margin-top: 3px;
@@ -207,6 +208,13 @@
 	position: absolute;
 	top: 0px;
 	width: 20px;
+}
+
+.vp-metabox .vp-color .input label span {
+	box-shadow: inset 0px 0px 0px 2px rgba(0,0,0,0.1);
+	display: block;
+	height: 100%;
+	width: 100%;
 }
 
 .vp-metabox .vp-slider .input {
