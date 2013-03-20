@@ -35,6 +35,20 @@
 		    $panel = $(href),
 		    fields = [];
 
+		$panel.children('.vp-field').each(function(j) {
+			var $field = $(this),
+				name   = $field.attr('id'),
+				rules  = $field.attr('data-vp-validation'),
+				bind   = $field.attr('data-vp-bind'),
+				type   = $field.getDatas().type,
+				$input = $('[name="' + name + '"]');
+
+			dep = $field.attr('data-vp-dependency');
+
+			dep   && dependencies.push({dep: dep, type: 'field', source: $field.attr('id')});
+			bind  && bindings.push({bind: bind, type: type, source: name});
+			rules && fields.push({name: name, rules: rules, type: type});
+		});
 
 		$panel.children('.vp-section').each(function(i) {
 			var $section = $(this);
@@ -66,12 +80,16 @@
 	$('.vp-js-menu-goto').click(function(e) {
 		e.preventDefault();
 		window.location.hash = $(this).attr('href');
-		var $this = $(this),
-		    $parent = $this.parent('li'),
-		    $li = $parent.siblings('li'),
-		    $panel = $($this.attr('href'));
-		$li.removeClass('vp-current');
+		var $this     = $(this),
+		    $li       = $this.parent('li'),
+		    $parent   = $li.parents('li'),
+		    $siblings = $li.siblings('li'),
+		    $parent_siblings = $parent.siblings('li'),
+		    $panel    = $($this.attr('href'));
+		$siblings.removeClass('vp-current');
+		$parent_siblings.removeClass('vp-current');
 		$parent.addClass('vp-current');
+		$li.addClass('vp-current');
 		$panel.siblings('.vp-panel').removeClass('vp-current');
 		$panel.addClass('vp-current');
 

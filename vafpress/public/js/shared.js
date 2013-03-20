@@ -227,39 +227,39 @@ vp.thejqname = function(name, thecase) {
 };
 
 vp.validateAlphabet = function(type, val) {
-	// ignore array
-	if (jQuery.isArray(val) || jQuery.inArray(type, ['vp-textbox', 'vp-textarea']) == -1) { return true; }
+	// ignore array and empty string, since they should be handled by 'required' rule
+	if (val === '' || jQuery.isArray(val) || jQuery.inArray(type, ['vp-textbox', 'vp-textarea']) == -1) { return true; }
 	var regex = new RegExp(/^[A-Z]+$/i);
 	return regex.test(val);
 };
 
 vp.validateAlphaNumeric = function(type, val) {
-	// ignore array
-	if (jQuery.isArray(val) || jQuery.inArray(type, ['vp-textbox', 'vp-textarea']) == -1) { return true; }
+	// ignore array and empty string, since they should be handled by 'required' rule
+	if (val === '' || jQuery.isArray(val) || jQuery.inArray(type, ['vp-textbox', 'vp-textarea']) == -1) { return true; }
 
 	var regex = new RegExp(/^[A-Z0-9]+$/i);
 	return regex.test(val);
 };
 
 vp.validateNumeric = function(type, val) {
-	// ignore array
-	if (jQuery.isArray(val) || jQuery.inArray(type, ['vp-textbox', 'vp-textarea']) == -1) { return true; }
+	// ignore array and empty string, since they should be handled by 'required' rule
+	if (val === '' || jQuery.isArray(val) || jQuery.inArray(type, ['vp-textbox', 'vp-textarea']) == -1) { return true; }
 
 	var regex = new RegExp(/^[-+]?[0-9]*\.?[0-9]+$/);
 	return regex.test(val);
 };
 
 vp.validateEmail = function(type, val) {
-	// ignore array
-	if (jQuery.isArray(val) || jQuery.inArray(type, ['vp-textbox', 'vp-textarea']) == -1) { return true; }
+	// ignore array and empty string, since they should be handled by 'required' rule
+	if (val === '' || jQuery.isArray(val) || jQuery.inArray(type, ['vp-textbox', 'vp-textarea']) == -1) { return true; }
 
 	var regex = new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i);
 	return regex.test(val);
 };
 
 vp.validateURL = function(type, val) {
-	// ignore array
-	if (jQuery.isArray(val) || jQuery.inArray(type, ['vp-textbox', 'vp-textarea']) == -1) { return true; }
+	// ignore array and empty string, since they should be handled by 'required' rule
+	if (val === '' || jQuery.isArray(val) || jQuery.inArray(type, ['vp-textbox', 'vp-textarea']) == -1) { return true; }
 
 	var regex = new RegExp(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i);
 	return regex.test(val);
