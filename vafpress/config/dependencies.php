@@ -99,7 +99,7 @@ return array(
 	 * Styles.
 	 */
 	'styles' => array(
-		'always' => array('tipsy-css', 'font-awesome'),
+		'always' => array('tipsy-css', 'font-awesome', 'font-awesome-ie7'),
 		'paths' => array(
 			array(
 				'name' => 'bootstrap-colorpicker',
@@ -119,6 +119,11 @@ return array(
 			array(
 				'name' => 'jqui',
 				'path' => VP_PUBLIC_URL . '/css/vendor/jqueryui/themes/' . $jqui_theme . '/jquery-ui-1.9.2.custom.min.css',
+				'deps' => array()
+			),
+			array(
+				'name' => 'font-awesome-ie7',
+				'path' => VP_PUBLIC_URL . '/css/vendor/font-awesome-ie7.min.css',
 				'deps' => array()
 			),
 			array(

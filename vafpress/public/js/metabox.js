@@ -20,6 +20,10 @@
 		return false;
 	};
 
+	// image controls event bind
+	vp.custom_check_radio_event(".vp-metabox", ".vp-field.vp-checkimage .field .input label");
+	vp.custom_check_radio_event(".vp-metabox", ".vp-field.vp-radioimage .field .input label");
+
 	// Bindings
 	var bindings = [];
 	$('.vp-field[data-vp-bind]').each(function(idx, el){

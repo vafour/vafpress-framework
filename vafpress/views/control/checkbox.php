@@ -2,7 +2,7 @@
 
 <?php foreach ($items as $item): ?>
 <label>
-	<input <?php if(in_array($item->value, $value)) echo "checked" ?> type="checkbox" name="<?php echo $name; ?>" value="<?php echo $item->value; ?>" />
+	<input <?php if(in_array($item->value, $value)) echo 'checked class="checked"'; ?> type="checkbox" name="<?php echo $name; ?>" value="<?php echo $item->value; ?>" />
 	<span></span><?php echo $item->label; ?>
 </label>
 <?php endforeach; ?>

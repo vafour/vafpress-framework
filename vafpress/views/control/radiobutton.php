@@ -2,7 +2,7 @@
 
 <?php foreach ($items as $item): ?>
 <label>
-	<input <?php if($item->value == $value) echo "checked" ?> type="radio" name="<?php echo $name; ?>" value="<?php echo $item->value; ?>" />
+	<input <?php if($item->value == $value) echo 'checked class="checked"'; ?> type="radio" name="<?php echo $name; ?>" value="<?php echo $item->value; ?>" />
 	<span></span><?php echo $item->label; ?>
 </label>
 <?php endforeach; ?>

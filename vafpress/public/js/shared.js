@@ -285,6 +285,39 @@ vp.validateRequired = function(type, val) {
 	return (val) ? true : false;
 };
 
+// custom checkbox and radiobutton handler
+vp.custom_check_radio_event = function(parent, selector){
+	jQuery(parent).delegate(selector, "click", function(e){
+		e.preventDefault();
+		$control = jQuery(this).find('input');
+		var type = $control.attr('type');
+		console.log(type);
+		if(type == 'radio')
+		{
+			jQuery(this).parents('.input').find('input').each(function(i){
+				jQuery(this).removeAttr('checked');
+				jQuery(this).removeClass('checked');
+			});
+			$control.attr('checked', 'checked');
+			$control.addClass('checked');
+			$control.trigger('change');
+		}
+		else if(type == 'checkbox')
+		{
+			if ($control.is(':checked')) {
+				$control.removeAttr('checked');
+				$control.removeClass('checked');
+			}
+			else
+			{
+				$control.attr('checked', 'checked');
+				$control.addClass('checked');
+			}
+			$control.trigger('change');
+		}
+	});
+};
+
 // vafpress binding related functions
 vp.binding_action =	function(ids, field, func, thecase) {
 	var $source_tr = jQuery(vp.jqid(field.source)),

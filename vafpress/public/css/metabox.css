@@ -194,6 +194,13 @@
 	background-color: #6cc4e8;
 }
 
+/* elt ie8 style */
+.vp-field.vp-checkimage .field input.checked ~ img,
+.vp-field.vp-radioimage .field input.checked ~ img {
+	border-color: #6cc4e8;
+	background-color: #6cc4e8;
+}
+
 .vp-metabox .vp-color .input {
 	padding-left: 25px;
 }
@@ -398,4 +405,26 @@
 	border-color: #dddddd;
 	border-radius: 3px;
 	height: 200px;
+}
+
+/* Bootstrap Colorpicker */
+
+.dropdown-menu {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	z-index: 1000;
+	display: none;
+	float: left;
+	min-width: 160px;
+	margin: 2px 0 0;
+	list-style: none;
+	background-color: #ffffff;
+	border: 1px solid #cccccc;
+	border: 1px solid rgba(0,0,0,0.2);
+	*border-right-width: 2px;
+	*border-bottom-width: 2px;
+	border-radius: 6px;
+	box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+	background-clip: padding-box;
 }

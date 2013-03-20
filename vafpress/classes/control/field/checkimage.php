@@ -13,6 +13,7 @@ class VP_Control_Field_CheckImage extends VP_Control_FieldMultiImage implements 
 	{
 		$instance = new self();
 		$instance->_basic_make($arr);
+		$instance->add_container_extra_classes('vp-checked-field');
 		return $instance;
 	}
 

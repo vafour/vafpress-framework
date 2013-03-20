@@ -522,6 +522,10 @@
 .vp-field.vp-checkbox .field input:checked ~ span { background-position: -20px 0px; }
 .vp-field.vp-radiobutton .field input:checked ~ span { background-position: -20px -20px; }
 
+/* elt ie8 style */
+.vp-field.vp-checkbox .field input.checked ~ span { background-position: -20px 0px; }
+.vp-field.vp-radiobutton .field input.checked ~ span { background-position: -20px -20px; }
+
 .vp-field.vp-checkimage .field label,
 .vp-field.vp-radioimage .field label {
 	display: inline;
@@ -543,6 +547,13 @@
 	background-color: #6cc4e8;
 }
 
+/* elt ie8 style */
+.vp-field.vp-checkimage .field input.checked ~ img,
+.vp-field.vp-radioimage .field input.checked ~ img {
+	border-color: #6cc4e8;
+	background-color: #6cc4e8;
+}
+
 .vp-field.vp-toggle .field label {
 	display: inline;
 	*zoom: 1;
@@ -559,6 +570,11 @@
 }
 
 .vp-field.vp-toggle .field input:checked ~ span {
+	background-position: -60px -40px;
+}
+
+/* elt ie8 style */
+.vp-field.vp-toggle .field input.checked ~ span {
 	background-position: -60px -40px;
 }
 

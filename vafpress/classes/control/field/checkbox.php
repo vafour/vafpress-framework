@@ -13,6 +13,7 @@ class VP_Control_Field_CheckBox extends VP_Control_FieldMulti implements VP_Mult
 	{
 		$instance = new self();
 		$instance->_basic_make($arr);
+		$instance->add_container_extra_classes('vp-checked-field');
 		return $instance;
 	}
 
