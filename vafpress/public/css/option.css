@@ -6,7 +6,7 @@
 }
 
 .vp-option-panel {
-	background-color: #fcfcfc;
+	background-color: #ffffff;
 	box-shadow: 0px 1px 3px rgba(0,0,0,0.05);
 	border-radius: 4px;
 	border: 1px solid #dddddd;
@@ -29,12 +29,6 @@
 	width: 100%;
 }
 
-.vp-option-panel svg {
-	height: 0px;
-	width: 0px;
-	display: none;
-}
-
 .vp-option-panel .vp-current {
 	display: block !important;
 }
@@ -48,17 +42,17 @@
 	background-repeat: no-repeat;
 	background-position: 0px -240px;
 	display: block;
-	height: 16px;
-	width: 16px;
+	height: 14px;
+	width: 14px;
 }
 
 .vp-option-panel .vp-button {
-	background-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.05) 100%);
+	background-image: linear-gradient(180deg, rgba(0,0,0,0),rgba(0,0,0,0.1));
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#0d000000',GradientType=0 ); /* IE6-9 */
 	border-radius: 4px;
 	border-width: 1px;
 	border-style: solid;
-	box-shadow: inset 0px 0px 0px 1px rgba(255,255,255,0.4);
+	box-shadow: inset 0px 1px 1px rgba(255,255,255,0.4);
 	color: #333333;
 	font-weight: bold;
 	padding: 7px 16px;
@@ -81,7 +75,7 @@
 }
 
 .vp-left-panel {
-	background-color: #f3f3f3;
+	background-color: #f9f9f9;
 	border-radius: 4px 0px 0px 4px;
 	border-right: 1px solid #dddddd;
 	border-right: 1px solid rgba(0,0,0,0.15);
@@ -101,12 +95,8 @@
 	border-radius: 0px 4px 4px 0px;
 	display: table-cell;
 	position: relative;
+	padding-bottom: 53px;
 }
-
-.vp-right-panel .vp-option-form {
-	background-color: #fcfcfc;
-}
-
 
 /* Menus
  * ==================================================== */
@@ -122,9 +112,6 @@
 .vp-menus ul.vp-menu-level-1 {
 	position: relative;
 	border-top: 1px solid #dddddd;
-	border-top: 1px solid rgba(0,0,0,0.15);
-	border-bottom: 1px solid #ffffff;
-	border-bottom: 1px solid rgba(255,255,255,1);
 }
 
 .vp-menus ul.vp-menu-level-1 > li {
@@ -134,9 +121,6 @@
 
 .vp-menus ul.vp-menu-level-1 > li > a {
 	border-bottom: 1px solid #dddddd;
-	border-bottom: 1px solid rgba(0,0,0,0.15);
-	border-top: 1px solid #ffffff;
-	border-top: 1px solid rgba(255,255,255,1);
 }
 
 .vp-menus ul.vp-menu-level-1 > li > a.vp-menu-dropdown:after {
@@ -169,26 +153,14 @@
 	right: 0px;
 }
 
-.vp-menus li > a > i,
-.vp-menus li > a > span {
-	opacity: 0.7;
-}
-
-.vp-menus li.vp-current > a > i,
-.vp-menus li.vp-current > a > span {
-	opacity: 1;
-}
-
 .vp-menus li.vp-current > a.vp-menu-goto {
-	background-color: #fcfcfc;
-	border-right: 1px solid #fcfcfc;
+	background-color: #ffffff;
+	border-right: 1px solid #ffffff;
 }
 
 .vp-menus ul.vp-menu-level-2 {
-	background-color: #e9e9e9;
-	background-color: rgba(0,0,0,0.05);
-	border-bottom: 1px solid #e9e9e9;
-	border-bottom: 1px solid rgba(0,0,0,0.05);
+	background-color: #f3f3f3;
+	border-bottom: 1px solid #dddddd;
 	margin: 0px;
 	display: none;
 }
@@ -211,9 +183,9 @@
 }
 
 .vp-menus a {
-	color: #444444;
+	color: #666666;
 	display: table;
-	font-size: 13px;
+	font-size: 12px;
 	line-height: 20px;
 	position: relative;
 	text-decoration: none;
@@ -241,7 +213,7 @@
 
 .vp-menus a .validation-notif.vp-error {
 	position: absolute;
-	margin: -8px 25px 0px 0px;
+	margin: -7px 30px 0px 0px;
 	top: 50%;
 	right: 0px;
 }
@@ -250,13 +222,15 @@
 /* Submit
  * ==================================================== */
 
-.vp-submit {
-	background-color: #fcfcfc;
+.vp-submit.top {
 	border-bottom: 1px solid #dddddd;
-	border-bottom: 1px solid rgba(0,0,0,0.15);
-	border-radius: 0px 4px 0px 0px;
-	margin-top: 1px;
-	top: 0px;
+}
+
+.vp-submit.bottom {
+	border-top: 1px solid #dddddd;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
 }
 
 .vp-submit .inner {
@@ -268,11 +242,6 @@
 	background-color: #6cc4e8;
 	border-color: #6cc4e8;
 	float: right;
-	letter-spacing: 1px;
-	height: 40px;
-	margin-left: 20px;
-	text-transform: uppercase;
-	padding: 12px 20px;
 	color: #ffffff;
 }
 
@@ -298,11 +267,11 @@
 }
 
 .vp-submit .save-loader {
-	padding: 10px 20px 10px 20px;
+	padding: 5px 20px 5px 20px;
 }
 
 .vp-submit .save-loader img {
-	margin-right: 10px;
+	margin-right: 12px;
 	vertical-align: middle;
 }
 
@@ -310,11 +279,12 @@
 	background-image: url('../img/vp-sprite.png');
 	background-repeat: no-repeat;
 	background-position: 9999px 9999px;
-	padding: 10px 20px 10px 50px;
+	padding: 5px 20px 5px 45px;
+	min-height: 20px;
 }
 
-.vp-submit .save-status.success { background-position: 0px -200px; }
-.vp-submit .save-status.failed { background-position: 0px -240px; }
+.vp-submit .save-status.success { background-position: 0px -180px; }
+.vp-submit .save-status.failed { background-position: 0px -210px; }
 
 
 /* Panel
@@ -326,13 +296,15 @@
 }
 
 .vp-section {
+	background-color: #ffffff;
+	margin-top: -1px;
 	padding: 20px 0px;
 	position: relative;
 	width: 100%;
 }
 
 .vp-section > h3 {
-	background-color: #fcfcfc;
+	background-color: #ffffff;
 	color: #6cc4e8;
 	font-size: 12px;
 	line-height: 1em;
@@ -355,7 +327,7 @@
 	position: absolute;
 	right: 0px;
 	margin: -10px 20px 0px 0px;
-	background-color: #fcfcfc;
+	background-color: #ffffff;
 	padding: 0px 10px;
 	z-index: 1;
 }
@@ -367,7 +339,6 @@
 .vp-section .vp-controls {
 	border-radius: 4px;
 	border: 1px solid #eeeeee;
-	border: 1px solid rgba(0,0,0,0.1);
 	padding-top: 10px;
 	position: relative;
 	width: 100%;
@@ -375,6 +346,7 @@
 
 .vp-field {
 	background-color: transparent;
+	border-bottom: 1px solid #eeeeee;
 	display: table;
 	table-layout: fixed;
 	width: 100%;
@@ -462,7 +434,7 @@
 .vp-field.vp-textarea .field textarea,
 .vp-field.vp-color .field input[type="text"] {
 	margin: 0px;
-	padding: 6px 12px;
+	padding: 6px 10px;
 	border-radius: 4px;
 	border: 1px solid #cccccc;
 	background-color: #ffffff;
@@ -765,6 +737,7 @@
 	height: 1em;
 	width: 1em;
 	position: absolute;
+	overflow: hidden;
 	margin: 1px 0px 0px 1px;
 }
 
@@ -772,7 +745,7 @@
 	display: block;
 	height: 100%;
 	width: 100%;
-	background-image: linear-gradient(180deg, rgba(255,255,255,0.4) 0%,rgba(255,255,255,0) 100%);
+	background-image: linear-gradient(180deg, rgba(255,255,255,0.2) 0%,rgba(0,0,0,0.05) 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4dffffff', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
 }
 
@@ -785,21 +758,15 @@
 	width: 140px;
 }
 
+
+/* Copyright
+ * ==================================================== */
+
 .vp-copyright {
-	border-top: 1px solid #dddddd;
 	border-radius: 0px 0px 4px 0px;
 	color: #888888;
 	font-size: 11px;
 	line-height: 1.4em;
-	text-align: right;
-	bottom: 0px;
-	right: 0px;
-	width: 100%;
-}
-
-.vp-copyright p {
-	padding: 15px 20px;
-	margin: 0px;
 }
 
 .vp-copyright a {

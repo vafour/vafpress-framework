@@ -248,7 +248,7 @@
 			{
 				// notify the menu which has the href
 				var $notif = $(menuNotifHTML),
-				    $anchor = $('[href="' + panel.name +'"]'),
+				    $anchor = $('[href="#' + panel.name +'"]'),
 				    $grandparent = $anchor.parent('li').parent('ul');
 				$notif.appendTo($anchor);
 				if ($grandparent.hasClass('vp-menu-level-2'))
