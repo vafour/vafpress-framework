@@ -34,6 +34,7 @@ require_once VP_DIR . '/autoload.php';
 // Include Data Source  //
 //////////////////////////
 require_once VP_DIR . '/data/sources.php';
+require_once VP_DIR . '/data/custom.php';
 
 
 ////////////////////////
