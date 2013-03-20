@@ -295,6 +295,21 @@
 	padding: 20px;
 }
 
+.vp-panel h2 {
+	background-color: #f9f9f9;
+	margin: 10px 0 40px;
+	padding: 0;
+	height: 10px;
+}
+
+.vp-panel h2 span {
+	background-color: #ffffff;
+	line-height: 1em;
+	padding: 0 15px;
+	position: relative;
+	top: -10px;
+}
+
 .vp-section {
 	background-color: #ffffff;
 	margin-top: -1px;
@@ -308,7 +323,7 @@
 	color: #6cc4e8;
 	font-size: 12px;
 	line-height: 1em;
-	padding: 5px 10px;
+	padding: 4px 10px;
 	margin: 10px 0px 0px 20px;
 	position: absolute;
 	top: 0px;
