@@ -1,10 +1,8 @@
 <?php
 
 /**
- * Since converter will be called via CLI that means it will be out of Wordpress Environment,
- * but 
+ * Convert XML configuration to PHP array.
  */
-
 class VP_Converter
 {
 

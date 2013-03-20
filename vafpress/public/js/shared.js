@@ -291,7 +291,6 @@ vp.custom_check_radio_event = function(parent, selector){
 		e.preventDefault();
 		$control = jQuery(this).find('input');
 		var type = $control.attr('type');
-		console.log(type);
 		if(type == 'radio')
 		{
 			jQuery(this).parents('.input').find('input').each(function(i){
@@ -675,43 +674,29 @@ if (jQuery.fn.colorpicker)
 	jQuery('.vp-js-colorpicker').each(function() {
 		var colorpicker  = this,
 		    options = jQuery(this).getDatas();
+
 		options = vp.parseOpt(options.opt);
+
 		jQuery(colorpicker).colorpicker({
 			format: options.format
+		}).on('changeColor', function(ev){
+			var color;
+			if(options.format == 'hex')
+			{
+				color = ev.color.toHex();
+			}
+			else if(options.format == 'rgba')
+			{
+				color = ev.color.toRGB();
+				color = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',' + color.a + ')';
+			}
+			else if(options.format == 'rgb')
+			{
+				color = ev.color.toRGB();
+				color = 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')';
+			}
+			jQuery(colorpicker).prev('label').find('span').css('background-color', color);
 		});
-
-		// jQuery(colorpicker).colorpicker({
-		// 	color: jQuery(colorpicker).attr('value'),
-		// 	onSubmit: function(hsb, hex, rgb, el) {
-		// 		jQuery(el).val(hex);
-		// 		jQuery(el).ColorPickerHide();
-		// 	},
-		// 	onBeforeShow: function() {
-		// 		jQuery(colorpicker).ColorPickerSetColor(this.value);
-		// 	},
-		// 	onShow: function(cp) {
-		// 		jQuery(cp).stop(true, true).fadeIn(500);
-		// 		return false;
-		// 	},
-		// 	onHide: function(cp) {
-		// 		jQuery(cp).stop(true, true).fadeOut(500);
-		// 		return false;
-		// 	},
-		// 	onChange: function(hsb, hex, rgb) {
-		// 		jQuery(colorpicker).prev('label').css('background-color', '#' + hex);
-		// 		jQuery(colorpicker).attr('value', '#' + hex);
-		// 		jQuery(colorpicker).trigger('keypress');
-		// 		jQuery(colorpicker).trigger('keyup');
-		// 	}
-		// }).bind('keyup', function(e) {
-		// 	var val = this.value.trimChar('#');
-		// 	if (this.value != ('#' + val))
-		// 	{
-		// 		jQuery(colorpicker).attr('value', '#' + val);
-		// 	}
-		// 	jQuery(this).ColorPickerSetColor(val);
-		// 	jQuery(this).prev('label').css('background-color', '#' + val);
-		// });
 	});
 }
 
