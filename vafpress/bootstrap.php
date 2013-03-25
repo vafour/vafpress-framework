@@ -1,40 +1,41 @@
 <?php
 
-/**
- * CONSTANTS
- */
-define('VP_VERSION', '2.0');
+//////////////////////////
+// Include Constants    //
+//////////////////////////
+require_once 'constants.php';
 
-define('VP_THEME_DIR'  , get_template_directory());
-define('VP_DIR'        , VP_THEME_DIR . '/vafpress');
-define('VP_CONFIG_DIR' , VP_DIR . '/config');
-define('VP_BUILDER_DIR', VP_DIR . '/builder');
-define('VP_CLASSES_DIR', VP_DIR . '/classes');
-define('VP_VIEWS_DIR'  , VP_DIR . '/views');
-define('VP_IMAGE_DIR'  , VP_DIR . '/public/img');
-define('VP_INCLUDE_DIR', VP_DIR . '/includes');
-
-define('VP_THEME_URL'  , get_template_directory_uri());
-define('VP_URL'        , VP_THEME_URL . '/vafpress');
-define('VP_PUBLIC_URL' , VP_URL . '/public');
-define('VP_IMAGE_URL'  , VP_PUBLIC_URL . '/img');
-define('VP_INCLUDE_URL', VP_URL . '/includes');
-
-// Get the start time and memory for use later
-defined('VP_START_TIME') or define('VP_START_TIME', microtime(true));
-defined('VP_START_MEM')  or define('VP_START_MEM',  memory_get_usage());
 
 //////////////////////////
 // Include Auotoloader  //
 //////////////////////////
 require_once VP_DIR . '/autoload.php';
 
+//////////////////////////
+// Setup FileSystem     //
+//////////////////////////
+$vpfs = VP_FileSystem::instance();
+// App Directories
+$vpfs->add_directories('views'   , VP_APP_VIEWS_DIR);
+$vpfs->add_directories('builder' , VP_APP_BUILDER_DIR);
+$vpfs->add_directories('config'  , VP_APP_CONFIG_DIR);
+$vpfs->add_directories('data'    , VP_APP_DATA_DIR);
+$vpfs->add_directories('includes', VP_APP_INCLUDE_DIR);
+// Core Directories
+$vpfs->add_directories('views'   , VP_CORE_VIEWS_DIR);
+$vpfs->add_directories('builder' , VP_CORE_BUILDER_DIR);
+$vpfs->add_directories('config'  , VP_CORE_CONFIG_DIR);
+$vpfs->add_directories('data'    , VP_CORE_DATA_DIR);
+$vpfs->add_directories('includes', VP_CORE_INCLUDE_DIR);
+
 
 //////////////////////////
 // Include Data Source  //
 //////////////////////////
-require_once VP_DIR . '/data/sources.php';
-require_once VP_DIR . '/data/custom.php';
+foreach (array_merge(glob(VP_APP_DATA_DIR . "/*.php"), glob(VP_CORE_DATA_DIR . "/*.php")) as $datasource)
+{
+	require_once($datasource);
+}
 
 
 ////////////////////////
@@ -53,19 +54,14 @@ load_theme_textdomain('vp_textdomain', $lang_dir);
 /////////////////////////
 // Parsing the option  //
 /////////////////////////
-try {
-	// loading the file, if doesn't exists try to load .sample version
-	$option_path        = VP_BUILDER_DIR . '/option/option.php';
-	$option_path_sample = $option_path . '.sample';
-	if(file_exists($option_path))
-		$options = include($option_path);
-	else
-		$options = include($option_path_sample);
+try{
+	$option_path = VP_FileSystem::instance()->resolve_path('builder', 'option/option');
+	$options     = include($option_path);
 } catch (Exception $e){
 	echo $e->getMessage();
 }
-$parser  = new VP_Option_Parser();
-$set	 = $parser->parse_array_options($options);
+$parser = new VP_Option_Parser();
+$set	= $parser->parse_array_options($options);
 
 ////////////////////////////////////////////////
 // Add Import and Export Option Functionality //
@@ -201,8 +197,11 @@ function vp_deactivate_theme()
 	// send data if it's not vpf theme activated
 	if(!get_option("vpf_active_$new_theme"))
 	{
-		$tracker    = new VP_WP_Tracker();
-		$tracker->track($stylesheet);
+		if(!vp_is_local())
+		{
+			$tracker    = new VP_WP_Tracker();
+			$tracker->track($stylesheet);
+		}
     }
 }
 
@@ -214,20 +213,26 @@ function vp_activate_theme()
 	$option_key = 'vpf_active_' . $theme;
 	update_option( $option_key, 1 );
 
-    $tracker = new VP_WP_Tracker();
-    $tracker->track();
+	if(!vp_is_local())
+	{
+    	$tracker = new VP_WP_Tracker();
+    	$tracker->track();
+    }
 }
 
-$local_hosts = array('localhost', '127.0.0.1', '::1');
-
-if(isset($_SERVER['HTTP_HOST']) and !in_array($_SERVER['HTTP_HOST'], $local_hosts))
+function vp_is_local()
 {
-	// register theme deactivation hook
-	add_action('switch_theme', 'vp_deactivate_theme');
-
-	// register theme activation 'hook'
-	add_action('after_switch_theme', 'vp_activate_theme');
+	$local_hosts = array('localhost', '127.0.0.1', '::1');
+	if(isset($_SERVER['HTTP_HOST']) and !in_array($_SERVER['HTTP_HOST'], $local_hosts))
+		return false;
+	return true;
 }
+
+// register theme deactivation hook
+add_action('switch_theme', 'vp_deactivate_theme');
+
+// register theme activation 'hook'
+add_action('after_switch_theme', 'vp_activate_theme');
 
 
 //////////////////////

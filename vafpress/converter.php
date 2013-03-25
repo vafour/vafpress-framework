@@ -12,34 +12,42 @@ class VP_Converter
 
 	public function to_array()
 	{
-		// Loading the file, if doesn't exists try to load .sample version
-		$config_dir         = 'config';
-		$builder_dir        = 'builder';
-		$option_path        = $builder_dir . '/option';
 
-		$source_path        = $option_path . '/option.xml';
-		$source_path_sample = $source_path . '.sample';
-		$dest_path          = $option_path . '/option.php';
-		$dest_path_sample   = $dest_path   . '.sample';
+		$option_xml_path = VP_FileSystem::instance()->resolve_path('builder', 'option/option', 'xml');
+		$option_php_path = dirname($option_xml_path) . '/option.php';
+
+		$options = file_get_contents($option_xml_path);
+
+		$config  = VP_Util_Config::get_instance()->load('option');
+
+		// Loading the file, if doesn't exists try to load .sample version
+		// $config_dir         = 'config';
+		// $builder_dir        = 'builder';
+		// $option_path        = $builder_dir . '/option';
+
+		// $source_path        = $option_path . '/option.xml';
+		// $source_path_sample = $source_path . '.sample';
+		// $dest_path          = $option_path . '/option.php';
+		// $dest_path_sample   = $dest_path   . '.sample';
 
 		// Set textdomain
-		$configs = require $config_dir . '/option.php';
+		// $configs = require $config_dir . '/option.php';
 		if( isset($configs['text_domain']) )
 		{
 			$this->text_domain = $configs['text_domain'];
 		}
 
-		if(file_exists($source_path))
-		{
-			$spath = $source_path;
-			$dpath = $dest_path;
-		}
-		else
-		{
-			$spath = $source_path_sample;
-			$dpath = $dest_path_sample;	
-		}
-		$options = file_get_contents($spath);
+		// if(file_exists($source_path))
+		// {
+		// 	$spath = $source_path;
+		// 	$dpath = $dest_path;
+		// }
+		// else
+		// {
+		// 	$spath = $source_path_sample;
+		// 	$dpath = $dest_path_sample;	
+		// }
+		// $options = file_get_contents($spath);
 
 		// Open root array
 		$opt_arr  = "<?php\n";
@@ -139,8 +147,8 @@ class VP_Converter
 
 		$result = array(
 			'opt_arr' => $opt_arr,
-			'source'  => $spath,
-			'dest'    => $dpath
+			'source'  => $option_xml_path,
+			'dest'    => $option_php_path
 		);
 
 		return $result;

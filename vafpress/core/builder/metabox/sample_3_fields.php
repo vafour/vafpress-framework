@@ -157,6 +157,7 @@ return array(
 			'label' => __('ColorPicker', 'vp_textdomain'),
 			'description' => __('ColorPicker using eyecon colorpicker library', 'vp_textdomain'),
 			'default' => '#98ed28',
+			'format' => 'rgb'
 		),
 		array(
 			'type' => 'date',

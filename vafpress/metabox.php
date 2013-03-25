@@ -1,22 +1,27 @@
 <?php
 
-// include original WPAlchemy class to be extended later on.
-include_once VP_INCLUDE_DIR . '/wpalchemy/MetaBox.php';
+/////////////////////////////////////////
+// Include original WPAlchemy Class    //
+/////////////////////////////////////////
+$wpalchemy_path = VP_FileSystem::instance()->resolve_path('includes', 'wpalchemy/MetaBox');
+include_once $wpalchemy_path;
 
 /**
  * global variable to store and expose all metaboxes objects
  */
 global $vp_metaboxes;
 
-// load all files from metaboxes
+/////////////////////////////////////////
+// Load all Metabox definition files   //
+/////////////////////////////////////////
 $metas = array();
-foreach (glob(VP_BUILDER_DIR . "/metabox/*.php") as $filename)
+foreach (glob(VP_CORE_BUILDER_DIR . "/metabox/*.php") as $filename)
 {
 	$metas[] = include($filename);
 }
 if(empty($metas))
 {
-	foreach (glob(VP_BUILDER_DIR . "/metabox/*.php.sample") as $filename)
+	foreach (glob(VP_CORE_BUILDER_DIR . "/metabox/*.php.sample") as $filename)
 	{
 		$metas[] = include($filename);
 	}
@@ -48,13 +53,13 @@ foreach ($metas as $meta)
 
 
 /**
- * @todo error checking
- * 
- * easy way to get metabox values using dot notation
+ * Easy way to get metabox values using dot notation
  * example:
+ * 
  * vp_metabox('meta_name.field_name')
  * vp_metabox('meta_name.group_name')
  * vp_metabox('meta_name.group_name.0.field_name')
+ * 
  */
 function vp_metabox($key)
 {

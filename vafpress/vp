@@ -1,6 +1,17 @@
 <?php
 
+	require_once 'constants.php';
+	require_once 'autoload.php';
 	require_once 'converter.php';
+
+	// Setup FileSystem
+	$vpfs = VP_FileSystem::instance();
+	// App Directories
+	$vpfs->add_directories('builder' , VP_APP_BUILDER_DIR);
+	$vpfs->add_directories('config'  , VP_APP_CONFIG_DIR);
+	// Core Directories
+	$vpfs->add_directories('builder' , VP_CORE_BUILDER_DIR);
+	$vpfs->add_directories('config'  , VP_CORE_CONFIG_DIR);
 
 	$args    = $_SERVER['argv'];
 	$command = $args[1];

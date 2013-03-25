@@ -79,7 +79,7 @@ function vp_get_roles()
 
 function vp_get_gwf_family()
 {
-	$fonts = file_get_contents(VP_DIR . '/data/gwf.json');
+	$fonts = file_get_contents(dirname(__FILE__) . '/gwf.json');
 	$fonts = json_decode($fonts);
 
 	$fonts = array_keys(get_object_vars($fonts));
@@ -97,7 +97,7 @@ function vp_get_gwf_weight($face)
 	if(empty($face))
 		return array();
 	
-	$fonts   = file_get_contents(VP_DIR . '/data/gwf.json');
+	$fonts   = file_get_contents(dirname(__FILE__) . '/gwf.json');
 	$fonts   = json_decode($fonts);
 	$weights = $fonts->{$face}->weights;
 
@@ -114,7 +114,7 @@ function vp_get_gwf_style($face)
 	if(empty($face))
 		return array();
 	
-	$fonts   = file_get_contents(VP_DIR . '/data/gwf.json');
+	$fonts   = file_get_contents(dirname(__FILE__) . '/gwf.json');
 	$fonts   = json_decode($fonts);
 	$styles = $fonts->{$face}->styles;
 

@@ -12,16 +12,10 @@ class VP_View
 	 */
 	private static $_instance;
 
-	private $_view_dir;
-
-	private $_view_ext;
-
 	private $_views;
 
 	private function __construct()
 	{
-		$this->_view_dir = VP_VIEWS_DIR . '/';
-		$this->_view_ext = '.php';
 		$this->_views    = array();
 	}
 
@@ -46,13 +40,20 @@ class VP_View
 		{
 			throw new Exception("Sorry 'field_view_file' variable name can't be used.");
 		}
+
+		$view_file = VP_FileSystem::instance()->resolve_path('views', $field_view_file);
+
+		if($view_file === false)
+		{
+			throw new Exception("View file not found.");
+		}
+	
 		if (array_key_exists($field_view_file, $this->_views))
 		{
 			$view = $this->_views[$field_view_file];
 		}
 		else
 		{
-			$view_file = $this->_view_dir . $field_view_file . $this->_view_ext;
 			$view = file_get_contents($view_file);
 			$this->_views[$field_view_file] = $view;
 		}
@@ -62,7 +63,7 @@ class VP_View
 		ob_start();
 		eval($view);
 		
-		return ob_get_clean();
+		return ob_get_clean();		
 	}
 
 }
