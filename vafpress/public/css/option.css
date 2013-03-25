@@ -206,8 +206,8 @@
 	background-position: top left;
 }
 
-.vp-menus a i + span {
-	padding-left: 10px;
+.vp-menus ul a i + span {
+	padding-left: 10px !important;
 }
 
 .vp-menus a span {
