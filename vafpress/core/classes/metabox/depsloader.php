@@ -38,8 +38,8 @@ class VP_Metabox_Depsloader
 		$style_always  = VP_Util_Config::get_instance()->load('dependencies', 'styles.always');
 		$rules         = VP_Util_Config::get_instance()->load('dependencies', 'rules');
 
-		reset($metaboxes);
-		foreach ($metaboxes as $key => $metabox)
+		if(is_array($metaboxes)) reset($metaboxes);
+		if(is_array($metaboxes)) foreach ($metaboxes as $key => $metabox)
 		{
 			if($metabox->can_output())
 			{

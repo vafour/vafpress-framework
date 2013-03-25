@@ -16,19 +16,22 @@ class VP_FileSystem
 		return self::$_instance;
 	}
 
-	public function get_require($key, $name)
+	public function get_first_non_empty_dir($key, $name = null)
 	{
+		if(!isset($this->_lookup_dirs[$key]))
+			return false;
 
-	}
-
-	public function get_include($key, $name)
-	{
-
-	}
-
-	public function get_content($key, $name)
-	{
-
+		foreach ($this->_lookup_dirs[$key] as $dir)
+		{
+			if(!is_null($name))
+			{
+				$dir = $dir . DIRECTORY_SEPARATOR . $name;
+			}
+			if($this->dir_contains_children($dir, 'php'))
+			{
+				return $dir;
+			}
+		}
 	}
 
 	public function resolve_path($key, $name, $ext = 'php')
@@ -53,6 +56,24 @@ class VP_FileSystem
 	{
 		$path = trim($path, '\\/');
 		return $path . '.' . $ext;
+	}
+
+	function dir_contains_children($dir, $ext = null)
+	{
+		$result = false;
+		if($dh = opendir($dir))
+		{
+			while(!$result && ($file = readdir($dh)) !== false)
+			{
+				$result = $file !== "." && $file !== "..";
+				if(!is_null($ext))
+				{
+					$result = pathinfo($file, PATHINFO_EXTENSION) === $ext;
+				}
+			}
+			closedir($dh);
+		}
+		return $result;
 	}
 
 	/**

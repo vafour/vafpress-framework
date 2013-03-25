@@ -15,7 +15,8 @@ global $vp_metaboxes;
 // Load all Metabox definition files   //
 /////////////////////////////////////////
 $metas = array();
-foreach (glob(VP_CORE_BUILDER_DIR . "/metabox/*.php") as $filename)
+$dir   = VP_FileSystem::instance()->get_first_non_empty_dir('builder', 'metabox');
+foreach (glob($dir . DIRECTORY_SEPARATOR . "*.php") as $filename)
 {
 	$metas[] = include($filename);
 }

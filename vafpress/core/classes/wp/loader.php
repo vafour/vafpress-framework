@@ -115,17 +115,17 @@ class VP_WP_Loader
 			$this->unit_register($dep);
 		}
 
-		foreach ($styles as $style) 
+		foreach ($styles as $name => $style) 
 		{
-			if(in_array($style['name'], $deps['styles']) and ! wp_style_is($style['name'], 'registered'))
+			if(in_array($name, $deps['styles']) and ! wp_style_is($name, 'registered'))
 			{
-				wp_register_style($style['name'], $style['path'], $style['deps']);
+				wp_register_style($name, $style['path'], $style['deps']);
 			}
 		}
 
 		// register and add shared-js at the end of dependencies
-		$this->unit_register('shared-js');
-		$deps['scripts'][] = 'shared-js';
+		$this->unit_register('shared');
+		$deps['scripts'][] = 'shared';
 
 		// register, enqueue and localized scripts
 		wp_register_script($deps['main_js']['name'], $deps['main_js']['path'], $deps['scripts'], '', true);

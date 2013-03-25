@@ -15,7 +15,7 @@ return array(
 	 * Scripts.
 	 */
 	'scripts' => array(
-		'always' => array('jquery', 'prefixfree-js', 'scrollspy-js', 'tipsy-js', 'jquery-typing'),
+		'always' => array('jquery', 'prefixfree', 'scrollspy', 'tipsy', 'jquery-typing'),
 		'paths' => array(
 			'jquery' => array(
 				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery-1.8.3.min.js',
@@ -27,7 +27,7 @@ return array(
 				'deps'     => array('jquery'),
 				'ver'      => false
 			),
-			'tipsy-js' => array(
+			'tipsy' => array(
 				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery.tipsy.js',
 				'deps'     => array('jquery'),
 				'ver'      => '1.0.0a'
@@ -37,12 +37,12 @@ return array(
 				'deps'     => array('jquery'),
 				'ver'      => '0.9.11'
 			),
-			'prefixfree-js' => array(
+			'prefixfree' => array(
 				'path'     => VP_PUBLIC_URL . '/js/vendor/prefixfree.min.js',
 				'deps'     => array(),
 				'ver'      => '1.0.7'
 			),
-			'scrollspy-js' => array(
+			'scrollspy' => array(
 				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery-scrollspy.js',
 				'deps'     => array('jquery'),
 				'ver'      => false
@@ -82,7 +82,7 @@ return array(
 				'deps'     => array(),
 				'ver'      => '1.0.0'
 			),
-			'shared-js' => array(
+			'shared' => array(
 				'path'     => VP_PUBLIC_URL . '/js/shared.js',
 				'deps'     => array(),
 				'ver'      => '1.1',
@@ -101,33 +101,27 @@ return array(
 	'styles' => array(
 		'always' => array('tipsy-css', 'font-awesome', 'font-awesome-ie7'),
 		'paths' => array(
-			array(
-				'name' => 'bootstrap-colorpicker',
+			'bootstrap-colorpicker' => array(
 				'path' => VP_PUBLIC_URL . '/css/vendor/bootstrap-colorpicker.css',
 				'deps' => array()
 			),
-			array(
-				'name' => 'tipsy-css',
+			'tipsy-css' => array(
 				'path' => VP_PUBLIC_URL . '/css/vendor/tipsy.css',
 				'deps' => array()
 			),
-			array(
-				'name' => 'chosen-css',
+			'chosen-css' => array(
 				'path' => VP_PUBLIC_URL . '/css/vendor/chosen.css',
 				'deps' => array()
 			),
-			array(
-				'name' => 'jqui',
+			'jqui' => array(
 				'path' => VP_PUBLIC_URL . '/css/vendor/jqueryui/themes/' . $jqui_theme . '/jquery-ui-1.9.2.custom.min.css',
 				'deps' => array()
 			),
-			array(
-				'name' => 'font-awesome-ie7',
+			'font-awesome-ie7' => array(
 				'path' => VP_PUBLIC_URL . '/css/vendor/font-awesome-ie7.min.css',
 				'deps' => array()
 			),
-			array(
-				'name' => 'font-awesome',
+			'font-awesome' => array(
 				'path' => VP_PUBLIC_URL . '/css/vendor/font-awesome.min.css',
 				'deps' => array()
 			),
