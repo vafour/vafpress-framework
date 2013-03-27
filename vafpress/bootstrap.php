@@ -50,6 +50,10 @@ $lang_dir = VP_THEME_DIR . '/lang';
 load_theme_textdomain('vp_textdomain', $lang_dir);
 
 $set = new VP_Option_Control_Set();
+$opt = array();
+
+// get options for db
+vp_init_options_db();
 
 // if is ajax wrapper request, don't parse option page
 if( !(vp_is_ajax() and isset($_POST['action']) and $_POST['action'] === 'vp_ajax_wrapper') )
@@ -61,13 +65,17 @@ add_action('admin_menu', 'vafpress_theme_menu');
 
 function vp_setup()
 {
-	global $set;
+	global $set, $opt;
 	$screen = get_current_screen();
 
+	// if we are at option page
 	if(vp_is_option_page($screen->id))
 	{
+		// parse options set object
 		vp_init_option_set();
+		// init options with $set defaults merging
 		vp_init_options();
+		// load scripts and styles
 		vp_load_scripts_and_styles();
 	}
 }
@@ -116,16 +124,13 @@ function vp_init_option_set()
 require_once 'metabox.php';
 
 
-//////////////////////////////////////////
-// Load Options to be used in the Theme //
-//////////////////////////////////////////
+////////////////////////////////////////////
+// Load Options to be used in option page //
+////////////////////////////////////////////
 /**
  * @todo load default values, and then check on db, if not available then save to the db
  * @todo load option from db and expose them to be used on theme
  */
-global $opt;
-$opt = array();
-
 function vp_init_options()
 {
 	global $config;
