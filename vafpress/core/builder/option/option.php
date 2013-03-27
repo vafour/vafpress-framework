@@ -633,7 +633,7 @@ return array(
 							'type' => 'date',
 							'name' => 'dt_3',
 							'label' => __('Ranged Date Picker', 'vp_textdomain'),
-							'description' => __('The range can be exact date or formatted string to define the offset from today, for example "+1D" will be parsed as tommorow date, or "+1D +1W", please refer to [jQueryUI Datepicker Docs](http://jqueryui.com/datepicker/#min-max)', 'vp_textdomain'),
+							'description' => __('The range can be exact date or formatted string to define the offset from today, for example &quot;+1D&quot; will be parsed as tommorow date, or &quot;+1D +1W&quot;, please refer to [jQueryUI Datepicker Docs](http://jqueryui.com/datepicker/#min-max)', 'vp_textdomain'),
 							'min_date' => '1-1-2000',
 							'max_date' => 'today',
 							'format' => 'yy-mm-dd',
@@ -868,7 +868,7 @@ return array(
 					'name' => 'section_custom_font',
 					'dependency' => array(
 						'field' => 'use_custom_font',
-						'value' => 'vp_dep_boolean',
+						'function' => 'vp_dep_boolean',
 					),
 					'fields' => array(
 						array(
@@ -937,7 +937,7 @@ return array(
 							'label' => __('Custom Logo', 'vp_textdomain'),
 							'dependency' => array(
 								'field' => 'use_custom_logo',
-								'value' => 'vp_dep_boolean',
+								'function' => 'vp_dep_boolean',
 							),
 							'description' => __('Upload or choose custom logo', 'vp_textdomain'),
 						),

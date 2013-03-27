@@ -124,7 +124,7 @@ abstract class VP_Control_Field implements iFactory
 
 		if(isset($arr['dependency']))
 		{
-			$func  = $arr['dependency']['value'];
+			$func  = $arr['dependency']['function'];
 			$field = $arr['dependency']['field'];
 			$this->set_dependency($func . '|' . $field);
 		}

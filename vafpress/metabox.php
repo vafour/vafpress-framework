@@ -18,14 +18,7 @@ $metas = array();
 $dir   = VP_FileSystem::instance()->get_first_non_empty_dir('builder', 'metabox');
 foreach (glob($dir . DIRECTORY_SEPARATOR . "*.php") as $filename)
 {
-	$metas[] = include($filename);
-}
-if(empty($metas))
-{
-	foreach (glob(VP_CORE_BUILDER_DIR . "/metabox/*.php.sample") as $filename)
-	{
-		$metas[] = include($filename);
-	}
+	$metas[] = include_once($filename);
 }
 
 // if there is metaboxes

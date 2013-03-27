@@ -19,8 +19,8 @@ return array(
 			'name'      => 'filtering_group',
 			'title'     => __('Filtering', 'vp_textdomain'),
 			'dependency' => array(
-				'field' => 'toggle_filtering',
-				'value' => 'vp_dep_boolean',
+				'field'    => 'toggle_filtering',
+				'function' => 'vp_dep_boolean',
 			),
 			'fields'    => array(
 				array(
@@ -46,8 +46,8 @@ return array(
 					'description' => __('Keyword to filter.', 'vp_textdomain'),
 					'default' => 'abcdefg',
 					'dependency' => array(
-						'field' => 'filter_type',
-						'value' => 'vp_dep_is_keyword',
+						'field'    => 'filter_type',
+						'function' => 'vp_dep_is_keyword',
 					),
 				),
 				array(
@@ -64,8 +64,8 @@ return array(
 						),
 					),
 					'dependency' => array(
-						'field' => 'filter_type',
-						'value' => 'vp_dep_is_tags',
+						'field'    => 'filter_type',
+						'function' => 'vp_dep_is_tags',
 					),
 				),
 			),

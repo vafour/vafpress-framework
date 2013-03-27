@@ -10,42 +10,52 @@ return array(
 	 * Will always load option values from option.php/xml default values, not DB,
 	 * so you can play with the option.php/xml freely.
 	 */
-	'dev_mode'          => true,
+	'dev_mode'           => true,
 
 	/**
 	 * Whether to use import and export menu
 	 */
-	'impexp'            => true,
+	'impexp'             => true,
 
 	/**
 	 * Automatically assign 'name' to each grouping class
 	 */
-	'auto_group_naming' => true,
+	'auto_group_naming'  => true,
 
 	/**
 	 * Option name in DB
 	 */
-	'option_key'        => 'vp_option',
+	'option_key'         => 'vp_option',
 
 	/**
 	 * Minimum Capabilities to access the option page
 	 */
-	'role'              => 'edit_theme_options',
+	'role'               => 'edit_theme_options',
+
+	/**
+	 * Menu label
+	 */
+	'browser_page_title' => 'Vafpress Option Panel',
+
+	/**
+	 * Menu label
+	 */
+	'menu_page_label'    => 'Vafpress Menu',
 
 	/**
 	 * Slug of option page menu under appereance
 	 */
-	'menu_page_slug'    => 'vp_theme_option',
+	'menu_page_slug'     => 'vp_theme_option',
 
 	/**
 	 * Whether to use fixed layout or fluid layout for Option Panel
 	 */
-	'fixed_layout'      => true,
+	'fixed_layout'       => true,
 
 	/**
 	 * 
 	 */
-	'text_domain'       => 'vp_textdomain'
+	'text_domain'        => 'vp_textdomain'
 
 );
 

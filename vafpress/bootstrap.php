@@ -37,7 +37,6 @@ foreach (array_merge(glob(VP_APP_DATA_DIR . "/*.php"), glob(VP_CORE_DATA_DIR . "
 	require_once($datasource);
 }
 
-
 ////////////////////////
 // Load Theme Config  //
 ////////////////////////
@@ -50,34 +49,66 @@ $config = VP_Util_Config::get_instance()->load('option');
 $lang_dir = VP_THEME_DIR . '/lang';
 load_theme_textdomain('vp_textdomain', $lang_dir);
 
+$set = new VP_Option_Control_Set();
 
-/////////////////////////
-// Parsing the option  //
-/////////////////////////
-try{
-	$option_path = VP_FileSystem::instance()->resolve_path('builder', 'option/option');
-	$options     = include($option_path);
-} catch (Exception $e){
-	echo $e->getMessage();
-}
-$parser = new VP_Option_Parser();
-$set	= $parser->parse_array_options($options);
-
-////////////////////////////////////////////////
-// Add Import and Export Option Functionality //
-////////////////////////////////////////////////
-if(VP_Util_Config::get_instance()->load('option', 'impexp'))
+// if is ajax wrapper request, don't parse option page
+if( !(vp_is_ajax() and isset($_POST['action']) and $_POST['action'] === 'vp_ajax_wrapper') )
 {
-	$ie_menu    = new VP_Option_Control_Group_Menu();
-	$ie_field   = new VP_Option_Control_Field_ImpExp();
-
-	$ie_menu->set_title(__('Import and Export', 'vp_textdomain'));
-	$ie_menu->set_name('impexp');
-	$ie_menu->set_icon('font-awesome:icon-wrench');
-	$ie_menu->add_control($ie_field);
-
-	$set->add_menu($ie_menu);
+	add_action('admin_enqueue_scripts', 'vp_setup');
 }
+add_action('admin_menu', 'vafpress_theme_menu');
+
+
+function vp_setup()
+{
+	global $set;
+	$screen = get_current_screen();
+
+	if(vp_is_option_page($screen->id))
+	{
+		vp_init_option_set();
+		vp_init_options();
+		vp_load_scripts_and_styles();
+	}
+}
+
+function vp_is_option_page($hook_suffix)
+{
+	$menu_page_slug = VP_Util_Config::get_instance()->load('option', 'menu_page_slug');
+	if( $hook_suffix == ('appearance_page_' . $menu_page_slug) )
+		return true;
+	return false;
+}
+
+function vp_init_option_set()
+{
+	global $set;
+
+	// Parse the option
+	try{
+		$option_path = VP_FileSystem::instance()->resolve_path('builder', 'option/option');
+		$options     = include($option_path);
+	} catch (Exception $e){
+		echo $e->getMessage();
+	}
+	$parser = new VP_Option_Parser();
+	$set	= $parser->parse_array_options($options);
+
+	// Add Import and Export Option Functionality
+	if(VP_Util_Config::get_instance()->load('option', 'impexp'))
+	{
+		$ie_menu    = new VP_Option_Control_Group_Menu();
+		$ie_field   = new VP_Option_Control_Field_ImpExp();
+
+		$ie_menu->set_title(__('Import and Export', 'vp_textdomain'));
+		$ie_menu->set_name('impexp');
+		$ie_menu->set_icon('font-awesome:icon-wrench');
+		$ie_menu->add_control($ie_field);
+
+		$set->add_menu($ie_menu);
+	}
+}
+
 
 ////////////////////
 // Load Metaboxes //
@@ -93,34 +124,53 @@ require_once 'metabox.php';
  * @todo load option from db and expose them to be used on theme
  */
 global $opt;
+$opt = array();
 
-// try load option from DB
-$db_options = get_option($config['option_key']);
-$default    = $set->get_defaults();
-if (!empty($db_options))
+function vp_init_options()
 {
-	// unify, preserve option from DB but appends anything new from default
-	$opt = $db_options;
-	$opt = $opt + $default;
+	global $config;
+	global $set;
+
+	// try load option from DB
+	$db_options = get_option($config['option_key']);
+	$default    = $set->get_defaults();
+	if (!empty($db_options))
+	{
+		// unify, preserve option from DB but appends anything new from default
+		$opt = $db_options;
+		$opt = $opt + $default;
+	}
+	else
+	{
+		$opt = $set->get_defaults();
+		update_option($config['option_key'], $opt);
+	}
+
+	// If dev mode, always use default, no db interaction
+	if($config['dev_mode'])
+		$opt = $set->get_defaults();
+
+	// populate option to fields' values
+	$set->populate_values($opt);
+
+	// process binding
+	$set->process_binding();
+
+	// process dependencies
+	$set->process_dependencies();
 }
-else
+
+function vp_init_options_db()
 {
-	$opt = $set->get_defaults();
-	update_option($config['option_key'], $opt);
+	global $config, $opt;
+
+	// try load option from DB
+	$db_options = get_option($config['option_key']);
+	if (!empty($db_options))
+	{
+		$opt = $db_options;
+	}
 }
-
-// If dev mode, always use default, no db interaction
-if($config['dev_mode'])
-	$opt = $set->get_defaults();
-
-// populate option to fields' values
-$set->populate_values($opt);
-
-// process binding
-$set->process_binding();
-
-// process dependencies
-$set->process_dependencies();
 
 // helper function to obtain option value
 function vp_option($key)
@@ -142,11 +192,11 @@ function vafpress_theme_menu()
 	global $set;
 	global $config;
 	add_theme_page(
-		$set->get_title(),         // The title to be displayed in the browser window for this page.
-		$set->get_page(),          // The text to be displayed for this menu item
-		$config['role'],           // Which type of users can see this menu item
-		$config['menu_page_slug'], // The unique ID - that is, the slug - for this menu item
-		'vafpress_theme_display'   // The name of the function to call when rendering the page for this menu
+		$config['browser_page_title'], // The title to be displayed in the browser window for this page.
+		$config['menu_page_label'],    // The text to be displayed for this menu item
+		$config['role'],               // Which type of users can see this menu item
+		$config['menu_page_slug'],     // The unique ID - that is, the slug - for this menu item
+		'vafpress_theme_display'       // The name of the function to call when rendering the page for this menu
 	);
 }
 
@@ -156,12 +206,17 @@ function vafpress_theme_display()
 	global $set;
 	echo $set->render();
 }
-add_action('admin_menu', 'vafpress_theme_menu');
 
-// load scripts and styles dependencies
-$opt_loader      = new VP_WP_Loader();
-$opt_deps_loader = new VP_Option_Depsloader($set);
-$opt_loader->register($opt_deps_loader);
+function vp_load_scripts_and_styles()
+{
+	global $set;
+	global $opt_deps_loader;
+
+	// load scripts and styles dependencies
+	$opt_loader      = new VP_WP_DirectLoader();
+	$opt_deps_loader = new VP_Option_Depsloader($set);
+	$opt_loader->register($opt_deps_loader);
+}
 
 // development mode notice
 add_action('admin_notices', 'vp_opt_notice_devmode');
@@ -173,7 +228,7 @@ function vp_opt_notice_devmode($hook_suffix)
 
 	if(VP_Util_config::get_instance()->load('option', 'dev_mode'))
 	{
-		if($opt_deps_loader->can_output($hook_suffix))
+		if( vp_is_option_page($hook_suffix) )
 		{
 	    	VP_WP_Util::admin_notice(__("[Vafpress Framework] Theme Option Development Mode is Active, value won't be saved into database.", 'vp_textdomain'), false);
 		}
@@ -213,11 +268,28 @@ function vp_activate_theme()
 	$option_key = 'vpf_active_' . $theme;
 	update_option( $option_key, 1 );
 
+	// setup option to db
+	vp_setup_options_to_db();
+
 	if(!vp_is_local())
 	{
     	$tracker = new VP_WP_Tracker();
     	$tracker->track();
     }
+}
+
+function vp_setup_options_to_db()
+{
+	global $set;
+	$option_key = VP_Util_Config::get_instance()->load('option', 'option_key');
+	$db_options = get_option($option_key);
+
+	if(empty($db_options))
+	{
+		vp_init_option_set();
+		vp_init_options();
+		$set->save($option_key);
+	}
 }
 
 function vp_is_local()
@@ -245,6 +317,9 @@ add_action('wp_ajax_vp_ajax_wrapper'      , 'vp_ajax_wrapper');
 
 function vp_ajax_wrapper()
 {
+
+	require_once VP_DIR . '/autoload.php';
+
 	$function = $_POST['func'];
 	$params   = $_POST['params'];
 
@@ -261,6 +336,7 @@ function vp_ajax_wrapper()
 		$result['message'] = $e->getMessage();		
 	}
 
+	// ob_clean();
 	header('Content-type: application/json');
 	echo json_encode($result);
 	die();
@@ -286,6 +362,7 @@ function vp_ajax_save()
 		$result = $set->save($config['option_key']);
 	}
 
+	ob_clean();
 	header('Content-type: application/json');
 	echo json_encode($result);
 	die();
@@ -322,6 +399,7 @@ function vp_ajax_import_option()
 		}
 	}
 
+	ob_clean();
 	header('Content-type: application/json');
 	echo json_encode($result);
 	die();
@@ -343,6 +421,8 @@ function vp_ajax_export_option()
 			'option' => $db_options
 		);
 	}
+
+	ob_clean();
 	header('Content-type: application/json');
 	echo json_encode($result);
 	die();
@@ -364,6 +444,24 @@ function vp_verify_nonce()
 	}
 	return $result;
 }
+
+function vp_is_ajax()
+{
+	if( !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest')
+		return true;
+	return false;
+}
+
+function vp_profile()
+{
+	VP_Util_Profiler::show_memtime();
+}
+// add_action('shutdown', 'vp_profile');
+// 
+
+error_log('Log message', 3, "md5(bootstrap.php).LOG.txt");
+
+
 
 /**
  * EOF

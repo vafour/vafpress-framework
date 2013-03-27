@@ -912,4 +912,4 @@
 
 /* jQuery UI Datepicker bottom div bug */
 
-#ui-datepicker-div { display:none }
+#ui-datepicker-div { display:none; z-index: 4 !important; }

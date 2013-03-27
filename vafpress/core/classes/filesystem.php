@@ -23,6 +23,12 @@ class VP_FileSystem
 
 		foreach ($this->_lookup_dirs[$key] as $dir)
 		{
+			if (is_link($dir))
+			{
+				$dir = readlink($dir);
+			}
+			// $real = realpath($dir);
+			// if($real) $dir = $real;
 			if(!is_null($name))
 			{
 				$dir = $dir . DIRECTORY_SEPARATOR . $name;
@@ -44,6 +50,12 @@ class VP_FileSystem
 		foreach ($this->_lookup_dirs[$key] as $dir)
 		{
 			$file = $dir . DIRECTORY_SEPARATOR . $name;
+			if (is_link($file))
+			{
+				$file = readlink($file);
+			}
+			// $real = realpath($file);
+			// if($real) $file = $real;
 			if(file_exists($file))
 			{
 				return $file;
@@ -61,6 +73,13 @@ class VP_FileSystem
 	function dir_contains_children($dir, $ext = null)
 	{
 		$result = false;
+		if (is_link($dir))
+		{
+			$dir = readlink($dir);
+		}
+		// $real = realpath($dir);
+		// if($real) $dir = $real;
+
 		if($dh = opendir($dir))
 		{
 			while(!$result && ($file = readdir($dh)) !== false)

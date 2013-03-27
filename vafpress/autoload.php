@@ -38,6 +38,8 @@ class VP_AutoLoader
 	 */
 	public static function load($class)
 	{
+		clearstatcache();
+
 		// halt process if not in our namespace
 		if (strpos($class, VP_NAMESPACE) !== 0) {
 			return;
@@ -47,11 +49,24 @@ class VP_AutoLoader
 		foreach (self::$directories as $dir)
 		{
 			$file = $dir . DIRECTORY_SEPARATOR . $class;
-			if(file_exists($file))
+
+			// if( $dir === end(self::$directories) )
+			// {
+			// 	require $file;
+			// 	return true;
+			// }
+
+			if (is_link($file))
 			{
-				// echo '<br/>';
-				// echo $file . ' loaded.';
-				require_once $file;
+				$file = readlink($file);
+			}
+
+			// $real = realpath($file);
+			// if($real) $file = $real;
+
+			if(is_file($file))
+			{
+				require $file;
 				return true;
 			}
 		}

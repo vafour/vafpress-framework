@@ -174,7 +174,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 							if(!empty($field['dependency']))
 							{
 								$dependency = $field['dependency'];
-								$func       = $dependency['value'];
+								$func       = $dependency['function'];
 								$params     = $dependency['field'];
 							}
 						}
@@ -330,7 +330,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 	function _render_group($group)
 	{
 		$name       = $group['name'];
-		$dependency = isset($group['dependency']) ? $group['dependency']['value'] . '|' . $group['dependency']['field'] : '';
+		$dependency = isset($group['dependency']) ? $group['dependency']['function'] . '|' . $group['dependency']['field'] : '';
 
 		$html  = '';
 		$html .= '<div id="wpa_loop-' . $name . '" class="vp-wpa-loop vp-fixed-loop vp-meta-group'
@@ -472,19 +472,28 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		// try to normalize data, since alchemy clean any empty value, it will
 		// throw away empty checkbox value, making unchecked checkbox not being saved
 		$scheme = $this->_get_scheme();
+		// print_r($scheme);
+		// echo 'before';
+		// print_r($new_data);
 		foreach ($scheme as $key => &$value)
 		{
 			if( in_array($key, $groups) and is_array($value) )
 			{
+				WPAlchemy_MetaBox::clean($new_data[$key]);
 				$count = count($new_data[$key]);
 				$data  = $value[0];
 				$value = array();
+				// print_r($new_data[$key]);
 				for ($i=0; $i < $count; $i++)
 				{ 
 					array_push($value, $data);
 				}
+
 			}
 		}
+		// echo 'after';
+		// print_r($new_data);
+		// print_r($scheme);
 
 		// WPAlchemy_MetaBox::clean($new_data);
 

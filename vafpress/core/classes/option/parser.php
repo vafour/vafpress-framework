@@ -105,7 +105,7 @@ class VP_Option_Parser
 
 		if(isset($section['dependency']))
 		{
-			$func  = $section['dependency']['value'];
+			$func  = $section['dependency']['function'];
 			$field = $section['dependency']['field'];
 			$vp_sec->set_dependency($func . '|' . $field);
 		}

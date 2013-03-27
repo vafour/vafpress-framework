@@ -12,42 +12,17 @@ class VP_Converter
 
 	public function to_array()
 	{
-
+		// Get option path and configs
 		$option_xml_path = VP_FileSystem::instance()->resolve_path('builder', 'option/option', 'xml');
 		$option_php_path = dirname($option_xml_path) . '/option.php';
-
-		$options = file_get_contents($option_xml_path);
-
-		$config  = VP_Util_Config::get_instance()->load('option');
-
-		// Loading the file, if doesn't exists try to load .sample version
-		// $config_dir         = 'config';
-		// $builder_dir        = 'builder';
-		// $option_path        = $builder_dir . '/option';
-
-		// $source_path        = $option_path . '/option.xml';
-		// $source_path_sample = $source_path . '.sample';
-		// $dest_path          = $option_path . '/option.php';
-		// $dest_path_sample   = $dest_path   . '.sample';
+		$options         = file_get_contents($option_xml_path);
+		$config          = VP_Util_Config::get_instance()->load('option');
 
 		// Set textdomain
-		// $configs = require $config_dir . '/option.php';
 		if( isset($configs['text_domain']) )
 		{
 			$this->text_domain = $configs['text_domain'];
 		}
-
-		// if(file_exists($source_path))
-		// {
-		// 	$spath = $source_path;
-		// 	$dpath = $dest_path;
-		// }
-		// else
-		// {
-		// 	$spath = $source_path_sample;
-		// 	$dpath = $dest_path_sample;	
-		// }
-		// $options = file_get_contents($spath);
 
 		// Open root array
 		$opt_arr  = "<?php\n";
@@ -61,9 +36,14 @@ class VP_Converter
 			if(!$set->hasChildren())
 			{
 				if(in_array($set->key(), $this->localized))
-					$opt_arr .= "\t'{$set->key()}' => __('{$set->current()}', '{$this->text_domain}'),\n";
+				{
+					$value    = $this->normalize_text($set->current());
+					$opt_arr .= "\t'{$set->key()}' => __('{$value}', '{$this->text_domain}'),\n";
+				}
 				else
+				{
 					$opt_arr .= "\t'{$set->key()}' => '{$set->current()}',\n";
+				}
 			}
 			if($set->key() == 'menus')
 			{
@@ -83,9 +63,14 @@ class VP_Converter
 				if(!$menu->hasChildren() and !in_array($menu->key(), $this->group))
 				{
 					if(in_array($menu->key(), $this->localized))
-						$opt_arr .= "\t\t\t'{$menu->key()}' => __('{$menu->current()}', '{$this->text_domain}'),\n";
+					{
+						$value    = $this->normalize_text($menu->current());
+						$opt_arr .= "\t\t\t'{$menu->key()}' => __('{$value}', '{$this->text_domain}'),\n";
+					}
 					else
+					{
 						$opt_arr .= "\t\t\t'{$menu->key()}' => '{$menu->current()}',\n";
+					}
 				}
 				if($menu->key() == 'menus')
 				{
@@ -109,9 +94,14 @@ class VP_Converter
 						if(!$submenu->hasChildren() and !in_array($submenu->key(), $this->group))
 						{
 							if(in_array($submenu->key(), $this->localized))
-								$opt_arr .= "\t\t\t\t\t'{$submenu->key()}' => __('{$submenu->current()}', '{$this->text_domain}'),\n";
+							{
+								$value    = $this->normalize_text($submenu->current());
+								$opt_arr .= "\t\t\t\t\t'{$submenu->key()}' => __('{$value}', '{$this->text_domain}'),\n";
+							}
 							else
+							{
 								$opt_arr .= "\t\t\t\t\t'{$submenu->key()}' => '{$submenu->current()}',\n";
+							}
 						}
 						if($submenu->key() == 'controls')
 						{
@@ -194,15 +184,20 @@ class VP_Converter
 
 					$opt_arr .= "$tabs\t\t'dependency' => array(\n";
 					$opt_arr .= "$tabs\t\t\t'field' => '{$current['field']}',\n";
-					$opt_arr .= "$tabs\t\t\t'value' => '{$current}',\n";
+					$opt_arr .= "$tabs\t\t\t'function' => '{$current}',\n";
 					$opt_arr .= "$tabs\t\t),\n";
 				}
 				else
 				{
 					if(in_array($section->key(), $this->localized))
-						$opt_arr .= "$tabs\t\t'{$section->key()}' => __('{$section->current()}', '{$this->text_domain}'),\n";
+					{
+						$value    = $this->normalize_text($section->current());
+						$opt_arr .= "$tabs\t\t'{$section->key()}' => __('{$value}', '{$this->text_domain}'),\n";
+					}
 					else
+					{
 						$opt_arr .= "$tabs\t\t'{$section->key()}' => '{$section->current()}',\n";
+					}
 				}
 			}
 			if($section->key() == 'fields')
@@ -244,16 +239,21 @@ class VP_Converter
 
 					$opt_arr .= "$tabs\t\t'dependency' => array(\n";
 					$opt_arr .= "$tabs\t\t\t'field' => '{$current['field']}',\n";
-					$opt_arr .= "$tabs\t\t\t'value' => '{$current}',\n";
+					$opt_arr .= "$tabs\t\t\t'function' => '{$current}',\n";
 					$opt_arr .= "$tabs\t\t),\n";
 
 				}
 				else
 				{
 					if(in_array($field->key(), $this->localized))
-						$opt_arr .= "$tabs\t\t'{$field->key()}' => __('{$field->current()}', '{$this->text_domain}'),\n";
+					{
+						$value    = $this->normalize_text($field->current());
+						$opt_arr .= "$tabs\t\t'{$field->key()}' => __('{$value}', '{$this->text_domain}'),\n";
+					}
 					else
+					{
 						$opt_arr .= "$tabs\t\t'{$field->key()}' => '{$field->current()}',\n";
+					}
 				}
 
 			}
@@ -344,9 +344,14 @@ class VP_Converter
 				foreach ($item as $key => $value)
 				{
 					if(in_array($key, $this->localized))
+					{
+						$value    = $this->normalize_text($value);
 						$opt_arr .= "$tabs\t\t\t\t'$key' => __('$value', '{$this->text_domain}'),\n";
+					}
 					else
+					{
 						$opt_arr .= "$tabs\t\t\t\t'$key' => '$value',\n";
+					}
 				}
 				$opt_arr .= "$tabs\t\t\t),\n";
 			}
@@ -373,6 +378,11 @@ class VP_Converter
 
 		return $opt_arr;
 	
+	}
+
+	private function normalize_text($text)
+	{
+		return htmlentities($text, ENT_QUOTES);
 	}
 
 }
