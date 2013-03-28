@@ -49,7 +49,8 @@ $config = VP_Util_Config::get_instance()->load('option');
 $lang_dir = VP_THEME_DIR . '/lang';
 load_theme_textdomain('vp_textdomain', $lang_dir);
 
-$set = new VP_Option_Control_Set();
+// $set = new VP_Option_Control_Set();
+$set;
 $opt = array();
 
 // get options for db
@@ -322,9 +323,6 @@ add_action('wp_ajax_vp_ajax_wrapper'      , 'vp_ajax_wrapper');
 
 function vp_ajax_wrapper()
 {
-
-	require_once VP_DIR . '/autoload.php';
-
 	$function = $_POST['func'];
 	$params   = $_POST['params'];
 
@@ -341,7 +339,7 @@ function vp_ajax_wrapper()
 		$result['message'] = $e->getMessage();		
 	}
 
-	// ob_clean();
+	ob_clean();
 	header('Content-type: application/json');
 	echo json_encode($result);
 	die();
@@ -352,18 +350,23 @@ function vp_ajax_save()
 	global $set;
 	global $config;
 
-	$option = $_POST['option'];
-	$nonce  = $_POST['nonce'];
-
-	$option = VP_Util_Array::unite( $option, 'name', 'value' );
-	$option = $set->normalize_values($option);
-
-	$set->populate_values($option, true);
-
 	$result = vp_verify_nonce();
 	
 	if($result['status'])
 	{
+		// parse options set object
+		vp_init_option_set();
+		// init options with $set defaults merging
+		vp_init_options();
+
+		$option = $_POST['option'];
+		$nonce  = $_POST['nonce'];
+
+		$option = VP_Util_Array::unite( $option, 'name', 'value' );
+		$option = $set->normalize_values($option);
+
+		$set->populate_values($option, true);
+
 		$result = $set->save($config['option_key']);
 	}
 
@@ -382,6 +385,11 @@ function vp_ajax_import_option()
 	
 	if($result['status'])
 	{
+		// parse options set object
+		vp_init_option_set();
+		// init options with $set defaults merging
+		vp_init_options();
+
 		$option = $_POST['option'];
 		if(empty($option))
 		{
