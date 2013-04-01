@@ -361,7 +361,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 	function _render_repeating_group($group)
 	{
 		$name       = $group['name'];
-		$dependency = isset($group['dependency']) ? $group['dependency']['value'] . '|' . $group['dependency']['field'] : '';
+		$dependency = isset($group['dependency']) ? $group['dependency']['function'] . '|' . $group['dependency']['field'] : '';
 
 		$html  = '';
 		$html .= '<div id="wpa_loop-' . $name
