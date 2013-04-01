@@ -438,3 +438,13 @@
 	box-shadow: 0 5px 10px rgba(0,0,0,0.2);
 	background-clip: padding-box;
 }
+
+.vp-metabox-error {
+	background-image: url('../img/vp-sprite.png');
+	background-repeat: no-repeat;
+	background-position: 0px -240px;
+	margin-right: 5px;
+	display: inline-block;
+	height: 14px;
+	width: 14px;
+}
