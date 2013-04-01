@@ -42,6 +42,16 @@
 	width: 100%;
 }
 
+.vp-metabox .vp-field.vp-error {
+	background-color: #f8efef;
+}
+
+.vp-metabox .validation-msgs {
+	color: #cc0000;
+	font-weight: bold;
+	margin-top: 10px;
+}
+
 .vp-metabox > .vp-wpa-loop {
 	background-color: rgba(0,0,0,0.025);
 	border-radius: 4px;
