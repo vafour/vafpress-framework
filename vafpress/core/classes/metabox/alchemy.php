@@ -30,7 +30,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		$id      =  $this->id;
 		$meta    =  $this->_meta(NULL, TRUE);
 
-		// use include because users may want to use one templete for multiple meta boxes
+		// use include because users may want to use one template for multiple meta boxes
 		if( !is_array($this->template) and file_exists($this->template) )
 		{
 			include $this->template;

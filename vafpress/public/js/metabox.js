@@ -46,12 +46,16 @@
 
 		$('.vp-field').removeClass('vp-error');
 		$('.validation-msg.vp-error').remove();
+		$('.vp-metabox-error').remove();
 
 		errors = vp.fields_validation_loop(validation);
 
 		if(errors > 0)
 		{
 			$('#publishing-action .spinner').hide();
+			$notif = $('<span class="vp-metabox-error vp-js-tipsy" original-title="' + errors + ' error(s) found in metabox"></span>');
+			$notif.tipsy();
+			$notif.insertAfter('#publishing-action .spinner');
 			$('#publish').prop('disabled', false).removeClass('button-primary-disabled');
 			e.preventDefault();
 		}
