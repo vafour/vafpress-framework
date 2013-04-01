@@ -1,5 +1,4 @@
-/**
- * =============================================================
+/* =============================================================
  * JQuery or Other Extension
  * =============================================================
  */
@@ -283,6 +282,91 @@ vp.validateRequired = function(type, val) {
 	// only check if it's empty array, if it's not, it will go true anyway..
 	if (jQuery.isArray(val) && jQuery.isEmptyObject(val)) return false;
 	return (val) ? true : false;
+};
+
+// validation function loop
+vp.fields_validation_loop = function(fields){
+
+	var msgHTML       = '<li class="validation-msg vp-error"></li>',
+		errors        = 0;
+
+	for (var i = 0; i < fields.length; i++)
+	{
+		var field  = fields[i],
+		    $tr    = jQuery(vp.jqid(field.name)),
+		    $msgs  = $tr.children('div.field').children('.validation-msgs').children('ul'),
+		    $input = jQuery('[name="' + field.name + '"]'),
+		    val    = $input.validationVal(),
+		    type   = field.type,
+		    rules  = field.rules.split('|');
+
+		field.nError = 0;
+		for (var j = 0; j < rules.length; j++)
+		{
+			var rule = rules[j],
+			    q1 = rule.indexOf('['),
+			    q2 = rule.indexOf(']'),
+			    def = (q1 >= 0) ? rule.substring(0, q1) : rule,
+			    res = '',
+			    n;
+
+			switch (def)
+			{
+				case 'alphabet':
+					if (!vp.validateAlphabet(type, val)) { res = vp_wp.val_msg.alphabet.format(); }
+					break;
+				case 'alphanumeric':
+					if (!vp.validateAlphaNumeric(type, val)) { res = vp_wp.val_msg.alphanumeric.format(); }
+					break;
+				case 'numeric':
+					if (!vp.validateNumeric(type, val)) { res = vp_wp.val_msg.numeric.format(); }
+					break;
+				case 'email':
+					if (!vp.validateEmail(type, val)) { res = vp_wp.val_msg.email.format(); }
+					break;
+				case 'url':
+					if (!vp.validateURL(type, val)) { res = vp_wp.val_msg.url.format(); }
+					break;
+				case 'maxlength':
+					n = rule.substring(q1 + 1, q2);
+					if (!vp.validateMaxLength(type, val, n)) { res = vp_wp.val_msg.maxlength.format(n); }
+					break;
+				case 'minlength':
+					n = rule.substring(q1 + 1, q2);
+					if (!vp.validateMinLength(type, val, n)) { res= vp_wp.val_msg.minlength.format(n); }
+					break;
+				case 'maxselected':
+					n = rule.substring(q1 + 1, q2);
+					if (!vp.validateMaxLength(type, val, n)) { res = vp_wp.val_msg.maxselected.format(n); }
+					break;
+				case 'minselected':
+					n = rule.substring(q1 + 1, q2);
+					if (!vp.validateMinLength(type, val, n)) { res= vp_wp.val_msg.minselected.format(n); }
+					break;
+				case 'required':
+					if (!vp.validateRequired(type, val)) { res = vp_wp.val_msg.required.format(); }
+					break;
+			}
+
+			if (res !== '')
+			{
+				// push into errors pool
+				field.nError += 1;
+
+				// set message
+				var $msg = jQuery(msgHTML);
+				    $msg.html(res);
+				    $msg.appendTo($msgs);
+			}
+		}
+
+		if (field.nError > 0)
+		{
+			errors += 1;
+			$tr.addClass('vp-error');
+		}
+	}
+	return errors;
 };
 
 // custom checkbox and radiobutton handler
@@ -752,7 +836,3 @@ if(window.ace !== 'undefined')
 
 	});
 }
-
-/*
- * =============================================================
- */

@@ -211,7 +211,7 @@
 								<checkimage>
 									<name>ci_5</name>
 									<label>Validation Rules Applied</label>
-									<description>Minimun selected of 2 items and Maximum selected of 3 items.</description>
+									<description>Minimum selected of 2 items and Maximum selected of 3 items.</description>
 									<items>
 										<item value="value_1" img="http://placehold.it/80x80" default="true">Label 1</item>
 										<item value="value_2" img="http://placehold.it/80x80">Label 2</item>
@@ -220,7 +220,7 @@
 									</items>
 									<item_max_height>70</item_max_height>
 									<item_max_width>70</item_max_width>
-									<validation>minselected[2]|maxselected[3]</validation>
+									<validation>required|minselected[2]|maxselected[3]</validation>
 								</checkimage>
 							</fields>
 						</section>

@@ -24,6 +24,41 @@
 	vp.custom_check_radio_event(".vp-metabox", ".vp-field.vp-checkimage .field .input label");
 	vp.custom_check_radio_event(".vp-metabox", ".vp-field.vp-radioimage .field .input label");
 
+	// Pool validation rules
+	var validation = [];
+	$('.vp-field').each(function(i) {
+		var $field = $(this);
+
+		if($field.parents('.wpa_group').hasClass('tocopy'))
+			return;
+
+		var name   = $field.attr('id'),
+			rules  = $field.attr('data-vp-validation'),
+			type   = $field.getDatas().type;
+
+		rules && validation.push({name: name, rules: rules, type: type});
+	});
+
+	// Bind event to WP publish button to process metabox validation
+	$('#post').on( 'submit', function(e){
+
+		var errors = 0;
+
+		$('.vp-field').removeClass('vp-error');
+		$('.validation-msg.vp-error').remove();
+
+		errors = vp.fields_validation_loop(validation);
+
+		if(errors > 0)
+		{
+			$('#publishing-action .spinner').hide();
+			$('#publish').prop('disabled', false).removeClass('button-primary-disabled');
+			e.preventDefault();
+		}
+
+	});
+
+
 	// Bindings
 	var bindings = [];
 	$('.vp-field[data-vp-bind]').each(function(idx, el){
@@ -140,6 +175,14 @@
 				name = $(el).attr('id');
 
 			dep && dependencies.push({dep: dep, type: 'field', source: name});
+		});
+		clone.find('.vp-field[data-vp-validation]').each(function(idx, el){
+			var $field = $(el),
+				name   = $field.attr('id'),
+				rules  = $field.attr('data-vp-validation'),
+				type   = $field.getDatas().type;
+
+			rules && validation.push({name: name, rules: rules, type: type});
 		});
 		if ($.fn.chosen) clone.find('.vp-js-chosen').chosen();
 		if ($.fn.chosenSortable) clone.find('.vp-js-sorter').addClass('chzn-sortable').chosen().chosenSortable();

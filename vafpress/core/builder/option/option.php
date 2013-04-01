@@ -356,10 +356,10 @@ return array(
 									'type' => 'checkimage',
 									'name' => 'ci_5',
 									'label' => __('Validation Rules Applied', 'vp_textdomain'),
-									'description' => __('Minimun selected of 2 items and Maximum selected of 3 items.', 'vp_textdomain'),
+									'description' => __('Minimum selected of 2 items and Maximum selected of 3 items.', 'vp_textdomain'),
 									'item_max_height' => '70',
 									'item_max_width' => '70',
-									'validation' => 'minselected[2]|maxselected[3]',
+									'validation' => 'required|minselected[2]|maxselected[3]',
 									'items' => array(
 										array(
 											'value' => 'value_1',

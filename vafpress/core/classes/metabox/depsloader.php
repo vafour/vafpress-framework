@@ -37,6 +37,9 @@ class VP_Metabox_Depsloader
 		$script_always = VP_Util_Config::get_instance()->load('dependencies', 'scripts.always');
 		$style_always  = VP_Util_Config::get_instance()->load('dependencies', 'styles.always');
 		$rules         = VP_Util_Config::get_instance()->load('dependencies', 'rules');
+		$messages      = VP_Util_Config::get_instance()->load('messages');
+
+		$result['localize']['val_msg'] = $messages['validation'];
 
 		if(is_array($metaboxes)) reset($metaboxes);
 		if(is_array($metaboxes)) foreach ($metaboxes as $key => $metabox)

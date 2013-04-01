@@ -339,7 +339,7 @@ function vp_ajax_wrapper()
 		$result['message'] = $e->getMessage();		
 	}
 
-	ob_clean();
+	if (ob_get_length()) ob_clean();
 	header('Content-type: application/json');
 	echo json_encode($result);
 	die();
@@ -370,7 +370,7 @@ function vp_ajax_save()
 		$result = $set->save($config['option_key']);
 	}
 
-	ob_clean();
+	if (ob_get_length()) ob_clean();
 	header('Content-type: application/json');
 	echo json_encode($result);
 	die();
@@ -412,7 +412,7 @@ function vp_ajax_import_option()
 		}
 	}
 
-	ob_clean();
+	if (ob_get_length()) ob_clean();
 	header('Content-type: application/json');
 	echo json_encode($result);
 	die();
@@ -435,7 +435,7 @@ function vp_ajax_export_option()
 		);
 	}
 
-	ob_clean();
+	if (ob_get_length()) ob_clean();
 	header('Content-type: application/json');
 	echo json_encode($result);
 	die();

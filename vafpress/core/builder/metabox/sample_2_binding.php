@@ -26,7 +26,7 @@ return array(
 						),
 					),
 					'default' => array(
-						// '{{first}}',
+						'{{first}}',
 					),
 				),
 				array(
