@@ -197,10 +197,12 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 							if($field instanceof VP_Control_Field)
 							{
 								$field->is_hidden(true);
+								$field->add_container_extra_classes('vp-dep-inactive');
 							}
 							else
 							{
 								$field['is_hidden'] = true;
+								$field['container_extra_classes'][] = 'vp-dep-inactive';
 							}
 						}
 					}
@@ -334,7 +336,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 
 		$html  = '';
 		$html .= '<div id="wpa_loop-' . $name . '" class="vp-wpa-loop vp-fixed-loop vp-meta-group'
-				. (isset($group['container_extra_classes']) ? (' ' . implode(',', $group['container_extra_classes'])) : '')
+				. (isset($group['container_extra_classes']) ? (' ' . implode(' ', $group['container_extra_classes'])) : '')
 				. '"'
 				. VP_Util_Text::return_if_exists(isset($dependency) ? $dependency : '', ' data-vp-dependency="%s"')
 				. ((isset($group['is_hidden']) and $group['is_hidden']) ? ' style="display: none;"' : '')
@@ -366,7 +368,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		$html  = '';
 		$html .= '<div id="wpa_loop-' . $name
 				. '" class="vp-wpa-loop wpa_loop wpa_loop-' . $name . ' vp-repeating-loop vp-meta-group'
-				. (isset($group['container_extra_classes']) ? (' ' . implode(',', $group['container_extra_classes'])) : '')
+				. (isset($group['container_extra_classes']) ? (' ' . implode(' ', $group['container_extra_classes'])) : '')
 				. '"'
 				. VP_Util_Text::return_if_exists(isset($dependency) ? $dependency : '', 'data-vp-dependency="%s"')
 				. (isset($group['is_hidden']) and $group['is_hidden'] ? ' style="display: none;"' : '')

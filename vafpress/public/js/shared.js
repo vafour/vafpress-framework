@@ -24,6 +24,9 @@ jQuery.fn.getDatas = function() {
 	});
 	return attributes;
 };
+jQuery.fn.exists = function () {
+	return this.length !== 0;
+};
 if (!String.prototype.trimChar) {
 	String.prototype.trimChar =  function(string) { return this.replace(new RegExp('^' + string + '+|' + string + '+$', 'g'), ''); };
 }
@@ -287,14 +290,19 @@ vp.validateRequired = function(type, val) {
 // validation function loop
 vp.fields_validation_loop = function(fields){
 
-	var msgHTML       = '<li class="validation-msg vp-error"></li>',
-		errors        = 0;
+	var msgHTML = '<li class="validation-msg vp-error"></li>',
+		errors  = 0;
 
 	for (var i = 0; i < fields.length; i++)
 	{
-		var field  = fields[i],
-		    $tr    = jQuery(vp.jqid(field.name)),
-		    $msgs  = $tr.children('div.field').children('.validation-msgs').children('ul'),
+		var field   = fields[i],
+		    $tr     = jQuery(vp.jqid(field.name)),
+		    $parent = $tr.parents('.vp-meta-group').exists() ? $tr.parents('.vp-meta-group') : $tr.parents('.vp-section');
+
+		if($tr.hasClass('vp-dep-inactive') || ($parent.exists() && $parent.hasClass('vp-dep-inactive')))
+			continue;
+
+		var $msgs  = $tr.children('div.field').children('.validation-msgs').children('ul'),
 		    $input = jQuery('[name="' + field.name + '"]'),
 		    val    = $input.validationVal(),
 		    type   = field.type,
@@ -551,10 +559,12 @@ vp.dependency_action =	function(ids, field, func) {
 		{
 			if(response.data)
 			{
+				$source_tr.removeClass('vp-dep-inactive');
 				$source_tr.fadeIn();
 			}
 			else
 			{
+				$source_tr.addClass('vp-dep-inactive');
 				$source_tr.fadeOut();
 			}
 		}

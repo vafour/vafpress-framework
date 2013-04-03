@@ -53,7 +53,8 @@ return array(
 	'fixed_layout'       => true,
 
 	/**
-	 * 
+	 * Theme text domain, to define a new one, change the value here, and then do a search and replace
+	 * in vafpress folder replacing the old value of this option with the new one.
 	 */
 	'text_domain'        => 'vp_textdomain'
 
