@@ -80,11 +80,12 @@
 	padding: 12px 10px;
 }
 
-.vp-metabox > .vp-wpa-loop.vp-repeating-loop .vp-wpa-group {
-	padding-right: 20px;
+.vp-metabox > .vp-wpa-loop.vp-repeating-loop .vp-wpa-group .vp-controls .vp-field .field {
+	padding-right: 40px;
 }
 
 .vp-metabox > .vp-wpa-loop.vp-repeating-loop .vp-wpa-group .vp-wpa-group-remove {
+	background-color: #ffffff;
 	border-radius: 0px 4px 0px 4px;
 	border-width: 0px 0px 1px 1px;
 	border-style: solid;
@@ -316,10 +317,8 @@
 
 /* Fix 100% width */
 .chzn-container, .chzn-drop, .chzn-drop .chzn-search, .chzn-drop .chzn-search input {
-  width: 100% !important;
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
+	width: 100% !important;
+	box-sizing: border-box;
 }
 
 /* Override width */
