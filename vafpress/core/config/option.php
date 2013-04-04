@@ -40,7 +40,7 @@ return array(
 	/**
 	 * Menu label
 	 */
-	'menu_page_label'    => 'Vafpress Menu',
+	'menu_page_label'    => 'Theme Options',
 
 	/**
 	 * Slug of option page menu under appereance

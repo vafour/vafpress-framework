@@ -371,7 +371,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 				. (isset($group['container_extra_classes']) ? (' ' . implode(' ', $group['container_extra_classes'])) : '')
 				. '"'
 				. VP_Util_Text::return_if_exists(isset($dependency) ? $dependency : '', 'data-vp-dependency="%s"')
-				. (isset($group['is_hidden']) and $group['is_hidden'] ? ' style="display: none;"' : '')
+				. ((isset($group['is_hidden']) and $group['is_hidden']) ? ' style="display: none;"' : '')
 				. '>';
 		$html .= '<h4>' . $group['title'] . '</h4>';
 

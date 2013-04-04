@@ -46,20 +46,9 @@
 }
 
 .vp-option-panel .vp-button {
-	background-image: linear-gradient(180deg, rgba(0,0,0,0),rgba(0,0,0,0.1));
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#0d000000',GradientType=0 ); /* IE6-9 */
-	border-radius: 4px;
-	border-width: 1px;
-	border-style: solid;
-	box-shadow: inset 0px 1px 1px rgba(255,255,255,0.4);
-	color: #333333;
-	font-weight: bold;
-	padding: 7px 16px;
-	cursor: pointer;
-}
-
-.vp-option-panel .vp-button:disabled {
-	opacity: 0.5;
+	height: 30px;
+	line-height: 28px;
+	padding: 0 12px 2px;
 }
 
 .vp-option-panel input,
@@ -245,21 +234,7 @@
 }
 
 .vp-submit .vp-button {
-	background-color: #6cc4e8;
-	border-color: #6cc4e8;
 	float: right;
-	color: #ffffff;
-}
-
-.vp-submit .vp-button:hover {
-	color: #ffffff !important;
-	background-color: #7dd5f9;
-	border-color: #7dd5f9;
-}
-
-.vp-submit .vp-button:disabled {
-	color: #ffffff !important;
-	border-color: #6cc4e8 !important;
 }
 
 .vp-submit p {
@@ -326,7 +301,7 @@
 
 .vp-section > h3 {
 	background-color: #ffffff;
-	color: #6cc4e8;
+	color: #278ab7;
 	font-size: 12px;
 	line-height: 1em;
 	padding: 4px 10px;
@@ -374,7 +349,7 @@
 }
 
 .vp-field.vp-error {
-	background-color: #f8efef;
+	background-color: #fbf1f1;
 }
 
 .vp-field > .label {
@@ -535,15 +510,15 @@
 
 .vp-field.vp-checkimage .field input:checked ~ img,
 .vp-field.vp-radioimage .field input:checked ~ img {
-	border-color: #6cc4e8;
-	background-color: #6cc4e8;
+	border-color: #278ab7;
+	background-color: #278ab7;
 }
 
 /* elt ie8 style */
 .vp-field.vp-checkimage .field input.checked ~ img,
 .vp-field.vp-radioimage .field input.checked ~ img {
-	border-color: #6cc4e8;
-	background-color: #6cc4e8;
+	border-color: #278ab7;
+	background-color: #278ab7;
 }
 
 .vp-field.vp-toggle .field label {
@@ -790,7 +765,7 @@
 }
 
 .vp-copyright a {
-	color: #6cc4e8;
+	color: #278ab7;
 	text-decoration: none;
 }
 

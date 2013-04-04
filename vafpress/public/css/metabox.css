@@ -43,7 +43,7 @@
 }
 
 .vp-metabox .vp-field.vp-error {
-	background-color: #f8efef;
+	background-color: #fbf1f1;
 }
 
 .vp-metabox .validation-msgs {
@@ -157,7 +157,7 @@
 }
 
 .vp-metabox .vp-upload .input {
-	padding-right: 110px;
+	padding-right: 130px;
 }
 
 .vp-metabox .vp-upload input[type="text"] {

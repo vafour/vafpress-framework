@@ -63,7 +63,7 @@
 				<form id="vp-option-form" class="vp-option-form vp-js-option-form">
 					<div id="vp-submit-top" class="vp-submit top">
 						<div class="inner">
-							<input class="vp-save vp-button" type="submit" value="<?php _e('Save Changes', 'vp_textdomain'); ?>" />
+							<input class="vp-save vp-button button button-primary" type="submit" value="<?php _e('Save Changes', 'vp_textdomain'); ?>" />
 							<p class="vp-js-save-loader save-loader" style="display: none;"><img src="<?php VP_Util_Res::img_out('ajax-loader.gif', ''); ?>" />Saving Now</p>
 							<p class="vp-js-save-status save-status" style="display: none;"></p>
 						</div>
@@ -77,7 +77,7 @@
 					<?php endforeach; ?>
 					<div id="vp-submit-bottom" class="vp-submit bottom">
 						<div class="inner">
-							<input class="vp-save vp-button" type="submit" value="<?php _e('Save Changes', 'vp_textdomain'); ?>" />
+							<input class="vp-save vp-button button button-primary" type="submit" value="<?php _e('Save Changes', 'vp_textdomain'); ?>" />
 							<p class="vp-js-save-loader save-loader" style="display: none;"><img src="<?php VP_Util_Res::img_out('ajax-loader.gif', ''); ?>" />Saving Now</p>
 							<p class="vp-js-save-status save-status" style="display: none;"></p>
 						</div>
