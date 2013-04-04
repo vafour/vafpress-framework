@@ -248,8 +248,7 @@ function vp_opt_notice_devmode($hook_suffix)
 function vp_deactivate_theme()
 {
 	// get new theme slug
-	$new_theme = wp_get_theme();
-	$new_theme = $new_theme->get_stylesheet();
+	$new_theme = get_stylesheet();
 
 	// delete old opt
 	$stylesheet = get_option( 'theme_switched' );
@@ -269,8 +268,7 @@ function vp_deactivate_theme()
 function vp_activate_theme()
 {
 	// set activated option value
-	$theme      = wp_get_theme();
-	$theme      = $theme->get_stylesheet();
+	$theme      = get_stylesheet();
 	$option_key = 'vpf_active_' . $theme;
 	update_option( $option_key, 1 );
 
