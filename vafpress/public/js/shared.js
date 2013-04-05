@@ -766,12 +766,12 @@ jQuery('.vp-js-remove-upload').click(vp.remove_upload_callback);
 if (jQuery.fn.colorpicker)
 {
 	jQuery('.vp-js-colorpicker').each(function() {
-		var colorpicker  = this,
+		var $colorpicker  = jQuery(this),
 		    options = jQuery(this).getDatas();
 
 		options = vp.parseOpt(options.opt);
 
-		jQuery(colorpicker).colorpicker({
+		$colorpicker.colorpicker({
 			format: options.format
 		}).on('changeColor', function(ev){
 			var color;
@@ -789,7 +789,9 @@ if (jQuery.fn.colorpicker)
 				color = ev.color.toRGB();
 				color = 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')';
 			}
-			jQuery(colorpicker).prev('label').find('span').css('background-color', color);
+			$colorpicker.prev('label').find('span').css('background-color', color);
+		}).on('blur', function(ev){
+			$colorpicker.prev('label').find('span').css('background-color', $colorpicker.val());
 		});
 	});
 }
