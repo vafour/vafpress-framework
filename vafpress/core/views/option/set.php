@@ -9,7 +9,8 @@
 				<div id="vp-menus" class="vp-menus">
 					<ul class="vp-menu-level-1">
 						<?php foreach ($set->get_menus() as $menu): ?>
-						<?php if ($menu === reset($set->get_menus())): ?>
+						<?php $is_first_lvl_1 = $menu === reset($set->get_menus()); ?>
+						<?php if ($is_first_lvl_1): ?>
 						<li class="vp-current">
 						<?php else: ?>
 						<li>
@@ -33,7 +34,7 @@
 							<?php if ($menu->get_menus()): ?>
 							<ul class="vp-menu-level-2">
 								<?php foreach ($menu->get_menus() as $submenu): ?>
-								<?php if ($submenu === reset($menu->get_menus())): ?>
+								<?php if ($is_first_lvl_1 and $submenu === reset($menu->get_menus())): ?>
 								<li class="vp-current">
 								<?php else: ?>
 								<li>

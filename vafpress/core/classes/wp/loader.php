@@ -3,84 +3,13 @@
 class VP_WP_Loader
 {
 
-	private $args;
-
-	private $id;
-
 	private $localize;
 
-	public function __construct()
+	public function register($loader, $hook_suffix = '')
 	{
-		$args     = null;
-		$this->id = spl_object_hash($this);
-		add_action('vp_loader_register_' . $this->id, array($this, 'register_real'), 10, 2);
-	}
 
-	public function register($deps)
-	{
-		$this->args = $deps;
-		add_action('admin_enqueue_scripts', array($this, 'register_caller'));
-	}
-
-	public function register_caller($hook_suffix)
-	{
-		do_action('vp_loader_register_' . $this->id, $this->args, $hook_suffix);
-	}
-
-	private function unit_register($name)
-	{
-		global $wp_scripts;
-
-		// dynamically registering scripts
-		$scripts     = VP_Util_Config::get_instance()->load('dependencies', 'scripts.paths');
-
-		$registered  = wp_script_is($name, 'registered');
-		$is_older    = false;
-		$available   = isset($scripts[$name]);
-
-		if($available)
-		{
-			$script  = $scripts[$name];
-			if($registered)
-			{
-				$is_older = version_compare($script['ver'], $wp_scripts->registered[$name]->ver) == 1;
-			}
-			if(!$registered or $is_older)
-			{
-				if(!empty($script['deps']))
-				{
-					foreach ($script['deps'] as $dep)
-					{
-						$this->unit_register($dep);
-					}
-				}
-				if($is_older)
-				{
-					wp_deregister_script($name);
-				}
-
-				wp_register_script($name, $script['path'], $script['deps'], $script['ver'], true);
-
-				if(isset($script['localize']))
-				{
-					$localize = array();
-					foreach ($script['localize']['keys'] as $key)
-					{
-						if(array_key_exists($key, $this->localize))
-						{
-							$localize[$key] = $this->localize[$key];
-						}
-					}
-					wp_localize_script($name, $script['localize']['name'], $localize);
-				}
-			}
-		}
-	}
-
-	public function register_real($loader, $hook_suffix)
-	{
 		// check if we should oupout
-		if(!$loader->can_output($hook_suffix))
+		if($hook_suffix !== '' and !$loader->can_output($hook_suffix))
 			return;
 
 		// build dependencies array
@@ -135,6 +64,57 @@ class VP_WP_Loader
 		// register and enqueue styles
 		wp_register_style($deps['main_css']['name'], $deps['main_css']['path'], $deps['styles']);
 		wp_enqueue_style($deps['main_css']['name']);
+	}
+
+	private function unit_register($name)
+	{
+		global $wp_scripts;
+
+		// dynamically registering scripts
+		$scripts     = VP_Util_Config::get_instance()->load('dependencies', 'scripts.paths');
+
+		$registered  = wp_script_is($name, 'registered');
+		$is_older    = false;
+		$available   = isset($scripts[$name]);
+
+		if($available)
+		{
+			$script   = $scripts[$name];
+			$override = isset($script['override']) ? $script['override'] : false;
+			if($registered)
+			{
+				$is_older = version_compare($script['ver'], $wp_scripts->registered[$name]->ver) == 1;
+			}
+			if(!$registered or ($is_older and $override))
+			{
+				if(!empty($script['deps']))
+				{
+					foreach ($script['deps'] as $dep)
+					{
+						$this->unit_register($dep);
+					}
+				}
+				if($is_older)
+				{
+					wp_deregister_script($name);
+				}
+
+				wp_register_script($name, $script['path'], $script['deps'], $script['ver'], true);
+
+				if(isset($script['localize']))
+				{
+					$localize = array();
+					foreach ($script['localize']['keys'] as $key)
+					{
+						if(array_key_exists($key, $this->localize))
+						{
+							$localize[$key] = $this->localize[$key];
+						}
+					}
+					wp_localize_script($name, $script['localize']['name'], $localize);
+				}
+			}
+		}
 	}
 
 }

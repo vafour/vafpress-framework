@@ -52,10 +52,10 @@
 
 		if(errors > 0)
 		{
-			$('#publishing-action .spinner').hide();
+			$('#publishing-action .spinner, #publishing-action .ajax-loading').hide();
 			$notif = $('<span class="vp-metabox-error vp-js-tipsy" original-title="' + errors + ' error(s) found in metabox"></span>');
 			$notif.tipsy();
-			$notif.insertAfter('#publishing-action .spinner');
+			$notif.insertAfter('#publishing-action .spinner, #publishing-action .ajax-loading');
 			$('#publish').prop('disabled', false).removeClass('button-primary-disabled');
 			e.preventDefault();
 		}

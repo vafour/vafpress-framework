@@ -20,12 +20,13 @@ return array(
 			'jquery' => array(
 				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery-1.8.3.min.js',
 				'deps'     => array(),
-				'ver'      => '1.8.3'
+				'ver'      => '1.8.3',
+				'override' => false,
 			),
 			'bootstrap-colorpicker' => array(
 				'path'     => VP_PUBLIC_URL . '/js/vendor/bootstrap-colorpicker.js',
 				'deps'     => array('jquery'),
-				'ver'      => false
+				'ver'      => false,
 			),
 			'tipsy' => array(
 				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery.tipsy.js',
@@ -35,52 +36,53 @@ return array(
 			'chosen-jquery' => array(
 				'path'     => VP_PUBLIC_URL . '/js/vendor/chosen.jquery.min.js',
 				'deps'     => array('jquery'),
-				'ver'      => '0.9.11'
+				'ver'      => '0.9.11',
+				'override' => true,
 			),
 			'prefixfree' => array(
 				'path'     => VP_PUBLIC_URL . '/js/vendor/prefixfree.min.js',
 				'deps'     => array(),
-				'ver'      => '1.0.7'
+				'ver'      => '1.0.7',
 			),
 			'scrollspy' => array(
 				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery-scrollspy.js',
 				'deps'     => array('jquery'),
-				'ver'      => false
+				'ver'      => false,
 			),
 			'jquery-ui-core' => array(
 				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery.ui.core.js',
 				'deps'     => array(),
-				'ver'      => '1.9.2'
+				'ver'      => '1.9.2',
 			),
 			'jquery-ui-widget' => array(
 				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery.ui.widget.js',
 				'deps'     => array(),
-				'ver'      => '1.9.2'
+				'ver'      => '1.9.2',
 			),
 			'jquery-ui-mouse' => array(
 				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery.ui.mouse.js',
 				'deps'     => array('jquery-ui-widget'),
-				'ver'      => '1.9.2'
+				'ver'      => '1.9.2',
 			),
 			'jquery-ui-slider' => array(
 				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery.ui.slider.js',
 				'deps'     => array('jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-mouse'),
-				'ver'      => '1.9.2'
+				'ver'      => '1.9.2',
 			),
 			'jquery-ui-datepicker' => array(
 				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery.ui.datepicker.js',
 				'deps'     => array('jquery', 'jquery-ui-core', 'jquery-ui-widget'),
-				'ver'      => '1.9.2'
+				'ver'      => '1.9.2',
 			),
 			'jquery-typing' => array(
 				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery.typing-0.2.0.min.js',
 				'deps'     => array('jquery'),
-				'ver'      => '0.2'
+				'ver'      => '0.2',
 			),
 			'ace-editor' => array(
 				'path'     => VP_PUBLIC_URL . '/js/vendor/ace/ace.js',
 				'deps'     => array(),
-				'ver'      => '1.0.0'
+				'ver'      => '1.0.0',
 			),
 			'shared' => array(
 				'path'     => VP_PUBLIC_URL . '/js/shared.js',
@@ -91,6 +93,7 @@ return array(
 				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery-chosen-sortable.js',
 				'deps'     => array('jquery', 'jquery-ui-sortable', 'chosen-jquery'),
 				'ver'      => '1.0.0',
+				'override' => true,
 			),
 		),
 	),
@@ -103,27 +106,27 @@ return array(
 		'paths' => array(
 			'bootstrap-colorpicker' => array(
 				'path' => VP_PUBLIC_URL . '/css/vendor/bootstrap-colorpicker.css',
-				'deps' => array()
+				'deps' => array(),
 			),
 			'tipsy-css' => array(
 				'path' => VP_PUBLIC_URL . '/css/vendor/tipsy.css',
-				'deps' => array()
+				'deps' => array(),
 			),
 			'chosen-css' => array(
 				'path' => VP_PUBLIC_URL . '/css/vendor/chosen.css',
-				'deps' => array()
+				'deps' => array(),
 			),
 			'jqui' => array(
 				'path' => VP_PUBLIC_URL . '/css/vendor/jqueryui/themes/' . $jqui_theme . '/jquery-ui-1.9.2.custom.min.css',
-				'deps' => array()
+				'deps' => array(),
 			),
 			'font-awesome-ie7' => array(
 				'path' => VP_PUBLIC_URL . '/css/vendor/font-awesome-ie7.min.css',
-				'deps' => array()
+				'deps' => array(),
 			),
 			'font-awesome' => array(
 				'path' => VP_PUBLIC_URL . '/css/vendor/font-awesome.min.css',
-				'deps' => array()
+				'deps' => array(),
 			),
 		),
 	),

@@ -219,7 +219,7 @@ function vp_load_scripts_and_styles()
 	global $opt_deps_loader;
 
 	// load scripts and styles dependencies
-	$opt_loader      = new VP_WP_DirectLoader();
+	$opt_loader      = new VP_WP_Loader();
 	$opt_deps_loader = new VP_Option_Depsloader($set);
 	$opt_loader->register($opt_deps_loader);
 }

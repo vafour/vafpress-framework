@@ -97,7 +97,7 @@ function vp_metabox($key)
 }
 
 // load metaboxes scripts and styles dependencies
-$mb_loader      = new VP_WP_Loader();
+$mb_loader      = new VP_WP_Enqueuer();
 $mb_deps_loader = new VP_Metabox_Depsloader($vp_metaboxes);
 $mb_loader->register($mb_deps_loader);
 
