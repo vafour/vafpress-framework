@@ -432,7 +432,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 	function _save($post_id) 
 	{
 		// skip saving if dev mode is on
-		$dev_mode = VP_Util_Config::get_instance()->load('metabox', 'dev_mode');
+		$dev_mode = VP_Util_Config::instance()->load('metabox', 'dev_mode');
 		if($dev_mode)
 			return;
 

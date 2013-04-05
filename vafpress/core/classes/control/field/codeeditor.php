@@ -44,7 +44,7 @@ class VP_Control_Field_CodeEditor extends VP_Control_Field
 		);
 		$this->add_data('opt', VP_Util_Text::make_opt($opt));
 
-		return VP_View::get_instance()->load('control/codeeditor', $this->get_data());
+		return VP_View::instance()->load('control/codeeditor', $this->get_data());
 	}
 
 	public function get_value()

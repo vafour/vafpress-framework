@@ -1,4 +1,4 @@
-<?php echo VP_View::get_instance()->load('control/template_control_head', $head_info); ?>
+<?php echo VP_View::instance()->load('control/template_control_head', $head_info); ?>
 
 <select name="<?php echo $name; ?>" class="vp-js-chosen" autocomplete="off">
 	<option value=""></option>
@@ -7,4 +7,4 @@
 	<?php endforeach; ?>
 </select>
 
-<?php echo VP_View::get_instance()->load('control/template_control_foot'); ?>
+<?php echo VP_View::instance()->load('control/template_control_foot'); ?>

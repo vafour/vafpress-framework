@@ -18,7 +18,7 @@ class VP_Control_Field_Upload extends VP_Control_Field
 	public function render()
 	{
 		$this->_setup_data();
-		return VP_View::get_instance()->load('control/upload', $this->get_data());
+		return VP_View::instance()->load('control/upload', $this->get_data());
 	}
 
 	public function _setup_data()

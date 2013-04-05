@@ -19,7 +19,7 @@ class VP_View
 		$this->_views    = array();
 	}
 
-	public static function get_instance()
+	public static function instance()
 	{
 		if (is_null(self::$_instance))
 		{

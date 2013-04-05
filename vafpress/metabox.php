@@ -25,7 +25,7 @@ foreach (glob($dir . DIRECTORY_SEPARATOR . "*.php") as $filename)
 if(!empty($metas))
 {	
 	// development mode notice
-	if(VP_Util_Config::get_instance()->load('metabox', 'dev_mode'))
+	if(VP_Util_Config::instance()->load('metabox', 'dev_mode'))
 	{
 		if ( WPAlchemy_MetaBox::_is_post() or WPAlchemy_MetaBox::_is_page() )
 		{

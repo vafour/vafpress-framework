@@ -20,7 +20,7 @@ class VP_Control_Field_CheckImage extends VP_Control_FieldMultiImage implements 
 	public function render()
 	{
 		$this->_setup_data();
-		return VP_View::get_instance()->load('control/checkimage', $this->get_data());
+		return VP_View::instance()->load('control/checkimage', $this->get_data());
 	}
 
 }

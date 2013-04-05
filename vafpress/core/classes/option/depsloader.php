@@ -36,12 +36,12 @@ class VP_Option_Depsloader
 			),
 		);
 
-		$result['scripts'] = VP_Util_Config::get_instance()->load('dependencies', 'scripts.always');
-		$result['styles']  = VP_Util_Config::get_instance()->load('dependencies', 'styles.always');
+		$result['scripts'] = VP_Util_Config::instance()->load('dependencies', 'scripts.always');
+		$result['styles']  = VP_Util_Config::instance()->load('dependencies', 'styles.always');
 
-		$scripts     = VP_Util_Config::get_instance()->load('dependencies', 'scripts.paths');
-		$styles      = VP_Util_Config::get_instance()->load('dependencies', 'styles.paths');
-		$rules       = VP_Util_Config::get_instance()->load('dependencies', 'rules');
+		$scripts     = VP_Util_Config::instance()->load('dependencies', 'scripts.paths');
+		$styles      = VP_Util_Config::instance()->load('dependencies', 'styles.paths');
+		$rules       = VP_Util_Config::instance()->load('dependencies', 'rules');
 
 		$fields = $set->get_fields();
 		foreach ($fields as $field)
@@ -62,7 +62,7 @@ class VP_Option_Depsloader
 		$result['styles']  = array_unique($result['styles']);
 
 		// build localize
-		$messages = VP_Util_Config::get_instance()->load('messages');
+		$messages = VP_Util_Config::instance()->load('messages');
 
 		$result['localize']['val_msg']     = $messages['validation'];
 		$result['localize']['impexp_msg']  = $messages['impexp'];
@@ -73,7 +73,7 @@ class VP_Option_Depsloader
 	public function can_output($hook_suffix = '')
 	{
 		// if not in option page, don't load
-		$menu_page_slug = VP_Util_Config::get_instance()->load('option', 'menu_page_slug');
+		$menu_page_slug = VP_Util_Config::instance()->load('option', 'menu_page_slug');
 		if( $hook_suffix == ('appearance_page_' . $menu_page_slug) )
 			return true;
 		return false;

@@ -20,7 +20,7 @@ class VP_Control_Field_Sorter extends VP_Control_FieldMulti implements VP_MultiS
 	public function render()
 	{
 		$this->_setup_data();
-		return VP_View::get_instance()->load('control/sorter', $this->get_data());
+		return VP_View::instance()->load('control/sorter', $this->get_data());
 	}
 
 }

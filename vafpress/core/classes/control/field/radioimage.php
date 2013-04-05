@@ -25,7 +25,7 @@ class VP_Control_Field_RadioImage extends VP_Control_FieldMultiImage
 	{
 		$this->add_container_extra_classes('vp-checked-field');
 		$this->_setup_data();
-		return VP_View::get_instance()->load('control/radioimage', $this->get_data());
+		return VP_View::instance()->load('control/radioimage', $this->get_data());
 	}
 
 }

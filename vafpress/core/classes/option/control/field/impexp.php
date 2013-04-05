@@ -18,7 +18,7 @@ class VP_Option_Control_Field_ImpExp extends VP_Control_Field
 	public function render()
 	{
 		$this->_setup_data();
-		return VP_View::get_instance()->load('option/impexp', $this->get_data());
+		return VP_View::instance()->load('option/impexp', $this->get_data());
 	}
 
 }

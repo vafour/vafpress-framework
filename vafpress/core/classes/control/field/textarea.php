@@ -18,7 +18,7 @@ class VP_Control_Field_TextArea extends VP_Control_Field
 	public function render()
 	{
 		$this->_setup_data();
-		return VP_View::get_instance()->load('control/textarea', $this->get_data());
+		return VP_View::instance()->load('control/textarea', $this->get_data());
 	}
 
 }

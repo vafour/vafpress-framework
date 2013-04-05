@@ -33,7 +33,7 @@ class VP_Option_Control_Group_Menu extends VP_Option_Control_Group
 		{
 			$this->add_data($key, $value);
 		}
-		return VP_View::get_instance()->load('option/menu', $this->get_data());
+		return VP_View::instance()->load('option/menu', $this->get_data());
 	}
 
 	public function add_menu($menu)

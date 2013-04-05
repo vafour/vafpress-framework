@@ -24,7 +24,7 @@ class VP_Control_Field_RadioButton extends VP_Control_FieldMulti
 	public function render()
 	{
 		$this->_setup_data();
-		return VP_View::get_instance()->load('control/radiobutton', $this->get_data());
+		return VP_View::instance()->load('control/radiobutton', $this->get_data());
 	}
 
 }

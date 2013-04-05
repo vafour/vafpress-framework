@@ -35,7 +35,7 @@ class VP_WP_Loader
 		$this->localize = $deps['localize'];
 
 		// dynamically registering scripts and styles
-		$styles = VP_Util_Config::get_instance()->load('dependencies', 'styles.paths');
+		$styles = VP_Util_Config::instance()->load('dependencies', 'styles.paths');
 
 		global $wp_scripts;
 
@@ -71,7 +71,7 @@ class VP_WP_Loader
 		global $wp_scripts;
 
 		// dynamically registering scripts
-		$scripts     = VP_Util_Config::get_instance()->load('dependencies', 'scripts.paths');
+		$scripts     = VP_Util_Config::instance()->load('dependencies', 'scripts.paths');
 
 		$registered  = wp_script_is($name, 'registered');
 		$is_older    = false;

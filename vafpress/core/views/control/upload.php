@@ -1,4 +1,4 @@
-<?php echo VP_View::get_instance()->load('control/template_control_head', $head_info); ?>
+<?php echo VP_View::instance()->load('control/template_control_head', $head_info); ?>
 
 <input type="text" readonly id="<?php echo $name; ?>" name="<?php echo $name; ?>" value="<?php echo $value; ?>" />
 <div class="buttons">
@@ -9,4 +9,4 @@
 	<img src="<?php echo $preview; ?>" alt="" />
 </div>
 
-<?php echo VP_View::get_instance()->load('control/template_control_foot'); ?>
+<?php echo VP_View::instance()->load('control/template_control_foot'); ?>

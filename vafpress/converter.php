@@ -16,7 +16,7 @@ class VP_Converter
 		$option_xml_path = VP_FileSystem::instance()->resolve_path('builder', 'option/option', 'xml');
 		$option_php_path = dirname($option_xml_path) . '/option.php';
 		$options         = file_get_contents($option_xml_path);
-		$config          = VP_Util_Config::get_instance()->load('option');
+		$config          = VP_Util_Config::instance()->load('option');
 
 		// Set textdomain
 		if( isset($configs['text_domain']) )

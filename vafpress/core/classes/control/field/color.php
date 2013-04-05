@@ -36,7 +36,7 @@ class VP_Control_Field_Color extends VP_Control_Field
 		);
 		$this->add_data('opt', VP_Util_Text::make_opt($opt));
 		$this->add_data('opt_raw', $opt);
-		return VP_View::get_instance()->load('control/color', $this->get_data());
+		return VP_View::instance()->load('control/color', $this->get_data());
 	}
 
 	/**

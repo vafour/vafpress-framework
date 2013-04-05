@@ -37,7 +37,7 @@ class VP_Option_Control_Group_Section extends VP_Option_Control_Group
 		{
 			$this->add_data($key, $value);
 		}
-		return VP_View::get_instance()->load('option/section', $this->get_data());
+		return VP_View::instance()->load('option/section', $this->get_data());
 	}
 
 	public function add_field($field)

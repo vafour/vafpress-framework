@@ -20,7 +20,7 @@ class VP_Option_Control_Set
 	{
 		// Setup data
 		$data = array('set' => $this);
-		return VP_View::get_instance()->load('option/set', $data);
+		return VP_View::instance()->load('option/set', $data);
 	}
 
 	/**

@@ -40,7 +40,7 @@ foreach (array_merge(glob(VP_APP_DATA_DIR . "/*.php"), glob(VP_CORE_DATA_DIR . "
 ////////////////////////
 // Load Theme Config  //
 ////////////////////////
-$config = VP_Util_Config::get_instance()->load('option');
+$config = VP_Util_Config::instance()->load('option');
 
 
 ////////////////////////
@@ -83,7 +83,7 @@ function vp_setup()
 
 function vp_is_option_page($hook_suffix)
 {
-	$menu_page_slug = VP_Util_Config::get_instance()->load('option', 'menu_page_slug');
+	$menu_page_slug = VP_Util_Config::instance()->load('option', 'menu_page_slug');
 	if( $hook_suffix == ('appearance_page_' . $menu_page_slug) )
 		return true;
 	return false;
@@ -104,7 +104,7 @@ function vp_init_option_set()
 	$set	= $parser->parse_array_options($options);
 
 	// Add Import and Export Option Functionality
-	if(VP_Util_Config::get_instance()->load('option', 'impexp'))
+	if(VP_Util_Config::instance()->load('option', 'impexp'))
 	{
 		$ie_menu    = new VP_Option_Control_Group_Menu();
 		$ie_field   = new VP_Option_Control_Field_ImpExp();
@@ -232,7 +232,7 @@ function vp_opt_notice_devmode($hook_suffix)
 	global $opt_deps_loader;
 	global $hook_suffix;
 
-	if(VP_Util_config::get_instance()->load('option', 'dev_mode'))
+	if(VP_Util_config::instance()->load('option', 'dev_mode'))
 	{
 		if( vp_is_option_page($hook_suffix) )
 		{
@@ -285,7 +285,7 @@ function vp_activate_theme()
 function vp_setup_options_to_db()
 {
 	global $set;
-	$option_key = VP_Util_Config::get_instance()->load('option', 'option_key');
+	$option_key = VP_Util_Config::instance()->load('option', 'option_key');
 	$db_options = get_option($option_key);
 
 	if(empty($db_options))

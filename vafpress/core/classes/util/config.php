@@ -16,7 +16,7 @@ class VP_Util_Config
 		$this->_configs = array();
 	}
 
-	public static function get_instance()
+	public static function instance()
 	{
 		if (is_null(self::$_instance))
 		{

@@ -61,7 +61,7 @@ class VP_Control_Field_NoteBox extends VP_Control_Field
 				break;
 		}
 		$this->_setup_data();
-		return VP_View::get_instance()->load('control/notebox', $this->get_data());
+		return VP_View::instance()->load('control/notebox', $this->get_data());
 	}
 
 	/**

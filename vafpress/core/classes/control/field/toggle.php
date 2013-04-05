@@ -19,7 +19,7 @@ class VP_Control_Field_Toggle extends VP_Control_Field
 	public function render()
 	{
 		$this->_setup_data();
-		return VP_View::get_instance()->load('control/toggle', $this->get_data());
+		return VP_View::instance()->load('control/toggle', $this->get_data());
 	}
 
 }

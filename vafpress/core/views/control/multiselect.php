@@ -1,4 +1,4 @@
-<?php echo VP_View::get_instance()->load('control/template_control_head', $head_info); ?>
+<?php echo VP_View::instance()->load('control/template_control_head', $head_info); ?>
 
 <select multiple name="<?php echo $name; ?>" class="vp-js-chosen" autocomplete="off">
 	<?php foreach ($items as $item): ?>
@@ -6,4 +6,4 @@
 	<?php endforeach; ?>
 </select>
 
-<?php echo VP_View::get_instance()->load('control/template_control_foot'); ?>
+<?php echo VP_View::instance()->load('control/template_control_foot'); ?>

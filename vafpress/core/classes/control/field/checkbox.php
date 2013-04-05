@@ -20,7 +20,7 @@ class VP_Control_Field_CheckBox extends VP_Control_FieldMulti implements VP_Mult
 	public function render()
 	{
 		$this->_setup_data();
-		return VP_View::get_instance()->load('control/checkbox', $this->get_data());
+		return VP_View::instance()->load('control/checkbox', $this->get_data());
 	}
 
 }

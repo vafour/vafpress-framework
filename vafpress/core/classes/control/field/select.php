@@ -23,7 +23,7 @@ class VP_Control_Field_Select extends VP_Control_FieldMulti
 	public function render()
 	{
 		$this->_setup_data();
-		return VP_View::get_instance()->load('control/select', $this->get_data());
+		return VP_View::instance()->load('control/select', $this->get_data());
 	}
 
 }

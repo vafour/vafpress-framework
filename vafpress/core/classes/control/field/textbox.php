@@ -19,7 +19,7 @@ class VP_Control_Field_TextBox extends VP_Control_Field
 	{
 		// Setup Data
 		$this->_setup_data();
-		return VP_View::get_instance()->load('control/textbox', $this->get_data());
+		return VP_View::instance()->load('control/textbox', $this->get_data());
 	}
 
 }
