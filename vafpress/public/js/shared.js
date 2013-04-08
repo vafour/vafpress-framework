@@ -652,7 +652,7 @@ if (jQuery.fn.slider)
 				return true;
 			return false;
 		})
-		.keyup(function(e){
+		.blur(function(e){
 			theValidate(this, options, $slider);
 		});
 	});
