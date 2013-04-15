@@ -10,7 +10,7 @@ class VP_Control_Field_Color extends VP_Control_Field
 		parent::__construct();
 	}
 
-	public static function withArray($arr)
+	public static function withArray($arr = array())
 	{
 		$instance = new self();
 		$instance->set_format(isset($arr['format']) ? $arr['format'] : 'hex');
@@ -21,21 +21,22 @@ class VP_Control_Field_Color extends VP_Control_Field
 	protected function _basic_make($arr)
 	{
 		parent::_basic_make($arr);
-		$default = $this->get_default();
-		if (empty($default))
-		{
-			$this->set_default('#000000');
-		}
 	}
 
-	public function render()
+	protected function _setup_data()
 	{
-		$this->_setup_data();
 		$opt = array(
 			'format'   => $this->get_format(),
 		);
 		$this->add_data('opt', VP_Util_Text::make_opt($opt));
 		$this->add_data('opt_raw', $opt);
+		parent::_setup_data();
+	}
+
+	public function render($is_compact = false)
+	{
+		$this->_setup_data();
+		$this->add_data('is_compact', $is_compact);
 		return VP_View::instance()->load('control/color', $this->get_data());
 	}
 

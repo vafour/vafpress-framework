@@ -8,22 +8,15 @@ class VP_Control_Field_Upload extends VP_Control_Field
 		parent::__construct();
 	}
 
-	public static function withArray($arr)
+	public static function withArray($arr = array())
 	{
 		$instance = new self();
 		$instance->_basic_make($arr);
 		return $instance;
 	}
 
-	public function render()
-	{
-		$this->_setup_data();
-		return VP_View::instance()->load('control/upload', $this->get_data());
-	}
-
 	public function _setup_data()
 	{
-		parent::_setup_data();
 
 		$preview = '';
 		$images  = array('jpg', 'jpeg', 'bmp',  'gif',  'png');
@@ -54,6 +47,15 @@ class VP_Control_Field_Upload extends VP_Control_Field
 		}
 
 		$this->add_data('preview', $preview);
+		
+		parent::_setup_data();
+	}
+
+	public function render($is_compact = false)
+	{
+		$this->_setup_data();
+		$this->add_data('is_compact', $is_compact);
+		return VP_View::instance()->load('control/upload', $this->get_data());
 	}
 
 }

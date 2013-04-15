@@ -1,6 +1,6 @@
-<?php echo VP_View::instance()->load('control/template_control_head', $head_info); ?>
+<?php if(!$is_compact) echo VP_View::instance()->load('control/template_control_head', $head_info); ?>
 
-<select multiple name="<?php echo $name; ?>" class="vp-js-sorter">
+<select multiple name="<?php echo $name; ?>" class="vp-input vp-js-sorter">
 	<?php
 	$labels = array();
 	foreach ($items as $item) $labels[$item->value] = $item->label;
@@ -15,4 +15,4 @@
 	<?php endforeach; ?>
 </select>
 
-<?php echo VP_View::instance()->load('control/template_control_foot'); ?>
+<?php if(!$is_compact) echo VP_View::instance()->load('control/template_control_foot'); ?>

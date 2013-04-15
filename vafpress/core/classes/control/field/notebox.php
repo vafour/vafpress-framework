@@ -19,7 +19,7 @@ class VP_Control_Field_NoteBox extends VP_Control_Field
 		parent::__construct();
 	}
 
-	public static function withArray($arr)
+	public static function withArray($arr = array())
 	{
 		$instance = new self();
 		$instance->_basic_make($arr);
@@ -32,15 +32,10 @@ class VP_Control_Field_NoteBox extends VP_Control_Field
 		$this->set_status(isset($arr['status']) ? $arr['status'] : '');
 	}
 
-	protected function _setup_data() {
-		parent::_setup_data();
-		$this->add_data('status', $this->get_status());
-	}
-
-	public function render()
+	protected function _setup_data()
 	{
-		// Setup Data
-		switch ($this->get_status()) {
+		switch ($this->get_status())
+		{
 			case 'normal':
 				$this->add_container_extra_classes('note-normal');
 				break;
@@ -60,7 +55,15 @@ class VP_Control_Field_NoteBox extends VP_Control_Field
 				$this->add_container_extra_classes('note-normal');
 				break;
 		}
+		$this->add_data('status', $this->get_status());
+		parent::_setup_data();
+	}
+
+	public function render($is_compact = false)
+	{
+		// Setup Data
 		$this->_setup_data();
+		$this->add_data('is_compact', $is_compact);
 		return VP_View::instance()->load('control/notebox', $this->get_data());
 	}
 

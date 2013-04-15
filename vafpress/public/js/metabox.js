@@ -1,15 +1,10 @@
 ;(function($) {
 
-	// Chosen
-	if (jQuery().chosen)
-	{
-		jQuery('.vp-metabox .vp-wpa-group:not(.tocopy) .vp-js-chosen, .vp-meta-single .vp-js-chosen').chosen();
-	}
-	// Chosen sortable
-	if (jQuery().chosenSortable)
-	{
-		jQuery('.vp-metabox .vp-wpa-group:not(.tocopy) .vp-js-sorter, .vp-meta-single .vp-js-sorter').addClass('chzn-sortable').chosen().chosenSortable();
-	}
+	// Select2
+	if ($.fn.select2) jQuery('.vp-metabox .vp-wpa-group:not(.tocopy) .vp-js-select2, .vp-meta-single .vp-js-select2').select2({
+		allowClear: true, placeholder: "Select option(s)"
+	});
+	if ($.fn.select2Sortable) jQuery('.vp-metabox .vp-wpa-group:not(.tocopy) .vp-js-sorter, .vp-meta-single .vp-js-sorter').select2().select2Sortable();
 
 	vp.is_multianswer = function(type){
 		var multi = ['vp-checkbox', 'vp-checkimage', 'vp-multiselect'];
@@ -23,6 +18,10 @@
 	// image controls event bind
 	vp.custom_check_radio_event(".vp-metabox", ".vp-field.vp-checkimage .field .input label");
 	vp.custom_check_radio_event(".vp-metabox", ".vp-field.vp-radioimage .field .input label");
+
+	// shortcode image controls event bind
+	vp.custom_check_radio_event("#inertia_sc_dialog", ".vp-checkimage label");
+	vp.custom_check_radio_event("#inertia_sc_dialog", ".vp-radioimage label");
 
 	// Pool validation rules
 	var validation = [];
@@ -188,8 +187,11 @@
 
 			rules && validation.push({name: name, rules: rules, type: type});
 		});
-		if ($.fn.chosen) clone.find('.vp-js-chosen').chosen();
-		if ($.fn.chosenSortable) clone.find('.vp-js-sorter').addClass('chzn-sortable').chosen().chosenSortable();
+
+		// Re-init Select2
+		if ($.fn.select2) clone.find('.vp-js-select2').select2({allowClear: true, placeholder: "Select option(s)"});
+		if ($.fn.select2Sortable) clone.find('.vp-js-sorter').select2().select2Sortable();
+
 		process_binding(bindings);
 		process_dependency(dependencies);
 	});

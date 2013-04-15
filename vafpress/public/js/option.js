@@ -25,6 +25,10 @@
 	// custom checkbox and radiobutton event binding
 	vp.custom_check_radio_event(".vp-wrap", ".vp-field.vp-checked-field .field .input label");
 
+	// init select2
+	if ($.fn.select2) $('.vp-js-select2').select2({allowClear: true, placeholder: "Select option(s)"});
+	if ($.fn.select2Sortable) $('.vp-js-sorter').select2().select2Sortable();
+
 	/* BEGIN FETCHING ALL FIELDS' VALIDATION and BINDING RULES */
 	var validation   = [];
 	var bindings     = [];
@@ -92,12 +96,6 @@
 		$li.addClass('vp-current');
 		$panel.siblings('.vp-panel').removeClass('vp-current');
 		$panel.addClass('vp-current');
-
-		// Init Chosen
-		if ($.fn.chosen) $panel.find('.vp-js-chosen').chosen();
-
-		// Init Chosen Sortable
-		if ($.fn.chosenSortable) $panel.find('.vp-js-sorter').addClass('chzn-sortable').chosen().chosenSortable();
 	});
 
 	// goto current menu

@@ -33,12 +33,6 @@ return array(
 				'deps'     => array('jquery'),
 				'ver'      => '1.0.0a'
 			),
-			'chosen-jquery' => array(
-				'path'     => VP_PUBLIC_URL . '/js/vendor/chosen.jquery.min.js',
-				'deps'     => array('jquery'),
-				'ver'      => '0.9.11',
-				'override' => true,
-			),
 			'prefixfree' => array(
 				'path'     => VP_PUBLIC_URL . '/js/vendor/prefixfree.min.js',
 				'deps'     => array(),
@@ -89,9 +83,15 @@ return array(
 				'deps'     => array(),
 				'ver'      => '1.1',
 			),
-			'jquery-chosen-sortable' => array(
-				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery-chosen-sortable.js',
-				'deps'     => array('jquery', 'jquery-ui-sortable', 'chosen-jquery'),
+			'select2' => array(
+				'path'     => VP_PUBLIC_URL . '/js/vendor/select2.min.js',
+				'deps'     => array('jquery'),
+				'ver'      => '3.3.2',
+				'override' => true,
+			),
+			'jquery-select2-sortable' => array(
+				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery.select2.sortable.js',
+				'deps'     => array('jquery', 'jquery-ui-sortable', 'select2'),
 				'ver'      => '1.0.0',
 				'override' => true,
 			),
@@ -112,10 +112,6 @@ return array(
 				'path' => VP_PUBLIC_URL . '/css/vendor/tipsy.css',
 				'deps' => array(),
 			),
-			'chosen-css' => array(
-				'path' => VP_PUBLIC_URL . '/css/vendor/chosen.css',
-				'deps' => array(),
-			),
 			'jqui' => array(
 				'path' => VP_PUBLIC_URL . '/css/vendor/jqueryui/themes/' . $jqui_theme . '/jquery-ui-1.9.2.custom.min.css',
 				'deps' => array(),
@@ -128,6 +124,10 @@ return array(
 				'path' => VP_PUBLIC_URL . '/css/vendor/font-awesome.min.css',
 				'deps' => array(),
 			),
+			'select2-css' => array(
+				'path'     => VP_PUBLIC_URL . '/css/vendor/select2.css',
+				'deps' => array(),
+			),
 		),
 	),
 
@@ -136,12 +136,13 @@ return array(
 	 */
 	'rules'   => array(
 		'color'       => array( 'js' => array('bootstrap-colorpicker'), 'css' => array('bootstrap-colorpicker') ),
-		'select'      => array( 'js' => array('chosen-jquery'), 'css' => array('chosen-css') ),
-		'multiselect' => array( 'js' => array('chosen-jquery'), 'css' => array('chosen-css') ),
+		'select'      => array( 'js' => array('select2'), 'css' => array('select2-css') ),
+		'multiselect' => array( 'js' => array('select2'), 'css' => array('select2-css') ),
 		'slider'      => array( 'js' => array('jquery-ui-slider'), 'css' => array('jqui') ),
 		'date'        => array( 'js' => array('jquery-ui-datepicker'), 'css' => array('jqui') ),
 		'codeeditor'  => array( 'js' => array('ace-editor'), 'css' => array() ),
-		'sorter'      => array( 'js' => array('jquery-chosen-sortable'), 'css' => array('chosen-css', 'jqui') ),
+		'sorter'      => array( 'js' => array('jquery-select2-sortable'), 'css' => array('select2-css', 'jqui') ),
+		'fontawesome' => array( 'js' => array('select2'), 'css' => array('select2-css') ),
 	)
 
 );

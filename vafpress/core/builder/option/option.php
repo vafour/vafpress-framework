@@ -22,6 +22,12 @@ return array(
 							'description' => __('TextBox and TextArea Showcase', 'vp_textdomain'),
 							'fields' => array(
 								array(
+									'type' => 'fontawesome',
+									'name' => 'fa_1',
+									'label' => __('Fontawesome', 'vp_textdomain'),
+									'description' => __('Font Awesome Chooser.', 'vp_textdomain'),
+								),
+								array(
 									'type' => 'textbox',
 									'name' => 'tb_1',
 									'label' => __('Alphabet', 'vp_textdomain'),

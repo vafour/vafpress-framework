@@ -1,5 +1,5 @@
-<?php echo VP_View::instance()->load('control/template_control_head', $head_info); ?>
+<?php if(!$is_compact) echo VP_View::instance()->load('control/template_control_head', $head_info); ?>
 
-<textarea name="<?php echo $name; ?>"><?php echo $value; ?></textarea>
+<textarea class="vp-input" name="<?php echo $name; ?>"><?php echo $value; ?></textarea>
 
-<?php echo VP_View::instance()->load('control/template_control_foot'); ?>
+<?php if(!$is_compact) echo VP_View::instance()->load('control/template_control_foot'); ?>

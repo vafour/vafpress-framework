@@ -448,3 +448,22 @@
 	width: 14px;
 	vertical-align: middle;
 }
+
+/* fontawesome chooser + select2 width */
+.vp-fontawesome{
+	width: 100%;
+}
+
+.vp-js-sorter{
+	width: 100%;
+}
+
+.vp-js-select2{
+	width: 100%;
+}
+
+.select2-container .fontawesome,
+.select2-result-label .fontawesome { font-size: 12px; vertical-align: middle; }
+
+.select2-container .fontawesome i,
+.select2-result-label .fontawesome i { font-size: 14px; margin-right: 8px; }

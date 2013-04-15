@@ -160,6 +160,29 @@ function vp_get_social_medias() {
 	return $socmeds;
 }
 
+function vp_get_fontawesome_icons()
+{
+	// scrape list of icons from fontawesome css
+	if( false === ( $icons  = get_transient( 'vp_fontawesome_icons' ) ) )
+	{
+		$pattern = '/\.(icon-(?:\w+(?:-)?)+):before\s*{\s*content/';
+		$subject = file_get_contents(VP_DIR . '/public/css/vendor/font-awesome.min.css');
+
+		preg_match_all($pattern, $subject, $matches, PREG_SET_ORDER);
+
+		$icons = array();
+
+		foreach($matches as $match)
+		{
+		    $icons[] = array('value' => $match[1], 'label' => $match[1]);
+		}
+		
+		set_transient( 'vp_fontawesome_icons', $icons, 60 * 60 * 24 );
+	}
+
+	return $icons;
+}
+
 function vp_bind_source_test($param = null)
 {
 	$result = array();

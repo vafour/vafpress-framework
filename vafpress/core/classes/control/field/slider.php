@@ -14,7 +14,7 @@ class VP_Control_Field_Slider extends VP_Control_Field
 		parent::__construct();
 	}
 
-	public static function withArray($arr)
+	public static function withArray($arr = array())
 	{
 		$instance = new self();
 		$instance->set_min(isset($arr['min']) ? $arr['min'] : 0);
@@ -24,10 +24,8 @@ class VP_Control_Field_Slider extends VP_Control_Field
 		return $instance;
 	}
 
-	public function render()
+	protected function _setup_data()
 	{
-		// Setup Data
-		$this->_setup_data();
 		$opt = array(
 			'min'   => $this->get_min(),
 			'max'   => $this->get_max(),
@@ -36,6 +34,14 @@ class VP_Control_Field_Slider extends VP_Control_Field
 		);
 		$this->add_data('opt', VP_Util_Text::make_opt($opt));
 		$this->add_data('opt_raw', $opt);
+		parent::_setup_data();
+	}
+
+	public function render($is_compact = false)
+	{
+		// Setup Data
+		$this->_setup_data();
+		$this->add_data('is_compact', $is_compact);
 		return VP_View::instance()->load('control/slider', $this->get_data());
 	}
 

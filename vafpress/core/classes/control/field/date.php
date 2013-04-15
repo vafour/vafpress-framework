@@ -14,7 +14,7 @@ class VP_Control_Field_Date extends VP_Control_Field
 		parent::__construct();
 	}
 
-	public static function withArray($arr)
+	public static function withArray($arr = array())
 	{
 		$instance = new self();
 		$instance->_basic_make($arr);
@@ -24,10 +24,8 @@ class VP_Control_Field_Date extends VP_Control_Field
 		return $instance;
 	}
 
-	public function render()
+	protected function _setup_data()
 	{
-		// Setup Data
-		$this->_setup_data();
 		$opt = array(
 			'minDate'    => $this->get_min_date(),
 			'maxDate'    => $this->get_max_date(),
@@ -35,6 +33,14 @@ class VP_Control_Field_Date extends VP_Control_Field
 			'value'      => $this->get_value()
 		);
 		$this->add_data('opt', VP_Util_Text::make_opt($opt));
+		parent::_setup_data();
+	}
+
+	public function render($is_compact = false)
+	{
+		// Setup Data
+		$this->_setup_data();
+		$this->add_data('is_compact', $is_compact);
 		return VP_View::instance()->load('control/date', $this->get_data());
 	}
 

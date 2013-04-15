@@ -98,12 +98,12 @@ jQuery.fn.validationVal = function() {
 						val = $field.val();
 						break;
 					case 'radio':
-						checked = $field.attr('checked');
+						checked = $field.prop('checked');
 						if (typeof checked !== 'undefined' && checked !== false)
 							val = $field.val();
 						break;
 					case 'checkbox':
-						checked = $field.attr('checked');
+						checked = $field.prop('checked');
 						if ($this.length > 1)
 						{
 							if (typeof checked !== 'undefined' && checked !== false) { val.push($field.val()); } // multiple
@@ -385,27 +385,28 @@ vp.custom_check_radio_event = function(parent, selector){
 		var type = $control.attr('type');
 		if(type == 'radio')
 		{
-			jQuery(this).parents('.input').find('input').each(function(i){
-				jQuery(this).removeAttr('checked');
+			jQuery(this).parent().parent().find('input').each(function(i){
 				jQuery(this).removeClass('checked');
+				$control.prop('checked', false);
 			});
-			$control.attr('checked', 'checked');
-			$control.addClass('checked');
-			$control.trigger('change');
+			$control.prop('checked', true).change();
 		}
 		else if(type == 'checkbox')
 		{
-			if ($control.is(':checked')) {
-				$control.removeAttr('checked');
-				$control.removeClass('checked');
-			}
+			if ($control.is(':checked'))
+				$control.prop('checked', false);
 			else
-			{
-				$control.attr('checked', 'checked');
-				$control.addClass('checked');
-			}
+				$control.prop('checked', true);
 			$control.trigger('change');
 		}
+	});
+	jQuery(parent).delegate(selector, "change", function(e){
+		e.preventDefault();
+		$control = jQuery(this).find('input');
+		if ($control.is(':checked'))
+			$control.addClass('checked');
+		else
+			$control.removeClass('checked');
 	});
 };
 
@@ -812,6 +813,21 @@ if (jQuery.fn.datepicker)
 	});
 }
 
+// Fontawesome Chooser
+if (jQuery.fn.select2)
+{
+	var format = function vp_fontawesome_chooser_format(icon){
+		return '<span class="fontawesome"><i class="' + icon.id + '"></i>' + icon.text + '</span>';
+	};
+	jQuery('.vp-js-fontawesome').select2({
+		formatResult: format,
+		formatSelection: format,
+		escapeMarkup: function(m) { return m; },
+		allowClear: true,
+		placeholder: "Select an icon"
+	});
+}
+
 // Tipsy
 vp.init_tipsy = function()
 {
@@ -831,9 +847,9 @@ if(window.ace !== 'undefined')
 
 		var editor   = ace.edit(jQuery(this).get(0));
 		var textarea = jQuery(this).prev();
+		var options  = jQuery(this).getDatas();
 
-		var options = jQuery(this).getDatas();
-		options     = vp.parseOpt(options.opt);
+		options      = vp.parseOpt(options.opt);
 
 		editor.setTheme("ace/theme/" + options.theme);
 		editor.getSession().setMode("ace/mode/" + options.mode);
@@ -842,8 +858,10 @@ if(window.ace !== 'undefined')
 
 		editor.getSession().setValue(textarea.val());
 		editor.getSession().on('change', function(){
-			var editorDoc = editor.getSession().getDocument();
-			textarea.text(editor.getSession().getValue());
+			textarea.val(editor.getSession().getValue());
+		});
+		textarea.on('change', function(){
+			editor.getSession().setValue(textarea.val());
 		});
 
 	});
