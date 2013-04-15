@@ -36,6 +36,7 @@ For those who need a simpler way to create their own Wordpress Theme. See the [h
 * ColorPicker
 * CodeEditor
 * NoteBox
+* Fontawesome icon chooser
 
 ## Field Validation
 
@@ -60,6 +61,6 @@ And you can contact us at contact [@] vafour.com
 
 ## Credits
 
-Metabox Support made with WPAlchemy MetaBox PHP Class by Dimas Begunoff, read more about it at [WPAlchmey Site](http://www.farinspace.com/wpalchemy-metabox/).
+Metabox Support made with WPAlchemy MetaBox PHP Class by Dimas Begunoff, read more about it at [WPAlchemy Site](http://www.farinspace.com/wpalchemy-metabox/).
 
 All icons used are provided by [FontAwesome](http://fortawesome.github.com/Font-Awesome/)
