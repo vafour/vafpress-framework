@@ -89,8 +89,8 @@ return array(
 				'ver'      => '3.3.2',
 				'override' => true,
 			),
-			'jquery-select2-sortable' => array(
-				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery.select2.sortable.js',
+			'select2-sortable' => array(
+				'path'     => VP_PUBLIC_URL . '/js/vendor/select2.sortable.js',
 				'deps'     => array('jquery', 'jquery-ui-sortable', 'select2'),
 				'ver'      => '1.0.0',
 				'override' => true,
@@ -141,7 +141,7 @@ return array(
 		'slider'      => array( 'js' => array('jquery-ui-slider'), 'css' => array('jqui') ),
 		'date'        => array( 'js' => array('jquery-ui-datepicker'), 'css' => array('jqui') ),
 		'codeeditor'  => array( 'js' => array('ace-editor'), 'css' => array() ),
-		'sorter'      => array( 'js' => array('jquery-select2-sortable'), 'css' => array('select2-css', 'jqui') ),
+		'sorter'      => array( 'js' => array('select2-sortable'), 'css' => array('select2-css', 'jqui') ),
 		'fontawesome' => array( 'js' => array('select2'), 'css' => array('select2-css') ),
 	)
 
