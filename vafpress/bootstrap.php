@@ -7,9 +7,9 @@ require_once 'constants.php';
 
 
 //////////////////////////
-// Include Auotoloader  //
+// Include Autoloader  //
 //////////////////////////
-require_once VP_DIR . '/autoload.php';
+require_once 'autoload.php';
 
 //////////////////////////
 // Setup FileSystem     //
