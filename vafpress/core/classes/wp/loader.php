@@ -8,36 +8,57 @@ class VP_WP_Loader
 	public function register($loader, $hook_suffix = '')
 	{
 
-		// check if we should oupout
+		// check if we should output
 		if($hook_suffix !== '' and !$loader->can_output($hook_suffix))
 			return;
 
 		// build dependencies array
 		$deps = $loader->build();
 
+		$messages = VP_Util_Config::instance()->load('messages');
+
+		$localize = array(
+			'use_upload'           => $deps['use_upload'],
+			'use_new_media_upload' => false,
+			'public_url'           => VP_PUBLIC_URL,
+			'wp_include_url'       => includes_url(),
+			'nonce'                => wp_create_nonce( 'vafpress' ),
+			'val_msg'              => $messages['validation'],
+			'impexp_msg'           => $messages['impexp'],
+		);
+
+		
 		// determine whether to load uploader and which version
-		if($deps['localize']['use_upload'])
+		if($localize['use_upload'])
 		{
 			global $wp_version;
-			if (version_compare($wp_version, '3.5', '<')) {
+			if (version_compare($wp_version, '3.5', '<'))
+			{
 				// version is under 3.5
 				$deps['scripts'][] = 'thickbox';
 				$deps['styles'][]  = 'thickbox';
 			}
 			else
 			{
-				$deps['localize']['use_new_media_upload'] = true;
+				$localize['use_new_media_upload'] = true;
 				wp_enqueue_media();
 			}
 		}
 
 		// assign localize to be used in further process
-		$this->localize = $deps['localize'];
+		$this->localize = $localize;
+
+		// build main js localize
+		foreach ($deps['localize_default'] as $key)
+		{
+			if(array_key_exists($key, $this->localize))
+			{
+				$deps['localize'][$key] = $this->localize[$key];
+			}
+		}
 
 		// dynamically registering scripts and styles
 		$styles = VP_Util_Config::instance()->load('dependencies', 'styles.paths');
-
-		global $wp_scripts;
 
 		foreach ($deps['scripts'] as $dep)
 		{
@@ -58,7 +79,7 @@ class VP_WP_Loader
 
 		// register, enqueue and localized scripts
 		wp_register_script($deps['main_js']['name'], $deps['main_js']['path'], $deps['scripts'], '', true);
-		wp_localize_script($deps['main_js']['name'], 'vp_wp', $deps['localize']);
+		wp_localize_script($deps['main_js']['name'], $deps['localize_name'], $deps['localize']);
 		wp_enqueue_script($deps['main_js']['name']);
 
 		// register and enqueue styles

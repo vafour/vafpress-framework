@@ -35,28 +35,48 @@ class VP_Util_Config
 		}
 		else
 		{
-			$app_config  = array();
-			$core_config = array();
-			$any_loaded  = false;
-			
-			// get app config
-			if(is_file(VP_APP_CONFIG_DIR . '/'. $config_name . '.php'))
-			{
-				$app_config = require VP_APP_CONFIG_DIR . '/'. $config_name . '.php';
-				$any_loaded = true;
-			}
-			
-			// get core config
-			if(is_file(VP_CORE_CONFIG_DIR . '/'. $config_name . '.php'))
-			{
-				$core_config = require VP_CORE_CONFIG_DIR . '/'. $config_name . '.php';
-				$any_loaded = true;
-			}
 
-			if(!$any_loaded) throw new Exception("$config_name file not found.\n", 1);
+			// check if it's belong to extension
+			$ns = VP_AutoLoader::discover_namespace($config_name);
+			if($ns !== '')
+			{
+				$ext         = VP_Extension::get_extension($ns);
+				$config_file = str_replace($ns, '', $config_name);
 
-			// merge if they both exists, with app config being the priority
-			$config = VP_Util_Array::array_replace_recursive($core_config, $app_config);
+				if(is_file($ext->get_config_dir() . '/'. $config_file . '.php'))
+				{
+					$config = require $ext->get_config_dir() . '/'. $config_file . '.php';
+				}
+				else
+				{
+					throw new Exception("$config_name file not found.\n", 1);
+				}
+			}
+			else
+			{
+				$app_config  = array();
+				$core_config = array();
+				$any_loaded  = false;
+				
+				// get app config
+				if(is_file(VP_APP_CONFIG_DIR . '/'. $config_name . '.php'))
+				{
+					$app_config = require VP_APP_CONFIG_DIR . '/'. $config_name . '.php';
+					$any_loaded = true;
+				}
+				
+				// get core config
+				if(is_file(VP_CORE_CONFIG_DIR . '/'. $config_name . '.php'))
+				{
+					$core_config = require VP_CORE_CONFIG_DIR . '/'. $config_name . '.php';
+					$any_loaded = true;
+				}
+
+				if(!$any_loaded) throw new Exception("$config_name file not found.\n", 1);
+
+				// merge if they both exists, with app config being the priority
+				$config = VP_Util_Array::array_replace_recursive($core_config, $app_config);
+			}
 
 			// cache 'em
 			$this->_configs[$config_name] = $config;

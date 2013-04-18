@@ -373,6 +373,12 @@
 							<format>yy-mm-dd</format>
 							<default>-1W</default>
 						</date>
+						<fontawesome>
+							<name>fa_1</name>
+							<label>Fontawesome Icon</label>
+							<description>Fontawesome icon chooser with small preview.</description>
+							<default><item>{{first}}</item></default>
+						</fontawesome>
 						<sorter>
 							<name>so_1</name>
 							<label>Sorter</label>

@@ -30,8 +30,8 @@ class VP_View
 
 	/**
 	 * Load view file
-	 * @param	String $field_view_file Name of the view file
-	 * @param	Array $data Array of data to be binded on the view
+	 * @param  String $field_view_file Name of the view file
+	 * @param  Array $data Array of data to be binded on the view
 	 * @return String The result view
 	 */
 	public function load($field_view_file, $data = array())
@@ -41,29 +41,36 @@ class VP_View
 			throw new Exception("Sorry 'field_view_file' variable name can't be used.");
 		}
 
-		$view_file = VP_FileSystem::instance()->resolve_path('views', $field_view_file);
+		// check if it's belong to extension
+		$ns = VP_AutoLoader::discover_namespace($field_view_file);
+		if($ns !== '')
+		{
+			$ext       = VP_Extension::get_extension($ns);
+			$view_file = str_replace($ns, '', $field_view_file);
+
+			if(is_file($ext->get_views_dir() . '/'. $view_file . '.php'))
+			{
+				$view_file = $ext->get_views_dir() . '/'. $view_file . '.php';
+			}
+			else
+			{
+				$view_file = false;
+			}
+		}
+		else
+		{
+			$view_file = VP_FileSystem::instance()->resolve_path('views', $field_view_file);
+		}
 
 		if($view_file === false)
 		{
 			throw new Exception("View file not found.");
 		}
 	
-		if (array_key_exists($field_view_file, $this->_views))
-		{
-			$view = $this->_views[$field_view_file];
-		}
-		else
-		{
-			$view = file_get_contents($view_file);
-			$this->_views[$field_view_file] = $view;
-		}
-		$view = ' ?>' . $view . '<?php ';
-
 		extract($data);
 		ob_start();
-		eval($view);
-		
-		return ob_get_clean();		
+		include $view_file;
+		return ob_get_clean();
 	}
 
 }

@@ -40,6 +40,12 @@ class VP_WP_Admin
 	 */
 	public static function get_current_post_type()
 	{
+		
+		if(!class_exists('WPAlchemy_MetaBox'))
+		{
+			require_once VP_FileSystem::instance()->resolve_path('includes', 'wpalchemy/MetaBox');
+		}
+
 		$uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : NULL ;
 
 		if ( isset( $uri ) )

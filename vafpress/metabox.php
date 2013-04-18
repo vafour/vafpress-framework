@@ -3,8 +3,10 @@
 /////////////////////////////////////////
 // Include original WPAlchemy Class    //
 /////////////////////////////////////////
-$wpalchemy_path = VP_FileSystem::instance()->resolve_path('includes', 'wpalchemy/MetaBox');
-include_once $wpalchemy_path;
+if(!class_exists('WPAlchemy_MetaBox'))
+{
+	require_once VP_FileSystem::instance()->resolve_path('includes', 'wpalchemy/MetaBox');
+}
 
 /**
  * global variable to store and expose all metaboxes objects

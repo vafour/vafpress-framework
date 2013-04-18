@@ -22,12 +22,6 @@ return array(
 							'description' => __('TextBox and TextArea Showcase', 'vp_textdomain'),
 							'fields' => array(
 								array(
-									'type' => 'fontawesome',
-									'name' => 'fa_1',
-									'label' => __('Fontawesome', 'vp_textdomain'),
-									'description' => __('Font Awesome Chooser.', 'vp_textdomain'),
-								),
-								array(
 									'type' => 'textbox',
 									'name' => 'tb_1',
 									'label' => __('Alphabet', 'vp_textdomain'),
@@ -644,6 +638,15 @@ return array(
 							'max_date' => 'today',
 							'format' => 'yy-mm-dd',
 							'default' => '-1W',
+						),
+						array(
+							'type' => 'fontawesome',
+							'name' => 'fa_1',
+							'label' => __('Fontawesome Icon', 'vp_textdomain'),
+							'description' => __('Fontawesome icon chooser with small preview.', 'vp_textdomain'),
+							'default' => array(
+								'{{first}}',
+							),
 						),
 						array(
 							'type' => 'sorter',

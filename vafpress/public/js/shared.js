@@ -814,19 +814,23 @@ if (jQuery.fn.datepicker)
 }
 
 // Fontawesome Chooser
-if (jQuery.fn.select2)
+vp.init_fontawesome_chooser = function()
 {
-	var format = function vp_fontawesome_chooser_format(icon){
-		return '<span class="fontawesome"><i class="' + icon.id + '"></i>' + icon.text + '</span>';
-	};
-	jQuery('.vp-js-fontawesome').select2({
-		formatResult: format,
-		formatSelection: format,
-		escapeMarkup: function(m) { return m; },
-		allowClear: true,
-		placeholder: "Select an icon"
-	});
-}
+if (jQuery.fn.select2)
+	{
+		var format = function vp_fontawesome_chooser_format(icon){
+			return '<span class="fontawesome"><i class="' + icon.id + '"></i>' + icon.text + '</span>';
+		};
+		jQuery('.vp-js-fontawesome').select2({
+			formatResult: format,
+			formatSelection: format,
+			escapeMarkup: function(m) { return m; },
+			allowClear: true,
+			placeholder: "Select an icon"
+		});
+	}
+};
+vp.init_fontawesome_chooser();
 
 // Tipsy
 vp.init_tipsy = function()

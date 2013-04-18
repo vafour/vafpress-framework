@@ -18,17 +18,16 @@ class VP_Option_Depsloader
 		$result = array(
 			'scripts'              => array(),
 			'styles'               => array(),
-			'localize'             => array(
-				'use_upload'           => false,
-				'use_new_media_upload' => false,
-				'public_url'           => VP_PUBLIC_URL,
-				'wp_include_url'       => includes_url(),
-				'nonce'                => wp_create_nonce( 'vafpress' )
+			'localize_name'        => 'vp_opt',
+			'localize_default'     => array(
+				'nonce', 'impexp_msg'
 			),
+			'localize'             => array(),
+			'use_upload'           => false,
+			'use_new_media_upload' => false,
 			'main_js'  => array(
 				'name' => 'vp-option-js',
 				'path' => VP_PUBLIC_URL . '/js/option.js',
-				'deps' => 'shared-js'
 			),
 			'main_css' => array(
 				'name' => 'vp-option-css',
@@ -39,11 +38,11 @@ class VP_Option_Depsloader
 		$result['scripts'] = VP_Util_Config::instance()->load('dependencies', 'scripts.always');
 		$result['styles']  = VP_Util_Config::instance()->load('dependencies', 'styles.always');
 
-		$scripts     = VP_Util_Config::instance()->load('dependencies', 'scripts.paths');
-		$styles      = VP_Util_Config::instance()->load('dependencies', 'styles.paths');
-		$rules       = VP_Util_Config::instance()->load('dependencies', 'rules');
+		$scripts = VP_Util_Config::instance()->load('dependencies', 'scripts.paths');
+		$styles  = VP_Util_Config::instance()->load('dependencies', 'styles.paths');
+		$rules   = VP_Util_Config::instance()->load('dependencies', 'rules');
 
-		$fields = $set->get_fields();
+		$fields  = $set->get_fields();
 		foreach ($fields as $field)
 		{
 			$type = VP_Util_Reflection::field_type_from_class(get_class($field));
@@ -55,17 +54,11 @@ class VP_Option_Depsloader
 			// check if using upload button
 			if( $type == 'upload' )
 			{
-				$result['localize']['use_upload'] = true;
+				$result['use_upload'] = true;
 			}
 		}
 		$result['scripts'] = array_unique($result['scripts']);
 		$result['styles']  = array_unique($result['styles']);
-
-		// build localize
-		$messages = VP_Util_Config::instance()->load('messages');
-
-		$result['localize']['val_msg']     = $messages['validation'];
-		$result['localize']['impexp_msg']  = $messages['impexp'];
 
 		return $result;
 	}

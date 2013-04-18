@@ -3,13 +3,38 @@
 //////////////////////////
 // Include Constants    //
 //////////////////////////
-require_once 'constants.php';
-
+require_once 'constant.php';
 
 //////////////////////////
 // Include Autoloader  //
 //////////////////////////
 require_once 'autoload.php';
+
+//////////////////////////
+// Bootstrap Extensions //
+//////////////////////////
+foreach (glob(VP_EXT_DIR . "/*", GLOB_ONLYDIR) as $ext)
+{
+	$bs_file  = $ext . '/bootstrap.php';
+	$fc_file  = $ext . '/functions.php';
+	$ext_data = get_file_data($bs_file, array());
+	if(is_file($bs_file) and is_file($fc_file))
+	{
+		// bootstrap and get namespace
+		$ns = require_once $bs_file;
+
+		// check the existence of config and views dir
+		$views_dir  = is_dir($ext . '/views')  ? $ext . '/views'  : '';
+		$config_dir = is_dir($ext . '/config') ? $ext . '/config' : '';
+
+		VP_Extension::add_extension($ns)
+			->set_bootstrap_file($bs_file)
+			->set_functions_file($fc_file)
+			->set_views_dir($views_dir)
+			->set_config_dir($config_dir);
+	}
+}
+
 
 //////////////////////////
 // Setup FileSystem     //
@@ -49,7 +74,6 @@ $config = VP_Util_Config::instance()->load('option');
 $lang_dir = VP_THEME_DIR . '/lang';
 load_theme_textdomain('vp_textdomain', $lang_dir);
 
-// $set = new VP_Option_Control_Set();
 $set;
 $opt = array();
 
@@ -122,7 +146,20 @@ function vp_init_option_set()
 ////////////////////
 // Load Metaboxes //
 ////////////////////
-require_once 'metabox.php';
+// require_once 'metabox.php';
+
+////////////////////////
+// Run APP main file  //
+////////////////////////
+require_once VP_APP_DIR . '/app.php';
+
+////////////////////////
+// Run Extension      //
+////////////////////////
+foreach (VP_Extension::get_extensions() as $ext)
+{
+	require_once $ext->get_functions_file();
+}
 
 
 ////////////////////////////////////////////
@@ -467,12 +504,7 @@ function vp_profile()
 {
 	VP_Util_Profiler::show_memtime();
 }
-// add_action('shutdown', 'vp_profile');
-// 
-
-error_log('Log message', 3, "md5(bootstrap.php).LOG.txt");
-
-
+add_action('admin_footer', 'vp_profile');
 
 /**
  * EOF

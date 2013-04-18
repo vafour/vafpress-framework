@@ -82,6 +82,12 @@ return array(
 				'path'     => VP_PUBLIC_URL . '/js/shared.js',
 				'deps'     => array(),
 				'ver'      => '1.1',
+				'localize' => array(
+					'name' => 'vp_wp',
+					'keys' => array(
+						'use_upload', 'use_new_media_upload', 'public_url', 'wp_include_url', 'val_msg'
+					)
+				)
 			),
 			'select2' => array(
 				'path'     => VP_PUBLIC_URL . '/js/vendor/select2.min.js',

@@ -9,8 +9,9 @@
 | inside app will be loaded first and will override class with the same
 | name with core classes.
 */
-VP_AutoLoader::add_directories(VP_APP_CLASSES_DIR);
-VP_AutoLoader::add_directories(VP_CORE_CLASSES_DIR);
+VP_AutoLoader::add_namespaces(VP_NAMESPACE);
+VP_AutoLoader::add_directories(VP_APP_CLASSES_DIR, VP_NAMESPACE);
+VP_AutoLoader::add_directories(VP_CORE_CLASSES_DIR, VP_NAMESPACE);
 VP_AutoLoader::register();
 
 class VP_AutoLoader
@@ -31,6 +32,13 @@ class VP_AutoLoader
 	protected static $directories = array();
 
 	/**
+	 * THe registered namespaces
+	 * 
+	 * @var array
+	 */
+	protected static $namespaces = array();
+
+	/**
 	 * Autoloading logic
 	 * 
 	 * @param  String  $class Class name
@@ -40,13 +48,14 @@ class VP_AutoLoader
 	{
 		clearstatcache();
 
-		// halt process if not in our namespace
-		if (strpos($class, VP_NAMESPACE) !== 0) {
+		// figure out namespace and halt process if not in our namespace
+		$namespace = self::discover_namespace($class);
+		if($namespace === '')
 			return;
-		}
-		$class = self::normalize_class($class);
 
-		foreach (self::$directories as $dir)
+		$class = self::normalize_class($class, $namespace);
+
+		foreach (self::$directories[$namespace] as $dir)
 		{
 			$file = $dir . DIRECTORY_SEPARATOR . $class;
 
@@ -73,6 +82,26 @@ class VP_AutoLoader
 	}
 
 	/**
+	 * Discover namespace from a string
+	 * 
+	 * @param  String $key A class name or namespaced key
+	 * @return String      Namespace
+	 */
+	public static function discover_namespace($key)
+	{
+		$namespace = '';
+		foreach (self::$namespaces as $ns)
+		{
+			if (strpos($key, $ns) === 0)
+			{
+				$namespace = $ns;
+				break;
+			}
+		}
+		return $namespace;
+	}
+
+	/**
 	 * Register autoloader
 	 * 
 	 * @return void
@@ -87,16 +116,43 @@ class VP_AutoLoader
 	}
 
 	/**
+	 * Add a namespace
+	 *
+	 * @return void
+	 */
+	public static function add_namespaces($namespaces)
+	{
+		self::$namespaces = array_merge(self::$namespaces, (array) $namespaces);
+		self::$namespaces = array_unique(self::$namespaces);
+		usort(self::$namespaces, array('self', 'sort'));
+	}
+
+	/**
+	 * Sort by length
+	 */
+	private static function sort($a, $b)
+	{
+    	return strlen($b) - strlen($a);
+	}
+
+
+	/**
 	 * Add directories to the autoloader, loading process will be run in orderly fashion
 	 * of directory addition.
 	 * 
 	 * @param  String|Array $directories
+	 * @param  String       $namespace
 	 * @return void
 	 */
-	public static function add_directories($directories)
+	public static function add_directories($directories, $namespace)
 	{
-		self::$directories = array_merge(self::$directories, (array) $directories);
-		self::$directories = array_unique(self::$directories);
+		if(in_array($namespace, self::$namespaces))
+		{
+			if(!isset(self::$directories[$namespace]))
+				self::$directories[$namespace] = array();
+			self::$directories[$namespace] = array_merge(self::$directories[$namespace], (array) $directories);
+			self::$directories[$namespace] = array_unique(self::$directories[$namespace]);
+		}
 	}
 
 	/**
@@ -105,12 +161,16 @@ class VP_AutoLoader
 	 * @param  String|Array $directories
 	 * @return void
 	 */
-	public static function remove_directories($directories = null)
+	public static function remove_directories($directories = null, $namespace)
 	{
+		// check if namespace existed
+		if(!in_array($namespace, self::$namespaces))
+			return;
+
 		// annihilate everything if none / null passed
 		if(is_null($directories))
 		{
-			self::$directories = array();
+			self::$directories[$namespace] = array();
 		}
 		else
 		{
@@ -118,11 +178,11 @@ class VP_AutoLoader
 			$directories = (array) $directories;
 
 			// do the filtering
-			foreach (self::$directories as $key => $dir)
+			foreach (self::$directories[$namespace] as $key => $dir)
 			{
 				if(in_array($dir, $directories))
 				{
-					unset(self::$directories[$key]);
+					unset(self::$directories[$namespace][$key]);
 				}
 			}
 		}
@@ -134,10 +194,10 @@ class VP_AutoLoader
 	 * @param  String $class Class name
 	 * @return String        Normalized class name
 	 */
-	public static function normalize_class($class)
+	public static function normalize_class($class, $namespace)
 	{
 		$class = ltrim($class, '\\');
-		$class = str_replace(VP_NAMESPACE, '', $class);
+		$class = str_replace($namespace, '', $class);
 		$class = ltrim($class, '_');
 		$class = strtolower($class);
 		return str_replace('_', DIRECTORY_SEPARATOR, $class) . '.php';

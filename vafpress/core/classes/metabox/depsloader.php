@@ -18,12 +18,11 @@ class VP_Metabox_Depsloader
 		$result = array(
 			'scripts'              => array(),
 			'styles'               => array(),
-			'localize'             => array(
-				'use_upload'           => false,
-				'use_new_media_upload' => false,
-				'public_url'           => VP_PUBLIC_URL,
-				'wp_include_url'       => includes_url(),
-			),
+			'localize_name'        => 'vp_mb',
+			'localize_default'     => array(),
+			'localize'             => array(),
+			'use_upload'           => false,
+			'use_new_media_upload' => false,
 			'main_js'              => array(
 				'name' => 'vp-metabox',
 				'path' => VP_PUBLIC_URL . '/js/metabox.js'
@@ -59,7 +58,7 @@ class VP_Metabox_Depsloader
 							}
 							if( $f['type'] == 'upload' )
 							{
-								$result['localize']['use_upload'] = true;
+								$result['use_upload'] = true;
 							}
 						}
 					}
@@ -72,7 +71,7 @@ class VP_Metabox_Depsloader
 						}
 						if( $field['type'] == 'upload' )
 						{
-							$result['localize']['use_upload'] = true;
+							$result['use_upload'] = true;
 						}
 					}
 				}

@@ -214,7 +214,7 @@
 			data = {
 				action: 'vp_ajax_save',
 				option: option,
-				nonce : vp_wp.nonce
+				nonce : vp_opt.nonce
 			};
 
 		$button.attr('disabled', 'disabled');
@@ -251,7 +251,7 @@
 		    $import_status = $('#vp-js-import-status'),
 		    $import_loader = $('#vp-js-import-loader'),
 		    $button        = $(this);
-		    data           = {action: 'vp_ajax_import_option', option: $textarea.val(), nonce : vp_wp.nonce};
+		    data           = {action: 'vp_ajax_import_option', option: $textarea.val(), nonce : vp_opt.nonce};
 
 		$button.attr('disabled', 'disabled');
 		$import_loader.fadeIn(100);
@@ -260,11 +260,11 @@
 			$import_loader.fadeOut(0);
 			if (response.status)
 			{
-				$import_status.html(vp_wp.impexp_msg.import_success);
+				$import_status.html(vp_opt.impexp_msg.import_success);
 			}
 			else
 			{
-				$import_status.html(vp_wp.impexp_msg.import_failed + ': ' + response.message);
+				$import_status.html(vp_opt.impexp_msg.import_failed + ': ' + response.message);
 			}
 			$import_status.fadeIn(100);
 			setTimeout(function() {
@@ -284,7 +284,7 @@
 		var $export_status = $('#vp-js-export-status'),
 		    $export_loader = $('#vp-js-export-loader'),
 		    $button        = $(this);
-		    data           = {action: 'vp_ajax_export_option', nonce : vp_wp.nonce},
+		    data           = {action: 'vp_ajax_export_option', nonce : vp_opt.nonce},
 
 		$button.attr('disabled', 'disabled');
 		$export_loader.fadeIn(100);
@@ -293,11 +293,11 @@
 			if (!$.isEmptyObject(response.option) && response.status)
 			{
 				$('#vp-js-export_text').val(response.option);
-				$export_status.html(vp_wp.impexp_msg.export_success);
+				$export_status.html(vp_opt.impexp_msg.export_success);
 			}
 			else
 			{
-				$export_status.html(vp_wp.impexp_msg.export_failed + ': ' + response.message);
+				$export_status.html(vp_opt.impexp_msg.export_failed + ': ' + response.message);
 			}
 			$export_status.fadeIn(100);
 			setTimeout(function() {
