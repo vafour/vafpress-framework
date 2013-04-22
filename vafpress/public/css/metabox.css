@@ -443,10 +443,12 @@
 	background-repeat: no-repeat;
 	background-position: 0px -240px;
 	margin-right: 5px;
+	margin-left: 5px;
 	display: inline-block;
 	height: 14px;
 	width: 14px;
 	vertical-align: middle;
+	float: left;
 }
 
 /* fontawesome chooser + select2 width */

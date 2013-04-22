@@ -146,7 +146,7 @@ function vp_init_option_set()
 ////////////////////
 // Load Metaboxes //
 ////////////////////
-// require_once 'metabox.php';
+require_once 'metabox.php';
 
 ////////////////////////
 // Run APP main file  //
@@ -499,12 +499,6 @@ function vp_is_ajax()
 		return true;
 	return false;
 }
-
-function vp_profile()
-{
-	VP_Util_Profiler::show_memtime();
-}
-add_action('admin_footer', 'vp_profile');
 
 /**
  * EOF

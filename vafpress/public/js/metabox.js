@@ -37,7 +37,9 @@
 	// Bind event to WP publish button to process metabox validation
 	$('#post').on( 'submit', function(e){
 
-		var errors = 0;
+		var submitter = $("input[type=submit][clicked=true]"),
+		    action    = submitter.val(),
+		    errors    = 0;
 
 		$('.vp-field').removeClass('vp-error');
 		$('.validation-msg.vp-error').remove();
@@ -47,14 +49,35 @@
 
 		if(errors > 0)
 		{
-			$('#publishing-action .spinner, #publishing-action .ajax-loading').hide();
 			$notif = $('<span class="vp-metabox-error vp-js-tipsy" original-title="' + errors + ' error(s) found in metabox"></span>');
-			$notif.tipsy();
-			$notif.insertAfter('#publishing-action .spinner, #publishing-action .ajax-loading');
-			$('#publish').prop('disabled', false).removeClass('button-primary-disabled');
+
+			if(action === 'Save Draft')
+			{
+				$('#minor-publishing-actions .spinner, #minor-publishing-actions .ajax-loading').hide();
+				$notif.tipsy();
+				$notif.insertAfter('#minor-publishing-actions .spinner, #minor-publishing-actions .ajax-loading');
+				$('#save-post').prop('disabled', false).removeClass('button-disabled');
+			}
+			else if(action === 'Publish' || action === 'Update')
+			{
+				$('#publishing-action .spinner, #publishing-action .ajax-loading').hide();
+				$notif.tipsy();
+				$notif.insertAfter('#publishing-action .spinner, #publishing-action .ajax-loading');
+				$('#publish').prop('disabled', false).removeClass('button-primary-disabled');
+			}
+
+			var margin_top = Math.ceil((submitter.outerHeight() - $notif.height()) / 2);
+			if(margin_top > 0)
+				$notif.css('margin-top', margin_top);
 			e.preventDefault();
 		}
 
+	});
+
+
+	$("#post input[type=submit]").click(function() {
+		$("input[type=submit]", $(this).parents("form")).removeAttr("clicked");
+		$(this).attr("clicked", "true");
 	});
 
 

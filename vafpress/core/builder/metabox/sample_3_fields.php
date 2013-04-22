@@ -19,7 +19,7 @@ return array(
 			'label'       => 'Custom CSS',
 			'description' => 'Define your custom CSS',
 			'mode'        => 'css',
-			'theme'       => 'solarized_light'
+			'theme'       => 'solarized_light',
 		),
 		array(
 			'type'        => 'sorter',
