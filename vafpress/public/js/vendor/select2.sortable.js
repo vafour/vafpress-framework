@@ -23,7 +23,8 @@
 				if (!this) {
 					return undefined;
 				}
-				return $this.find('option:contains(' + $.trim($(this).text()) + ')')[0];
+				var text = $.trim($(this).text());
+				return $this.find('option').filter(function () { return $(this).html() == text; })[0];
 			}));
 
 			sorted.push.apply(sorted, unselected);

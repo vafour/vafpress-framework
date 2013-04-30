@@ -17,7 +17,7 @@ foreach (glob(VP_EXT_DIR . "/*", GLOB_ONLYDIR) as $ext)
 {
 	$bs_file  = $ext . '/bootstrap.php';
 	$fc_file  = $ext . '/functions.php';
-	$ext_data = get_file_data($bs_file, array());
+	// $ext_data = get_file_data($bs_file, array());
 	if(is_file($bs_file) and is_file($fc_file))
 	{
 		// bootstrap and get namespace
