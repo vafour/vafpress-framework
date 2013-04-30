@@ -281,7 +281,7 @@
 
 .vp-metabox .vp-select .field .input a,
 .vp-metabox .vp-fontawesome .field .input a {
-	height: auto;
+	height: 30px;
 	border-radius: 3px;
 	border: 1px solid #cccccc;
 }
@@ -308,10 +308,15 @@
 	height: auto;
 }
 
-.vp-metabox .vp-sorter .field .select2-search-choice {
+.vp-metabox .vp-multiselect .field .input li {
+	height: 22px;
+}
+
+.vp-metabox .vp-sorter .field .input li {
 	display: block;
 	float: none;
 	margin: 3px 5px;
+	height: 22px;
 }
 
 .vp-metabox .vp-sorter .field .input ul,

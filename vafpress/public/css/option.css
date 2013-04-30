@@ -602,10 +602,15 @@
 
 /* SORTER & MULTISELECT */
 
-.vp-sorter .field .select2-search-choice {
+.vp-multiselect .field .input li {
+	height: 22px;
+}
+
+.vp-sorter .field .input li {
 	display: block;
 	float: none;
 	margin: 3px 5px;
+	height: 22px;
 }
 
 .vp-sorter .field .input ul,
@@ -631,7 +636,7 @@
 
 .vp-select .field .input a,
 .vp-fontawesome .field .input a {
-	height: auto;
+	height: 30px;
 	background-image: none;
 	border-radius: 3px;
 	border: 1px solid #cccccc;
