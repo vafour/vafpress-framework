@@ -305,7 +305,7 @@
 .vp-section {
 	background-color: #ffffff;
 	margin-top: -1px;
-	padding: 20px 0;
+	padding: 30px 0 20px;
 	position: relative;
 	width: 100%;
 }
@@ -316,7 +316,7 @@
 	font-size: 12px;
 	line-height: 1em;
 	padding: 4px 10px;
-	margin: 10px 0 0 20px;
+	margin: 20px 0 0 20px;
 	position: absolute;
 	top: 0;
 	text-transform: uppercase;
@@ -758,6 +758,7 @@
 	display: block;
 	width: auto;
 	padding: 0;
+	font-weight: bold;
 }
 
 .vp-notebox > .description {
