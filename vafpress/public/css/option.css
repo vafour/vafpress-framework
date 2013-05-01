@@ -116,6 +116,10 @@
 	border-bottom: 1px solid #dddddd;
 }
 
+.vp-menus ul.vp-menu-level-1 > li > a i {
+	width: 30px;
+}
+
 .vp-menus ul.vp-menu-level-1 > li > a.vp-menu-dropdown:after {
 	content: ' ';
 	display: block;
@@ -173,6 +177,7 @@
 
 .vp-menus ul.vp-menu-level-2 > li a i {
 	padding-left: 25px;
+	width: 40px;
 }
 
 .vp-menus a {
@@ -190,7 +195,6 @@
 	font-size: 14px;
 	font-weight: normal;
 	padding: 12px 0 12px 15px;
-	width: 15px;
 }
 
 .vp-menus a i.custom-menu-icon {
