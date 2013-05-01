@@ -1,6 +1,6 @@
 <?php
 
-	require_once 'constants.php';
+	require_once 'constant.php';
 	require_once 'autoload.php';
 	require_once 'converter.php';
 
