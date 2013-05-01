@@ -458,8 +458,7 @@
 	*zoom: 1;
 	display: inline-block;
 	margin-right: 30px;
-	padding-top: 3px;
-	line-height: 20px;
+	line-height: 30px;
 }
 
 .vp-checkbox .field span,
@@ -702,7 +701,7 @@
 }
 
 .vp-color .field input[type="text"] {
-	width: 150px;
+	width: 170px;
 	padding: 6px 12px 6px 35px;
 }
 
