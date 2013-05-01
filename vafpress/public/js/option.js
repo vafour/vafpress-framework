@@ -118,7 +118,10 @@
 		if ($parent.hasClass('vp-current')) return;
 		$li.removeClass('vp-current');
 		$parent.addClass('vp-current');
-		$sub.children('li.vp-current').children('a').click();
+		if($sub.children('li.vp-current').exists())
+			$sub.children('li.vp-current').children('a').click();
+		else
+			$sub.children('li').first().children('a').click();
 	});
 
 	// Bindings
