@@ -535,7 +535,9 @@
 
 /* SLIDER */
 
-.vp-slider .field .input { padding-right: 80px; }
+.vp-slider .field .input {
+	padding: 10px 80px 10px 10px;
+}
 
 .vp-slider .field .slidebar {
 	background-color: transparent;
@@ -545,7 +547,6 @@
 	border-radius: 4px;
 	border: none;
 	height: 8px;
-	margin: 10px 10px;
 	position: relative;
 }
 
@@ -579,7 +580,7 @@
 	margin-top: -10px;
 	position: absolute;
 	right: 0;
-	width: 70px;
+	width: 60px;
 	top: 0;
 }
 
