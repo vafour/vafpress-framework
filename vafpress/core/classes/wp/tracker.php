@@ -9,6 +9,26 @@ if(!class_exists('VP_WP_Tracker'))
 	class VP_WP_Tracker
 	{
 
+		function schedule_track()
+		{
+			add_filter( 'cron_schedules', array( $this, 'add_schedule' ) );
+
+			if ( !wp_next_scheduled( 'vpf_tracking' ) ) {
+				wp_schedule_event( time(), 'weekly', 'vpf_tracking' );
+			}
+			add_action( 'vpf_tracking', array( $this, 'track' ) );
+		}
+
+		function add_schedule()
+		{
+			// Adds once weekly to the existing schedules.
+			$schedules['weekly'] = array(
+				'interval' => 60 * 60 * 24 * 7,
+				'display' => __( 'Once Weekly' )
+			);
+			return $schedules;
+		}
+
 		function track($old_theme = null)
 		{
 			$wp_root_path = str_replace('/wp-content/themes', '', get_theme_root());

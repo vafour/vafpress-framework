@@ -127,19 +127,41 @@ function vp_init_option_set()
 	$parser = new VP_Option_Parser();
 	$set	= $parser->parse_array_options($options);
 
+	// setup util menu
+	$util_menu = new VP_Option_Control_Group_Menu();
+	$util_menu->set_title(__('Utility', 'vp_textdomain'));
+	$util_menu->set_name('utility');
+	$util_menu->set_icon('font-awesome:icon-wrench');
+
+	// Add tracking option
+	$et_section = new VP_Option_Control_Group_Section();
+	$et_section->set_name('et_section');
+
+	$help_note = new VP_Control_Field_NoteBox();
+	$help_note->set_label('Help Us!');
+	$help_note->set_status('info');
+	$help_note->set_description('Send analytic data to Vafpress to help us improve the framework better, we\'re not collecting private data, and this won\'t slow down your site :)');
+
+	$enable_tracker = new VP_Control_Field_Toggle();
+	$enable_tracker->set_name('enable_tracking');
+	$enable_tracker->set_label('Enable Tracking');
+
+	$et_section->add_field($help_note);
+	$et_section->add_field($enable_tracker);
+
+	$util_menu->add_control($et_section);
+
 	// Add Import and Export Option Functionality
 	if(VP_Util_Config::instance()->load('option', 'impexp'))
 	{
-		$ie_menu    = new VP_Option_Control_Group_Menu();
+		$ie_section = new VP_Option_Control_Group_Section();
+		$ie_section->set_name('ie_section');
+		$ie_section->set_title('Import/Export Settings');
 		$ie_field   = new VP_Option_Control_Field_ImpExp();
-
-		$ie_menu->set_title(__('Import and Export', 'vp_textdomain'));
-		$ie_menu->set_name('impexp');
-		$ie_menu->set_icon('font-awesome:icon-wrench');
-		$ie_menu->add_control($ie_field);
-
-		$set->add_menu($ie_menu);
+		$ie_section->add_field($ie_field);
+		$util_menu->add_control($ie_section);
 	}
+	$set->add_menu($util_menu);
 }
 
 
@@ -294,7 +316,7 @@ function vp_deactivate_theme()
 	// send data if it's not vpf theme activated
 	if(!get_option("vpf_active_$new_theme"))
 	{
-		if(!vp_is_local())
+		if(vp_should_track())
 		{
 			$tracker    = new VP_WP_Tracker();
 			$tracker->track($stylesheet);
@@ -312,11 +334,11 @@ function vp_activate_theme()
 	// setup option to db
 	vp_setup_options_to_db();
 
-	if(!vp_is_local())
+	if(vp_should_track())
 	{
-    	$tracker = new VP_WP_Tracker();
-    	$tracker->track();
-    }
+		$tracker = new VP_WP_Tracker();
+		$tracker->track();
+	}
 }
 
 function vp_setup_options_to_db()
@@ -333,12 +355,28 @@ function vp_setup_options_to_db()
 	}
 }
 
+function vp_should_track()
+{
+	if(vp_option('enable_tracking') and !vp_is_local())
+	{
+		return true;
+	}
+	return false;
+}
+
 function vp_is_local()
 {
 	$local_hosts = array('localhost', '127.0.0.1', '::1');
 	if(isset($_SERVER['HTTP_HOST']) and !in_array($_SERVER['HTTP_HOST'], $local_hosts))
 		return false;
 	return true;
+}
+
+// schedule tracker
+if(vp_should_track())
+{
+	$tracker = new VP_WP_Tracker();
+	$tracker->schedule_track();
 }
 
 // register theme deactivation hook

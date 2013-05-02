@@ -7,13 +7,13 @@ class VP_Control_Field_CheckBox extends VP_Control_FieldMulti implements VP_Mult
 	{
 		parent::__construct();
 		$this->_value = array();
+		$this->add_container_extra_classes('vp-checked-field');
 	}
 
 	public static function withArray($arr = array())
 	{
 		$instance = new self();
 		$instance->_basic_make($arr);
-		$instance->add_container_extra_classes('vp-checked-field');
 		return $instance;
 	}
 

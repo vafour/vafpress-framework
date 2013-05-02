@@ -6,13 +6,13 @@ class VP_Control_Field_Toggle extends VP_Control_Field
 	public function __construct()
 	{
 		parent::__construct();
+		$this->add_container_extra_classes('vp-checked-field');
 	}
 
 	public static function withArray($arr = array())
 	{
 		$instance = new self();
 		$instance->_basic_make($arr);
-		$instance->add_container_extra_classes('vp-checked-field');
 		return $instance;
 	}
 

@@ -225,7 +225,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		}
 		else
 		{
-			$mb->the_field($field['name'], WPALCHEMY_FIELD_HINT_CHECKBOX_MULTI);						
+			$mb->the_field($field['name'], WPALCHEMY_FIELD_HINT_CHECKBOX_MULTI);
 		}
 		$field['name'] = $mb->get_the_name();
 
@@ -239,9 +239,9 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		$default  = $vp_field->get_default();
 
 		// if value is null and default exist, use default
-		if( is_null($value) and !empty($default) )
+		if( is_null($value) and !is_null($default) )
 		{
-			$value = $default;				
+			$value = $default;
 		}
 		// if not the set up value from mb
 		else

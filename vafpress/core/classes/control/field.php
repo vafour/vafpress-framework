@@ -118,7 +118,7 @@ abstract class VP_Control_Field implements iFactory
 	{
 		$this->set_name(isset($arr['name']) ? $arr['name'] : '')
 			 ->set_label(isset($arr['label']) ? $arr['label'] : '')
-			 ->set_default(isset($arr['default']) ? $arr['default'] : '')
+			 ->set_default(isset($arr['default']) ? $arr['default'] : null)
 			 ->set_description(isset($arr['description']) ? $arr['description'] : '')
 			 ->set_validation(isset($arr['validation']) ? $arr['validation'] : '');
 

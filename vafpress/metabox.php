@@ -73,7 +73,7 @@ function vp_metabox($key)
 			}
 			else
 			{
-				throw new Exception("Metabox Undefined", 1);
+				return null;
 			}
 		}
 		else
@@ -90,7 +90,7 @@ function vp_metabox($key)
 				}
 				else
 				{
-					throw new Exception("No Value", 1);
+					return null;
 				}
 			}
 		}

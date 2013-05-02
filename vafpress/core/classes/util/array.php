@@ -5,12 +5,12 @@ class VP_Util_Array
 
 	public static function first($array)
 	{
-		if( !empty($array) )
+		if( !empty($array) and !is_null($array) )
 		{
 			list($array) = $array;
 			return $array;
 		}
-		return false;
+		return null;
 	}
 
 	public static function deep_values($array, $the_key)

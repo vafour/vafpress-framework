@@ -7,13 +7,13 @@ class VP_Control_Field_RadioImage extends VP_Control_FieldMultiImage
 	{
 		parent::__construct();
 		$this->_value = array();
+		$this->add_container_extra_classes('vp-checked-field');
 	}
 
 	public static function withArray($arr = array())
 	{
 		$instance = new self();
 		$instance->_basic_make($arr);
-		$instance->add_container_extra_classes('vp-checked-field');
 				
 		// Turn default array to single value
 		$instance->set_default(VP_Util_Array::first($instance->get_default()));
