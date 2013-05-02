@@ -283,9 +283,6 @@ function vp_load_scripts_and_styles()
 	$opt_loader->register($opt_deps_loader);
 }
 
-// development mode notice
-add_action('admin_notices', 'vp_opt_notice_devmode');
-
 function vp_opt_notice_devmode($hook_suffix)
 {
 	global $opt_deps_loader;
@@ -300,6 +297,8 @@ function vp_opt_notice_devmode($hook_suffix)
 	}
 }
 
+// development mode notice
+add_action('admin_notices', 'vp_opt_notice_devmode');
 
 ///////////////////////////////////////////////
 // Theme Activation and Deactivation actions //

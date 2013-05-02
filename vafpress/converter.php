@@ -19,9 +19,9 @@ class VP_Converter
 		$config          = VP_Util_Config::instance()->load('option');
 
 		// Set textdomain
-		if( isset($configs['text_domain']) )
+		if( isset($config['text_domain']) )
 		{
-			$this->text_domain = $configs['text_domain'];
+			$this->text_domain = $config['text_domain'];
 		}
 
 		// Open root array
