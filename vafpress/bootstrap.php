@@ -127,7 +127,7 @@ function vp_init_option_set()
 	$parser = new VP_Option_Parser();
 	$set	= $parser->parse_array_options($options);
 
-	// setup util menu
+	// setup utility menu
 	$util_menu = new VP_Option_Control_Group_Menu();
 	$util_menu->set_title(__('Utility', 'vp_textdomain'));
 	$util_menu->set_name('utility');
@@ -138,13 +138,13 @@ function vp_init_option_set()
 	$et_section->set_name('et_section');
 
 	$help_note = new VP_Control_Field_NoteBox();
-	$help_note->set_label('Help Us!');
+	$help_note->set_label(__('Help Us!', 'vp_textdomain'));
 	$help_note->set_status('info');
-	$help_note->set_description('Send analytic data to Vafpress to help us improve the framework better, we\'re not collecting private data, and this won\'t slow down your site :)');
+	$help_note->set_description(__('Send analytic data to Vafpress to help us improve the framework better, we\'re not collecting private data, and this won\'t slow down your site :)', 'vp_textdomain'));
 
 	$enable_tracker = new VP_Control_Field_Toggle();
 	$enable_tracker->set_name('enable_tracking');
-	$enable_tracker->set_label('Enable Tracking');
+	$enable_tracker->set_label(__('Enable Tracking', 'vp_textdomain'));
 
 	$et_section->add_field($help_note);
 	$et_section->add_field($enable_tracker);
@@ -156,7 +156,7 @@ function vp_init_option_set()
 	{
 		$ie_section = new VP_Option_Control_Group_Section();
 		$ie_section->set_name('ie_section');
-		$ie_section->set_title('Import/Export Settings');
+		$ie_section->set_title(__('Import / Export Settings', 'vp_textdomain'));
 		$ie_field   = new VP_Option_Control_Field_ImpExp();
 		$ie_section->add_field($ie_field);
 		$util_menu->add_control($ie_section);
