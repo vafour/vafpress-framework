@@ -361,7 +361,7 @@
 	padding: 10px 20px 10px 55px;
 	position: relative;
 	margin: 10px 0;
-	min-height: 40px;
+	min-height: 50px;
 	width: auto;
 }
 
@@ -370,7 +370,7 @@
 	font-size: 30px;
 	line-height: 1em;
 	left: 0;
-	margin: 8px 0 0 8px;
+	margin: 9px;
 	opacity: 0.3;
 	position: absolute;
 	text-align: center;
