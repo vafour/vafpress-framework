@@ -606,15 +606,12 @@
 
 /* SORTER & MULTISELECT */
 
-.vp-multiselect .field .input li {
-	height: 22px;
-}
-
-.vp-sorter .field .input li {
+.vp-sorter .field .input li.ui-state-highlight,
+.vp-sorter .field .input li.select2-search-choice {
 	display: block;
 	float: none;
 	margin: 3px 5px;
-	height: 22px;
+	height: 21px;
 }
 
 .vp-sorter .field .input ul,
