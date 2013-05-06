@@ -59,7 +59,11 @@ foreach ($metas as $meta)
  */
 function vp_metabox($key)
 {
-	global $vp_metaboxes;
+	global $vp_metaboxes, $post;
+
+	if(is_null($post))
+		return null;
+
 	$keys = explode('.', $key);
 	$temp = NULL;
 	foreach ($keys as $idx => $key)
