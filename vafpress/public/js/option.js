@@ -210,7 +210,7 @@
 
 		// otherwise, do saving
 		var $loading = $('.vp-js-save-loader'),
-			$button = $(this),
+			$button = $(this).find('.vp-save'),
 			$save_status = $('.vp-js-save-status'),
 			$form = $('#vp-option-form'),
 			option = $form.serializeArray(),

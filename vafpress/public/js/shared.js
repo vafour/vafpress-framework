@@ -263,7 +263,7 @@ vp.validateURL = function(type, val) {
 	// ignore array and empty string, since they should be handled by 'required' rule
 	if (val === '' || jQuery.isArray(val) || jQuery.inArray(type, ['vp-textbox', 'vp-textarea']) == -1) { return true; }
 
-	var regex = new RegExp(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i);
+	var regex = new RegExp(/^(ftp|http|https):\/\/[^ "]+$/i);
 	return regex.test(val);
 };
 

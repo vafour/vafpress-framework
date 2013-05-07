@@ -45,7 +45,7 @@
 				});
 
 				// Apply options ordering in form submit
-				$select.closest('form').on('submit', function(){
+				$select.closest('form').unbind('submit.select2sortable').on('submit.select2sortable', function(){
 					var $options = $select.select2Order();
 					$select.children().remove();
 					$select.append($options);
