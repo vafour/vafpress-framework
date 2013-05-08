@@ -814,14 +814,16 @@ if (jQuery.fn.datepicker)
 }
 
 // Fontawesome Chooser
-vp.init_fontawesome_chooser = function()
+vp.init_fontawesome_chooser = function($elements)
 {
 if (jQuery.fn.select2)
 	{
 		var format = function vp_fontawesome_chooser_format(icon){
 			return '<span class="fontawesome"><i class="' + icon.id + '"></i>' + icon.text + '</span>';
 		};
-		jQuery('.vp-js-fontawesome').select2({
+		$elements = $elements || jQuery('.vp-js-fontawesome');
+		console.log($elements);
+		$elements.select2({
 			formatResult: format,
 			formatSelection: format,
 			escapeMarkup: function(m) { return m; },
@@ -830,7 +832,6 @@ if (jQuery.fn.select2)
 		});
 	}
 };
-vp.init_fontawesome_chooser();
 
 // Tipsy
 vp.init_tipsy = function()

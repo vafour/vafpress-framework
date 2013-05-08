@@ -28,6 +28,7 @@
 	// init select2
 	if ($.fn.select2) $('.vp-js-select2').select2({allowClear: true, placeholder: "Select option(s)"});
 	if ($.fn.select2Sortable) $('.vp-js-sorter').select2().select2Sortable();
+	vp.init_fontawesome_chooser(jQuery('.vp-js-fontawesome'));
 
 	/* BEGIN FETCHING ALL FIELDS' VALIDATION and BINDING RULES */
 	var validation   = [];

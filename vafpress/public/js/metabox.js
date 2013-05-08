@@ -5,6 +5,7 @@
 		allowClear: true, placeholder: "Select option(s)"
 	});
 	if ($.fn.select2Sortable) jQuery('.vp-metabox .vp-wpa-group:not(.tocopy) .vp-js-sorter, .vp-meta-single .vp-js-sorter').select2().select2Sortable();
+	vp.init_fontawesome_chooser(jQuery('.vp-metabox .vp-wpa-group:not(.tocopy) .vp-js-fontawesome, .vp-meta-single .vp-js-fontawesome'));
 
 	vp.is_multianswer = function(type){
 		var multi = ['vp-checkbox', 'vp-checkimage', 'vp-multiselect'];
@@ -210,6 +211,7 @@
 		// Re-init Select2
 		if ($.fn.select2) clone.find('.vp-js-select2').select2({allowClear: true, placeholder: "Select option(s)"});
 		if ($.fn.select2Sortable) clone.find('.vp-js-sorter').select2().select2Sortable();
+		vp.init_fontawesome_chooser(clone.find('select.vp-js-fontawesome'));
 
 		process_binding(bindings);
 		process_dependency(dependencies);

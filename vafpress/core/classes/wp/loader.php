@@ -5,6 +5,20 @@ class VP_WP_Loader
 
 	private $localize;
 
+	private $_loaders;
+
+	public function add_loader($loader)
+	{
+		$_loaders[] = $loader;
+	}
+
+	public function rregister($hook_suffix)
+	{
+
+	}
+
+
+
 	public function register($loader, $hook_suffix = '')
 	{
 
