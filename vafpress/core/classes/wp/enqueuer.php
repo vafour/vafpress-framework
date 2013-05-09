@@ -1,30 +1,35 @@
 <?php
 
+/**
+ * For singleton accessor, use VP_WP_MassEnqueuer class instead.
+ */
 class VP_WP_Enqueuer
 {
 
-	private $args;
+	private $_loaders;
 
-	private $id;
-
-	private $localize;
+	private $_id;
 
 	public function __construct()
 	{
-		$args     = null;
-		$this->id = spl_object_hash($this);
-		$loader = new VP_WP_Loader();
-		add_action('vp_loader_register_' . $this->id, array($loader, 'register'), 10, 2);
+		$this->_id = spl_object_hash($this);
+		$loader    = new VP_WP_Loader();
+		add_action('vp_loader_register_' . $this->_id, array($loader, 'register'), 10, 2);
 	}
 
-	public function register($deps)
+	public function add_loader($loader)
 	{
-		$this->args = $deps;
+		$this->_loaders[] = $loader;
+	}
+
+	public function register()
+	{
 		add_action('admin_enqueue_scripts', array($this, 'register_caller'));
 	}
 
 	public function register_caller($hook_suffix)
 	{
-		do_action('vp_loader_register_' . $this->id, $this->args, $hook_suffix);
+		do_action('vp_loader_register_' . $this->_id, $this->_loaders, $hook_suffix);
 	}
+
 }

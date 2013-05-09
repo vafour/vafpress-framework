@@ -537,6 +537,9 @@ function vp_is_ajax()
 	return false;
 }
 
+// do scripts and styles dependencies for Mass Enqueuer
+VP_WP_MassEnqueuer::instance()->register();
+
 /**
  * EOF
  */

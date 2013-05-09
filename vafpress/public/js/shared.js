@@ -816,13 +816,12 @@ if (jQuery.fn.datepicker)
 // Fontawesome Chooser
 vp.init_fontawesome_chooser = function($elements)
 {
-if (jQuery.fn.select2)
+	if (jQuery.fn.select2)
 	{
 		var format = function vp_fontawesome_chooser_format(icon){
 			return '<span class="fontawesome"><i class="' + icon.id + '"></i>' + icon.text + '</span>';
 		};
 		$elements = $elements || jQuery('.vp-js-fontawesome');
-		console.log($elements);
 		$elements.select2({
 			formatResult: format,
 			formatSelection: format,
