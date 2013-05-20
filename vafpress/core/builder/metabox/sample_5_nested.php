@@ -25,8 +25,10 @@ return array(
 							'title'     => __('Column', 'vp_textdomain'),
 							'fields'    => array(
 								array(
-									'type' => 'textarea',
-									'name' => 'content',
+									// 'type'  => 'textarea',
+									'type'  => 'wpeditor',
+									'label' => __('Content', 'vp_textdomain'),
+									'name'  => 'content',
 								),
 							),
 						),
