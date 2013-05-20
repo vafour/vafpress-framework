@@ -85,7 +85,30 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 			{
 				foreach ($field['groups'] as $group)
 				{
-					$this->_enbind($group['childs']);
+					foreach ($group as $f)
+					{
+						if($f instanceof VP_Control_FieldMulti)
+						{
+							$bind = $f->get_bind();
+							if(!empty($bind))
+							{
+								$bind   = explode('|', $bind);
+								$func   = $bind[0];
+								$params = $bind[1];
+								$params = explode(',', $params);
+								$values = array();
+								foreach ($params as $param)
+								{
+									if(array_key_exists($param, $group))
+									{
+										$values[] = $group[$param]->get_value();
+									}
+								}
+								$items  = call_user_func_array($func, $values);
+								$f->set_items_from_array($items);
+							}
+						}
+					}
 				}
 			}
 			else
@@ -95,6 +118,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 					$bind = $field->get_bind();
 					if(!empty($bind))
 					{
+
 						$bind   = explode('|', $bind);
 						$func   = $bind[0];
 						$params = $bind[1];
@@ -126,9 +150,9 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 				{
 					if(is_array($field))
 					{
-						foreach ($field['groups'] as &$group)
+						foreach ($field['groups'] as $group)
 						{
-							loop_fields($group['childs']);
+							loop_fields($group);
 						}
 					}
 
@@ -214,26 +238,18 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		// get default from array
 		$default  = $vp_field->get_default();
 
-		// if tocopy always assign default
-		if( $mb->is_in_last() )
+		// if value is null and default exist, use default
+		if( is_null($value) and !is_null($default) )
 		{
 			$value = $default;
 		}
+		// if not the set up value from mb
 		else
 		{
-			// if value is null and default exist, use default
-			if( is_null($value) and !is_null($default) and is_null($this->meta) )
+			if( VP_Util_Reflection::is_multiselectable($field['type']) )
 			{
-				$value = $default;
-			}
-			// if not then set up value from mb
-			else
-			{
-				if( VP_Util_Reflection::is_multiselectable($field['type']) )
-				{
-					if( !is_array($value) )
-						$value = array( $value );
-				}
+				if( !is_array($value) )
+					$value = array( $value );
 			}
 		}
 		$vp_field->set_value($value);
@@ -248,50 +264,34 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 
 	function _enfactor_group($field, $mb, $repeating)
 	{
-		$ignore       = array('type', 'length', 'fields');
-		$groups       = array();
-		$indexed_name = '';
+		$ignore = array('type', 'length', 'fields');
+		$groups = array();
 		if($repeating)
 		{
 			while($mb->have_fields_and_multi($field['name']))
 			{
-				if ($indexed_name === '') $indexed_name = $mb->get_the_loop_group_id();
 				$fields = array();
 				foreach ($field['fields'] as $f)
 				{
-					if($f['type'] === 'group')
-	 					$fields[$f['name']] = $this->_enfactor_group($f, $mb, $f['repeating']);
-					else
-	 					$fields[$f['name']] = $this->_enfactor_field($f, $mb, true);
+	 				$fields[$f['name']] = $this->_enfactor_field($f, $mb, true);
 				}
-				$groups[] = array(
-					'name'   => $mb->get_the_loop_group_name(true),
-					'childs' => $fields
-				);
+				$groups[] = $fields;
 			}
 		}
 		else
 		{
 			while($mb->have_fields($field['name'], $field['length']))
 			{
-				if ($indexed_name === '') $indexed_name = $mb->get_the_loop_group_id();
 				$fields = array();
 				foreach ($field['fields'] as $f)
 				{
-					if($f['type'] === 'group')
-	 					$fields[$f['name']] = $this->_enfactor_group($f, $mb, $f['repeating']);
-					else
-	 					$fields[$f['name']] = $this->_enfactor_field($f, $mb, true);
+	 				$fields[$f['name']] = $this->_enfactor_field($f, $mb, true);
 				}
-				$groups[] = array(
-					'name'   => $mb->get_the_loop_group_name(true),
-					'childs' => $fields
-				);
+				$groups[] = $fields;
 			}
 		}
 		// assign groups
-		$group['groups']       = $groups;
-		$group['indexed_name'] = $indexed_name;
+		$group['groups'] = $groups;
 
 		// assign other information
 		$keys = array_keys($field);
@@ -307,7 +307,6 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 
 	function _enview($fields)
 	{
-		// print_r($fields);
 		foreach ($fields as $name => $field)
 		{
 			if( is_array($field) and $field['repeating'] )
@@ -348,12 +347,9 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		{
 			$html .= '<div class="vp-wpa-group wpa_group wpa_group-' . $name . '">';
 			$html .= '<div class="vp-controls">';
-			foreach ($g['childs'] as $f)
-			{	
-				if(is_array($f))
-					$html .= $this->_render_group($f);
-				else
-					$html .= $this->_render_field($f);
+			foreach ($g as $f)
+			{
+				$html .= $this->_render_field($f);
 			}
 			$html .= '</div>';
 			$html .= '</div>';
@@ -367,11 +363,10 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 	function _render_repeating_group($group)
 	{
 		$name       = $group['name'];
-		$uid        = $group['indexed_name'];
 		$dependency = isset($group['dependency']) ? $group['dependency']['function'] . '|' . $group['dependency']['field'] : '';
 
 		$html  = '';
-		$html .= '<div id="wpa_loop-' . $uid
+		$html .= '<div id="wpa_loop-' . $name
 				. '" class="vp-wpa-loop wpa_loop wpa_loop-' . $name . ' vp-repeating-loop vp-meta-group'
 				. (isset($group['container_extra_classes']) ? (' ' . implode(' ', $group['container_extra_classes'])) : '')
 				. '"'
@@ -385,27 +380,11 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 			$class = '';
 			if ($g === end($group['groups']))   $class = ' last tocopy';
 			if ($g === reset($group['groups'])) $class = ' first';
-			$html .= '<div id="'. $g['name'] .'" class="vp-wpa-group wpa_group wpa_group-' . $name . $class . '">';
+			$html .= '<div class="vp-wpa-group wpa_group wpa_group-' . $name . $class . '">';
 			$html .= '<div class="vp-controls">';
-			if ($g === end($group['groups']))
+			foreach ($g as $f)
 			{
-				$tocopy = $g['name'] . '[tocopy]';
-				$html  .= '<input type="hidden" class="tocopy-hidden" name="' . $tocopy . '" value="1">';
-			}
-			foreach ($g['childs'] as $f)
-			{
-
-				if( is_array($f) and $f['repeating'] )
-					$html .= $this->_render_repeating_group($f);
-				else if( is_array($f) and !$f['repeating'] )
-					$html .= $this->_render_group($f);
-				else
-					$html .= $this->_render_field($f);
-
-				// if(is_array($f))
-				// 	$html .= $this->_render_group($f);
-				// else
-				// 	$html .= $this->_render_field($f);
+				$html .= $this->_render_field($f);
 			}
 			$html .= '</div>';
 			$html .= '<div class="vp-wpa-group-remove">';
@@ -421,6 +400,33 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		$html .= '</div>';
 
 		return $html;
+	}
+
+	// get all groups index as array
+	function _get_groups_idx()
+	{
+		$groups = array();
+		foreach ($this->template as $field)
+		{
+			if( $field['type'] == 'group' )
+			{
+				$groups[] = $field['name'];
+			}
+		}
+		return $groups;
+	}
+
+	function _get_repeating_groups_idx()
+	{
+		$groups = array();
+		foreach ($this->template as $field)
+		{
+			if( $field['type'] == 'group' and $field['repeating'] )
+			{
+				$groups[] = $field['name'];
+			}
+		}
+		return $groups;
 	}
 
 	function _save($post_id) 
@@ -452,23 +458,54 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		// authentication passed, save data
 		$new_data = isset( $_POST[$this->id] ) ? $_POST[$this->id] : NULL ;
 
+		// remove 'to-copy' item from being saved
+		$groups   = $this->_get_groups_idx();
+		$r_groups = $this->_get_repeating_groups_idx();
+		if(!is_null($new_data)) foreach ($new_data as $key => &$value)
+		{
+			if( in_array($key, $r_groups) and is_array($value) )
+			{
+				end($value);
+				$key = key($value);
+				unset($value[$key]);
+			}
+		}
+
+		// try to normalize data, since alchemy clean any empty value, it will
+		// throw away empty checkbox value, making unchecked checkbox not being saved
+		$scheme = $this->_get_scheme();
+		// print_r($scheme);
 		// echo 'before';
 		// print_r($new_data);
+		foreach ($scheme as $key => &$value)
+		{
+			if( in_array($key, $groups) and is_array($value) )
+			{
+				WPAlchemy_MetaBox::clean($new_data[$key]);
+				$count = count($new_data[$key]);
+				$data  = $value[0];
+				$value = array();
+				// print_r($new_data[$key]);
+				for ($i=0; $i < $count; $i++)
+				{ 
+					array_push($value, $data);
+				}
 
-		// $groups = array();
-		// $this->_get_repeating_groups_names($groups, $this->template);
-		// print_r($groups);
-
-		// $this->_clean_tocopy_2($new_data, $groups);
-		$this->_clean_tocopy($new_data);
-
+			}
+		}
 		// echo 'after';
 		// print_r($new_data);
+		// print_r($scheme);
+
+		// WPAlchemy_MetaBox::clean($new_data);
 
 		if (empty($new_data))
 		{
 			$new_data = NULL;
 		}
+
+		// continuation of normalizing data
+		$new_data = VP_Util_Array::array_merge_recursive_all($scheme, $new_data);
 
 		// filter: save
 		if ($this->has_filter('save'))
@@ -564,63 +601,66 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		return $post_id;
 	}
 
-	private function _clean_tocopy(&$arr)
+	private function _get_scheme()
 	{
-		if(is_array($arr))
-		{
-			foreach ($arr as $key => $value)
-			{
-				if(is_array($value))
-				{
-					$this->_clean_tocopy($arr[$key]);
-					if(array_key_exists('tocopy', $value))
-					{
-						unset($arr[$key]);
-					}
-				}
-			}
-		}
-	}
 
-	private function _clean_tocopy_2(&$arr, $groups)
-	{
-		if(is_array($arr))
-		{
-			foreach ($arr as $key => $value)
-			{
-				if(is_array($value))
-				{
-					var_dump($key);
-					var_dump($value);
-					$this->_clean_tocopy_2($arr[$key], $groups);
-					if( in_array( $key, $groups ) )
-					{
-						end($value);
-						$last = key($value);
-						echo $key;
-						echo 'here';
-						var_dump($last);
-						unset($arr[$key][$last]);
-					}
-				}
-			}
-		}
-	}
+		$this->in_template = TRUE;
 
-	private function _get_repeating_groups_names(&$groups, $fields)
-	{
+		$scheme      = array();
+		$curr_group  = '';
+		$is_in_group = false;
+		$fields      = $this->template;
+
 		foreach ($fields as $field)
 		{
 			if( $field['type'] == 'group' and $field['repeating'] )
 			{
-				$groups[] = $field['name'];
-				$groups[] = $this->_get_repeating_groups_names($groups, $field['fields']);
+				$curr_group          = $field['name'];
+				$scheme[$curr_group] = array();
+				$is_in_group         = true;
+				while($this->have_fields_and_multi($curr_group))
+				{
+					$ops      = array();
+					foreach ($field['fields'] as $f)
+					{
+						if(VP_Util_Reflection::is_multiselectable($f['type']))
+							$ops[$f['name']] = array();
+						else
+							$ops[$f['name']] = '';
+					}
+					$scheme[$curr_group][] = $ops;
+				}
+				end($scheme[$curr_group]);
+				$key = key($scheme[$curr_group]);
+				unset($scheme[$curr_group][$key]);
+			}
+			else if( $field['type'] == 'group' and ! $field['repeating'] )
+			{
+				$curr_group          = $field['name'];
+				$scheme[$curr_group] = array();
+				$is_in_group         = true;
+				while($this->have_fields($curr_group, $field['length']))
+				{
+					$ops = array();
+					foreach ($field['fields'] as $f)
+					{
+						if(VP_Util_Reflection::is_multiselectable($f['type']))
+							$ops[$f['name']] = array();
+						else
+							$ops[$f['name']] = '';
+					}
+					$scheme[$curr_group][] = $ops;
+				}
+			}
+			else
+			{
+				if(VP_Util_Reflection::is_multiselectable($field['type']))
+					$scheme[$field['name']] = array();
+				else
+					$scheme[$field['name']] = '';
 			}
 		}
+		return $scheme;
 	}
 
 }
-
-/**
- * EOF
- */

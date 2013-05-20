@@ -416,6 +416,7 @@ class WPAlchemy_MetaBox
 
 	var $meta;
 	var $name;
+	var $subname;
 
 	/**
 	 * Used to provide field type hinting
@@ -1367,10 +1368,7 @@ class WPAlchemy_MetaBox
 				{
 					e.preventDefault();
 
-					var p = elem.parents('.wpa_group:first');
-
-					if(p.length <= 0)
-						p = elem.parents('.postbox'); /*wp*/
+					var p = elem.parents('.postbox'); /*wp*/
 
 					var the_name = elem.attr('class').match(/dodelete-([a-zA-Z0-9_-]*)/i);
 
@@ -1385,33 +1383,30 @@ class WPAlchemy_MetaBox
 						}
 						else
 						{
-							elem.parents('.wpa_group:first').remove();
+							elem.parents('.wpa_group').remove();
 						}
 						
-						if(!the_name)
+						var the_group = elem.parents('.wpa_group');
+						
+						if(the_group && the_group.attr('class'))
 						{
-							var the_group = elem.parents('.wpa_group');
-							if(the_group && the_group.attr('class'))
-							{
-								the_name = the_group.attr('class').match(/wpa_group-([a-zA-Z0-9_-]*)/i);
-								the_name = (the_name && the_name[1]) ? the_name[1] : null ;
-							}
+							the_name = the_group.attr('class').match(/wpa_group-([a-zA-Z0-9_-]*)/i);
+
+							the_name = (the_name && the_name[1]) ? the_name[1] : null ;
+
+							checkLoopLimit(the_name);
 						}
-						checkLoopLimit(the_name);
 
 						$.wpalchemy.trigger('wpa_delete');
 					}
 				}
 			});
 
-			$(document).on('click', '[class*=docopy-]', function(e)
+			$('[class*=docopy-]').click(function(e)
 			{
 				e.preventDefault();
 
-				var p = $(this).parents('.wpa_group:first');
-
-				if(p.length <= 0)
-					p = $(this).parents('.postbox'); /*wp*/
+				var p = $(this).parents('.postbox'); /*wp*/
 
 				var the_name = $(this).attr('class').match(/docopy-([a-zA-Z0-9_-]*)/i)[1];
 
@@ -1429,12 +1424,11 @@ class WPAlchemy_MetaBox
 
 						if (the_prop)
 						{
-							var reg = new RegExp('\\['+the_name+'\\]\\[(\\d+)\\]', 'i');
-							var the_match = the_prop.match(reg);
+							var the_match = the_prop.match(/\[(\d+)\]/i);
 
 							if (the_match)
 							{
-								the_prop = the_prop.replace(the_match[0], '['+ the_name + ']' + '['+ (+the_match[1]+1) +']');
+								the_prop = the_prop.replace(the_match[0],'['+ (+the_match[1]+1) +']');
 
 								$(elem).attr(the_props[j], the_prop);
 							}
@@ -1454,15 +1448,6 @@ class WPAlchemy_MetaBox
 					}
 				});
 
-				// increment the group id
-				var reg       = new RegExp('\\[(\\d+)\\]$', 'i');
-				var the_id    = the_group.attr("id");
-				var the_match = the_id.match(reg);
-				if (the_match)
-				{
-					the_group.attr("id", the_id.replace(the_match[0], '['+ (+the_match[1]+1) +']'));
-				}
-
 				if ($(this).hasClass('ontop'))
 				{
 					$('.wpa_group-'+ the_name, p).first().before(the_clone);
@@ -1479,38 +1464,28 @@ class WPAlchemy_MetaBox
 
 			function checkLoopLimit(name)
 			{
-				var elems = $('.docopy-' + name);
+				var elem = $('.docopy-' + name);
 
-				$.each(elems, function(idx, elem){
+				var the_class = $('.wpa_loop-' + name).attr('class');
 
-					var p = $(this).parents('.wpa_group:first');
+				if (the_class)
+				{
+					var the_match = the_class.match(/wpa_loop_limit-([0-9]*)/i);
 
-					if(p.length <= 0)
-						p = $(this).parents('.postbox'); /*wp*/
-
-					var the_class = $('.wpa_loop-' + name, p).attr('class');
-
-					if (the_class)
+					if (the_match)
 					{
-						var the_match = the_class.match(/wpa_loop_limit-([0-9]*)/i);
+						var the_limit = the_match[1];
 
-						if (the_match)
+						if ($('.wpa_group-' + name).not('.wpa_group.tocopy').length >= the_limit)
 						{
-							var the_limit = the_match[1];
-
-							if ($('.wpa_group-' + name, p).not('.wpa_group.tocopy').length >= the_limit)
-							{
-								$(this).hide();
-							}
-							else
-							{
-								$(this).show();
-							}
+							elem.hide();
+						}
+						else
+						{
+							elem.show();
 						}
 					}
-
-				});
-
+				}
 			}
 			
 			/* do an initial limit check, show or hide buttons */
@@ -1623,8 +1598,6 @@ class WPAlchemy_MetaBox
 
 		$this->meta = $meta;
 
-		// var_dump($meta);
-
 		return $this->meta;
 	}
 
@@ -1653,7 +1626,9 @@ class WPAlchemy_MetaBox
 	 */
 	function the_field($n, $hint = NULL)
 	{
-		$this->name = $n;
+		if ($this->in_loop) $this->subname = $n;
+		else $this->name = $n;
+
 		$this->hint = $hint;
 	}
 
@@ -1677,84 +1652,10 @@ class WPAlchemy_MetaBox
 		echo $this->get_the_value($n);
 	}
 
-	function get_the_value($n = NULL, $collection = FALSE)
-	{
-		$this->_meta(NULL, TRUE);
-
-		$value = null;
-
-		if ($this->is_in_loop())
-		{
-			$n = is_null($n) ? $this->name : $n ;
-
-			if(!is_null($n))
-			{
-				if ($collection)
-				{
-					$keys   = $this->get_the_loop_group_name_array();
-				}
-				else
-				{
-					$keys   = $this->get_the_loop_group_name_array();
-					$keys[] = $n;
-				}
-			}
-			else
-			{
-				if ($collection)
-				{
-					$keys   = $this->get_the_loop_group_name_array();
-					end($keys);
-					$last   = key($keys);
-					unset($keys[$last]);
-				}
-				else
-				{
-					$keys   = $this->get_the_loop_group_name_array();
-				}
-			}
-			// var_dump($n);
-			// var_dump($keys);
-			$value = $this->get_meta_by_array($keys);
-		}
-		else
-		{
-			$n = is_null($n) ? $this->name : $n ;
-
-			if(isset($this->meta[$n]))
-			{
-				$value = $this->meta[$n];
-			}
-		}
-
-		if (is_string($value) || is_numeric($value))
-		{
-			if ($this->in_template)
-			{
-				return htmlentities($value, ENT_QUOTES, 'UTF-8');
-			}
-			else
-			{
-				// http://wordpress.org/support/topic/call-function-called-by-embed-shortcode-direct
-				// http://phpdoc.wordpress.org/trunk/WordPress/Embed/WP_Embed.html#run_shortcode
-
-				global $wp_embed;
-
-				return do_shortcode($wp_embed->run_shortcode($value));
-			}
-		}
-		else
-		{
-			// value can sometimes be an array
-			return $value;
-		}
-	}
-
 	/**
 	 * @since	1.0
 	 * @access	public
 	 */
-	/*
 	function get_the_value($n = NULL, $collection = FALSE)
 	{
 		$this->_meta(NULL, TRUE);
@@ -1835,7 +1736,6 @@ class WPAlchemy_MetaBox
 			return $value;
 		}
 	}
-	*/
 
 	/**
 	 * @since	1.0
@@ -1857,18 +1757,13 @@ class WPAlchemy_MetaBox
 			return $this->prefix . str_replace($this->prefix, '', is_null($n) ? $this->name : $n);
 		}
 
-		if ($this->is_in_loop())
+		if ($this->in_loop)
 		{
-			$n = is_null($n) ? $this->name : $n ;
+			$n = is_null($n) ? $this->subname : $n ;
 
-			if (!is_null($n))
-				$the_field = $this->get_the_loop_group_name(true) . '[' . $n . ']' ;
-			else
-				$the_field = $this->get_the_loop_group_name(true);	
+			if (!is_null($n)) $the_field = $this->id . '[' . $this->name . '][' . $this->current . '][' . $n . ']' ;
 
-			// if (!is_null($n)) $the_field = $this->id . '[' . $this->name . '][' . $this->current . '][' . $n . ']' ;
-
-			// else $the_field = $this->id . '[' . $this->name . '][' . $this->current . ']' ;	
+			else $the_field = $this->id . '[' . $this->name . '][' . $this->current . ']' ;	
 		}
 		else
 		{
@@ -1907,7 +1802,7 @@ class WPAlchemy_MetaBox
 	 */
 	function get_the_index()
 	{
-		return $this->in_loop ? $this->get_the_current_group_current() : 0 ;
+		return $this->in_loop ? $this->current : 0 ;
 	}
 
 	/**
@@ -2106,17 +2001,13 @@ class WPAlchemy_MetaBox
 	{
 		$this->group_tag = $t;
 
-		$curr_loop = $this->get_the_current_loop();
-		$the_name  = $curr_loop->name;
-
 		$loop_open = NULL;
 
-		$loop_open_classes = array('wpa_loop', 'wpa_loop-' . $the_name);
+		$loop_open_classes = array('wpa_loop', 'wpa_loop-' . $this->name);
 		
-		$css_class = array('wpa_group', 'wpa_group-'. $the_name);
+		$css_class = array('wpa_group', 'wpa_group-'. $this->name);
 
-
-		if ($curr_loop->is_first())
+		if ($this->is_first())
 		{
 			array_push($css_class, 'first');
 
@@ -2127,10 +2018,10 @@ class WPAlchemy_MetaBox
 				array_push($loop_open_classes, 'wpa_loop_limit-' . $this->_loop_data->limit);
 			}
 
-			$loop_open = '<div id="wpa_loop-'. $the_name .'" class="' . implode(' ', $loop_open_classes) . '">';
+			$loop_open = '<div id="wpa_loop-'. $this->name .'" class="' . implode(' ', $loop_open_classes) . '">';
 		}
 
-		if ($curr_loop->is_last())
+		if ($this->is_last())
 		{
 			array_push($css_class, 'last');
 
@@ -2159,10 +2050,8 @@ class WPAlchemy_MetaBox
 	function get_the_group_close()
 	{
 		$loop_close = NULL;
-
-		$curr_loop = $this->get_the_current_loop();
-
-		if ($curr_loop->is_last())
+		
+		if ($this->is_last())
 		{
 			$loop_close = '</div>';
 		}
@@ -2193,9 +2082,6 @@ class WPAlchemy_MetaBox
 
 		$this->_meta(NULL, TRUE);
 
-		// push new loop or set loop to current name
-		$this->push_or_set_current_loop($n, $length);
-
 		$this->in_loop = 'multi';
 
 		return $this->_loop($n, $length, 2);
@@ -2220,8 +2106,6 @@ class WPAlchemy_MetaBox
 	function have_fields($n,$length=NULL)
 	{
 		$this->_meta(NULL, TRUE);
-		// push new loop or set loop to current name
-		$this->push_or_set_current_loop($n, $length);
 		$this->in_loop = 'normal';
 		return $this->_loop($n,$length);
 	}
@@ -2237,20 +2121,9 @@ class WPAlchemy_MetaBox
 			$this->in_loop = TRUE;
 		}
 		
-		// $this->name = $n;
+		$this->name = $n;
 
-		// echo $this->name;
-		// echo '|';
-		// echo $this->get_the_loop_group_name();
-		// echo '|';
-		// $dotted = $this->get_the_dotted_loop_group_name();
-		// echo $dotted;
-		// var_dump($this->get_meta_by_dotted($dotted));
-		// var_dump($this->get_the_loop_group_name_array());
-
-		// $meta = $this->get_the_value(null, true);
-		$cnt = $this->get_the_current_group_count();
-		// $cnt = count(!empty($meta) ? $meta : NULL);
+		$cnt = count(!empty($this->meta[$n])?$this->meta[$n]:NULL);
 
 		$length = is_null($length) ? $cnt : $length ;
 		
@@ -2270,46 +2143,22 @@ class WPAlchemy_MetaBox
 			}
 		}
 
-		// var_dump($this->length);
-
-		$this->set_the_current_group_length($this->length);
-		$this->increment_current_loop();
 		$this->current++;
 
-		// echo 'name:' . $this->get_the_current_loop()->name;
-		// echo 'curr:' . $this->get_the_current_group_current();
-		// echo 'leng:' . $this->get_the_current_group_length();
-
-		if ($this->get_the_current_group_current() < $this->get_the_current_group_length())
+		if ($this->current < $this->length)
 		{
-			$this->name      = NULL;
+			$this->subname = NULL;
+
 			$this->fieldtype = NULL;
 
 			return TRUE;
 		}
-		else if ($this->get_the_current_group_current() == $this->get_the_current_group_length())
+		else if ($this->current == $this->length)
 		{
-			$this->name      = NULL;
-			$this->set_the_current_group_current(-1);
-			$this->prev_loop();
+			$this->name = NULL;
+
+			$this->current = -1;
 		}
-
-		// $this->current++;
-
-		// if ($this->current < $this->length)
-		// {
-		// 	$this->subname = NULL;
-
-		// 	$this->fieldtype = NULL;
-
-		// 	return TRUE;
-		// }
-		// else if ($this->current == $this->length)
-		// {
-		// 	$this->name = NULL;
-
-		// 	$this->current = -1;
-		// }
 
 		$this->in_loop = FALSE;
 
@@ -2359,8 +2208,6 @@ class WPAlchemy_MetaBox
 		// authentication passed, save data
 	 
 		$new_data = isset( $_POST[$this->id] ) ? $_POST[$this->id] : NULL ;
-
-		// print_r($new_data);
 	 
 		WPAlchemy_MetaBox::clean($new_data);
 
@@ -2521,303 +2368,6 @@ class WPAlchemy_MetaBox
 			}
 		}
 	}
-
-	/**
-	 * The Metal Borned Here!
-	 */
-
-	var $_loop_stack = array();
-
-	function push_loop($name, $length)
-	{
-		$loop = new WPA_Loop($name, $length);
-		$this->_loop_stack[$name] = $loop;
-		return $loop;
-	}
-
-	function push_or_set_current_loop($name, $length)
-	{
-		if( !array_key_exists( $name, $this->_loop_stack ) )
-		{
-			$this->push_loop($name, $length);
-		}
-
-		$this->set_current_loop($name);
-	}
-
-	function set_current_loop($name)
-	{
-		reset($this->_loop_stack);
-		if(!array_key_exists($name, $this->_loop_stack)){
-			return;
-		}
-		while(key($this->_loop_stack) !== $name)
-			next($this->_loop_stack);
-	}
-
-	function next_loop()
-	{
-		return next($this->_loop_stack);
-	}
-
-	function prev_loop()
-	{
-		$prev = prev($this->_loop_stack);
-		if($prev === FALSE)
-			$this->_loop_stack = array();
-		return $prev;
-	}
-
-	function get_the_current_group_length()
-	{
-		return current($this->_loop_stack)->length;
-	}
-
-	function get_the_current_group_current()
-	{
-		return current($this->_loop_stack)->current;
-	}
-
-	function set_the_current_group_length($length)
-	{
-		current($this->_loop_stack)->length = $length;
-	}
-
-	function set_the_current_group_current($current)
-	{
-		current($this->_loop_stack)->current = $current;
-	}
-
-	function get_the_loop_group_name($with_id = false)
-	{
-		$loop_name  = $with_id ? $this->id : '';
-		$curr       = $this->get_the_current_loop();
-
-		// copy _loop_stack to prevent internal pointer ruined
-		$loop_stack = $this->_loop_stack;
-		foreach ($loop_stack as $loop)
-		{
-			$loop_name .= '[' . $loop->name . '][' . $loop->current . ']';
-
-			if($loop->name === $curr->name)
-				break;
-		}
-		return $loop_name;
-	}
-
-	function get_the_loop_group_id()
-	{
-		$loop_name  = '';
-		$curr       = $this->get_the_current_loop();
-
-		// copy _loop_stack to prevent internal pointer ruined
-		$loop_stack = $this->_loop_stack;
-		foreach ($loop_stack as $key => $loop)
-		{
-			$is_first = false;
-			$is_last  = false;
-
-			reset($loop_stack);
-			if ($key === key($loop_stack))
-				$is_first = true;
-			if ($loop->name === $curr->name)
-				$is_last = true;
-
-			$loop_name .= '[' . $loop->name . ']';
-
-			if(!$is_last)
-				$loop_name .= '[' . $loop->current . ']';
-
-			if($loop->name === $curr->name)
-				break;
-		}
-		return $loop_name;
-	}
-
-	function get_the_loop_group_name_array($with_id = false)
-	{
-		$loop_name   = array();
-		$curr        = $this->get_the_current_loop();
-
-		if($with_id)
-		{	
-			$loop_name[] = $this->id;
-		}
-
-		// copy _loop_stack to prevent internal pointer ruined
-		$loop_stack = $this->_loop_stack;
-		foreach ($loop_stack as $loop)
-		{
-			$loop_name[] = $loop->name;
-			$loop_name[] = $loop->current;
-
-			if($loop->name === $curr->name)
-				break;
-		}
-		return $loop_name;
-	}
-
-	function get_the_dotted_loop_group_name($with_id = false)
-	{
-		$loop_name  = $with_id ? $this->id : '';
-		$curr       = $this->get_the_current_loop();
-
-		// copy _loop_stack to prevent internal pointer ruined
-		$loop_stack = $this->_loop_stack;
-		foreach ($loop_stack as $loop)
-		{
-			$loop_name .= ($loop_name === '' ? '' : '.') . $loop->name . '.' . $loop->current;
-
-			if($loop->name === $curr->name)
-				break;
-		}
-		return $loop_name;
-	}
-
-	function get_meta_by_dotted($dotted)
-	{
-		$keys = explode('.', $dotted);
-		$meta = $this->meta;
-		foreach ($keys as $key)
-		{
-			if(array_key_exists($key, $meta))
-			{
-				$meta = $meta[$key];
-			}
-			else
-			{
-				return null;
-			}
-		}
-		return $meta;
-	}
-
-	function get_meta_by_array($arr)
-	{
-		$meta = $this->meta;
-
-		if(!is_array($arr) || !is_array($meta) || is_null($meta))
-			return null;
-
-		// var_dump($arr);
-		// echo $this->get_the_current_loop()->name;
-		// echo $this->get_the_current_loop()->current;
-		// var_dump($meta);
-	
-			
-		foreach ($arr as $key)
-		{
-			if(is_array($meta) and array_key_exists($key, $meta))
-			{
-				$meta = $meta[$key];
-			}
-			else
-			{
-				return null;
-			}
-		}
-		return $meta;
-	}
-
-	function get_the_current_group_count()
-	{
-		$arr  = $this->get_the_loop_group_name_array();
-		end($arr);
-		$last = key($arr);
-		unset($arr[$last]);
-		$meta = $this->get_meta_by_array($arr);
-		return count($meta);
-	}
-
-	function increment_current_loop()
-	{
-		current($this->_loop_stack)->current++;
-	}
-
-	function get_the_current_loop()
-	{
-		return current($this->_loop_stack);
-	}
-
-	function is_in_last()
-	{
-		// copy _loop_stack to prevent internal pointer ruined
-		$loop_stack = $this->_loop_stack;
-		foreach ($loop_stack as $loop)
-		{
-			if($loop->is_last())
-				return true;
-		}
-		return false;
-	}
-
-	function is_in_loop()
-	{
-		if(current($this->_loop_stack) === false)
-			return false;
-		return true;
-	}
-
-	function the_copy_button_class()
-	{
-		$curr = $this->get_the_current_loop();
-		return 'docopy-' . $curr->get_the_indexed_name();
-	}
-
-}
-
-// $wpma = new WPAlchemy_MetaBox(array('id'=>'asdf', 'template' => 'asdf'));
-// $wpma->push_or_set_current_loop('a', 2);
-// $wpma->push_or_set_current_loop('b', 2);
-// $wpma->push_or_set_current_loop('c', 2);
-// var_dump($wpma->prev_loop());
-// var_dump($wpma->prev_loop());
-// var_dump($wpma->prev_loop());
-// var_dump($wpma->prev_loop());
-// $wpma->increment_current_loop();
-// var_dump($wpma->_loop_stack);
-// echo $wpma->get_the_loop_group_name();
-
-
-class WPA_Loop
-{
-
-	public $length   = 0;
-
-	public $current  = -1;
-
-	public $name     = NULL;
-
-	function __construct($name, $length)
-	{
-		$this->name   = $name;
-		$this->length = $length;
-	}
-
-	function the_indexed_name()
-	{
-		echo $this->get_the_indexed_name();
-	}
-
-	function get_the_indexed_name()
-	{
-		return $this->name . '[' . $this->current . ']';
-	}
-
-	function is_first()
-	{
-		if ( $this->current == 0 ) return TRUE;
-
-		return FALSE;
-	}
-
-	function is_last()
-	{
-		if ( ( $this->current + 1 ) == $this->length ) return TRUE;
-
-		return FALSE;
-	}
-
 }
 
 /* eof */

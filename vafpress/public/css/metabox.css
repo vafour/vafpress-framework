@@ -14,7 +14,7 @@
 	padding: 0 12px;
 }
 
-.vp-metabox .vp-metabox-error {
+.vp-metabox-error {
 	background-image: url('../img/vp-sprite.png');
 	background-repeat: no-repeat;
 	background-position: 0px -240px;

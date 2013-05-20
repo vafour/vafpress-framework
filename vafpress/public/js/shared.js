@@ -299,6 +299,11 @@ vp.fields_validation_loop = function(fields){
 		    $tr     = jQuery(vp.jqid(field.name)),
 		    $parent = $tr.parents('.vp-meta-group').exists() ? $tr.parents('.vp-meta-group') : $tr.parents('.vp-section');
 
+		// if field is now deleted and not found
+		if($tr.length <= 0)
+			continue;
+
+		// if field is inactive due to dependencies mechanism
 		if($tr.hasClass('vp-dep-inactive') || ($parent.exists() && $parent.hasClass('vp-dep-inactive')))
 			continue;
 
@@ -449,6 +454,7 @@ vp.binding_action =	function(ids, field, func, thecase) {
 				case 'vp-multiselect':
 					$source    = jQuery('[name="' + field.source + '"]');
 					$source.empty();
+					$source.append(jQuery("<option></option>"));
 					response.data !== null && jQuery.each(response.data, function(key, value) {
 						$source
 							.append(jQuery("<option></option>")

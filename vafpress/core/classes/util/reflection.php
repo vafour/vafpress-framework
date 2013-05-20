@@ -15,9 +15,16 @@ class VP_Util_Reflection
 			$class = self::field_class_from_type($object);
 			if(function_exists('class_implements'))
 			{
-				$interfaces = class_implements($class);
-				if(isset($interfaces['VP_MultiSelectable']))
-					return true;
+				if(class_exists($class))
+				{
+					$interfaces = class_implements($class);
+					if(isset($interfaces['VP_MultiSelectable']))
+						return true;	
+				}
+				else
+				{
+					return false;
+				}
 			}
 			else
 			{
