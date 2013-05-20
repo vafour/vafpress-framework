@@ -33,11 +33,8 @@
 				// init dependancies
 				if(typeof dep !== 'undefined' && dep !== false)
 				{
-					bind && bindings.push({bind: bind, type: type, source: id});
-				}
-				$('.vp-field[data-vp-dependency]').each(function(idx, el){
 					dep && dependencies.push({dep: dep, type: 'field', source: id});
-				});
+				}
 			}
 		});
 	}
@@ -50,7 +47,10 @@
 				var dep  = $(this).attr('data-vp-dependency'),
 					type = $(this).getDatas().type,
 					id   = $(this).attr('id');
-				dep && dependencies.push({dep: dep, type: 'section', source: id});
+				if(typeof dep !== 'undefined' && dep !== false)
+				{
+					dep && dependencies.push({dep: dep, type: 'section', source: id});
+				}
 			}
 		});
 	}

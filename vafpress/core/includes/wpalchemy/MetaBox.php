@@ -2605,6 +2605,22 @@ class WPAlchemy_MetaBox
 		return $loop_name;
 	}
 
+	function get_the_loop_level()
+	{
+		$curr  = $this->get_the_current_loop();
+		$depth = 0;
+
+		// copy _loop_stack to prevent internal pointer ruined
+		$loop_stack = $this->_loop_stack;
+		foreach ($loop_stack as $loop)
+		{
+			if($loop->name === $curr->name)
+				break;
+			$depth++;
+		}
+		return $depth;
+	}
+
 	function get_the_loop_group_id()
 	{
 		$loop_name  = '';

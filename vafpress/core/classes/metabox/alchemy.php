@@ -251,11 +251,13 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		$ignore       = array('type', 'length', 'fields');
 		$groups       = array();
 		$indexed_name = '';
+		$level        = null;
 		if($repeating)
 		{
 			while($mb->have_fields_and_multi($field['name']))
 			{
 				if ($indexed_name === '') $indexed_name = $mb->get_the_loop_group_id();
+				if (is_null($level)) $level = $mb->get_the_loop_level();
 				$fields = array();
 				foreach ($field['fields'] as $f)
 				{
@@ -275,6 +277,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 			while($mb->have_fields($field['name'], $field['length']))
 			{
 				if ($indexed_name === '') $indexed_name = $mb->get_the_loop_group_id();
+				if (is_null($level)) $level = $mb->get_the_loop_level();
 				$fields = array();
 				foreach ($field['fields'] as $f)
 				{
@@ -292,6 +295,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		// assign groups
 		$group['groups']       = $groups;
 		$group['indexed_name'] = $indexed_name;
+		$group['level']         = $level;
 
 		// assign other information
 		$keys = array_keys($field);
@@ -333,10 +337,11 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 	function _render_group($group)
 	{
 		$name       = $group['name'];
+		$oddity     = ($group['level'] % 2 === 0) ? 'even' : 'odd';
 		$dependency = isset($group['dependency']) ? $group['dependency']['function'] . '|' . $group['dependency']['field'] : '';
 
 		$html  = '';
-		$html .= '<div id="wpa_loop-' . $name . '" class="vp-wpa-loop vp-fixed-loop vp-meta-group'
+		$html .= '<div id="wpa_loop-' . $name . '" class="vp-wpa-loop level-' . $oddity . ' vp-fixed-loop vp-meta-group'
 				. (isset($group['container_extra_classes']) ? (' ' . implode(' ', $group['container_extra_classes'])) : '')
 				. '"'
 				. VP_Util_Text::return_if_exists(isset($dependency) ? $dependency : '', ' data-vp-dependency="%s"')
@@ -368,17 +373,17 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 	{
 		$name       = $group['name'];
 		$uid        = $group['indexed_name'];
+		$oddity     = ($group['level'] % 2 === 0) ? 'even' : 'odd';
 		$dependency = isset($group['dependency']) ? $group['dependency']['function'] . '|' . $group['dependency']['field'] : '';
 
 		$html  = '';
 		$html .= '<div id="wpa_loop-' . $uid
-				. '" class="vp-wpa-loop wpa_loop wpa_loop-' . $name . ' vp-repeating-loop vp-meta-group'
+				. '" class="vp-wpa-loop level-' . $oddity . ' wpa_loop wpa_loop-' . $name . ' vp-repeating-loop vp-meta-group'
 				. (isset($group['container_extra_classes']) ? (' ' . implode(' ', $group['container_extra_classes'])) : '')
 				. '"'
 				. VP_Util_Text::return_if_exists(isset($dependency) ? $dependency : '', 'data-vp-dependency="%s"')
 				. ((isset($group['is_hidden']) and $group['is_hidden']) ? ' style="display: none;"' : '')
 				. '>';
-		$html .= '<h4>' . $group['title'] . '</h4>';
 
 		foreach ($group['groups'] as $g)
 		{
@@ -386,6 +391,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 			if ($g === end($group['groups']))   $class = ' last tocopy';
 			if ($g === reset($group['groups'])) $class = ' first';
 			$html .= '<div id="'. $g['name'] .'" class="vp-wpa-group wpa_group wpa_group-' . $name . $class . '">';
+			$html .= '<div class="vp-wpa-group-heading"><a>' . $group['title'] . '</a></div>';
 			$html .= '<div class="vp-controls">';
 			if ($g === end($group['groups']))
 			{
@@ -415,7 +421,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		}
 
 		$html .= '<div class="vp-wpa-group-add">';
-		$html .= '<a href="#" class="button button-large docopy-' . $name . '">Add More</a>';
+		$html .= '<a href="#" class="button button-large docopy-' . $name . '">Add More ' . $group['title'] . '</a>';
 		$html .= '</div>';
 
 		$html .= '</div>';
