@@ -98,7 +98,6 @@
 }
 
 .vp-metabox .vp-wpa-loop {
-	background-color: #f0f0f0;
 	border-radius: 3px;
 	padding: 10px;
 	margin-top: 10px;
@@ -113,42 +112,46 @@
 
 .vp-metabox .vp-wpa-loop .vp-wpa-group {
 	background: #ffffff;
+	border: 1px solid #e5e5e5;
 	border-radius: 3px;
 	margin-bottom: 10px;
 	position: relative;
+	overflow: hidden;
 }
 
 .vp-metabox .vp-wpa-loop .vp-wpa-group .vp-controls {
+	padding-top: 10px;
 	display: inline-block;
 	width: 100%;
 	position: relative;
 }
 
 .vp-metabox .vp-wpa-loop .vp-wpa-group .vp-controls .vp-field .label { padding: 12px 10px; }
+.vp-metabox .vp-wpa-loop .vp-wpa-group .vp-controls .vp-field .field { padding: 10px 10px 10px 20px; }
 
-.vp-metabox .vp-wpa-loop.vp-repeating-loop .vp-wpa-group .vp-controls .vp-field .field { padding-right: 40px; }
-
-.vp-metabox .vp-wpa-loop.vp-repeating-loop .vp-wpa-group .vp-wpa-group-remove {
-	background-color: #ffffff;
-	border-radius: 0 3px 0 3px;
-	border-width: 0px 0px 1px 1px;
-	border-style: solid;
-	border-color: rgba(0,0,0,0.1);
-	position: absolute;
-	top: 0px;
-	right: 0px;
-	width: 20px;
+.vp-metabox .vp-wpa-loop.vp-repeating-loop .vp-wpa-group .vp-wpa-group-heading .vp-wpa-group-title {
+	display: block;
 }
 
-.vp-metabox .vp-wpa-loop .vp-wpa-group .vp-wpa-group-remove a {
-	color: #999999;
-	display: block;
-	font-size: 0.8em;
+.vp-metabox .vp-wpa-loop.vp-repeating-loop .vp-wpa-group .vp-wpa-group-heading {
+	background-color: #f9f9f9;
+	border-bottom: 1px solid #e5e5e5;
+	font-size: 0.9em;
 	font-weight: bold;
-	line-height: 2em;
+	line-height: 30px;
+	padding: 0 80px 0 10px;
 	text-transform: uppercase;
+}
+
+.vp-metabox .vp-wpa-loop.vp-repeating-loop .vp-wpa-group .vp-wpa-group-heading a {
 	text-decoration: none;
-	text-align: center;
+}
+
+.vp-metabox .vp-wpa-loop.vp-repeating-loop .vp-wpa-group .vp-wpa-group-remove {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0 10px;
 }
 
 .vp-metabox .vp-wpa-loop .vp-wpa-group .vp-wpa-group-remove a:hover { color: #990000; }

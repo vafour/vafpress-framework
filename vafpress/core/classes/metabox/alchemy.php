@@ -391,7 +391,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 			if ($g === end($group['groups']))   $class = ' last tocopy';
 			if ($g === reset($group['groups'])) $class = ' first';
 			$html .= '<div id="'. $g['name'] .'" class="vp-wpa-group wpa_group wpa_group-' . $name . $class . '">';
-			$html .= '<div class="vp-wpa-group-heading"><a>' . $group['title'] . '</a></div>';
+			$html .= '<div class="vp-wpa-group-heading"><a href="#" class="vp-wpa-group-title">' . $group['title'] . '</a><a href="#" class="dodelete vp-wpa-group-remove" title="Remove"><i class="icon-remove"></i> Remove</a></div>';
 			$html .= '<div class="vp-controls">';
 			if ($g === end($group['groups']))
 			{
@@ -413,9 +413,6 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 				// else
 				// 	$html .= $this->_render_field($f);
 			}
-			$html .= '</div>';
-			$html .= '<div class="vp-wpa-group-remove">';
-			$html .= '<a href="#" class="dodelete" title="Remove">X</a>';
 			$html .= '</div>';
 			$html .= '</div>';
 		}
