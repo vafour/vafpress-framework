@@ -4,6 +4,44 @@
 	var bindings     = [];
 	var dependencies = [];
 
+	KIA_metabox.mediaButtons();
+
+	$(document).on('click', '.vp-wpa-group-title', function(e){
+		e.preventDefault();
+		var group     = $(this).parents('.wpa_group:first');
+		var control   = group.find('.vp-controls:first');
+		var siblings  = group.siblings();
+		var container = $('html, body');
+		if(control.hasClass('vp-hide'))
+		{
+			siblings.each(function(i, el){
+				$(this).find('.vp-controls').first().slideUp('fast', function() {
+					$(this).addClass('vp-hide')
+					.slideDown(0, function(){
+						if(i == siblings.length - 2)
+						{
+							container.animate({
+								scrollTop: group.offset().top - container.offset().top + container.scrollTop() - $('#wpadminbar').height()
+							}).promise().done(function(){
+								control.slideUp(0,function() {
+									$(this).removeClass('vp-hide')
+									.slideDown('fast');
+								});
+							});
+						}
+					});
+				});
+			});
+		}
+		else
+		{
+			control.slideUp('fast', function() {
+				$(this).addClass('vp-hide')
+				.slideDown(0);
+			});
+		}
+	});
+
 	function vp_init_fields($elements)
 	{
 		$elements.each(function(){
@@ -35,6 +73,8 @@
 				{
 					dep && dependencies.push({dep: dep, type: 'field', source: id});
 				}
+				if($(this).hasClass('vp-wpeditor'))
+					KIA_metabox.runTinyMCE($(this).find('textarea'));
 			}
 		});
 	}
@@ -55,8 +95,14 @@
 		});
 	}
 
-	vp_init_fields(jQuery('.vp-metabox .vp-field'));
-	vp_init_groups(jQuery('.vp-metabox .vp-meta-group'));
+	$(document).ready(function () {
+		vp_init_fields(jQuery('.vp-metabox .vp-field'));
+		vp_init_groups(jQuery('.vp-metabox .vp-meta-group'));
+		console.log(bindings);
+		console.log(dependencies);
+		process_binding(bindings);
+		process_dependency(dependencies);
+	});
 
 	vp.is_multianswer = function(type){
 		var multi = ['vp-checkbox', 'vp-checkimage', 'vp-multiselect'];
@@ -145,8 +191,6 @@
 		}
 	}
 
-	process_binding(bindings);
-
 	function process_dependency(dependencies)
 	{
 		for (var i = 0; i < dependencies.length; i++)
@@ -194,7 +238,6 @@
 			}
 		}
 	}
-	process_dependency(dependencies);
 
 	$.wpalchemy.on('wpa_copy', function(event, clone){
 
@@ -206,6 +249,8 @@
 
 		vp_init_fields(clone.find('.vp-field'));
 		vp_init_groups(clone.find('.vp-meta-group'));
+
+		clone.find('.vp-wpa-group-title:first').click();
 
 		console.log(bindings);
 		console.log(dependencies);

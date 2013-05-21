@@ -101,6 +101,12 @@ return array(
 				'ver'      => '1.0.0',
 				'override' => true,
 			),
+			'kia-metabox' => array(
+				'path'     => VP_PUBLIC_URL . '/js/kia-metabox.js',
+				'deps'     => array('jquery', 'editor'),
+				'ver'      => '1.0',
+				'override' => true,
+			),
 		),
 	),
 
@@ -149,6 +155,7 @@ return array(
 		'codeeditor'  => array( 'js' => array('ace-editor'), 'css' => array() ),
 		'sorter'      => array( 'js' => array('select2-sortable'), 'css' => array('select2-css', 'jqui') ),
 		'fontawesome' => array( 'js' => array('select2'), 'css' => array('select2-css') ),
+		'wpeditor'    => array( 'js' => array('kia-metabox'), 'css' => array() ),
 	)
 
 );

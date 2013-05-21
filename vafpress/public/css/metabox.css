@@ -100,7 +100,7 @@
 .vp-metabox .vp-wpa-loop {
 	border-radius: 3px;
 	padding: 10px;
-	margin-top: 10px;
+	/*margin-top: 10px;*/
 }
 
 .vp-metabox .vp-wpa-loop h4 {
@@ -348,6 +348,13 @@
 	max-height: 200px;
 }
 
+/* WP TinyMCE Editor */
+.vp-metabox .vp-wpeditor .label, .vp-metabox .vp-wpeditor .field{
+	display: block;
+	padding: 0px 10px !important;
+	width: 100%;	
+}
+
 /* jQuery UI Datepicker bottom div bug */
 #ui-datepicker-div { display:none }
 
@@ -490,3 +497,23 @@
 .select2-drop input { border-color: #cccccc; }
 
 .select2-results .select2-highlighted { background: #278ab7; }
+
+/* WP Editor / Custom tinyMCE editor styles */
+
+.vp-metabox .customEditor { margin: 15px 0px; }
+.vp-metabox .customEditor textarea { width: 100%; margin: 0; -webkit-border-top-right-radius: 0; -webkit-border-top-left-radius: 0; border-top-left-radius: 0; border-top-right-radius: 0; }
+.vp-metabox .custom_upload_buttons a { text-decoration: none; }
+.vp-metabox .wp_themeSkin table.mceLayout  { background: white; border-width: 1px; 	border-style: solid; -webkit-border-top-right-radius: 3px; -webkit-border-top-left-radius: 3px; border-top-right-radius: 3px; border-top-left-radius: 3px; border-color: #CCC #CCC #DFDFDF;}
+.vp-metabox .mceLayout span { display:inline; }
+.vp-metabox .customEditor * { box-sizing: content-box; }
+.vp-metabox .vp-wpeditor .field .customEditor .mceIcon img {
+	border-width: 0;
+	padding: 0;
+}
+
+.vp-hide {
+   position: absolute !important;
+   /*top: -9999px !important;*/
+   /*left: -9999px !important;*/
+   visibility: hidden;
+}

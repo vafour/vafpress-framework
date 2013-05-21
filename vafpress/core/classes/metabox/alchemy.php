@@ -387,12 +387,15 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 
 		foreach ($group['groups'] as $g)
 		{
-			$class = '';
-			if ($g === end($group['groups']))   $class = ' last tocopy';
-			if ($g === reset($group['groups'])) $class = ' first';
+			$class    = '';
+			$is_first = false;
+			$is_last  = false;
+			if ($g === end($group['groups'])){ $is_last = true; $class = ' last tocopy';}
+			if ($g === reset($group['groups'])){ $is_first = true; $class = ' first';}
+
 			$html .= '<div id="'. $g['name'] .'" class="vp-wpa-group wpa_group wpa_group-' . $name . $class . '">';
 			$html .= '<div class="vp-wpa-group-heading"><a href="#" class="vp-wpa-group-title">' . $group['title'] . '</a><a href="#" class="dodelete vp-wpa-group-remove" title="Remove"><i class="icon-remove"></i> Remove</a></div>';
-			$html .= '<div class="vp-controls">';
+			$html .= '<div class="vp-controls' . ((!$is_first) ? ' vp-hide' : '') . '">';
 			if ($g === end($group['groups']))
 			{
 				$tocopy = $g['name'] . '[tocopy]';
