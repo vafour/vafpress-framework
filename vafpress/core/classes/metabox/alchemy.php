@@ -220,15 +220,16 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		// get default from array
 		$default  = $vp_field->get_default();
 
+
 		// if tocopy always assign default
-		if( $mb->is_in_last() )
+		if( $this->in_loop == 'multi' and $mb->is_in_last() )
 		{
 			$value = $default;
 		}
 		else
 		{
 			// if value is null and default exist, use default
-			if( is_null($value) and !is_null($default) and is_null($this->meta) )
+			if( is_null($value) and !is_null($default) and empty($this->meta) )
 			{
 				$value = $default;
 			}
@@ -280,7 +281,8 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		}
 		else
 		{
-			while($mb->have_fields($field['name'], $field['length']))
+			$length = isset($field['length']) ? $field['length'] : 1;
+			while($mb->have_fields($field['name'], $length))
 			{
 				if ($indexed_name === '') $indexed_name = $mb->get_the_loop_group_id();
 				if (is_null($level)) $level = $mb->get_the_loop_level();
@@ -342,28 +344,39 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 	function _render_group($group)
 	{
 		$name       = $group['name'];
+		$uid        = $group['indexed_name'];
 		$oddity     = ($group['level'] % 2 === 0) ? 'even' : 'odd';
 		$dependency = isset($group['dependency']) ? $group['dependency']['function'] . '|' . $group['dependency']['field'] : '';
 
 		$html  = '';
-		$html .= '<div id="wpa_loop-' . $name . '" class="vp-wpa-loop level-' . $oddity . ' vp-fixed-loop vp-meta-group'
+		$html .= '<div id="wpa_loop-' . $uid
+				. '" class="vp-wpa-loop level-' . $oddity . ' wpa_loop wpa_loop-' . $name . ' vp-fixed-loop vp-meta-group'
 				. (isset($group['container_extra_classes']) ? (' ' . implode(' ', $group['container_extra_classes'])) : '')
 				. '"'
-				. VP_Util_Text::return_if_exists(isset($dependency) ? $dependency : '', ' data-vp-dependency="%s"')
+				. VP_Util_Text::return_if_exists(isset($dependency) ? $dependency : '', 'data-vp-dependency="%s"')
 				. '>';
-		$html .= '<h4>' . $group['title'] . '</h4>';
+
 
 		foreach ($group['groups'] as $g)
 		{
-			$html .= '<div class="vp-wpa-group wpa_group wpa_group-' . $name . '">';
-			$html .= '<div class="vp-controls">';
+			$is_first = false;
+			if ($g === reset($group['groups'])){ $is_first = true;}
+
+			$html .= '<div id="'. $g['name'] .'" class="vp-wpa-group wpa_group wpa_group-' . $name . '">';
+			$html .= '<div class="vp-wpa-group-heading"><a href="#" class="vp-wpa-group-title">' . $group['title'] . '</a></div>';
+			$html .= '<div class="vp-controls' . ((!$is_first) ? ' vp-hide' : '') . '">';
+
 			foreach ($g['childs'] as $f)
-			{	
-				if(is_array($f))
+			{
+
+				if( is_array($f) and $f['repeating'] )
+					$html .= $this->_render_repeating_group($f);
+				else if( is_array($f) and !$f['repeating'] )
 					$html .= $this->_render_group($f);
 				else
 					$html .= $this->_render_field($f);
 			}
+
 			$html .= '</div>';
 			$html .= '</div>';
 		}

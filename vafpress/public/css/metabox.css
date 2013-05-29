@@ -129,11 +129,11 @@
 .vp-metabox .vp-wpa-loop .vp-wpa-group .vp-controls .vp-field .label { padding: 12px 10px; }
 .vp-metabox .vp-wpa-loop .vp-wpa-group .vp-controls .vp-field .field { padding: 10px 10px 10px 20px; }
 
-.vp-metabox .vp-wpa-loop.vp-repeating-loop .vp-wpa-group .vp-wpa-group-heading .vp-wpa-group-title {
+.vp-metabox .vp-wpa-loop .vp-wpa-group .vp-wpa-group-heading .vp-wpa-group-title {
 	display: block;
 }
 
-.vp-metabox .vp-wpa-loop.vp-repeating-loop .vp-wpa-group .vp-wpa-group-heading {
+.vp-metabox .vp-wpa-loop .vp-wpa-group .vp-wpa-group-heading {
 	background-color: #f9f9f9;
 	border-bottom: 1px solid #e5e5e5;
 	font-size: 0.9em;
@@ -144,11 +144,11 @@
 	margin-bottom: -1px;
 }
 
-.vp-metabox .vp-wpa-loop.vp-repeating-loop .vp-wpa-group .vp-wpa-group-heading a {
+.vp-metabox .vp-wpa-loop .vp-wpa-group .vp-wpa-group-heading a {
 	text-decoration: none;
 }
 
-.vp-metabox .vp-wpa-loop.vp-repeating-loop .vp-wpa-group .vp-wpa-group-remove {
+.vp-metabox .vp-wpa-loop .vp-wpa-group .vp-wpa-group-remove {
 	position: absolute;
 	top: 0;
 	right: 0;

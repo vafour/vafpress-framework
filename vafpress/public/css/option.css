@@ -894,7 +894,11 @@
 
 .vp-hide {
 	position: absolute !important;
-	visibility: hidden !important;
-	top: -9999px !important;
-	left: -9999px !important;
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	width: 1px;
 }

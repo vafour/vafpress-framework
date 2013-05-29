@@ -107,15 +107,14 @@ $mb_deps_loader = new VP_Metabox_Depsloader($vp_metaboxes);
 VP_WP_MassEnqueuer::instance()->add_loader($mb_deps_loader);
 
 /* 
- * Recreate the default filters on the_content
- * this will make it much easier to output the meta content with proper/expected formatting
-*/
-// add_filter( 'meta_content', 'wptexturize'        );
-// add_filter( 'meta_content', 'convert_smilies'    );
-// add_filter( 'meta_content', 'convert_chars'      );
-// add_filter( 'meta_content', 'wpautop'            );
-// add_filter( 'meta_content', 'shortcode_unautop'  );
-// add_filter( 'meta_content', 'prepend_attachment' );
+ * the_content clone filter
+ */
+add_filter( 'meta_content', 'wptexturize'        );
+add_filter( 'meta_content', 'convert_smilies'    );
+add_filter( 'meta_content', 'convert_chars'      );
+add_filter( 'meta_content', 'wpautop'            );
+add_filter( 'meta_content', 'shortcode_unautop'  );
+add_filter( 'meta_content', 'prepend_attachment' );
 
 /**
  * EOF

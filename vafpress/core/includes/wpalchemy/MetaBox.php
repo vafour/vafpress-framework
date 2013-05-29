@@ -1612,6 +1612,8 @@ class WPAlchemy_MetaBox
 
 		$meta = get_post_meta($post_id, $this->id, TRUE);
 
+		// var_dump($meta);
+
 		// WPALCHEMY_MODE_EXTRACT
 
 		$fields = get_post_meta($post_id, $this->id . '_fields', TRUE);
@@ -2405,7 +2407,12 @@ class WPAlchemy_MetaBox
 
 	function push_loop($name, $length)
 	{
-		$loop = new WPA_Loop($name, $length);
+		$loop         = new WPA_Loop($name, $length);
+		$parent       = $this->get_the_current_loop();
+		if($parent)
+			$loop->parent = $parent->name;
+		else
+			$loop->parent = false;
 		$this->_loop_stack[$name] = $loop;
 		return $loop;
 	}
@@ -2437,10 +2444,16 @@ class WPAlchemy_MetaBox
 
 	function prev_loop()
 	{
-		$prev = prev($this->_loop_stack);
-		if($prev === FALSE)
+		$parent = $this->get_the_current_loop()->parent;
+		if($parent)
+		{
+			$this->set_current_loop($parent);
+		}
+		else
+		{
 			$this->_loop_stack = array();
-		return $prev;
+			return false;
+		}
 	}
 
 	function get_the_current_group_length()
@@ -2463,13 +2476,34 @@ class WPAlchemy_MetaBox
 		current($this->_loop_stack)->current = $current;
 	}
 
+	function get_the_loop_collection($name = null)
+	{
+		if(is_null($name))
+			$name = $this->get_the_current_loop()->name;
+		$loop_stack   = $this->_loop_stack;
+		$collection   = array();
+		$loop         = $loop_stack[$name];
+		$collection[] = $loop;
+		while ($loop)
+		{
+			$collection[] = $loop;
+			if($loop->parent)
+				$loop = $loop_stack[$loop->parent];
+			else
+				$loop = false;
+		}
+		$collection = array_reverse($collection);
+		return $collection;
+	}
+
 	function get_the_loop_group_name($with_id = false)
 	{
 		$loop_name  = $with_id ? $this->id : '';
 		$curr       = $this->get_the_current_loop();
 
 		// copy _loop_stack to prevent internal pointer ruined
-		$loop_stack = $this->_loop_stack;
+		$loop_stack = $this->get_the_loop_collection();
+		// print_r($loop_stack);
 		foreach ($loop_stack as $loop)
 		{
 			$loop_name .= '[' . $loop->name . '][' . $loop->current . ']';
@@ -2486,7 +2520,7 @@ class WPAlchemy_MetaBox
 		$depth = 0;
 
 		// copy _loop_stack to prevent internal pointer ruined
-		$loop_stack = $this->_loop_stack;
+		$loop_stack = $this->get_the_loop_collection();
 		foreach ($loop_stack as $loop)
 		{
 			if($loop->name === $curr->name)
@@ -2502,7 +2536,7 @@ class WPAlchemy_MetaBox
 		$curr       = $this->get_the_current_loop();
 
 		// copy _loop_stack to prevent internal pointer ruined
-		$loop_stack = $this->_loop_stack;
+		$loop_stack = $this->get_the_loop_collection();
 		foreach ($loop_stack as $key => $loop)
 		{
 			$is_first = false;
@@ -2536,7 +2570,7 @@ class WPAlchemy_MetaBox
 		}
 
 		// copy _loop_stack to prevent internal pointer ruined
-		$loop_stack = $this->_loop_stack;
+		$loop_stack = $this->get_the_loop_collection();
 		foreach ($loop_stack as $loop)
 		{
 			$loop_name[] = $loop->name;
@@ -2554,7 +2588,7 @@ class WPAlchemy_MetaBox
 		$curr       = $this->get_the_current_loop();
 
 		// copy _loop_stack to prevent internal pointer ruined
-		$loop_stack = $this->_loop_stack;
+		$loop_stack = $this->get_the_loop_collection();
 		foreach ($loop_stack as $loop)
 		{
 			$loop_name .= ($loop_name === '' ? '' : '.') . $loop->name . '.' . $loop->current;
@@ -2655,6 +2689,8 @@ class WPA_Loop
 {
 
 	public $length   = 0;
+
+	public $parent   = NULL;
 
 	public $current  = -1;
 
