@@ -14,24 +14,38 @@
 		var container = $('html, body');
 		if(control.hasClass('vp-hide'))
 		{
-			siblings.each(function(i, el){
-				$(this).find('.vp-controls').first().slideUp('fast', function() {
-					$(this).addClass('vp-hide')
-					.slideDown(0, function(){
-						if(i == siblings.length - 1)
-						{
-							container.animate({
-								scrollTop: group.offset().top - container.offset().top + container.scrollTop() - $('#wpadminbar').height()
-							}).promise().done(function(){
-								control.slideUp(0,function() {
-									$(this).removeClass('vp-hide')
-									.slideDown('fast');
+			if(siblings.exists())
+			{
+				siblings.each(function(i, el){
+					$(this).find('.vp-controls').first().slideUp('fast', function() {
+						$(this).addClass('vp-hide')
+						.slideDown(0, function(){
+							if(i == siblings.length - 1)
+							{
+								container.animate({
+									scrollTop: group.offset().top - container.offset().top + container.scrollTop() - $('#wpadminbar').height()
+								}).promise().done(function(){
+									control.slideUp(0,function() {
+										$(this).removeClass('vp-hide')
+										.slideDown('fast');
+									});
 								});
-							});
-						}
+							}
+						});
 					});
 				});
-			});
+			}
+			else
+			{
+				container.animate({
+					scrollTop: group.offset().top - container.offset().top + container.scrollTop() - $('#wpadminbar').height()
+				}).promise().done(function(){
+					control.slideUp(0,function() {
+						$(this).removeClass('vp-hide')
+						.slideDown('fast');
+					});
+				});
+			}
 		}
 		else
 		{
