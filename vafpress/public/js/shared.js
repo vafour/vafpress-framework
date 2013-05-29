@@ -127,6 +127,66 @@ jQuery.fn.validationVal = function() {
 		val = initialVal;
 	return val;
 };
+
+// hidding plugin
+jQuery.fn.vp_slideUp = function(callback){
+	var $this = this;
+	if(!$this.hasClass('vp-hide'))
+	{
+		$this.slideUp('fast', function() {
+			jQuery(this).addClass('vp-hide')
+			.slideDown(0, callback);
+		});
+	}
+};
+jQuery.fn.vp_slideDown = function(callback){
+	var $this = this;
+	if($this.hasClass('vp-hide'))
+	{
+		$this.slideUp(0,function() {
+			jQuery(this).removeClass('vp-hide')
+			.slideDown('fast', callback);
+		});
+	}
+};
+jQuery.fn.vp_fadeOut = function(callback){
+	var $this = this;
+	if(!$this.hasClass('vp-hide'))
+	{
+		$this.fadeOut('fast', function() {
+			jQuery(this).addClass('vp-hide')
+			.fadeIn(0, callback);
+		});
+	}
+};
+jQuery.fn.vp_fadeIn = function(callback){
+	var $this = this;
+	if($this.hasClass('vp-hide'))
+	{
+		$this.fadeOut(0,function() {
+			jQuery(this).removeClass('vp-hide')
+			.fadeIn('fast', callback);
+		});
+	}
+};
+jQuery.fn.vp_toggle = function(callback){
+	var $this = this;
+	if($this.hasClass('vp-hide'))
+	{
+		$this.slideUp(0,function() {
+			jQuery(this).removeClass('vp-hide')
+			.slideDown('fast', callback);
+		});
+	}
+	else
+	{
+		$this.slideUp('fast', function() {
+			jQuery(this).addClass('vp-hide')
+			.slideDown(0, callback);
+		});
+	}
+};
+
 /*
  * =============================================================
  */
@@ -436,14 +496,13 @@ vp.binding_action =	function(ids, field, func, thecase) {
 	var $loader = $source_tr.find('.vp-js-bind-loader'),
 	    $input  = $source_tr.find('.input');
 
-	$input.fadeOut(100, function(){
-		$loader.removeClass('hidden');
-		$loader.fadeIn(100);
+	$input.vp_fadeOut(function(){
+		$loader.vp_fadeIn();
 	});
 
 	jQuery.post(ajaxurl, data, function(response) {
-		$loader.fadeOut(100, function(){
-			$input.fadeIn(100);
+		$loader.vp_fadeOut(function(){
+			$input.vp_fadeIn();
 		});
 		if (response.status)
 		{
@@ -498,7 +557,7 @@ vp.binding_action =	function(ids, field, func, thecase) {
 					vp.init_tipsy();
 					break;
 			}
-			jQuery('[name="' + field.source + '"]').change();
+			jQuery('[name="' + field.source + '"]:first').change();
 		}
 	}, 'JSON');
 };
@@ -553,13 +612,13 @@ vp.dependency_action =	function(ids, field, func) {
 	// get loader
 	jQuery.each(targets, function(idx, val){
 		var $loader = val.find('.vp-js-bind-loader');
-		$loader.fadeIn(100);
+		$loader.vp_fadeIn();
 	});
 
 	jQuery.post(ajaxurl, data, function(response) {
 		jQuery.each(targets, function(idx, val){
 			var $loader = val.find('.vp-js-bind-loader');
-			$loader.fadeOut(100);
+			$loader.vp_fadeOut();
 		});
 
 		if (response.status)
@@ -567,12 +626,12 @@ vp.dependency_action =	function(ids, field, func) {
 			if(response.data)
 			{
 				$source_tr.removeClass('vp-dep-inactive');
-				$source_tr.fadeIn();
+				$source_tr.vp_fadeIn();
 			}
 			else
 			{
 				$source_tr.addClass('vp-dep-inactive');
-				$source_tr.fadeOut();
+				$source_tr.vp_fadeOut();
 			}
 		}
 	}, 'JSON');
@@ -637,33 +696,36 @@ function theValidate(elem, options, $slider)
 	}
 }
 
-if (jQuery.fn.slider)
+vp.init_slider = function($elements)
 {
-	jQuery('.vp-js-slider').each(function(i, el) {
-		var $slider = jQuery(this),
-		    options = jQuery(this).getDatas();
-		options = vp.parseOpt(options.opt);
-		options.range = 'min';
-		options.slide = function(event, ui) {
-			$slider.prev('.slideinput').val(ui.value);
-			$slider.prev('.slideinput').trigger('keypress');
-			$slider.prev('.slideinput').trigger('keyup');
-		};
-		$slider.slider(options);
+	if (jQuery.fn.slider)
+	{
+		$elements.each(function(i, el) {
+			var $slider = jQuery(this),
+			    options = jQuery(this).getDatas();
+			options = vp.parseOpt(options.opt);
+			options.range = 'min';
+			options.slide = function(event, ui) {
+				$slider.prev('.slideinput').val(ui.value);
+				$slider.prev('.slideinput').trigger('keypress');
+				$slider.prev('.slideinput').trigger('keyup');
+			};
+			$slider.slider(options);
 
-		$slider.prev('.slideinput').keypress(function(e) {
-			var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
-			if (e.altKey || e.ctrlKey || e.shiftKey)
-				return true;
-			if (jQuery.inArray(charCode, [45, 46, 8, 0]) != -1 || (charCode >= 48 && charCode <= 57) )
-				return true;
-			return false;
-		})
-		.blur(function(e){
-			theValidate(this, options, $slider);
+			$slider.prev('.slideinput').keypress(function(e) {
+				var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
+				if (e.altKey || e.ctrlKey || e.shiftKey)
+					return true;
+				if (jQuery.inArray(charCode, [45, 46, 8, 0]) != -1 || (charCode >= 48 && charCode <= 57) )
+					return true;
+				return false;
+			})
+			.blur(function(e){
+				theValidate(this, options, $slider);
+			});
 		});
-	});
-}
+	}
+};
 
 
 vp.upload_callback = function() {};
@@ -767,67 +829,91 @@ vp.remove_upload_callback = function(e) {
 	$preview.attr('src', '');
 };
 
-jQuery('.vp-js-upload').click(vp.upload_callback);
-jQuery('.vp-js-remove-upload').click(vp.remove_upload_callback);
+jQuery(document).on('click', '.vp-js-upload', vp.upload_callback);
+jQuery(document).on('click', '.vp-js-remove-upload', vp.remove_upload_callback);
 
-if (jQuery.fn.colorpicker)
+vp.init_colorpicker = function($elements)
 {
-	jQuery('.vp-js-colorpicker').each(function() {
-		var $colorpicker  = jQuery(this),
-		    options = jQuery(this).getDatas();
+	if (jQuery.fn.colorpicker)
+	{
+		if($elements.length <= 0)
+			return;
+		$elements.each(function() {
+			var $colorpicker  = jQuery(this),
+			    options = jQuery(this).getDatas();
 
-		options = vp.parseOpt(options.opt);
+			options = vp.parseOpt(options.opt);
 
-		$colorpicker.colorpicker({
-			format: options.format
-		}).on('changeColor', function(ev){
-			var color;
-			if(options.format == 'hex')
-			{
-				color = ev.color.toHex();
-			}
-			else if(options.format == 'rgba')
-			{
-				color = ev.color.toRGB();
-				color = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',' + color.a + ')';
-			}
-			else if(options.format == 'rgb')
-			{
-				color = ev.color.toRGB();
-				color = 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')';
-			}
-			$colorpicker.prev('label').find('span').css('background-color', color);
-		}).on('blur', function(ev){
-			$colorpicker.prev('label').find('span').css('background-color', $colorpicker.val());
+			$colorpicker.colorpicker({
+				format: options.format
+			}).on('changeColor', function(ev){
+				var color;
+				if(options.format == 'hex')
+				{
+					color = ev.color.toHex();
+				}
+				else if(options.format == 'rgba')
+				{
+					color = ev.color.toRGB();
+					color = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',' + color.a + ')';
+				}
+				else if(options.format == 'rgb')
+				{
+					color = ev.color.toRGB();
+					color = 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')';
+				}
+				$colorpicker.prev('label').find('span').css('background-color', color);
+			}).on('blur', function(ev){
+				$colorpicker.prev('label').find('span').css('background-color', $colorpicker.val());
+			});
 		});
-	});
-}
+	}
+};
 
-// Date Picker
-if (jQuery.fn.datepicker)
+vp.init_datepicker = function($elements)
 {
-	jQuery('.vp-js-datepicker').each(function() {
-		var options = jQuery(this).getDatas();
-		options     = vp.parseOpt(options.opt);
-		options.onSelect = function(){
-			jQuery(this).trigger('keypress');
-			jQuery(this).trigger('keyup');
-			jQuery(this).trigger('blur');
-		};
-		jQuery(this).datepicker(options);
-		jQuery(this).datepicker('setDate', options.value);
-	});
-}
+	if (jQuery.fn.datepicker)
+	{
+		if($elements.length <= 0)
+			return;
+		$elements.each(function() {
+			var options = jQuery(this).getDatas();
+			options     = vp.parseOpt(options.opt);
+			options.onSelect = function(){
+				jQuery(this).trigger('keypress');
+				jQuery(this).trigger('keyup');
+				jQuery(this).trigger('blur');
+			};
+			jQuery(this).datepicker(options);
+			jQuery(this).datepicker('setDate', options.value);
+		});
+	}
+};
+
+vp.init_controls = function($parent)
+{
+	// init date picker
+	vp.init_datepicker($parent.find('.vp-js-datepicker'));
+	vp.init_fontawesome_chooser($parent.find('.vp-js-fontawesome'));
+	vp.init_select2($parent.find('.vp-js-select2'));
+	vp.init_sorter($parent.find('.vp-js-sorter'));
+	vp.init_colorpicker($parent.find('.vp-js-colorpicker'));
+	vp.init_slider($parent.find('.vp-js-slider'));
+	vp.init_ace_editor($parent.find('.vp-js-codeeditor'));
+	vp.init_wpeditor($parent.find('.vp-js-wpeditor'));
+	vp.init_tipsy();
+};
 
 // Fontawesome Chooser
 vp.init_fontawesome_chooser = function($elements)
 {
 	if (jQuery.fn.select2)
 	{
+		if($elements.length <= 0)
+			return;
 		var format = function vp_fontawesome_chooser_format(icon){
 			return '<span class="fontawesome"><i class="' + icon.id + '"></i>' + icon.text + '</span>';
 		};
-		$elements = $elements || jQuery('.vp-js-fontawesome');
 		$elements.select2({
 			formatResult: format,
 			formatSelection: format,
@@ -835,6 +921,28 @@ vp.init_fontawesome_chooser = function($elements)
 			allowClear: true,
 			placeholder: "Select an icon"
 		});
+	}
+};
+
+// Select2
+vp.init_select2 = function($elements)
+{
+	if (jQuery.fn.select2)
+	{
+		if($elements.length <= 0)
+			return;
+		$elements.select2({allowClear: true, placeholder: "Select option(s)"});
+	}
+};
+
+// Sorter
+vp.init_sorter = function($elements)
+{
+	if (jQuery.fn.select2Sortable)
+	{
+		if($elements.length <= 0)
+			return;
+		$elements.select2().select2Sortable();
 	}
 };
 
@@ -850,29 +958,45 @@ vp.init_tipsy = function()
 };
 vp.init_tipsy();
 
-// Ace Editor
-if(window.ace !== 'undefined')
+// Init Sorter
+vp.init_ace_editor = function($elements)
 {
-	jQuery('.vp-js-codeeditor').each(function() {
+	if(window.ace !== 'undefined')
+	{
+		if($elements.length <= 0)
+			return;
+		$elements.each(function() {
 
-		var editor   = ace.edit(jQuery(this).get(0));
-		var textarea = jQuery(this).prev();
-		var options  = jQuery(this).getDatas();
+			var editor   = ace.edit(jQuery(this).get(0));
+			var textarea = jQuery(this).prev();
+			var options  = jQuery(this).getDatas();
 
-		options      = vp.parseOpt(options.opt);
+			options      = vp.parseOpt(options.opt);
 
-		editor.setTheme("ace/theme/" + options.theme);
-		editor.getSession().setMode("ace/mode/" + options.mode);
-		editor.getSession().setUseWrapMode( true );
-            editor.setShowPrintMargin( false );
+			editor.setTheme("ace/theme/" + options.theme);
+			editor.getSession().setMode("ace/mode/" + options.mode);
+			editor.getSession().setUseWrapMode( true );
+			editor.setShowPrintMargin( false );
 
-		editor.getSession().setValue(textarea.val());
-		editor.getSession().on('change', function(){
-			textarea.val(editor.getSession().getValue());
-		});
-		textarea.on('change', function(){
 			editor.getSession().setValue(textarea.val());
-		});
+			editor.getSession().on('change', function(){
+				textarea.val(editor.getSession().getValue());
+			});
+			textarea.on('change', function(){
+				editor.getSession().setValue(textarea.val());
+			});
 
-	});
-}
+		});
+	}
+};
+
+// Init WP TinyMCE Editor
+vp.init_wpeditor = function($elements)
+{
+	if(window.KIA_metabox !== 'undefined')
+	{
+		if($elements.length <= 0)
+			return;
+		KIA_metabox.runTinyMCE($elements);
+	}
+};

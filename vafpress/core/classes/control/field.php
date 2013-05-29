@@ -96,6 +96,12 @@ abstract class VP_Control_Field implements iFactory
 		// Determine Type
 		$type = 'vp-' . strtolower(substr(get_class($this), strrpos(get_class($this), '_') + 1));
 
+		// Is hidden
+		if($this->is_hidden())
+		{
+			$this->add_container_extra_classes('vp-hide');
+		}
+
 		// Set Control Head Data
 		$this->add_data('head_info', array(
 			'name'                    => $this->get_name(),

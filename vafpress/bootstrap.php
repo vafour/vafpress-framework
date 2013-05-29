@@ -98,8 +98,13 @@ function vp_setup()
 	{
 		// parse options set object
 		vp_init_option_set();
+
+		// init wp editor
+		vp_init_wpeditor();
+
 		// init options with $set defaults merging
 		vp_init_options();
+
 		// load scripts and styles
 		vp_load_scripts_and_styles();
 	}
@@ -111,6 +116,19 @@ function vp_is_option_page($hook_suffix)
 	if( $hook_suffix == ('appearance_page_' . $menu_page_slug) )
 		return true;
 	return false;
+}
+
+function vp_init_wpeditor()
+{
+	global $set;
+	$types = $set->get_field_types();
+	if(in_array('wpeditor', $types))
+	{
+		echo '<div style="display: none">';
+		add_filter( 'wp_default_editor', create_function('', 'return "tinymce";') );
+		wp_editor( '', 'vp_dummy_editor' );
+		echo '</div>';
+	}
 }
 
 function vp_init_option_set()
@@ -350,7 +368,14 @@ function vp_setup_options_to_db()
 	{
 		vp_init_option_set();
 		vp_init_options();
-		$set->save($option_key);
+
+		$opt = $set->get_values();
+		// before db options db action hook
+		do_action('vp_before_db_options_init', $opt);
+		// save to db
+		$result = $set->save($option_key);
+		// after db options db action hook
+		do_action('vp_after_db_options_init', $opt, $result['status'], $option_key);
 	}
 }
 
@@ -439,7 +464,17 @@ function vp_ajax_save()
 
 		$set->populate_values($option, true);
 
+		// get back options from set
+		$opt = $set->get_values();
+
+		// before ajax save action hook
+		do_action('vp_before_ajax_save', $opt);
+
+		// do saving
 		$result = $set->save($config['option_key']);
+
+		// after ajax save action hook
+		do_action('vp_after_ajax_save', $opt, $result['status'], $config['option_key']);
 	}
 
 	if (ob_get_length()) ob_clean();

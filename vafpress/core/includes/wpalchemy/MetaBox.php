@@ -10,6 +10,12 @@
  * @link		http://farinspace.com
  */
 
+/**
+ * This is modified version so that WPAlchemy supports nested repeatable group
+ * Vafpress (http://vafpress.com)
+ * 2013
+ */
+
 // todo: perhaps move _global_head and _global_foot locally, when first run
 // define a constant to prevent other instances from running again ...
 
@@ -1623,8 +1629,6 @@ class WPAlchemy_MetaBox
 
 		$this->meta = $meta;
 
-		// var_dump($meta);
-
 		return $this->meta;
 	}
 
@@ -1713,8 +1717,6 @@ class WPAlchemy_MetaBox
 					$keys   = $this->get_the_loop_group_name_array();
 				}
 			}
-			// var_dump($n);
-			// var_dump($keys);
 			$value = $this->get_meta_by_array($keys);
 		}
 		else
@@ -1754,93 +1756,6 @@ class WPAlchemy_MetaBox
 	 * @since	1.0
 	 * @access	public
 	 */
-	/*
-	function get_the_value($n = NULL, $collection = FALSE)
-	{
-		$this->_meta(NULL, TRUE);
-
-		$value = null;
-
-		if ($this->in_loop)
-		{
-			if(isset($this->meta[$this->name]))
-			{
-				$n = is_null($n) ? $this->subname : $n ;
-
-				if(!is_null($n))
-				{
-					if ($collection)
-					{
-						if(isset($this->meta[$this->name][$this->current]))
-						{
-							$value = $this->meta[$this->name][$this->current];
-						}
-					}
-					else
-					{
-						if(isset($this->meta[$this->name][$this->current][$n]))
-						{
-							$value = $this->meta[$this->name][$this->current][$n];
-						}
-					}
-				}
-				else
-				{
-					if ($collection)
-					{
-						if(isset($this->meta[$this->name]))
-						{
-							$value = $this->meta[$this->name];
-						}
-					}
-					else
-					{
-						if(isset($this->meta[$this->name][$this->current]))
-						{
-							$value = $this->meta[$this->name][$this->current];
-						}
-					}
-				}
-			}
-		}
-		else
-		{
-			$n = is_null($n) ? $this->name : $n ;
-
-			if(isset($this->meta[$n]))
-			{
-				$value = $this->meta[$n];
-			}
-		}
-
-		if (is_string($value) || is_numeric($value))
-		{
-			if ($this->in_template)
-			{
-				return htmlentities($value, ENT_QUOTES, 'UTF-8');
-			}
-			else
-			{
-				// http://wordpress.org/support/topic/call-function-called-by-embed-shortcode-direct
-				// http://phpdoc.wordpress.org/trunk/WordPress/Embed/WP_Embed.html#run_shortcode
-
-				global $wp_embed;
-
-				return do_shortcode($wp_embed->run_shortcode($value));
-			}
-		}
-		else
-		{
-			// value can sometimes be an array
-			return $value;
-		}
-	}
-	*/
-
-	/**
-	 * @since	1.0
-	 * @access	public
-	 */
 	function the_name($n = NULL)
 	{
 		echo $this->get_the_name($n);
@@ -1864,11 +1779,7 @@ class WPAlchemy_MetaBox
 			if (!is_null($n))
 				$the_field = $this->get_the_loop_group_name(true) . '[' . $n . ']' ;
 			else
-				$the_field = $this->get_the_loop_group_name(true);	
-
-			// if (!is_null($n)) $the_field = $this->id . '[' . $this->name . '][' . $this->current . '][' . $n . ']' ;
-
-			// else $the_field = $this->id . '[' . $this->name . '][' . $this->current . ']' ;	
+				$the_field = $this->get_the_loop_group_name(true);
 		}
 		else
 		{
@@ -2237,20 +2148,7 @@ class WPAlchemy_MetaBox
 			$this->in_loop = TRUE;
 		}
 		
-		// $this->name = $n;
-
-		// echo $this->name;
-		// echo '|';
-		// echo $this->get_the_loop_group_name();
-		// echo '|';
-		// $dotted = $this->get_the_dotted_loop_group_name();
-		// echo $dotted;
-		// var_dump($this->get_meta_by_dotted($dotted));
-		// var_dump($this->get_the_loop_group_name_array());
-
-		// $meta = $this->get_the_value(null, true);
 		$cnt = $this->get_the_current_group_count();
-		// $cnt = count(!empty($meta) ? $meta : NULL);
 
 		$length = is_null($length) ? $cnt : $length ;
 		
@@ -2270,15 +2168,9 @@ class WPAlchemy_MetaBox
 			}
 		}
 
-		// var_dump($this->length);
-
 		$this->set_the_current_group_length($this->length);
 		$this->increment_current_loop();
 		$this->current++;
-
-		// echo 'name:' . $this->get_the_current_loop()->name;
-		// echo 'curr:' . $this->get_the_current_group_current();
-		// echo 'leng:' . $this->get_the_current_group_length();
 
 		if ($this->get_the_current_group_current() < $this->get_the_current_group_length())
 		{
@@ -2293,23 +2185,6 @@ class WPAlchemy_MetaBox
 			$this->set_the_current_group_current(-1);
 			$this->prev_loop();
 		}
-
-		// $this->current++;
-
-		// if ($this->current < $this->length)
-		// {
-		// 	$this->subname = NULL;
-
-		// 	$this->fieldtype = NULL;
-
-		// 	return TRUE;
-		// }
-		// else if ($this->current == $this->length)
-		// {
-		// 	$this->name = NULL;
-
-		// 	$this->current = -1;
-		// }
 
 		$this->in_loop = FALSE;
 
@@ -2359,8 +2234,6 @@ class WPAlchemy_MetaBox
 		// authentication passed, save data
 	 
 		$new_data = isset( $_POST[$this->id] ) ? $_POST[$this->id] : NULL ;
-
-		// print_r($new_data);
 	 
 		WPAlchemy_MetaBox::clean($new_data);
 
@@ -2523,7 +2396,9 @@ class WPAlchemy_MetaBox
 	}
 
 	/**
-	 * The Metal Borned Here!
+	 * Other than core modifications, here is the loop stack function and class to support
+	 * nested repeatable group.
+	 * author Vafpress
 	 */
 
 	var $_loop_stack = array();
@@ -2714,12 +2589,6 @@ class WPAlchemy_MetaBox
 
 		if(!is_array($arr) || !is_array($meta) || is_null($meta))
 			return null;
-
-		// var_dump($arr);
-		// echo $this->get_the_current_loop()->name;
-		// echo $this->get_the_current_loop()->current;
-		// var_dump($meta);
-	
 			
 		foreach ($arr as $key)
 		{
@@ -2781,19 +2650,6 @@ class WPAlchemy_MetaBox
 	}
 
 }
-
-// $wpma = new WPAlchemy_MetaBox(array('id'=>'asdf', 'template' => 'asdf'));
-// $wpma->push_or_set_current_loop('a', 2);
-// $wpma->push_or_set_current_loop('b', 2);
-// $wpma->push_or_set_current_loop('c', 2);
-// var_dump($wpma->prev_loop());
-// var_dump($wpma->prev_loop());
-// var_dump($wpma->prev_loop());
-// var_dump($wpma->prev_loop());
-// $wpma->increment_current_loop();
-// var_dump($wpma->_loop_stack);
-// echo $wpma->get_the_loop_group_name();
-
 
 class WPA_Loop
 {

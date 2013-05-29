@@ -159,6 +159,19 @@ class VP_Option_Control_Set
 		return $fields;
 	}
 
+	public function get_field_types()
+	{
+		$fields = $this->get_fields();
+		$types  = array();
+		foreach ($fields as $field)
+		{
+			$type = VP_Util_Reflection::field_type_from_class(get_class($field));
+			if(!in_array($type, $types))
+				$types[] = $type;
+		}
+		return $types;
+	}
+
 	public function get_field($name)
 	{
 		$fields = $this->get_fields();

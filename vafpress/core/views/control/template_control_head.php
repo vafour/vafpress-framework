@@ -3,7 +3,6 @@
 	<?php echo VP_Util_Text::print_if_exists($validation, 'data-vp-validation="%s"'); ?>
 	<?php echo VP_Util_Text::print_if_exists(isset($bind) ? $bind : '', 'data-vp-bind="%s"'); ?>
 	<?php echo VP_Util_Text::print_if_exists(isset($dependency) ? $dependency : '', 'data-vp-dependency="%s"'); ?>
-	<?php echo $is_hidden ? 'style="display: none;"' : ''; ?>
 	id="<?php echo $name; ?>">
 	<div class="label">
 		<label><?php echo $label; ?></label>

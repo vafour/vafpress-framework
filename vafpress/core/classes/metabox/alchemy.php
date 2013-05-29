@@ -173,11 +173,17 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 							if($field instanceof VP_Control_Field)
 							{
 								$field->is_hidden(true);
+								if($field->is_hidden())
+									$field->add_container_extra_classes('vp-hide');
+
 								$field->add_container_extra_classes('vp-dep-inactive');
 							}
 							else
 							{
 								$field['is_hidden'] = true;
+								if($field['is_hidden'])
+									$field['container_extra_classes'][] = 'vp-hide';
+									
 								$field['container_extra_classes'][] = 'vp-dep-inactive';
 							}
 						}
@@ -311,7 +317,6 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 
 	function _enview($fields)
 	{
-		// print_r($fields);
 		foreach ($fields as $name => $field)
 		{
 			if( is_array($field) and $field['repeating'] )
@@ -345,7 +350,6 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 				. (isset($group['container_extra_classes']) ? (' ' . implode(' ', $group['container_extra_classes'])) : '')
 				. '"'
 				. VP_Util_Text::return_if_exists(isset($dependency) ? $dependency : '', ' data-vp-dependency="%s"')
-				. ((isset($group['is_hidden']) and $group['is_hidden']) ? ' style="display: none;"' : '')
 				. '>';
 		$html .= '<h4>' . $group['title'] . '</h4>';
 
@@ -382,7 +386,6 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 				. (isset($group['container_extra_classes']) ? (' ' . implode(' ', $group['container_extra_classes'])) : '')
 				. '"'
 				. VP_Util_Text::return_if_exists(isset($dependency) ? $dependency : '', 'data-vp-dependency="%s"')
-				. ((isset($group['is_hidden']) and $group['is_hidden']) ? ' style="display: none;"' : '')
 				. '>';
 
 		foreach ($group['groups'] as $g)
@@ -410,11 +413,6 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 					$html .= $this->_render_group($f);
 				else
 					$html .= $this->_render_field($f);
-
-				// if(is_array($f))
-				// 	$html .= $this->_render_group($f);
-				// else
-				// 	$html .= $this->_render_field($f);
 			}
 			$html .= '</div>';
 			$html .= '</div>';
@@ -458,18 +456,8 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		// authentication passed, save data
 		$new_data = isset( $_POST[$this->id] ) ? $_POST[$this->id] : NULL ;
 
-		// echo 'before';
-		// print_r($new_data);
-
-		// $groups = array();
-		// $this->_get_repeating_groups_names($groups, $this->template);
-		// print_r($groups);
-
-		// $this->_clean_tocopy_2($new_data, $groups);
+		// clean to copy and reset array indexes
 		$this->_clean_tocopy($new_data);
-
-		// echo 'after';
-		// print_r($new_data);
 
 		if (empty($new_data))
 		{
@@ -487,7 +475,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 			 */
 			if (FALSE === $new_data) return $post_id;
 
-			// WPAlchemy_MetaBox::clean($new_data);
+			$this->_clean_tocopy($new_data);
 		}
 
 		// get current fields, use $real_post_id (checked for in both modes)
@@ -585,42 +573,29 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 					}
 				}
 			}
-		}
-	}
-
-	private function _clean_tocopy_2(&$arr, $groups)
-	{
-		if(is_array($arr))
-		{
-			foreach ($arr as $key => $value)
+			if (!count($arr)) 
 			{
-				if(is_array($value))
+				$arr = array();
+			}
+			else
+			{
+				$keys = array_keys($arr);
+
+				$is_numeric = TRUE;
+
+				foreach ($keys as $key)
 				{
-					var_dump($key);
-					var_dump($value);
-					$this->_clean_tocopy_2($arr[$key], $groups);
-					if( in_array( $key, $groups ) )
+					if (!is_numeric($key)) 
 					{
-						end($value);
-						$last = key($value);
-						echo $key;
-						echo 'here';
-						var_dump($last);
-						unset($arr[$key][$last]);
+						$is_numeric = FALSE;
+						break;
 					}
 				}
-			}
-		}
-	}
 
-	private function _get_repeating_groups_names(&$groups, $fields)
-	{
-		foreach ($fields as $field)
-		{
-			if( $field['type'] == 'group' and $field['repeating'] )
-			{
-				$groups[] = $field['name'];
-				$groups[] = $this->_get_repeating_groups_names($groups, $field['fields']);
+				if ($is_numeric)
+				{
+					$arr = array_values($arr);
+				}
 			}
 		}
 	}

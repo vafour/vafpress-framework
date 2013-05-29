@@ -176,7 +176,6 @@ function vp_get_fontawesome_icons()
 		{
 		    $icons[] = array('value' => $match[1], 'label' => $match[1]);
 		}
-		
 		set_transient( 'vp_fontawesome_icons', $icons, 60 * 60 * 24 );
 	}
 

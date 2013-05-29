@@ -564,6 +564,15 @@ return array(
 					'title' => __('Section 1', 'vp_textdomain'),
 					'fields' => array(
 						array(
+							'type' => 'wpeditor',
+							'name' => 'tb_1',
+							'label' => __('WP TinyMCE Editor', 'vp_textdomain'),
+							'description' => __('Wordpress tinyMCE editor.', 'vp_textdomain'),
+							'use_external_plugins' => '0',
+							'disabled_externals_plugins' => '',
+							'disabled_internals_plugins' => '',
+						),
+						array(
 							'type' => 'toggle',
 							'name' => 'tg_1',
 							'label' => __('Toggle', 'vp_textdomain'),

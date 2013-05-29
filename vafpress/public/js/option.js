@@ -25,10 +25,9 @@
 	// custom checkbox and radiobutton event binding
 	vp.custom_check_radio_event(".vp-wrap", ".vp-field.vp-checked-field .field .input label");
 
-	// init select2
-	if ($.fn.select2) $('.vp-js-select2').select2({allowClear: true, placeholder: "Select option(s)"});
-	if ($.fn.select2Sortable) $('.vp-js-sorter').select2().select2Sortable();
-	vp.init_fontawesome_chooser(jQuery('.vp-js-fontawesome'));
+	$(document).on('ready', function(){
+		vp.init_controls($('.vp-wrap'));
+	});
 
 	/* BEGIN FETCHING ALL FIELDS' VALIDATION and BINDING RULES */
 	var validation   = [];
@@ -173,6 +172,9 @@
 	// Ajax Saving
 	$('.vp-js-option-form').bind('submit', function(e) {
 		e.preventDefault();
+
+		// update tinyMCE textarea content
+		tinyMCE.triggerSave(false, true);
 
 		$('.vp-js-option-form .vp-field').removeClass('vp-error');
 		$('.validation-notif.vp-error').remove();

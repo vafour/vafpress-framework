@@ -306,6 +306,14 @@
 				<section>
 					<title>Section 1</title>
 					<fields>
+						<wpeditor>
+							<name>tb_1</name>
+							<label>WP TinyMCE Editor</label>
+							<description>Wordpress tinyMCE editor.</description>
+							<use_external_plugins>0</use_external_plugins>
+							<disabled_externals_plugins></disabled_externals_plugins>
+							<disabled_internals_plugins></disabled_internals_plugins>
+						</wpeditor>
 						<toggle>
 							<name>tg_1</name>
 							<label>Toggle</label>

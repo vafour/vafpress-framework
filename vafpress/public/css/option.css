@@ -33,7 +33,7 @@
 }
 
 .vp-option-panel .vp-current {
-	display: block !important;
+	position: static !important;
 }
 
 .vp-option-panel .stop {
@@ -283,8 +283,10 @@
  * ==================================================== */
 
 .vp-panel {
-	display: none;
 	padding: 20px;
+	position: absolute !important;
+	top: -9999px !important;
+	left: -9999px !important;
 }
 
 .vp-panel h2 {
@@ -676,6 +678,29 @@
 	height: 100px;
 }
 
+/* WP TinyMCE Editor */
+
+.vp-wrap .vp-wpeditor .label{
+	display: block;
+	padding: 15px 0 0 20px;
+	width: 100%;	
+}
+.vp-wrap .vp-wpeditor .field{
+	display: block;
+	padding-top: 0;
+	width: 100%;
+}
+.vp-wrap .customEditor { margin: 15px 0px; }
+.vp-wrap .customEditor textarea { width: 100%; margin: 0; -webkit-border-top-right-radius: 0; -webkit-border-top-left-radius: 0; border-top-left-radius: 0; border-top-right-radius: 0; }
+.vp-wrap .custom_upload_buttons a { text-decoration: none; }
+.vp-wrap .wp_themeSkin table.mceLayout  { background: white; border-width: 1px; border-style: solid; -webkit-border-top-right-radius: 3px; -webkit-border-top-left-radius: 3px; border-top-right-radius: 3px; border-top-left-radius: 3px; border-color: #CCC #CCC #DFDFDF;}
+/*.vp-wrap .mceLayout span { display:inline; }*/
+.vp-wrap .customEditor * { box-sizing: content-box !important; }
+.vp-wrap .vp-wpeditor .field .customEditor .mceIcon img {
+	border-width: 0;
+	padding: 0;
+}
+
 /* COLOR */
 
 .vp-color .field label {
@@ -699,7 +724,7 @@
 }
 
 .vp-color .field input[type="text"] {
-	width: 170px;
+	width: 200px;
 	padding: 6px 12px 6px 35px;
 }
 
@@ -866,3 +891,10 @@
 .select2-drop input { border-color: #cccccc; }
 
 .select2-results .select2-highlighted { background: #278ab7; }
+
+.vp-hide {
+	position: absolute !important;
+	visibility: hidden !important;
+	top: -9999px !important;
+	left: -9999px !important;
+}

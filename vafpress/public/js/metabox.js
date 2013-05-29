@@ -10,7 +10,7 @@
 		e.preventDefault();
 		var group     = $(this).parents('.wpa_group:first');
 		var control   = group.find('.vp-controls:first');
-		var siblings  = group.siblings();
+		var siblings  = group.siblings('.wpa_group:not(.tocopy)');
 		var container = $('html, body');
 		if(control.hasClass('vp-hide'))
 		{
@@ -18,7 +18,7 @@
 				$(this).find('.vp-controls').first().slideUp('fast', function() {
 					$(this).addClass('vp-hide')
 					.slideDown(0, function(){
-						if(i == siblings.length - 2)
+						if(i == siblings.length - 1)
 						{
 							container.animate({
 								scrollTop: group.offset().top - container.offset().top + container.scrollTop() - $('#wpadminbar').height()
@@ -40,6 +40,7 @@
 				.slideDown(0);
 			});
 		}
+		return false;
 	});
 
 	function vp_init_fields($elements)
@@ -47,12 +48,7 @@
 		$elements.each(function(){
 			if($(this).parents('.tocopy').length <= 0)
 			{
-				// init select2 and friends
-				if ($.fn.select2)
-					$(this).find('.vp-js-select2').select2({allowClear: true, placeholder: "Select option(s)"});
-				if ($.fn.select2Sortable)
-					$(this).find('.vp-js-sorter').select2().select2Sortable();
-				vp.init_fontawesome_chooser($(this).find('.vp-js-fontawesome'));
+				vp.init_controls($(this));
 
 				var id    = $(this).attr('id'),
 					name  = $(this).attr('id'),
@@ -73,8 +69,6 @@
 				{
 					dep && dependencies.push({dep: dep, type: 'field', source: id});
 				}
-				if($(this).hasClass('vp-wpeditor'))
-					KIA_metabox.runTinyMCE($(this).find('textarea'));
 			}
 		});
 	}
@@ -98,8 +92,6 @@
 	$(document).ready(function () {
 		vp_init_fields(jQuery('.vp-metabox .vp-field'));
 		vp_init_groups(jQuery('.vp-metabox .vp-meta-group'));
-		console.log(bindings);
-		console.log(dependencies);
 		process_binding(bindings);
 		process_dependency(dependencies);
 	});
@@ -123,6 +115,9 @@
 		var submitter = $("input[type=submit][clicked=true]"),
 		    action    = submitter.val(),
 		    errors    = 0;
+
+		// update tinyMCE textarea content
+		tinyMCE.triggerSave(false, true);
 
 		$('.vp-field').removeClass('vp-error');
 		$('.validation-msg.vp-error').remove();
@@ -251,9 +246,6 @@
 		vp_init_groups(clone.find('.vp-meta-group'));
 
 		clone.find('.vp-wpa-group-title:first').click();
-
-		console.log(bindings);
-		console.log(dependencies);
 
 		process_binding(bindings);
 		process_dependency(dependencies);
