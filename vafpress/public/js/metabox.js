@@ -4,8 +4,6 @@
 	var bindings     = [];
 	var dependencies = [];
 
-	KIA_metabox.mediaButtons();
-
 	$(document).on('click', '.vp-wpa-group-title', function(e){
 		e.preventDefault();
 		var group     = $(this).parents('.wpa_group:first');

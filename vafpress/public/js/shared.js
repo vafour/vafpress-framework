@@ -991,6 +991,10 @@ vp.init_ace_editor = function($elements)
 };
 
 // Init WP TinyMCE Editor
+if(window.KIA_metabox !== 'undefined')
+{
+	KIA_metabox.mediaButtons();
+}
 vp.init_wpeditor = function($elements)
 {
 	if(window.KIA_metabox !== 'undefined')
