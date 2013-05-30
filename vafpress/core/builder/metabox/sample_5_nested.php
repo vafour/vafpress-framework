@@ -26,7 +26,7 @@ return array(
 						array(
 							'type'      => 'group',
 							'repeating' => false,
-							'length'    => 5,
+							'length'    => 2,
 							'name'      => 'binding_group',
 							'title'     => __('Location', 'vp_textdomain'),
 							'fields'    => array(

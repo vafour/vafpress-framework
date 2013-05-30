@@ -174,7 +174,7 @@
 		e.preventDefault();
 
 		// update tinyMCE textarea content
-		tinyMCE.triggerSave(false, true);
+		vp.tinyMCE_save();
 
 		$('.vp-js-option-form .vp-field').removeClass('vp-error');
 		$('.validation-notif.vp-error').remove();

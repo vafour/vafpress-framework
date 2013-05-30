@@ -129,7 +129,7 @@
 		    errors    = 0;
 
 		// update tinyMCE textarea content
-		tinyMCE.triggerSave(false, true);
+		vp.tinyMCE_save();
 
 		$('.vp-field').removeClass('vp-error');
 		$('.validation-msg.vp-error').remove();

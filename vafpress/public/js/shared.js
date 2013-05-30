@@ -1004,3 +1004,10 @@ vp.init_wpeditor = function($elements)
 		KIA_metabox.runTinyMCE($elements);
 	}
 };
+vp.tinyMCE_save = function()
+{
+	if(typeof window.tinyMCE !== 'undefined')
+	{
+		tinyMCE.triggerSave(false, true);
+	}
+};
