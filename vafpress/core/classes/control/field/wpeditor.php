@@ -14,9 +14,12 @@ class VP_Control_Field_WPEditor extends VP_Control_Field
 		parent::__construct();
 	}
 
-	public static function withArray($arr = array())
+	public static function withArray($arr = array(), $class_name = null)
 	{
-		$instance = new self();
+		if(is_null($class_name))
+			$instance = new self();
+		else
+			$instance = new $class_name;
 
 		$use_external_plugins       = isset($arr['use_external_plugins']) ? $arr['use_external_plugins'] : 1;
 		$disabled_externals_plugins = array();

@@ -14,9 +14,12 @@ class VP_Control_Field_Date extends VP_Control_Field
 		parent::__construct();
 	}
 
-	public static function withArray($arr = array())
+	public static function withArray($arr = array(), $class_name = null)
 	{
-		$instance = new self();
+		if(is_null($class_name))
+			$instance = new self();
+		else
+			$instance = new $class_name;
 		$instance->_basic_make($arr);
 		$instance->set_min_date(isset($arr['min_date']) ? $arr['min_date'] : '');
 		$instance->set_max_date(isset($arr['max_date']) ? $arr['max_date'] : '');

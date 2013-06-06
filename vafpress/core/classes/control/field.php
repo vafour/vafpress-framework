@@ -398,7 +398,7 @@ abstract class VP_Control_Field implements iFactory
  */
 interface iFactory
 {
-	static function withArray($arr = array());
+	static function withArray($arr = array(), $class_name = null);
 }
 
 /**

@@ -2106,10 +2106,10 @@ class WPAlchemy_MetaBox
 
 		$this->_meta(NULL, TRUE);
 
-		// push new loop or set loop to current name
-		$this->push_or_set_current_loop($n, $length);
-
 		$this->in_loop = 'multi';
+
+		// push new loop or set loop to current name
+		$this->push_or_set_current_loop($n, $length, $this->in_loop);
 
 		return $this->_loop($n, $length, 2);
 	}
@@ -2123,6 +2123,7 @@ class WPAlchemy_MetaBox
 	{
 		$this->_meta(NULL, TRUE);
 		$this->in_loop = 'single';
+		$this->push_or_set_current_loop($n, $length, $this->in_loop);
 		return $this->_loop($n,NULL,1);
 	}
 
@@ -2134,8 +2135,8 @@ class WPAlchemy_MetaBox
 	{
 		$this->_meta(NULL, TRUE);
 		// push new loop or set loop to current name
-		$this->push_or_set_current_loop($n, $length);
 		$this->in_loop = 'normal';
+		$this->push_or_set_current_loop($n, $length, $this->in_loop);
 		return $this->_loop($n,$length);
 	}
 
@@ -2236,7 +2237,7 @@ class WPAlchemy_MetaBox
 		// authentication passed, save data
 	 
 		$new_data = isset( $_POST[$this->id] ) ? $_POST[$this->id] : NULL ;
-	 
+
 		WPAlchemy_MetaBox::clean($new_data);
 
 		if (empty($new_data))
@@ -2405,9 +2406,9 @@ class WPAlchemy_MetaBox
 
 	var $_loop_stack = array();
 
-	function push_loop($name, $length)
+	function push_loop($name, $length, $type)
 	{
-		$loop         = new WPA_Loop($name, $length);
+		$loop         = new WPA_Loop($name, $length, $type);
 		$parent       = $this->get_the_current_loop();
 		if($parent)
 			$loop->parent = $parent->name;
@@ -2417,11 +2418,11 @@ class WPAlchemy_MetaBox
 		return $loop;
 	}
 
-	function push_or_set_current_loop($name, $length)
+	function push_or_set_current_loop($name, $length, $type)
 	{
 		if( !array_key_exists( $name, $this->_loop_stack ) )
 		{
-			$this->push_loop($name, $length);
+			$this->push_loop($name, $length, $type);
 		}
 
 		$this->set_current_loop($name);
@@ -2478,21 +2479,29 @@ class WPAlchemy_MetaBox
 
 	function get_the_loop_collection($name = null)
 	{
-		if(is_null($name))
-			$name = $this->get_the_current_loop()->name;
-		$loop_stack   = $this->_loop_stack;
 		$collection   = array();
-		$loop         = $loop_stack[$name];
-		$collection[] = $loop;
-		while ($loop)
+
+		if(is_null($name))
 		{
-			$collection[] = $loop;
-			if($loop->parent)
-				$loop = $loop_stack[$loop->parent];
-			else
-				$loop = false;
+			$curr = $this->get_the_current_loop();
+			if($curr)
+			{
+				$name         = $curr->name;
+				$loop_stack   = $this->_loop_stack;
+				$loop         = $loop_stack[$name];
+				$collection[] = $loop;
+				while ($loop)
+				{
+					$collection[] = $loop;
+					if($loop->parent)
+						$loop = $loop_stack[$loop->parent];
+					else
+						$loop = false;
+				}
+				$collection = array_reverse($collection);
+			}
 		}
-		$collection = array_reverse($collection);
+
 		return $collection;
 	}
 
@@ -2658,13 +2667,13 @@ class WPAlchemy_MetaBox
 		return current($this->_loop_stack);
 	}
 
-	function is_in_last()
+	function is_in_multi_last()
 	{
 		// copy _loop_stack to prevent internal pointer ruined
-		$loop_stack = $this->_loop_stack;
+		$loop_stack = $this->get_the_loop_collection();
 		foreach ($loop_stack as $loop)
 		{
-			if($loop->is_last())
+			if($loop->type === 'multi' and $loop->is_last())
 				return true;
 		}
 		return false;
@@ -2675,6 +2684,18 @@ class WPAlchemy_MetaBox
 		if(current($this->_loop_stack) === false)
 			return false;
 		return true;
+	}
+
+	function is_parent_multi()
+	{
+		// copy _loop_stack to prevent internal pointer ruined
+		$loop_stack = $this->get_the_loop_collection();
+		foreach ($loop_stack as $loop)
+		{
+			if($loop->type === 'multi')
+				return true;
+		}
+		return false;
 	}
 
 	function the_copy_button_class()
@@ -2696,10 +2717,13 @@ class WPA_Loop
 
 	public $name     = NULL;
 
-	function __construct($name, $length)
+	public $type     = false;
+
+	function __construct($name, $length, $type)
 	{
 		$this->name   = $name;
 		$this->length = $length;
+		$this->type   = $type;
 	}
 
 	function the_indexed_name()

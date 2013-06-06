@@ -222,7 +222,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 
 
 		// if tocopy always assign default
-		if( $this->in_loop == 'multi' and $mb->is_in_last() )
+		if( $mb->is_parent_multi() and $mb->is_in_multi_last() )
 		{
 			$value = $default;
 		}

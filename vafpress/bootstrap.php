@@ -63,9 +63,15 @@ foreach (array_merge(glob(VP_APP_DATA_DIR . "/*.php"), glob(VP_CORE_DATA_DIR . "
 }
 
 ////////////////////////
+// Global Variables   //
+////////////////////////
+global $vp_set, $vp_config, $vp_opt;
+$vp_opt = array();
+
+////////////////////////
 // Load Theme Config  //
 ////////////////////////
-$config = VP_Util_Config::instance()->load('option');
+$vp_config = VP_Util_Config::instance()->load('option');
 
 
 ////////////////////////
@@ -74,118 +80,14 @@ $config = VP_Util_Config::instance()->load('option');
 $lang_dir = VP_THEME_DIR . '/lang';
 load_theme_textdomain('vp_textdomain', $lang_dir);
 
-$set;
-$opt = array();
+/////////////////////////////
+// Bootstrap Theme Options //
+/////////////////////////////
+require_once 'option.php';
 
-// get options for db
-vp_init_options_db();
-
-// if is ajax wrapper request, don't parse option page
-if( !(vp_is_ajax() and isset($_POST['action']) and $_POST['action'] === 'vp_ajax_wrapper') )
-{
-	add_action('admin_enqueue_scripts', 'vp_setup');
-}
-add_action('admin_menu', 'vafpress_theme_menu');
-
-
-function vp_setup()
-{
-	global $set, $opt;
-	$screen = get_current_screen();
-
-	// if we are at option page
-	if(vp_is_option_page($screen->id))
-	{
-		// parse options set object
-		vp_init_option_set();
-
-		// init wp editor
-		vp_init_wpeditor();
-
-		// init options with $set defaults merging
-		vp_init_options();
-
-		// load scripts and styles
-		vp_load_scripts_and_styles();
-	}
-}
-
-function vp_is_option_page($hook_suffix)
-{
-	$menu_page_slug = VP_Util_Config::instance()->load('option', 'menu_page_slug');
-	if( $hook_suffix == ('appearance_page_' . $menu_page_slug) )
-		return true;
-	return false;
-}
-
-function vp_init_wpeditor()
-{
-	global $set;
-	$types = $set->get_field_types();
-	if(in_array('wpeditor', $types))
-	{
-		echo '<div style="display: none">';
-		add_filter( 'wp_default_editor', create_function('', 'return "tinymce";') );
-		wp_editor( '', 'vp_dummy_editor' );
-		echo '</div>';
-	}
-}
-
-function vp_init_option_set()
-{
-	global $set;
-
-	// Parse the option
-	try{
-		$option_path = VP_FileSystem::instance()->resolve_path('builder', 'option/option');
-		$options     = include($option_path);
-	} catch (Exception $e){
-		echo $e->getMessage();
-	}
-	$parser = new VP_Option_Parser();
-	$set	= $parser->parse_array_options($options);
-
-	// setup utility menu
-	$util_menu = new VP_Option_Control_Group_Menu();
-	$util_menu->set_title(__('Utility', 'vp_textdomain'));
-	$util_menu->set_name('utility');
-	$util_menu->set_icon('font-awesome:icon-wrench');
-
-	// Add tracking option
-	$et_section = new VP_Option_Control_Group_Section();
-	$et_section->set_name('et_section');
-
-	$help_note = new VP_Control_Field_NoteBox();
-	$help_note->set_label(__('Help Us!', 'vp_textdomain'));
-	$help_note->set_status('info');
-	$help_note->set_description(__('Send analytic data to Vafpress to help us improve the framework better, we\'re not collecting private data, and this won\'t slow down your site :)', 'vp_textdomain'));
-
-	$enable_tracker = new VP_Control_Field_Toggle();
-	$enable_tracker->set_name('enable_tracking');
-	$enable_tracker->set_label(__('Enable Tracking', 'vp_textdomain'));
-
-	$et_section->add_field($help_note);
-	$et_section->add_field($enable_tracker);
-
-	$util_menu->add_control($et_section);
-
-	// Add Import and Export Option Functionality
-	if(VP_Util_Config::instance()->load('option', 'impexp'))
-	{
-		$ie_section = new VP_Option_Control_Group_Section();
-		$ie_section->set_name('ie_section');
-		$ie_section->set_title(__('Import / Export Settings', 'vp_textdomain'));
-		$ie_field   = new VP_Option_Control_Field_ImpExp();
-		$ie_section->add_field($ie_field);
-		$util_menu->add_control($ie_section);
-	}
-	$set->add_menu($util_menu);
-}
-
-
-////////////////////
-// Load Metaboxes //
-////////////////////
+/////////////////////////
+// Bootstrap Metaboxes //
+/////////////////////////
 require_once 'metabox.php';
 
 ////////////////////////
@@ -200,123 +102,6 @@ foreach (VP_Extension::get_extensions() as $ext)
 {
 	require_once $ext->get_functions_file();
 }
-
-
-////////////////////////////////////////////
-// Load Options to be used in option page //
-////////////////////////////////////////////
-/**
- * @todo load default values, and then check on db, if not available then save to the db
- * @todo load option from db and expose them to be used on theme
- */
-function vp_init_options()
-{
-	global $config;
-	global $set;
-
-	// try load option from DB
-	$db_options = get_option($config['option_key']);
-	$default    = $set->get_defaults();
-	if (!empty($db_options))
-	{
-		// unify, preserve option from DB but appends anything new from default
-		$opt = $db_options;
-		$opt = $opt + $default;
-	}
-	else
-	{
-		$opt = $set->get_defaults();
-		update_option($config['option_key'], $opt);
-	}
-
-	// If dev mode, always use default, no db interaction
-	if($config['dev_mode'])
-		$opt = $set->get_defaults();
-
-	// populate option to fields' values
-	$set->populate_values($opt);
-
-	// process binding
-	$set->process_binding();
-
-	// process dependencies
-	$set->process_dependencies();
-}
-
-function vp_init_options_db()
-{
-	global $config, $opt;
-
-	// try load option from DB
-	$db_options = get_option($config['option_key']);
-	if (!empty($db_options))
-	{
-		$opt = $db_options;
-	}
-}
-
-// helper function to obtain option value
-function vp_option($key)
-{
-	global $opt;
-	if(array_key_exists($key, $opt))
-	{
-		return $opt[$key];
-	}
-	return null;
-}
-
-
-///////////////////////////////
-// Theme Menu and Page Setup //
-///////////////////////////////
-function vafpress_theme_menu()
-{
-	global $set;
-	global $config;
-	add_theme_page(
-		$config['browser_page_title'], // The title to be displayed in the browser window for this page.
-		$config['menu_page_label'],    // The text to be displayed for this menu item
-		$config['role'],               // Which type of users can see this menu item
-		$config['menu_page_slug'],     // The unique ID - that is, the slug - for this menu item
-		'vafpress_theme_display'       // The name of the function to call when rendering the page for this menu
-	);
-}
-
-function vafpress_theme_display()
-{
-	// render the page
-	global $set;
-	echo $set->render();
-}
-
-function vp_load_scripts_and_styles()
-{
-	global $set;
-	global $opt_deps_loader;
-
-	// load scripts and styles dependencies
-	$opt_loader      = new VP_WP_Loader();
-	$opt_deps_loader = new VP_Option_Depsloader($set);
-	$opt_loader->register($opt_deps_loader);
-}
-
-function vp_opt_notice_devmode($hook_suffix)
-{
-	global $opt_deps_loader;
-	global $hook_suffix;
-
-	if(VP_Util_config::instance()->load('option', 'dev_mode'))
-	{
-		if( vp_is_option_page($hook_suffix) )
-		{
-	    	VP_WP_Util::admin_notice(__("[Vafpress Framework] Theme Option Development Mode is Active, value won't be saved into database.", 'vp_textdomain'), false);
-		}
-	}
-}
-
-// development mode notice
-add_action('admin_notices', 'vp_opt_notice_devmode');
 
 ///////////////////////////////////////////////
 // Theme Activation and Deactivation actions //
@@ -358,27 +143,6 @@ function vp_activate_theme()
 	}
 }
 
-function vp_setup_options_to_db()
-{
-	global $set;
-	$option_key = VP_Util_Config::instance()->load('option', 'option_key');
-	$db_options = get_option($option_key);
-
-	if(empty($db_options))
-	{
-		vp_init_option_set();
-		vp_init_options();
-
-		$opt = $set->get_values();
-		// before db options db action hook
-		do_action('vp_before_db_options_init', $opt);
-		// save to db
-		$result = $set->save($option_key);
-		// after db options db action hook
-		do_action('vp_after_db_options_init', $opt, $result['status'], $option_key);
-	}
-}
-
 function vp_should_track()
 {
 	if(vp_option('enable_tracking') and !vp_is_local())
@@ -408,169 +172,6 @@ add_action('switch_theme', 'vp_deactivate_theme');
 
 // register theme activation 'hook'
 add_action('after_switch_theme', 'vp_activate_theme');
-
-
-//////////////////////
-// Ajax Admin Logic //
-//////////////////////
-add_action('wp_ajax_vp_ajax_save'         , 'vp_ajax_save');
-add_action('wp_ajax_vp_ajax_export_option', 'vp_ajax_export_option');
-add_action('wp_ajax_vp_ajax_import_option', 'vp_ajax_import_option');
-add_action('wp_ajax_vp_ajax_wrapper'      , 'vp_ajax_wrapper');
-
-function vp_ajax_wrapper()
-{
-	$function = $_POST['func'];
-	$params   = $_POST['params'];
-
-	if(!is_array($params))
-		$params = array($params);
-
-	try {
-		$result['data']    = call_user_func_array($function, $params);
-		$result['status']  = true;
-		$result['message'] = __("", 'vp_textdomain');
-	} catch (Exception $e) {
-		$result['data']    = '';
-		$result['status']  = false;
-		$result['message'] = $e->getMessage();		
-	}
-
-	if (ob_get_length()) ob_clean();
-	header('Content-type: application/json');
-	echo json_encode($result);
-	die();
-}
-
-function vp_ajax_save()
-{
-	global $set;
-	global $config;
-
-	$result = vp_verify_nonce();
-	
-	if($result['status'])
-	{
-		// parse options set object
-		vp_init_option_set();
-		// init options with $set defaults merging
-		vp_init_options();
-
-		$option = $_POST['option'];
-		$nonce  = $_POST['nonce'];
-
-		$option = VP_Util_Array::unite( $option, 'name', 'value' );
-		$option = $set->normalize_values($option);
-
-		$set->populate_values($option, true);
-
-		// get back options from set
-		$opt = $set->get_values();
-
-		// before ajax save action hook
-		do_action('vp_before_ajax_save', $opt);
-
-		// do saving
-		$result = $set->save($config['option_key']);
-
-		// after ajax save action hook
-		do_action('vp_after_ajax_save', $opt, $result['status'], $config['option_key']);
-	}
-
-	if (ob_get_length()) ob_clean();
-	header('Content-type: application/json');
-	echo json_encode($result);
-	die();
-}
-
-function vp_ajax_import_option()
-{
-	global $set;
-	global $config;
-
-	$result = vp_verify_nonce();
-	
-	if($result['status'])
-	{
-		// parse options set object
-		vp_init_option_set();
-		// init options with $set defaults merging
-		vp_init_options();
-
-		$option = $_POST['option'];
-		if(empty($option))
-		{
-			$result['status']  = false;
-			$result['message'] = __("Can't be empty.", 'vp_textdomain');
-		}
-		else
-		{
-			$option = maybe_unserialize(stripslashes($option));
-			if( is_array($option) )
-			{
-				$set->populate_values($option, true);
-				$result = $set->save($config['option_key']);
-			}
-			else
-			{
-				$result['status']  = false;
-				$result['message'] = __("Invalid data.", 'vp_textdomain');
-			}
-		}
-	}
-
-	if (ob_get_length()) ob_clean();
-	header('Content-type: application/json');
-	echo json_encode($result);
-	die();
-}
-
-function vp_ajax_export_option()
-{
-	global $config;
-
-	$result = vp_verify_nonce();
-	
-	if($result['status'])
-	{
-		$db_options = get_option($config['option_key']);
-		$db_options = serialize($db_options);
-		$result = array(
-			'status' => true,
-			'message'=> __("", 'vp_textdomain'),
-			'option' => $db_options
-		);
-	}
-
-	if (ob_get_length()) ob_clean();
-	header('Content-type: application/json');
-	echo json_encode($result);
-	die();
-}
-
-function vp_verify_nonce()
-{
-	$nonce  = $_POST['nonce'];
-	$verify = check_ajax_referer('vafpress', 'nonce', false);
-	if($verify)
-	{
-		$result['status']  = true;
-		$result['message'] = __("", 'vp_textdomain');	
-	}
-	else
-	{
-		$result['status']  = false;
-		$result['message'] = __("Unverified Access.", 'vp_textdomain');
-	}
-	return $result;
-}
-
-function vp_is_ajax()
-{
-	if( !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest')
-		return true;
-	return false;
-}
 
 // do scripts and styles dependencies for Mass Enqueuer
 VP_WP_MassEnqueuer::instance()->register();

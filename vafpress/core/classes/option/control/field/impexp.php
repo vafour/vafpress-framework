@@ -8,9 +8,12 @@ class VP_Option_Control_Field_ImpExp extends VP_Control_Field
 		parent::__construct();
 	}
 
-	public static function withArray($arr = array())
+	public static function withArray($arr = array(), $class_name = null)
 	{
-		$instance = new self();
+		if(is_null($class_name))
+			$instance = new self();
+		else
+			$instance = new $class_name;
 		$instance->_basic_make($arr);
 		return $instance;
 	}

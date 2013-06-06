@@ -8,46 +8,20 @@ class VP_Control_Field_Upload extends VP_Control_Field
 		parent::__construct();
 	}
 
-	public static function withArray($arr = array())
+	public static function withArray($arr = array(), $class_name = null)
 	{
-		$instance = new self();
+		if(is_null($class_name))
+			$instance = new self();
+		else
+			$instance = new $class_name;
 		$instance->_basic_make($arr);
 		return $instance;
 	}
 
 	public function _setup_data()
 	{
-
-		$preview = '';
-		$images  = array('jpg', 'jpeg', 'bmp',  'gif',  'png');
-		
-		if(filter_var($this->get_value(), FILTER_VALIDATE_URL) !== FALSE)
-		{
-			$info = pathinfo($this->get_value());
-			if(isset($info['extension']))
-			{
-				if(in_array($info['extension'], $images))
-				{
-					$preview = 'image';
-				}
-				else
-				{
-					$type    = wp_ext2type( $info['extension'] );
-					$preview = includes_url() . 'images/crystal/' . $type . '.png';
-				}
-			}
-			else
-			{
-				// if no extension, just assume they are image
-				$preview = 'image';
-			}
-
-			if($preview == 'image')
-				$preview = $this->get_value();
-		}
-
+		$preview = VP_Util_Res::get_preview_from_url($this->get_value());
 		$this->add_data('preview', $preview);
-		
 		parent::_setup_data();
 	}
 

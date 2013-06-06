@@ -9,9 +9,12 @@ class VP_Control_Field_Select extends VP_Control_FieldMulti
 		$this->_value = array();
 	}
 
-	public static function withArray($arr = array())
+	public static function withArray($arr = array(), $class_name = null)
 	{
-		$instance = new self();
+		if(is_null($class_name))
+			$instance = new self();
+		else
+			$instance = new $class_name;
 		$instance->_basic_make($arr);
 
 		// Turn default array to single value

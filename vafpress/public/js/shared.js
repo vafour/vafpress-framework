@@ -254,6 +254,19 @@ vp.wp_ext2type = function ( ext ) {
 	return result;
 };
 
+vp.get_url_extension = function(url){
+	var regex    = new RegExp(/(.*)[\/\\]([^\/\\]+)\.(\w+)/i);
+	var url_info = regex.exec(url);
+	if(url_info)
+	{
+		if (typeof url_info[3] != 'undefined')
+		{
+			return url_info[3];
+		}
+	}
+	return '';
+};
+
 vp.jqid = function(id) {
 	return '#' + id.replace(/([:\.\[\]])/g,'\\$1');
 };
@@ -804,7 +817,7 @@ function get_url_info(html)
 	if ($el.prop('tagName') == 'A')
 	{
 		imgurl  = jQuery(html).attr('href');
-		ext     = imgurl.split('.').pop();
+		ext     = vp.get_url_extension(imgurl);
 		type    = vp.wp_ext2type(ext);
 		iconurl = imgurl;
 		if(type !== 'image')

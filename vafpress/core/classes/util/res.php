@@ -12,6 +12,44 @@ class VP_Util_Res
 		return false;
 	}
 
+	public static function get_preview_from_url($url)
+	{
+		$preview = '';
+		$images  = array('jpg', 'jpeg', 'bmp',  'gif',  'png');
+		
+		if(filter_var($url, FILTER_VALIDATE_URL) !== FALSE)
+		{
+			// check for extension, if it has extension then use it
+			$info = pathinfo($url);
+			if(isset($info['extension']))
+			{
+				if(in_array($info['extension'], $images))
+				{
+					$preview = $url;
+				}
+				else
+				{
+					$type    = wp_ext2type( $info['extension'] );
+					if(is_null($type))
+						$type = 'default';
+					$preview = includes_url() . 'images/crystal/' . $type . '.png';
+				}
+			}
+			else
+			{
+				// if no extension, try to discover from mime
+				$mime = wp_remote_head( $url );
+				$mime = $mime['headers']['content-type'];
+				if(strpos($mime, 'image') === 0)
+					$preview = $url;
+				else
+					$preview = wp_mime_type_icon( $mime );
+			}
+		}
+
+		return $preview;
+	}
+
 	public static function img($url)
 	{
 		// empty parameter
