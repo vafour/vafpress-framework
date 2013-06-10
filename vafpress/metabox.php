@@ -86,6 +86,8 @@ function vp_metabox($key)
 		}
 		else
 		{
+			if(!is_object($temp) or !is_array($temp)) return null;
+
 			if( is_object($temp) and get_class($temp) === 'VP_MetaBox_Alchemy' )
 			{
 				$temp = $temp->get_the_value($key);
