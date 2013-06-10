@@ -32,7 +32,7 @@ class VP_Control_Field_NoteBox extends VP_Control_Field
 	protected function _basic_make($arr)
 	{
 		parent::_basic_make($arr);
-		$this->set_status(isset($arr['status']) ? $arr['status'] : '');
+		$this->set_status(isset($arr['status']) ? $arr['status'] : 'normal');
 	}
 
 	protected function _setup_data()

@@ -303,7 +303,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		// assign groups
 		$group['groups']       = $groups;
 		$group['indexed_name'] = $indexed_name;
-		$group['level']         = $level;
+		$group['level']        = $level;
 
 		// assign other information
 		$keys = array_keys($field);
@@ -314,6 +314,11 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 				$group[$key] = $field[$key];
 			}
 		}
+
+		// sortable
+		if(isset($group['sortable']) and $group['sortable'])
+			$group['container_extra_classes'][] = 'vp-sortable';
+
 		return $group;
 	}
 
@@ -356,6 +361,9 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 				. VP_Util_Text::return_if_exists(isset($dependency) ? $dependency : '', 'data-vp-dependency="%s"')
 				. '>';
 
+		$icon = '';
+		if(isset($group['sortable']) and $group['sortable'])
+			$icon = '<i class="icon-move"></i> ';
 
 		foreach ($group['groups'] as $g)
 		{
@@ -363,7 +371,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 			if ($g === reset($group['groups'])){ $is_first = true;}
 
 			$html .= '<div id="'. $g['name'] .'" class="vp-wpa-group wpa_group wpa_group-' . $name . '">';
-			$html .= '<div class="vp-wpa-group-heading"><a href="#" class="vp-wpa-group-title">' . $group['title'] . '</a></div>';
+			$html .= '<div class="vp-wpa-group-heading"><a href="#" class="vp-wpa-group-title">' . $icon . $group['title'] . '</a></div>';
 			$html .= '<div class="vp-controls' . ((!$is_first) ? ' vp-hide' : '') . '">';
 
 			foreach ($g['childs'] as $f)
@@ -401,6 +409,10 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 				. VP_Util_Text::return_if_exists(isset($dependency) ? $dependency : '', 'data-vp-dependency="%s"')
 				. '>';
 
+		$icon = '';
+		if(isset($group['sortable']) and $group['sortable'])
+			$icon = '<i class="icon-move"></i> ';
+
 		foreach ($group['groups'] as $g)
 		{
 			$class    = '';
@@ -410,7 +422,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 			if ($g === reset($group['groups'])){ $is_first = true; $class = ' first';}
 
 			$html .= '<div id="'. $g['name'] .'" class="vp-wpa-group wpa_group wpa_group-' . $name . $class . '">';
-			$html .= '<div class="vp-wpa-group-heading"><a href="#" class="vp-wpa-group-title">' . $group['title'] . '</a><a href="#" class="dodelete vp-wpa-group-remove" title="Remove"><i class="icon-remove"></i> Remove</a></div>';
+			$html .= '<div class="vp-wpa-group-heading"><a href="#" class="vp-wpa-group-title">' . $icon . $group['title'] . '</a><a href="#" class="dodelete vp-wpa-group-remove" title="Remove"><i class="icon-remove"></i> Remove</a></div>';
 			$html .= '<div class="vp-controls' . ((!$is_first) ? ' vp-hide' : '') . '">';
 			if ($g === end($group['groups']))
 			{

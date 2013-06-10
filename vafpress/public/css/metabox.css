@@ -47,7 +47,7 @@
 	font-size: 1em;
 	font-weight: bold;
 	line-height: 1.4em;
-	margin-top: 6px;
+	margin: 6px 0 4px;
 	display: block;
 }
 
@@ -55,7 +55,6 @@
 	font-size: 0.9em;
 	color: #999999;
 	line-height: 1.3em;
-	margin-top: 4px;
 }
 
 .vp-metabox .vp-field .label .description p {

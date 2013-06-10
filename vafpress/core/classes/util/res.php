@@ -39,11 +39,18 @@ class VP_Util_Res
 			{
 				// if no extension, try to discover from mime
 				$mime = wp_remote_head( $url );
-				$mime = $mime['headers']['content-type'];
-				if(strpos($mime, 'image') === 0)
-					$preview = $url;
+				if(!is_wp_error( $mime ))
+				{
+					$mime = $mime['headers']['content-type'];
+					if(strpos($mime, 'image') === 0)
+						$preview = $url;
+					else
+						$preview = wp_mime_type_icon( $mime );
+				}
 				else
-					$preview = wp_mime_type_icon( $mime );
+				{
+					$preview = includes_url() . 'images/crystal/' . 'default' . '.png';
+				}
 			}
 		}
 

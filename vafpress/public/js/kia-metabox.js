@@ -143,7 +143,39 @@ var KIA_metabox, tinyMCEbackupConfig = null;
 			window.send_to_editor = kia_backup;
 		};
 
-	} //end mediaButtons
+	}, //end mediaButtons
+
+/*-----------------------------------------------------------------------------------*/
+/* Meta Fields Sorting
+/*-----------------------------------------------------------------------------------*/
+
+	sortable: function() {
+
+		var textareaIDs = [];
+		$('.wpa_loop.vp-sortable').sortable({
+			items: '>.wpa_group',
+			handle: '.vp-wpa-group-heading',
+			axis: 'y',
+			opacity: 0.5,
+			tolerance: 'pointer',
+			start: function(event, ui) { // turn TinyMCE off while sorting (if not, it won't work when resorted)
+				textareaIDs = [];
+				$(ui.item).find('.customEditor textarea').each(function(){
+					if($(this).parents('.tocopy').length <= 0)
+					{
+						try { tinyMCE.execCommand('mceRemoveControl', false, this.id); } catch(e){}
+						textareaIDs.push(vp.jqid(this.id));
+					}
+				});
+			},
+			stop: function(event, ui) { // re-initialize TinyMCE when sort is completed
+				textareaIDs = textareaIDs.join(", ");
+				try { KIA_metabox.runTinyMCE($(textareaIDs)); } catch(e){}
+				$(this).find('.update-warning').show();
+			}
+		});
+	} //end of sortable
+
 
 	}; // End KIA_metabox Object // Don't remove this, or the sky will fall on your head.
 

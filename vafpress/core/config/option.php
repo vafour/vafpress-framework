@@ -33,7 +33,7 @@ return array(
 	'role'               => 'edit_theme_options',
 
 	/**
-	 * Menu label
+	 * Browser page title
 	 */
 	'browser_page_title' => 'Vafpress Option Panel',
 

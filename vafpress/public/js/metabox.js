@@ -106,6 +106,9 @@
 		vp_init_groups(jQuery('.vp-metabox .vp-meta-group'));
 		process_binding(bindings);
 		process_dependency(dependencies);
+
+		KIA_metabox.sortable();
+
 	});
 
 	vp.is_multianswer = function(type){
