@@ -55,7 +55,14 @@ abstract class VP_Control_FieldMulti extends VP_Control_Field
 		}
 		if (!empty($arr['default']))
 		{
-			$this->_process_default($arr['default'], $arr['items']);
+			if(is_array($arr['default']))
+			{
+				$this->_process_default($arr['default'], $arr['items']);
+			}
+			else
+			{
+				trigger_error("$arr[name] default value need to be array.", E_USER_WARNING);
+			}
 		}
 		return $this;
 	}

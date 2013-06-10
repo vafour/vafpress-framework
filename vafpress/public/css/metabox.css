@@ -138,11 +138,14 @@
 	font-size: 0.9em;
 	font-weight: bold;
 	line-height: 30px;
-	padding: 0 80px 0 10px;
+	padding: 0 10px;
 	text-transform: uppercase;
 	margin-bottom: -1px;
 }
 
+.vp-metabox .vp-wpa-loop.vp-repeating-loop .vp-wpa-group .vp-wpa-group-heading {
+	padding-right: 80px;
+}
 .vp-metabox .vp-wpa-loop .vp-wpa-group .vp-wpa-group-heading a {
 	text-decoration: none;
 }
