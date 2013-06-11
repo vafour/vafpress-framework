@@ -22,6 +22,10 @@ class VP_Site_GoogleWebFont
 
 	public function add($name, $weights = 'normal', $styles = 'normal')
 	{
+		
+		if(empty($name))
+			return;
+
 		$weights = (array) $weights;
 		$styles  = (array) $styles;
 		$name    = str_replace(' ', '+', $name);
@@ -31,12 +35,14 @@ class VP_Site_GoogleWebFont
 
 		foreach ($weights as $weight)
 		{
-			// set it to empty if weight is equal to normal
-			if($weight === 'normal') $weight = '';
 			foreach ($styles as $style)
 			{
 				// set it to empty if style is equal to normal
-				if($style === 'normal') $style = '';
+				if($style === 'normal')
+					$style = '';
+
+				if($style != '')
+					if($weight === 'normal') $weight = '';
 
 				// skip if both are empty
 				if($style === '' and $weight === '')
