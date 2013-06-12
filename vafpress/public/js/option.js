@@ -133,7 +133,7 @@
 		    dest  = temp[1],
 		    ids   = [];
 
-		dest = dest.split(',');
+		dest = dest.split(/[\s,]+/);
 
 		for (var j = 0; j < dest.length; j++)
 		{

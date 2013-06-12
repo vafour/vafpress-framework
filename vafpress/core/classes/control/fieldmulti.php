@@ -8,8 +8,6 @@ abstract class VP_Control_FieldMulti extends VP_Control_Field
 
 	protected $_items = array();
 
-	protected $_bind;
-
 	/**
 	 * Basic self setup of the object
 	 * @param  SimpleXMLElement $simpleXML SimpleXML object representation of the field
@@ -21,7 +19,7 @@ abstract class VP_Control_FieldMulti extends VP_Control_Field
 
 		if (!empty($arr['items']))
 		{
-			if(isset($arr['items']['data']))
+			if(isset($arr['items']['data']) and is_array($arr['items']['data']))
 			{
 				foreach ($arr['items']['data'] as $data)
 				{
@@ -36,16 +34,10 @@ abstract class VP_Control_FieldMulti extends VP_Control_Field
 							$arr['items'] = array_merge($arr['items'], $items);
 						}
 					}
-					else if($data['source'] == 'bind')
-					{
-						$function = $data['value'];
-						$field    = $data['field'];
-						$this->set_bind($function . '|' . $field);
-					}
 				}
 				unset($arr['items']['data']);
 			}
-			foreach ($arr['items'] as $item)
+			if(is_array($arr['items'])) foreach ($arr['items'] as $item)
 			{
 				$the_item = new VP_Control_Field_Item_Generic();
 				$the_item->value($item['value'])
@@ -97,7 +89,6 @@ abstract class VP_Control_FieldMulti extends VP_Control_Field
 	protected function _setup_data()
 	{
 		parent::_setup_data();
-		$this->add_single_data('head_info', 'bind', $this->get_bind());
 		$this->add_data('items', $this->get_items());
 	}
 
@@ -134,7 +125,7 @@ abstract class VP_Control_FieldMulti extends VP_Control_Field
 		return $this;
 	}
 
-	public function set_items_from_array($_items) {
+	public function add_items_from_array($_items) {
 		if(is_array($_items))
 		{
 			foreach ($_items as $item)
@@ -145,25 +136,6 @@ abstract class VP_Control_FieldMulti extends VP_Control_Field
 				$this->add_item($the_item);
 			}
 		}
-	}
-
-	/**
-	 * Get $_bind
-	 *
-	 * @return String bind rule string
-	 */
-	public function get_bind() {
-	    return $this->_bind;
-	}
-	
-	/**
-	 * Set $_bind
-	 *
-	 * @param String $_bind bind rule string
-	 */
-	public function set_bind($_bind) {
-	    $this->_bind = $_bind;
-	    return $this;
 	}
 
 }

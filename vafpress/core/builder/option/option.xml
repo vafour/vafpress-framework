@@ -507,19 +507,19 @@
 							<label>Logo Font Style</label>
 							<description>Select Font Style</description>
 							<items>
-								<data source="bind" field="logo_font_face">vp_get_gwf_style</data>
 							</items>
 							<default>
 								<item>{{first}}</item>
 							</default>
+							<binding field="logo_font_face">vp_get_gwf_style</binding>
 						</radiobutton>
 						<radiobutton>
 							<name>logo_font_weight</name>
 							<label>Logo Font Weight</label>
 							<description>Select Font Weight</description>
 							<items>
-								<data source="bind" field="logo_font_face">vp_get_gwf_weight</data>
 							</items>
+							<binding field="logo_font_face">vp_get_gwf_weight</binding>
 						</radiobutton>
 					</fields>
 				</section>

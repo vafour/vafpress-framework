@@ -234,14 +234,20 @@ class VP_Converter
 			{
 				if($field->key() == 'dependency')
 				{
-
 					$current  = $field->current();
-
 					$opt_arr .= "$tabs\t\t'dependency' => array(\n";
 					$opt_arr .= "$tabs\t\t\t'field' => '{$current['field']}',\n";
 					$opt_arr .= "$tabs\t\t\t'function' => '{$current}',\n";
 					$opt_arr .= "$tabs\t\t),\n";
 
+				}
+				else if($field->key() == 'binding')
+				{
+					$current  = $field->current();
+					$opt_arr .= "$tabs\t\t'binding' => array(\n";
+					$opt_arr .= "$tabs\t\t\t'field' => '{$current['field']}',\n";
+					$opt_arr .= "$tabs\t\t\t'function' => '{$current}',\n";
+					$opt_arr .= "$tabs\t\t),\n";
 				}
 				else
 				{
@@ -358,7 +364,7 @@ class VP_Converter
 			$opt_arr .= "$tabs\t\t),\n";
 		}
 
-		// processing defaaults
+		// processing defaults
 		if(!empty($tag_defaults))
 			$defaults = $tag_defaults;
 		else

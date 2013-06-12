@@ -569,8 +569,11 @@ vp.binding_action =	function(ids, field, func, thecase) {
 					});
 					vp.init_tipsy();
 					break;
+				default:
+					$source = jQuery(vp.jqname(field.source));
+					$source.val(response.data);
 			}
-			jQuery('[name="' + field.source + '"]:first').change();
+			jQuery('[name="' + field.source + '"]:first').change().blur();
 		}
 	}, 'JSON');
 };

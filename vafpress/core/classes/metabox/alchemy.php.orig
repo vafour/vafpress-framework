@@ -89,7 +89,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 					{
 						if($f instanceof VP_Control_FieldMulti)
 						{
-							$bind = $f->get_bind();
+							$bind = $f->get_binding();
 							if(!empty($bind))
 							{
 								$bind   = explode('|', $bind);
@@ -105,7 +105,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 									}
 								}
 								$items  = call_user_func_array($func, $values);
-								$f->set_items_from_array($items);
+								$f->add_items_from_array($items);
 							}
 						}
 					}
@@ -115,7 +115,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 			{
 				if($field instanceof VP_Control_FieldMulti)
 				{
-					$bind = $field->get_bind();
+					$bind = $field->get_binding();
 					if(!empty($bind))
 					{
 
@@ -132,7 +132,7 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 							}
 						}
 						$items  = call_user_func_array($func, $values);
-						$field->set_items_from_array($items);
+						$field->add_items_from_array($items);
 					}
 				}
 			}

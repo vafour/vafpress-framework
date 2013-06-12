@@ -37,6 +37,12 @@ abstract class VP_Control_Field implements iFactory
 	protected $_dependency;
 
 	/**
+	 * binding patter string
+	 * @var String
+	 */
+	protected $_binding;
+
+	/**
 	 * Default value for the field
 	 * @var String|Array
 	 */
@@ -110,6 +116,7 @@ abstract class VP_Control_Field implements iFactory
 			'is_hidden'               => $this->is_hidden(),
 			'validation'              => $this->get_validation(),
 			'dependency'              => $this->get_dependency(),
+			'binding'                 => $this->get_binding(),
 			'label'                   => $this->get_label(),
 			'description'             => VP_Util_Text::parse_md($this->get_description())
 		));
@@ -128,11 +135,23 @@ abstract class VP_Control_Field implements iFactory
 			 ->set_description(isset($arr['description']) ? $arr['description'] : '')
 			 ->set_validation(isset($arr['validation']) ? $arr['validation'] : '');
 
+		// if($arr['name'] == 'vp_meta_sample_2[binding_group][0][image]')
+		// {
+		// 	var_dump($this->get_default());
+		// }
+
 		if(isset($arr['dependency']))
 		{
 			$func  = $arr['dependency']['function'];
 			$field = $arr['dependency']['field'];
 			$this->set_dependency($func . '|' . $field);
+		}
+
+		if(isset($arr['binding']))
+		{
+			$function = $arr['binding']['function'];
+			$field    = $arr['binding']['field'];
+			$this->set_binding($function . '|' . $field);
 		}
 
 		return $this;
@@ -287,6 +306,25 @@ abstract class VP_Control_Field implements iFactory
 	public function set_dependency($_dependency) {
 		$this->_dependency = $_dependency;
 		return $this;
+	}
+
+	/**
+	 * Get $_binding
+	 *
+	 * @return String bind rule string
+	 */
+	public function get_binding() {
+	    return $this->_binding;
+	}
+	
+	/**
+	 * Set $_binding
+	 *
+	 * @param String $_binding bind rule string
+	 */
+	public function set_binding($_binding) {
+	    $this->_binding = $_binding;
+	    return $this;
 	}
 
 	/**

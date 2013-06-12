@@ -13,51 +13,32 @@ return array(
 			'title'     => __('Location', 'vp_textdomain'),
 			'fields'    => array(
 				array(
-					'type' => 'select',
-					'name' => 'big_continent',
-					'label' => __('Big Continent', 'vp_textdomain'),
-					'description' => __('Big Continent', 'vp_textdomain'),
-					'items' => array(
-						'data' => array(
-							array(
-								'source' => 'function',
-								'value'  => 'vp_bind_bigcontinents',
-							),
-						),
-					),
-					'default' => array(
-						'{{first}}',
-					),
+					'type' => 'textbox',
+					'name' => 'name',
+					'label' => __('Name', 'vp_textdomain'),
+					'description' => __('Source Name', 'vp_textdomain'),
 				),
 				array(
-					'type' => 'radiobutton',
-					'name' => 'continent',
-					'label' => __('Continent', 'vp_textdomain'),
-					'description' => __('Continent', 'vp_textdomain'),
-					'items' => array(
-						'data' => array(
-							array(
-								'source' => 'bind',
-								'field'  => 'big_continent',
-								'value'  => 'vp_bind_continents',
-							),
-						),
-					),
+					'type' => 'textbox',
+					'name' => 'url',
+					'label' => __('URL', 'vp_textdomain'),
+					'description' => __('Source URL', 'vp_textdomain'),
 				),
 				array(
-					'type' => 'select',
-					'name' => 'country',
-					'label' => __('Country', 'vp_textdomain'),
-					'description' => __('Country', 'vp_textdomain'),
-					'items' => array(
-						'data' => array(
-							array(
-								'source' => 'bind',
-								'field'  => 'continent',
-								'value'  => 'vp_bind_countries',
-							),
-						),
-					),
+					'type' => 'upload',
+					'name' => 'image',
+					'label' => __('Image', 'vp_textdomain'),
+					'description' => __('Source Image', 'vp_textdomain'),
+				),
+				array(
+					'type' => 'textbox',
+					'name' => 'shortcode',
+					'label' => __('Shortcode', 'vp_textdomain'),
+					'description' => __('Shortcode', 'vp_textdomain'),
+					'binding' => array(
+						'field' => 'name,url, image',
+						'function' => 'vp_simple_shortcode'
+					)
 				),
 			),
 		),

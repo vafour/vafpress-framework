@@ -90,25 +90,29 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 			}
 			else
 			{
-				if($field instanceof VP_Control_FieldMulti)
+				$bind = $field->get_binding();
+				if(!empty($bind))
 				{
-					$bind = $field->get_bind();
-					if(!empty($bind))
+					$bind   = explode('|', $bind);
+					$func   = $bind[0];
+					$params = $bind[1];
+					$params = preg_split('/[\s,]+/', $params);
+					$values = array();
+					foreach ($params as $param)
 					{
-						$bind   = explode('|', $bind);
-						$func   = $bind[0];
-						$params = $bind[1];
-						$params = explode(',', $params);
-						$values = array();
-						foreach ($params as $param)
+						if(array_key_exists($param, $fields))
 						{
-							if(array_key_exists($param, $fields))
-							{
-								$values[] = $fields[$param]->get_value();
-							}
+							$values[] = $fields[$param]->get_value();
 						}
-						$items  = call_user_func_array($func, $values);
-						$field->set_items_from_array($items);
+					}
+					$items  = call_user_func_array($func, $values);
+					if($field instanceof VP_Control_FieldMulti)
+					{
+						$field->add_items_from_array($items);
+					}
+					else
+					{
+						$field->set_value($items);
 					}
 				}
 			}
@@ -219,7 +223,6 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 		$value    = $mb->get_the_value();
 		// get default from array
 		$default  = $vp_field->get_default();
-
 
 		// if tocopy always assign default
 		if( $mb->is_parent_multi() and $mb->is_in_multi_last() )

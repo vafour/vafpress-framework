@@ -46,7 +46,7 @@ abstract class VP_Control_FieldMultiImage extends VP_Control_FieldMulti
 		$this->add_data('item_max_width', $this->get_item_max_width());
 	}
 
-	public function set_items_from_array($_items){
+	public function add_items_from_array($_items){
 		foreach ($_items as $item)
 		{
 			$the_item = new VP_Control_Field_Item_Generic();

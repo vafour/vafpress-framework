@@ -188,25 +188,29 @@ class VP_Option_Control_Set
 
 		foreach ($fields as $field)
 		{
-			if($field instanceof VP_Control_FieldMulti)
+			$bind = $field->get_binding();
+			if(!empty($bind))
 			{
-				$bind = $field->get_bind();
-				if(!empty($bind))
+				$bind   = explode('|', $bind);
+				$func   = $bind[0];
+				$params = $bind[1];
+				$params = explode(',', $params);
+				$values = array();
+				foreach ($params as $param)
 				{
-					$bind   = explode('|', $bind);
-					$func   = $bind[0];
-					$params = $bind[1];
-					$params = explode(',', $params);
-					$values = array();
-					foreach ($params as $param)
+					if(array_key_exists($param, $fields))
 					{
-						if(array_key_exists($param, $fields))
-						{
-							$values[] = $fields[$param]->get_value();
-						}
+						$values[] = $fields[$param]->get_value();
 					}
-					$items  = call_user_func_array($func, $values);
-					$field->set_items_from_array($items);
+				}
+				$items  = call_user_func_array($func, $values);
+				if($field instanceof VP_Control_FieldMulti)
+				{
+					$field->add_items_from_array($items);
+				}
+				else
+				{
+					$field->set_value($items);
 				}
 			}
 		}
@@ -224,7 +228,7 @@ class VP_Option_Control_Set
 				$dependency = explode('|', $dependency);
 				$func       = $dependency[0];
 				$params     = $dependency[1];
-				$params     = explode(',', $params);
+				$params     = preg_split('/[\s,]+/', $params);
 				$values     = array();
 				foreach ($params as $param)
 				{

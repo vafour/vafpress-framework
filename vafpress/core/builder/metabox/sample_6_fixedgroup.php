@@ -36,13 +36,10 @@ return array(
 					'label' => __('Continent', 'vp_textdomain'),
 					'description' => __('Continent', 'vp_textdomain'),
 					'items' => array(
-						'data' => array(
-							array(
-								'source' => 'bind',
-								'field'  => 'big_continent',
-								'value'  => 'vp_bind_continents',
-							),
-						),
+					),
+					'binding' => array(
+						'field'    => 'big_continent',
+						'function' => 'vp_bind_continents',
 					),
 				),
 				array(
@@ -51,13 +48,10 @@ return array(
 					'label' => __('Country', 'vp_textdomain'),
 					'description' => __('Country', 'vp_textdomain'),
 					'items' => array(
-						'data' => array(
-							array(
-								'source' => 'bind',
-								'field'  => 'continent',
-								'value'  => 'vp_bind_countries',
-							),
-						),
+					),
+					'binding' => array(
+						'field'    => 'continent',
+						'function' => 'vp_bind_countries',
 					),
 				),
 			),

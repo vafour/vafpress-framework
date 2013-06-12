@@ -126,6 +126,21 @@ function vp_get_gwf_style($face)
 	return $result;
 }
 
+function vp_copy_content($value, $value2)
+{
+	return $value . $value2;
+}
+
+function vp_simple_shortcode($name = "", $url = "", $image = "")
+{
+	if(is_null($name)) $name = '';
+	if(is_null($url)) $url = '';
+	if(is_null($image)) $image = '';
+	$result = "[shortcode name='$name' url='$url' image='$image']";
+	return $result;
+}
+
+
 function vp_get_social_medias() {
 	$socmeds = array(
 		array('value' => 'blogger', 'label' => 'Blogger'),

@@ -165,6 +165,12 @@
 			e.preventDefault();
 		}
 
+		// add hidden field before toggle to force submit
+		$(this).find('.vp-toggle .vp-input').each(function(){
+			var hidden = $('<input>', {type: 'hidden', name: this.name, value: 0});
+			$(this).before(hidden);
+		});
+
 	});
 
 	$("#post input[type=submit]").click(function() {
@@ -186,7 +192,7 @@
 			prefix      = field.source.replace('[]', '');
 			prefix      = prefix.substring(0, prefix.lastIndexOf('['));
 
-			dest = dest.split(',');
+			dest = dest.split(/[\s,]+/);
 
 			for (var j = 0; j < dest.length; j++)
 			{

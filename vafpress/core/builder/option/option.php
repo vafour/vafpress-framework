@@ -830,14 +830,11 @@ return array(
 							'name' => 'logo_font_style',
 							'label' => __('Logo Font Style', 'vp_textdomain'),
 							'description' => __('Select Font Style', 'vp_textdomain'),
-							'items' => array(
-								'data' => array(
-									array(
-										'source' => 'bind',
-										'field' => 'logo_font_face',
-										'value' => 'vp_get_gwf_style',
-									),
-								),
+							'items' => '
+							',
+							'binding' => array(
+								'field' => 'logo_font_face',
+								'function' => 'vp_get_gwf_style',
 							),
 							'default' => array(
 								'{{first}}',
@@ -848,14 +845,11 @@ return array(
 							'name' => 'logo_font_weight',
 							'label' => __('Logo Font Weight', 'vp_textdomain'),
 							'description' => __('Select Font Weight', 'vp_textdomain'),
-							'items' => array(
-								'data' => array(
-									array(
-										'source' => 'bind',
-										'field' => 'logo_font_face',
-										'value' => 'vp_get_gwf_weight',
-									),
-								),
+							'items' => '
+							',
+							'binding' => array(
+								'field' => 'logo_font_face',
+								'function' => 'vp_get_gwf_weight',
 							),
 						),
 					),
