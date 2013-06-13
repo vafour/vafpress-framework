@@ -30,9 +30,10 @@
 	});
 
 	/* BEGIN FETCHING ALL FIELDS' VALIDATION and BINDING RULES */
-	var validation   = [];
-	var bindings     = [];
-	var dependencies = [];
+	var validation    = [];
+	var bindings      = [];
+	var items_binding = [];
+	var dependencies  = [];
 	var dep;
 	$('.vp-menu-goto').each(function(i) {
 		var href = $(this).attr('href'),
@@ -40,18 +41,20 @@
 		    fields = [];
 
 		$panel.children('.vp-field').each(function(j) {
-			var $field = $(this),
-				name   = $field.attr('id'),
-				rules  = $field.attr('data-vp-validation'),
-				bind   = $field.attr('data-vp-bind'),
-				type   = $field.getDatas().type,
-				$input = $('[name="' + name + '"]');
+				var $field = $(this),
+				name       = $field.attr('id'),
+				rules      = $field.attr('data-vp-validation'),
+				bind       = $field.attr('data-vp-bind'),
+				items_bind = $field.attr('data-vp-items-bind'),
+				type       = $field.getDatas().type,
+				$input     = $('[name="' + name + '"]');
 
 			dep = $field.attr('data-vp-dependency');
 
-			dep   && dependencies.push({dep: dep, type: 'field', source: $field.attr('id')});
-			bind  && bindings.push({bind: bind, type: type, source: name});
-			rules && fields.push({name: name, rules: rules, type: type});
+			dep         && dependencies.push({dep: dep, type: 'field', source: $field.attr('id')});
+			bind        && bindings.push({bind: bind, type: type, source: name});
+			items_bind  && items_binding.push({bind: items_bind, type: type, source: name});
+			rules       && fields.push({name: name, rules: rules, type: type});
 		});
 
 		$panel.children('.vp-section').each(function(i) {
@@ -61,18 +64,21 @@
 			dep && dependencies.push({dep: dep, type: 'section', source: $section.attr('id')});
 
 			$section.find('.vp-field').each(function(j) {
-				var $field = $(this),
-					name   = $field.attr('id'),
-					rules  = $field.attr('data-vp-validation'),
-					bind   = $field.attr('data-vp-bind'),
-					type   = $field.getDatas().type,
-					$input = $('[name="' + name + '"]');
+				var $field     = $(this),
+					name       = $field.attr('id'),
+					rules      = $field.attr('data-vp-validation'),
+					bind       = $field.attr('data-vp-bind'),
+					items_bind = $field.attr('data-vp-items-bind'),
+					type       = $field.getDatas().type,
+					$input     = $('[name="' + name + '"]');
 
 				dep = $field.attr('data-vp-dependency');
 
-				dep   && dependencies.push({dep: dep, type: 'field', source: $field.attr('id')});
-				bind  && bindings.push({bind: bind, type: type, source: name});
-				rules && fields.push({name: name, rules: rules, type: type});
+				dep         && dependencies.push({dep: dep, type: 'field', source: $field.attr('id')});
+				bind        && bindings.push({bind: bind, type: type, source: name});
+				items_bind  && items_binding.push({bind: items_bind, type: type, source: name});
+				rules       && fields.push({name: name, rules: rules, type: type});
+
 			});
 		});
 
@@ -143,6 +149,29 @@
 		for (var j = 0; j < ids.length; j++)
 		{
 			vp.binding_event(ids, j, field, func, '.vp-wrap', 'option');
+		}
+	}
+	/* ============================================================ */
+
+	// Items Binding
+	for (var i = 0; i < items_binding.length; i++)
+	{
+		var field = items_binding[i],
+		    temp  = field.bind.split('|'),
+		    func  = temp[0],
+		    dest  = temp[1],
+		    ids   = [];
+
+		dest = dest.split(/[\s,]+/);
+
+		for (var j = 0; j < dest.length; j++)
+		{
+			ids.push(dest[j]);
+		}
+
+		for (var j = 0; j < ids.length; j++)
+		{
+			vp.items_binding_event(ids, j, field, func, '.vp-wrap', 'option');
 		}
 	}
 	/* ============================================================ */

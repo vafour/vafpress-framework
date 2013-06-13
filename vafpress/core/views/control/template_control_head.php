@@ -2,6 +2,7 @@
 	data-vp-type="<?php echo $type; ?>"
 	<?php echo VP_Util_Text::print_if_exists($validation, 'data-vp-validation="%s"'); ?>
 	<?php echo VP_Util_Text::print_if_exists(isset($binding) ? $binding : '', 'data-vp-bind="%s"'); ?>
+	<?php echo VP_Util_Text::print_if_exists(isset($items_binding) ? $items_binding : '', 'data-vp-items-bind="%s"'); ?>
 	<?php echo VP_Util_Text::print_if_exists(isset($dependency) ? $dependency : '', 'data-vp-dependency="%s"'); ?>
 	id="<?php echo $name; ?>">
 	<div class="label">

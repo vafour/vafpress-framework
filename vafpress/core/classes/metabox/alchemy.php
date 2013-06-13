@@ -105,14 +105,41 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 							$values[] = $fields[$param]->get_value();
 						}
 					}
-					$items  = call_user_func_array($func, $values);
-					if($field instanceof VP_Control_FieldMulti)
+					$result = call_user_func_array($func, $values);
+
+					if(VP_Util_Reflection::is_multiselectable($field))
 					{
-						$field->add_items_from_array($items);
+						$result = (array) $result;
 					}
 					else
 					{
-						$field->set_value($items);
+						if(is_array($result))
+						{
+							$result = reset($result);
+						}
+						$result = (String) $result;
+					}
+					$field->set_value($result);
+				}
+				if($field instanceof VP_Control_FieldMulti)
+				{
+					$bind = $field->get_items_binding();
+					if(!empty($bind))
+					{
+						$bind   = explode('|', $bind);
+						$func   = $bind[0];
+						$params = $bind[1];
+						$params = explode(',', $params);
+						$values = array();
+						foreach ($params as $param)
+						{
+							if(array_key_exists($param, $fields))
+							{
+								$values[] = $fields[$param]->get_value();
+							}
+						}
+						$items  = call_user_func_array($func, $values);
+						$field->add_items_from_array($items);
 					}
 				}
 			}

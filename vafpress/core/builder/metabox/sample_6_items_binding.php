@@ -26,9 +26,7 @@ return array(
 							),
 						),
 					),
-					'default' => array(
-						'{{first}}',
-					),
+					'default' => '{{last}}',
 				),
 				array(
 					'type' => 'radiobutton',
@@ -36,10 +34,13 @@ return array(
 					'label' => __('Continent', 'vp_textdomain'),
 					'description' => __('Continent', 'vp_textdomain'),
 					'items' => array(
-					),
-					'binding' => array(
-						'field'    => 'big_continent',
-						'function' => 'vp_bind_continents',
+						'data' => array(
+							array(
+								'source' => 'binding',
+								'field'  => 'big_continent',
+								'value'  => 'vp_bind_continents',
+							),
+						),
 					),
 				),
 				array(
@@ -48,10 +49,13 @@ return array(
 					'label' => __('Country', 'vp_textdomain'),
 					'description' => __('Country', 'vp_textdomain'),
 					'items' => array(
-					),
-					'binding' => array(
-						'field'    => 'continent',
-						'function' => 'vp_bind_countries',
+						'data' => array(
+							array(
+								'source' => 'binding',
+								'field'  => 'continent',
+								'value'  => 'vp_bind_countries',
+							),
+						),
 					),
 				),
 			),

@@ -135,11 +135,6 @@ abstract class VP_Control_Field implements iFactory
 			 ->set_description(isset($arr['description']) ? $arr['description'] : '')
 			 ->set_validation(isset($arr['validation']) ? $arr['validation'] : '');
 
-		// if($arr['name'] == 'vp_meta_sample_2[binding_group][0][image]')
-		// {
-		// 	var_dump($this->get_default());
-		// }
-
 		if(isset($arr['dependency']))
 		{
 			$func  = $arr['dependency']['function'];

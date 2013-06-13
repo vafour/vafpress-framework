@@ -6,7 +6,6 @@ class VP_Control_Field_RadioButton extends VP_Control_FieldMulti
 	public function __construct()
 	{
 		parent::__construct();
-		$this->_value = array();
 		$this->add_container_extra_classes('vp-checked-field');
 	}
 

@@ -51,13 +51,25 @@ class VP_Control_Field_Slider extends VP_Control_Field
 	protected function _basic_make($arr)
 	{
 		parent::_basic_make($arr);
-		$default   = $this->get_default();
-		$out_range = (intval($default) < $this->get_min()) || (intval($default) > $this->get_max());
+		$default = $this->get_default();
+		$default = $this->validate_value($default);
+		$this->set_default($default);
+	}
 
-		if (is_null($default) || $out_range)
-			$this->set_default($this->get_min());
+	protected function validate_value($_value)
+	{
+		$out_range = (intval($_value) < $this->get_min()) || (intval($_value) > $this->get_max());
+
+		if (is_null($_value) || $out_range)
+			return $this->get_min();
 		else
-			$this->set_default($default);
+			return $_value;
+	}
+
+	public function set_value($_value)
+	{
+		$_value = $this->validate_value($_value);
+		parent::set_value($_value);
 	}
 
 	/**

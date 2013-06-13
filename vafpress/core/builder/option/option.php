@@ -565,7 +565,7 @@ return array(
 					'fields' => array(
 						array(
 							'type' => 'wpeditor',
-							'name' => 'tb_1',
+							'name' => 'we_1',
 							'label' => __('WP TinyMCE Editor', 'vp_textdomain'),
 							'description' => __('Wordpress tinyMCE editor.', 'vp_textdomain'),
 							'use_external_plugins' => '0',

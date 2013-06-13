@@ -519,6 +519,135 @@ vp.binding_action =	function(ids, field, func, thecase) {
 		});
 		if (response.status)
 		{
+			var data;
+			switch(field.type)
+			{
+				case 'vp-select':
+				case 'vp-multiselect':
+					$source    = jQuery('[name="' + field.source + '"]');
+					if(response.data !== null)
+					{
+						data = response.data instanceof Array ? response.data : [response.data];
+						$source.val(data).change();
+					}
+					break;
+				case 'vp-checkbox':
+					if(response.data !== null)
+					{
+						data = response.data instanceof Array ? response.data : [response.data];
+						$source.prop('checked', false);
+						jQuery.each(data, function(key, value) {
+							$source.filter('[value="'+ value +'"]').prop('checked', true);
+						});
+					}
+					break;
+				case 'vp-toggle':
+					if(response.data !== null)
+					{
+						if(response.data)
+							$source.prop('checked', true);
+						else
+							$source.prop('checked', false);
+					}
+					break;
+				case 'vp-checkimage':
+					if(response.data !== null)
+					{
+						data = response.data instanceof Array ? response.data : [response.data];
+						$source.prop('checked', false);
+						jQuery.each(data, function(key, value) {
+							$source.filter('[value="'+ value +'"]').prop('checked', true);
+						});
+					}
+					vp.init_tipsy();
+					break;
+				case 'vp-radiobutton':
+					if(response.data !== null)
+					{
+						data = response.data instanceof Array ? response.data : [response.data];
+						$source.prop('checked', false);
+						jQuery.each(data, function(key, value) {
+							$source.filter('[value="'+ value +'"]').prop('checked', true);
+						});
+					}
+					break;
+				case 'vp-radioimage':
+					if(response.data !== null)
+					{
+						data = response.data instanceof Array ? response.data : [response.data];
+						$source.prop('checked', false);
+						jQuery.each(data, function(key, value) {
+							$source.filter('[value="'+ value +'"]').prop('checked', true);
+						});
+					}
+					vp.init_tipsy();
+					break;
+				default:
+					$source = jQuery(vp.jqname(field.source));
+					$source.val(response.data);
+			}
+			jQuery('[name="' + field.source + '"]:first').keypress().keyup().change().blur();
+		}
+	}, 'JSON');
+};
+
+vp.binding_event = function(ids, idx, field, func, parent, thecase)
+{
+	var change    = ['vp-select', 'vp-checkbox', 'vp-checkimage', 'vp-radiobutton', 'vp-radioimage', 'vp-multiselect', 'vp-toggle', 'vp-upload'],
+	    typing    = ['vp-textbox', 'vp-slider', 'vp-color', 'vp-date'],
+	    name      = vp.thejqname(ids[idx], thecase),
+	    dest_type = jQuery(vp.thejqid(ids[idx], thecase)).attr('data-vp-type');
+
+	if(jQuery.inArray(dest_type, change) !== -1 )
+	{
+		jQuery(parent).delegate(name, 'change', function(){vp.binding_action(ids, field, func, thecase);});
+	}
+	else if(jQuery.inArray(dest_type, typing) !== -1 )
+	{
+		jQuery(name).typing({
+			stop: function(event, $elem){
+				vp.binding_action(ids, field, func, thecase);
+			},
+			delay: 400
+		});
+	}
+};
+
+/*
+ * =============================================================
+ */
+
+// vafpress binding related functions
+vp.items_binding_action =	function(ids, field, func, thecase) {
+	var $source_tr = jQuery(vp.jqid(field.source)),
+	    $source    = jQuery('[name="' + field.source + '"]'),
+	    values     = [];
+
+	for (var i = 0; i < ids.length; i++)
+	{
+		values.push(jQuery(vp.thejqname(ids[i], thecase)).validationVal());
+	}
+
+	var data = {
+		action   : 'vp_ajax_wrapper',
+		func     : func,
+		params   : values
+	};
+
+	// get loader
+	var $loader = $source_tr.find('.vp-js-bind-loader'),
+	    $input  = $source_tr.find('.input');
+
+	$input.vp_fadeOut(function(){
+		$loader.vp_fadeIn();
+	});
+
+	jQuery.post(ajaxurl, data, function(response) {
+		$loader.vp_fadeOut(function(){
+			$input.vp_fadeIn();
+		});
+		if (response.status)
+		{
 			var $source;
 			switch(field.type)
 			{
@@ -533,7 +662,6 @@ vp.binding_action =	function(ids, field, func, thecase) {
 							.attr("value",value.value)
 							.text(value.label));
 					});
-					$source.trigger('liszt:updated');
 					break;
 				case 'vp-checkbox':
 					$source = $input;
@@ -569,16 +697,13 @@ vp.binding_action =	function(ids, field, func, thecase) {
 					});
 					vp.init_tipsy();
 					break;
-				default:
-					$source = jQuery(vp.jqname(field.source));
-					$source.val(response.data);
 			}
 			jQuery('[name="' + field.source + '"]:first').change().blur();
 		}
 	}, 'JSON');
 };
 
-vp.binding_event = function(ids, idx, field, func, parent, thecase)
+vp.items_binding_event = function(ids, idx, field, func, parent, thecase)
 {
 	var change    = ['vp-select', 'vp-checkbox', 'vp-checkimage', 'vp-radiobutton', 'vp-radioimage', 'vp-multiselect', 'vp-toggle', 'vp-upload'],
 	    typing    = ['vp-textbox', 'vp-slider', 'vp-color', 'vp-date'],
@@ -587,13 +712,13 @@ vp.binding_event = function(ids, idx, field, func, parent, thecase)
 
 	if(jQuery.inArray(dest_type, change) !== -1 )
 	{
-		jQuery(parent).delegate(name, 'change', function(){vp.binding_action(ids, field, func, thecase);});
+		jQuery(parent).delegate(name, 'change', function(){vp.items_binding_action(ids, field, func, thecase);});
 	}
 	else if(jQuery.inArray(dest_type, typing) !== -1 )
 	{
 		jQuery(name).typing({
 			stop: function(event, $elem){
-				vp.binding_action(ids, field, func, thecase);
+				vp.items_binding_action(ids, field, func, thecase);
 			},
 			delay: 400
 		});
@@ -603,7 +728,6 @@ vp.binding_event = function(ids, idx, field, func, parent, thecase)
 /*
  * =============================================================
  */
-
 
 // vafpress dependencies related functions
 vp.dependency_action =	function(ids, field, func) {

@@ -128,7 +128,23 @@ function vp_get_gwf_style($face)
 
 function vp_copy_content($value, $value2)
 {
-	return $value . $value2;
+	$args = func_get_args();
+	return implode('', $args);
+}
+
+function vp_mesti_normal()
+{
+	return 'normal';
+}
+
+function vp_array_value($value = null, $value2 = null)
+{
+	$result = array();
+	if(!is_null($value))
+		$result[] = $value;
+	if(!is_null($value2))
+		$result[] = $value2;
+	return $result;
 }
 
 function vp_simple_shortcode($name = "", $url = "", $image = "")

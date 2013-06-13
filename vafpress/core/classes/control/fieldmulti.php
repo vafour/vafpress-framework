@@ -8,6 +8,8 @@ abstract class VP_Control_FieldMulti extends VP_Control_Field
 
 	protected $_items = array();
 
+	protected $_items_binding;
+
 	/**
 	 * Basic self setup of the object
 	 * @param  SimpleXMLElement $simpleXML SimpleXML object representation of the field
@@ -34,6 +36,12 @@ abstract class VP_Control_FieldMulti extends VP_Control_Field
 							$arr['items'] = array_merge($arr['items'], $items);
 						}
 					}
+					else if($data['source'] == 'binding')
+					{
+						$function = $data['value'];
+						$field    = $data['field'];
+						$this->set_items_binding($function . '|' . $field);
+					}
 				}
 				unset($arr['items']['data']);
 			}
@@ -45,15 +53,16 @@ abstract class VP_Control_FieldMulti extends VP_Control_Field
 				$this->add_item($the_item);
 			}
 		}
-		if (!empty($arr['default']))
+		if (isset($arr['default']))
 		{
+			$arr['default'] = (array) $arr['default'];
+			if(!VP_Util_Reflection::is_multiselectable($this))
+			{
+				$arr['default'] = (array) reset($arr['default']);
+			}
 			if(is_array($arr['default']))
 			{
 				$this->_process_default($arr['default'], $arr['items']);
-			}
-			else
-			{
-				trigger_error("$arr[name] default value need to be array.", E_USER_WARNING);
 			}
 		}
 		return $this;
@@ -67,7 +76,8 @@ abstract class VP_Control_FieldMulti extends VP_Control_Field
 			switch ($def)
 			{
 				case '{{all}}':
-					$defaults = array_merge($defaults, VP_Util_Array::deep_values($arr_items, 'value'));
+					if(VP_Util_Reflection::is_multiselectable($this))
+						$defaults = array_merge($defaults, VP_Util_Array::deep_values($arr_items, 'value'));
 					break;
 				case '{{first}}':
 					$first = VP_Util_Array::first($arr_items);
@@ -78,7 +88,8 @@ abstract class VP_Control_FieldMulti extends VP_Control_Field
 					$defaults[] = $last['value'];
 					break;
 				default:
-					$defaults[] = $def;
+					if(array_key_exists($def, $this->get_items()))
+						$defaults[] = $def;
 					break;
 			}
 		}
@@ -89,6 +100,7 @@ abstract class VP_Control_FieldMulti extends VP_Control_Field
 	protected function _setup_data()
 	{
 		parent::_setup_data();
+		$this->add_single_data('head_info', 'items_binding', $this->get_items_binding());
 		$this->add_data('items', $this->get_items());
 	}
 
@@ -103,7 +115,7 @@ abstract class VP_Control_FieldMulti extends VP_Control_Field
 	 */
 	public function add_item($opt)
 	{
-		$this->_items[] = $opt;
+		$this->_items[$opt->value] = $opt;
 	}
 
 	/**
@@ -136,6 +148,25 @@ abstract class VP_Control_FieldMulti extends VP_Control_Field
 				$this->add_item($the_item);
 			}
 		}
+	}
+
+	/**
+	 * Get $_items_binding
+	 *
+	 * @return String bind rule string
+	 */
+	public function get_items_binding() {
+	    return $this->_items_binding;
+	}
+	
+	/**
+	 * Set $_items_binding
+	 *
+	 * @param String $_items_binding bind rule string
+	 */
+	public function set_items_binding($_items_binding) {
+	    $this->_items_binding = $_items_binding;
+	    return $this;
 	}
 
 }

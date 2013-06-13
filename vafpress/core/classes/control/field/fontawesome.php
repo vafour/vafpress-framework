@@ -6,7 +6,6 @@ class VP_Control_Field_Fontawesome extends VP_Control_FieldMulti
 	public function __construct()
 	{
 		parent::__construct();
-		$this->_value = array();
 	}
 
 	public static function withArray($arr = array(), $class_name = null)

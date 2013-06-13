@@ -10,7 +10,7 @@ return array(
 			'type'      => 'group',
 			'repeating' => true,
 			'name'      => 'binding_group',
-			'title'     => __('Location', 'vp_textdomain'),
+			'title'     => __('Reference', 'vp_textdomain'),
 			'fields'    => array(
 				array(
 					'type' => 'textbox',

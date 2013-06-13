@@ -1,8 +1,9 @@
 ;(function($) {
 
-	var validation   = [];
-	var bindings     = [];
-	var dependencies = [];
+	var validation    = [];
+	var bindings      = [];
+	var items_binding = [];
+	var dependencies  = [];
 
 	$(document).on('click', '.vp-wpa-group-title', function(e){
 		e.preventDefault();
@@ -62,12 +63,13 @@
 			{
 				vp.init_controls($(this));
 
-				var id    = $(this).attr('id'),
-					name  = $(this).attr('id'),
-					rules = $(this).attr('data-vp-validation'),
-					bind  = $(this).attr('data-vp-bind'),
-					dep   = $(this).attr('data-vp-dependency'),
-					type  = $(this).getDatas().type;
+				var id         = $(this).attr('id'),
+					name       = $(this).attr('id'),
+					rules      = $(this).attr('data-vp-validation'),
+					bind       = $(this).attr('data-vp-bind'),
+					items_bind = $(this).attr('data-vp-items-bind'),
+					dep        = $(this).attr('data-vp-dependency'),
+					type       = $(this).getDatas().type;
 
 				// init validation
 				rules && validation.push({name: id, rules: rules, type: type});
@@ -75,6 +77,11 @@
 				if(typeof bind !== 'undefined' && bind !== false)
 				{
 					bind && bindings.push({bind: bind, type: type, source: id});
+				}
+				// init items binding
+				if(typeof items_bind !== 'undefined' && items_bind !== false)
+				{
+					items_bind && items_binding.push({bind: items_bind, type: type, source: id});
 				}
 				// init dependancies
 				if(typeof dep !== 'undefined' && dep !== false)
@@ -105,6 +112,7 @@
 		vp_init_fields(jQuery('.vp-metabox .vp-field'));
 		vp_init_groups(jQuery('.vp-metabox .vp-meta-group'));
 		process_binding(bindings);
+		process_items_binding(items_binding);
 		process_dependency(dependencies);
 
 		KIA_metabox.sortable();
@@ -207,6 +215,35 @@
 		}
 	}
 
+	function process_items_binding(items_binding)
+	{
+		for (var i = 0; i < items_binding.length; i++)
+		{
+			var field   = items_binding[i];
+			var temp    = field.bind.split('|');
+			var func    = temp[0];
+			var dest    = temp[1];
+			var ids     = [];
+
+			var prefix  = '';
+			prefix      = field.source.replace('[]', '');
+			prefix      = prefix.substring(0, prefix.lastIndexOf('['));
+
+			dest = dest.split(/[\s,]+/);
+
+			for (var j = 0; j < dest.length; j++)
+			{
+				dest[j] = prefix + '[' + dest[j] + ']';
+				ids.push(dest[j]);
+			}
+
+			for (j = 0; j < ids.length; j++)
+			{
+				vp.items_binding_event(ids, j, field, func, '.vp-metabox', 'metabox');
+			}
+		}
+	}
+
 	function process_dependency(dependencies)
 	{
 		for (var i = 0; i < dependencies.length; i++)
@@ -259,6 +296,7 @@
 
 		bindings      = [];
 		dependencies  = [];
+		items_binding  = [];
 
 		// delete tocopy hidden field
 		clone.find('input[class="tocopy-hidden"]').first().remove();
@@ -269,6 +307,7 @@
 		clone.find('.vp-wpa-group-title:first').click();
 
 		process_binding(bindings);
+		process_items_binding(items_binding);
 		process_dependency(dependencies);
 	});
 
