@@ -1,9 +1,9 @@
 <?php
 
 return array(
-	'id'          => 'vp_meta_sample_5',
+	'id'          => 'page_builder',
 	'types'       => array('post'),
-	'title'       => __('VP Nested Group', 'vp_textdomain'),
+	'title'       => __('Page Builder', 'vp_textdomain'),
 	'priority'    => 'high',
 	'template'    => array(
 		array(
@@ -15,33 +15,31 @@ return array(
 			'type'      => 'group',
 			'repeating' => true,
 			'sortable'  => true,
-			'name'      => 'section',
-			'title'     => __('Section', 'vp_textdomain'),
+			'name'      => 'row',
+			'title'     => __('Row', 'vp_textdomain'),
 			'fields'    => array(
 				array(
 					'type'      => 'group',
 					'repeating' => true,
 					'sortable'  => true,
-					'name'      => 'row',
-					'title'     => __('Row', 'vp_textdomain'),
+					'name'      => 'column',
+					'title'     => __('Column', 'vp_textdomain'),
 					'fields'    => array(
 						array(
-							'type'      => 'group',
-							'repeating' => true,
-							'sortable'  => true,
-							'name'      => 'column',
-							'title'     => __('Column', 'vp_textdomain'),
-							'fields'    => array(
-								array(
-									'type'                       => 'wpeditor',
-									'label'                      => __('Content', 'vp_textdomain'),
-									'name'                       => 'content',
-									'use_external_plugins'       => 1,
-									'disabled_externals_plugins' => 'vp_sc_button',
-									'disabled_internals_plugins' => '',
-									'validation'                 => 'required',
-								),
-							),
+							'type'  => 'slider',
+							'name'  => 'grid',
+							'label' => __('Grid Length', 'vp_textdomain'),
+							'min'   => 1,
+							'max'   => 12,
+						),
+						array(
+							'type'                       => 'wpeditor',
+							'label'                      => __('Content', 'vp_textdomain'),
+							'name'                       => 'content',
+							'use_external_plugins'       => 1,
+							'disabled_externals_plugins' => 'vp_sc_button',
+							'disabled_internals_plugins' => '',
+							'validation'                 => 'required',
 						),
 					),
 				),

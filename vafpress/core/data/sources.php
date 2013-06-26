@@ -132,25 +132,10 @@ function vp_copy_content($value, $value2)
 	return implode('', $args);
 }
 
-function vp_mesti_normal()
-{
-	return 'normal';
-}
-
-function vp_array_value($value = null, $value2 = null)
-{
-	$result = array();
-	if(!is_null($value))
-		$result[] = $value;
-	if(!is_null($value2))
-		$result[] = $value2;
-	return $result;
-}
-
 function vp_simple_shortcode($name = "", $url = "", $image = "")
 {
-	if(is_null($name)) $name = '';
-	if(is_null($url)) $url = '';
+	if(is_null($name))  $name = '';
+	if(is_null($url))   $url = '';
 	if(is_null($image)) $image = '';
 	$result = "[shortcode name='$name' url='$url' image='$image']";
 	return $result;
@@ -213,41 +198,6 @@ function vp_get_fontawesome_icons()
 	return $icons;
 }
 
-function vp_bind_source_test($param = null)
-{
-	$result = array();
-	$data   = array('Zero','One','Two','Three','Four');
-
-	if(!empty($param))
-	{
-		if(is_array($param))
-		{
-			$temp = array();
-			foreach ($param as $par)
-			{
-				$temp[$par] = $data[$par];
-			}
-			$data = $temp;
-		}
-		else
-		{
-			if(is_numeric($param))
-				$param = (int) $param;
-			else
-				$param = strlen($param);
-			$param = $param % 5;
-			$data = array($param => $data[$param]);
-		}
-	}
-
-	foreach ($data as $key => $value)
-	{
-		$result[] = array('value' => $key, 'label' => $value, 'img' => 'http://placehold.it/100x100');
-	}
-
-	return $result;
-}
-
 function vp_bind_bigcontinents()
 {
 	$bigcontinents = array(
@@ -286,6 +236,7 @@ function vp_bind_continents($param = '')
 			'Polynesia',
 		),
 	);
+
 	$result = array();
 	$datas  = array();
 
@@ -407,6 +358,32 @@ function vp_dep_is_tags($value)
 		return true;
 	return false;
 }
+
+function vp_bind_color_accent($preset)
+{
+	switch ($preset) {
+		case 'red':
+			return '#ff0000';
+		case 'green':
+			return '#00ff00';
+		case 'blue':
+			return '#0000ff';
+		default:
+			return '#000000';
+	}
+}
+
+function vp_bind_color_subtle($preset)
+{
+	return vp_bind_color_accent($preset);
+}
+
+function vp_bind_color_background($preset)
+{
+	return vp_bind_color_accent($preset);
+}
+
+
 
 /**
  * EOF

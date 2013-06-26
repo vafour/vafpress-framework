@@ -79,7 +79,7 @@ return array(
 				'ver'      => '1.0.0',
 			),
 			'shared' => array(
-				'path'     => VP_PUBLIC_URL . '/js/shared.js',
+				'path'     => VP_PUBLIC_URL . '/js/shared.min.js',
 				'deps'     => array(),
 				'ver'      => '1.1',
 				'localize' => array(

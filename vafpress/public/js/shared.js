@@ -304,7 +304,7 @@ vp.thejqname = function(name, thecase) {
 vp.validateAlphabet = function(type, val) {
 	// ignore array and empty string, since they should be handled by 'required' rule
 	if (val === '' || jQuery.isArray(val) || jQuery.inArray(type, ['vp-textbox', 'vp-textarea']) == -1) { return true; }
-	var regex = new RegExp(/^[A-Z]+$/i);
+	var regex = new RegExp(/^[A-Z\s]+$/i);
 	return regex.test(val);
 };
 
@@ -535,9 +535,9 @@ vp.binding_action =	function(ids, field, func, thecase) {
 					if(response.data !== null)
 					{
 						data = response.data instanceof Array ? response.data : [response.data];
-						$source.prop('checked', false);
+						$source.prop('checked', false).change();
 						jQuery.each(data, function(key, value) {
-							$source.filter('[value="'+ value +'"]').prop('checked', true);
+							$source.filter('[value="'+ value +'"]').prop('checked', true).change();
 						});
 					}
 					break;
@@ -545,18 +545,18 @@ vp.binding_action =	function(ids, field, func, thecase) {
 					if(response.data !== null)
 					{
 						if(response.data)
-							$source.prop('checked', true);
+							$source.prop('checked', true).change();
 						else
-							$source.prop('checked', false);
+							$source.prop('checked', false).change();
 					}
 					break;
 				case 'vp-checkimage':
 					if(response.data !== null)
 					{
 						data = response.data instanceof Array ? response.data : [response.data];
-						$source.prop('checked', false);
+						$source.prop('checked', false).change();
 						jQuery.each(data, function(key, value) {
-							$source.filter('[value="'+ value +'"]').prop('checked', true);
+							$source.filter('[value="'+ value +'"]').prop('checked', true).change();
 						});
 					}
 					vp.init_tipsy();
@@ -565,9 +565,9 @@ vp.binding_action =	function(ids, field, func, thecase) {
 					if(response.data !== null)
 					{
 						data = response.data instanceof Array ? response.data : [response.data];
-						$source.prop('checked', false);
+						$source.prop('checked', false).change();
 						jQuery.each(data, function(key, value) {
-							$source.filter('[value="'+ value +'"]').prop('checked', true);
+							$source.filter('[value="'+ value +'"]').prop('checked', true).change();
 						});
 					}
 					break;
@@ -575,9 +575,9 @@ vp.binding_action =	function(ids, field, func, thecase) {
 					if(response.data !== null)
 					{
 						data = response.data instanceof Array ? response.data : [response.data];
-						$source.prop('checked', false);
+						$source.prop('checked', false).change();
 						jQuery.each(data, function(key, value) {
-							$source.filter('[value="'+ value +'"]').prop('checked', true);
+							$source.filter('[value="'+ value +'"]').prop('checked', true).change();
 						});
 					}
 					vp.init_tipsy();

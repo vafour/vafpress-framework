@@ -30,8 +30,14 @@ class VP_Option_Control_Group_Section extends VP_Option_Control_Group
 	{
 		// Setup data
 		$this->_setup_data();
+
+		if($this->is_hidden())
+		{
+			$this->add_container_extra_classes('vp-hide');
+		}
+
 		$this->add_data('section', $this);
-		$this->add_data('container_extra_classes', implode(',', $this->get_container_extra_classes()));
+		$this->add_data('container_extra_classes', implode(' ', $this->get_container_extra_classes()));
 
 		foreach ($extra as $key => $value)
 		{

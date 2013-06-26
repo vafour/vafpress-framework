@@ -13,7 +13,8 @@ For those who need a simpler way to create their own Wordpress Theme. See the [h
 * Client Side Validation
 * Custom Data Source
 * Binding Data Source
-* Field Dependencies
+* Fields Binding
+* Fields Dependencies
 * Import / Export
 * Localization
 * Wordpress 3.3++ compatibility
@@ -37,6 +38,7 @@ For those who need a simpler way to create their own Wordpress Theme. See the [h
 * CodeEditor
 * NoteBox
 * Fontawesome icon chooser
+* WP TinyMCE Editor
 
 ## Field Validation
 

@@ -53,7 +53,7 @@ class VP_Option_Parser
 
 				if($auto_group_naming)
 				{
-					if(isset($menu['name']) and !empty($menu['name']))
+					if(isset($submenu['name']) and !empty($submenu['name']))
 					{
 						$vp_submenu->set_name($submenu['name']);
 					}

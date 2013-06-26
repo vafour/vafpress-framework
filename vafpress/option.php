@@ -166,6 +166,7 @@ function vp_option($key)
 	global $vp_opt;
 	if(array_key_exists($key, $vp_opt))
 	{
+		$vp_opt[$key] = apply_filters( 'vp_option_value', $vp_opt[$key], $key );
 		return $vp_opt[$key];
 	}
 	return null;

@@ -114,8 +114,10 @@
 		process_binding(bindings);
 		process_items_binding(items_binding);
 		process_dependency(dependencies);
-
-		KIA_metabox.sortable();
+		if(typeof window.KIA_metabox !== 'undefined')
+		{
+			KIA_metabox.sortable();
+		}
 
 	});
 

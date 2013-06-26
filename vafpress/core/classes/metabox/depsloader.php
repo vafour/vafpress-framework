@@ -25,11 +25,11 @@ class VP_Metabox_Depsloader
 			'use_new_media_upload' => false,
 			'main_js'              => array(
 				'name' => 'vp-metabox',
-				'path' => VP_PUBLIC_URL . '/js/metabox.js'
+				'path' => VP_PUBLIC_URL . '/js/metabox.min.js'
 			),
 			'main_css'             => array(
 				'name' => 'vp-metabox',
-				'path' => VP_PUBLIC_URL . '/css/metabox.css'
+				'path' => VP_PUBLIC_URL . '/css/metabox.min.css'
 			),
 		);
 

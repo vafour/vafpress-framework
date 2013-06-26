@@ -91,7 +91,8 @@ class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
 			else
 			{
 				$bind = $field->get_binding();
-				if(!empty($bind))
+				$val  = $field->get_value();
+				if(!empty($bind) and is_null($val))
 				{
 					$bind   = explode('|', $bind);
 					$func   = $bind[0];

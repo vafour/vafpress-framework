@@ -26,7 +26,6 @@ return array(
 									'name' => 'tb_1',
 									'label' => __('Alphabet', 'vp_textdomain'),
 									'description' => __('Only alphabets allowed here.', 'vp_textdomain'),
-									'default' => 'abcdefg',
 									'validation' => 'alphabet',
 								),
 								array(
@@ -695,105 +694,172 @@ return array(
 			'title' => __('Custom Data Source', 'vp_textdomain'),
 			'name' => 'menu_3',
 			'icon' => 'font-awesome:icon-th-list',
-			'controls' => array(
+			'menus' => array(
 				array(
-					'type' => 'section',
-					'title' => __('Data Source and Special Default', 'vp_textdomain'),
-					'fields' => array(
+					'title' => __('Dynamic', 'vp_textdomain'),
+					'name' => 'dynamic_data_source',
+					'icon' => 'font-awesome:icon-fire',
+					'controls' => array(
 						array(
-							'type' => 'multiselect',
-							'name' => 'ms_categories',
-							'label' => __('Categories', 'vp_textdomain'),
-							'description' => __('MultiSelect field with WP Categories Data Source and **{{first}}** **{{last}}** default items.', 'vp_textdomain'),
-							'items' => array(
-								'data' => array(
-									array(
-										'source' => 'function',
-										'value' => 'vp_get_categories',
+							'type' => 'section',
+							'title' => __('Data Source and Smart Tags', 'vp_textdomain'),
+							'fields' => array(
+								array(
+									'type' => 'multiselect',
+									'name' => 'ms_categories',
+									'label' => __('Categories', 'vp_textdomain'),
+									'description' => __('MultiSelect field with WP Categories Data Source and **{{first}}** **{{last}}** default items.', 'vp_textdomain'),
+									'items' => array(
+										'data' => array(
+											array(
+												'source' => 'function',
+												'value' => 'vp_get_categories',
+											),
+										),
+									),
+									'default' => array(
+										'{{first}}',
+										'{{last}}',
+									),
+								),
+								array(
+									'type' => 'select',
+									'name' => 'se_pages',
+									'label' => __('Pages', 'vp_textdomain'),
+									'description' => __('Select field with WP Pages Data Source', 'vp_textdomain'),
+									'items' => array(
+										'data' => array(
+											array(
+												'source' => 'function',
+												'value' => 'vp_get_pages',
+											),
+										),
+									),
+								),
+								array(
+									'type' => 'checkbox',
+									'name' => 'cb_users',
+									'label' => __('Users Data Source', 'vp_textdomain'),
+									'description' => __('Checkbox field with WP Users Data Source and **{{all}}** default items.', 'vp_textdomain'),
+									'items' => array(
+										'data' => array(
+											array(
+												'source' => 'function',
+												'params' => 'admin',
+												'value' => 'vp_get_users',
+											),
+										),
+									),
+									'default' => array(
+										'{{all}}',
+									),
+								),
+								array(
+									'type' => 'radiobutton',
+									'name' => 'rb_roles',
+									'label' => __('Roles', 'vp_textdomain'),
+									'description' => __('RadioButton field with WP Roles Data Source and **{{last}}** default item.', 'vp_textdomain'),
+									'items' => array(
+										'data' => array(
+											array(
+												'source' => 'function',
+												'value' => 'vp_get_roles',
+											),
+										),
+									),
+									'default' => array(
+										'{{last}}',
+									),
+								),
+								array(
+									'type' => 'multiselect',
+									'name' => 'ms_tags',
+									'label' => __('Tags', 'vp_textdomain'),
+									'description' => __('MultiSelect field with WP Tags Data Source and **{{first}}** default items.', 'vp_textdomain'),
+									'items' => array(
+										'data' => array(
+											array(
+												'source' => 'function',
+												'value' => 'vp_get_tags',
+											),
+										),
+									),
+									'default' => array(
+										'{{first}}',
+									),
+								),
+								array(
+									'type' => 'select',
+									'name' => 'se_posts',
+									'label' => __('Posts', 'vp_textdomain'),
+									'description' => __('Select field with WP Post Data Source', 'vp_textdomain'),
+									'items' => array(
+										'data' => array(
+											array(
+												'source' => 'function',
+												'value' => 'vp_get_posts',
+											),
+										),
 									),
 								),
 							),
-							'default' => array(
-								'{{first}}',
-								'{{last}}',
-							),
 						),
+					),
+				),
+				array(
+					'title' => __('Binding', 'vp_textdomain'),
+					'name' => 'binding_data_source',
+					'icon' => 'font-awesome:icon-link',
+					'controls' => array(
 						array(
-							'type' => 'select',
-							'name' => 'se_pages',
-							'label' => __('Pages', 'vp_textdomain'),
-							'description' => __('Select field with WP Pages Data Source', 'vp_textdomain'),
-							'items' => array(
-								'data' => array(
-									array(
-										'source' => 'function',
-										'value' => 'vp_get_pages',
+							'type' => 'section',
+							'title' => __('Choose Font', 'vp_textdomain'),
+							'fields' => array(
+								array(
+									'type' => 'select',
+									'name' => 'logo_font_face',
+									'label' => __('Logo Font Face', 'vp_textdomain'),
+									'description' => __('Select Font', 'vp_textdomain'),
+									'items' => array(
+										'data' => array(
+											array(
+												'source' => 'function',
+												'value' => 'vp_get_gwf_family',
+											),
+										),
 									),
 								),
-							),
-						),
-						array(
-							'type' => 'checkbox',
-							'name' => 'cb_users',
-							'label' => __('Users Data Source', 'vp_textdomain'),
-							'description' => __('Checkbox field with WP Users Data Source and **{{all}}** default items.', 'vp_textdomain'),
-							'items' => array(
-								'data' => array(
-									array(
-										'source' => 'function',
-										'params' => 'admin',
-										'value' => 'vp_get_users',
+								array(
+									'type' => 'radiobutton',
+									'name' => 'logo_font_style',
+									'label' => __('Logo Font Style', 'vp_textdomain'),
+									'description' => __('Select Font Style', 'vp_textdomain'),
+									'items' => array(
+										'data' => array(
+											array(
+												'source' => 'binding',
+												'field' => 'logo_font_face',
+												'value' => 'vp_get_gwf_style',
+											),
+										),
+									),
+									'default' => array(
+										'{{first}}',
 									),
 								),
-							),
-							'default' => array(
-								'{{all}}',
-							),
-						),
-						array(
-							'type' => 'radiobutton',
-							'name' => 'rb_roles',
-							'label' => __('Roles', 'vp_textdomain'),
-							'description' => __('RadioButton field with WP Roles Data Source and **{{last}}** default item.', 'vp_textdomain'),
-							'items' => array(
-								'data' => array(
-									array(
-										'source' => 'function',
-										'value' => 'vp_get_roles',
-									),
-								),
-							),
-							'default' => array(
-								'{{last}}',
-							),
-						),
-						array(
-							'type' => 'multiselect',
-							'name' => 'ms_tags',
-							'label' => __('Tags', 'vp_textdomain'),
-							'description' => __('MultiSelect field with WP Tags Data Source and **{{first}}** default items.', 'vp_textdomain'),
-							'items' => array(
-								'data' => array(
-									array(
-										'source' => 'function',
-										'value' => 'vp_get_tags',
-									),
-								),
-							),
-							'default' => array(
-								'{{first}}',
-							),
-						),
-						array(
-							'type' => 'select',
-							'name' => 'se_posts',
-							'label' => __('Posts', 'vp_textdomain'),
-							'description' => __('Select field with WP Post Data Source', 'vp_textdomain'),
-							'items' => array(
-								'data' => array(
-									array(
-										'source' => 'function',
-										'value' => 'vp_get_posts',
+								array(
+									'type' => 'radiobutton',
+									'name' => 'logo_font_weight',
+									'label' => __('Logo Font Weight', 'vp_textdomain'),
+									'description' => __('Select Font Weight', 'vp_textdomain'),
+									'items' => array(
+										'data' => array(
+											array(
+												'source' => 'binding',
+												'field' => 'logo_font_face',
+												'value' => 'vp_get_gwf_weight',
+											),
+										),
 									),
 								),
 							),
@@ -803,129 +869,64 @@ return array(
 			),
 		),
 		array(
-			'name' => 'binding_data_source',
-			'title' => __('Binding Data Source', 'vp_textdomain'),
-			'icon' => 'font-awesome:icon-link',
-			'controls' => array(
+			'title' => __('Fields Interactions', 'vp_textdomain'),
+			'name' => 'fields_interactions',
+			'icon' => 'font-awesome:icon-exchange',
+			'menus' => array(
 				array(
-					'type' => 'section',
-					'title' => __('Choose Font', 'vp_textdomain'),
-					'fields' => array(
+					'name' => 'binding_field',
+					'title' => __('Binding Field', 'vp_textdomain'),
+					'icon' => 'font-awesome:icon-retweet',
+					'controls' => array(
 						array(
-							'type' => 'select',
-							'name' => 'logo_font_face',
-							'label' => __('Logo Font Face', 'vp_textdomain'),
-							'description' => __('Select Font', 'vp_textdomain'),
-							'items' => array(
-								'data' => array(
-									array(
-										'source' => 'function',
-										'value' => 'vp_get_gwf_family',
+							'type' => 'section',
+							'title' => __('Color Set', 'vp_textdomain'),
+							'fields' => array(
+								array(
+									'type' => 'select',
+									'name' => 'color_preset',
+									'label' => __('Color Preset', 'vp_textdomain'),
+									'default' => 'red',
+									'items' => array(
+										array(
+											'value' => 'red',
+											'label' => __('Red', 'vp_textdomain'),
+										),
+										array(
+											'value' => 'green',
+											'label' => __('Green', 'vp_textdomain'),
+										),
+										array(
+											'value' => 'blue',
+											'label' => __('Blue', 'vp_textdomain'),
+										),
 									),
 								),
-							),
-						),
-						array(
-							'type' => 'radiobutton',
-							'name' => 'logo_font_style',
-							'label' => __('Logo Font Style', 'vp_textdomain'),
-							'description' => __('Select Font Style', 'vp_textdomain'),
-							'items' => '
-							',
-							'binding' => array(
-								'field' => 'logo_font_face',
-								'function' => 'vp_get_gwf_style',
-							),
-							'default' => array(
-								'{{first}}',
-							),
-						),
-						array(
-							'type' => 'radiobutton',
-							'name' => 'logo_font_weight',
-							'label' => __('Logo Font Weight', 'vp_textdomain'),
-							'description' => __('Select Font Weight', 'vp_textdomain'),
-							'items' => '
-							',
-							'binding' => array(
-								'field' => 'logo_font_face',
-								'function' => 'vp_get_gwf_weight',
-							),
-						),
-					),
-				),
-			),
-		),
-		array(
-			'name' => 'dependent_field',
-			'title' => __('Dependent Field', 'vp_textdomain'),
-			'icon' => 'font-awesome:icon-key',
-			'controls' => array(
-				array(
-					'type' => 'section',
-					'title' => __('Decider', 'vp_textdomain'),
-					'name' => 'section_custom_font_decider',
-					'fields' => array(
-						array(
-							'type' => 'toggle',
-							'name' => 'use_custom_font',
-							'label' => __('Use Custom Font', 'vp_textdomain'),
-							'description' => __('Use custom font or not', 'vp_textdomain'),
-						),
-					),
-				),
-				array(
-					'type' => 'section',
-					'title' => __('Custom Font', 'vp_textdomain'),
-					'name' => 'section_custom_font',
-					'dependency' => array(
-						'field' => 'use_custom_font',
-						'function' => 'vp_dep_boolean',
-					),
-					'fields' => array(
-						array(
-							'type' => 'select',
-							'name' => 'dep_font_face',
-							'label' => __('Font Face', 'vp_textdomain'),
-							'description' => __('Select Font', 'vp_textdomain'),
-							'items' => array(
-								'data' => array(
-									array(
-										'source' => 'function',
-										'value' => 'vp_get_gwf_family',
+								array(
+									'type' => 'color',
+									'name' => 'color_accent',
+									'label' => __('Color Accent', 'vp_textdomain'),
+									'binding' => array(
+										'field' => 'color_preset',
+										'function' => 'vp_bind_color_accent',
 									),
 								),
-							),
-						),
-						array(
-							'type' => 'radiobutton',
-							'name' => 'dep_font_style',
-							'label' => __('Font Style', 'vp_textdomain'),
-							'description' => __('Select Font Style', 'vp_textdomain'),
-							'items' => array(
-								'data' => array(
-									array(
-										'source' => 'bind',
-										'field' => 'dep_font_face',
-										'value' => 'vp_get_gwf_style',
+								array(
+									'type' => 'color',
+									'name' => 'color_subtle',
+									'label' => __('Color Subtle', 'vp_textdomain'),
+									'binding' => array(
+										'field' => 'color_preset',
+										'function' => 'vp_bind_color_subtle',
 									),
 								),
-							),
-							'default' => array(
-								'{{first}}',
-							),
-						),
-						array(
-							'type' => 'radiobutton',
-							'name' => 'dep_font_weight',
-							'label' => __('Font Weight', 'vp_textdomain'),
-							'description' => __('Select Font Weight', 'vp_textdomain'),
-							'items' => array(
-								'data' => array(
-									array(
-										'source' => 'bind',
-										'field' => 'dep_font_face',
-										'value' => 'vp_get_gwf_weight',
+								array(
+									'type' => 'color',
+									'name' => 'color_background',
+									'label' => __('Color Background', 'vp_textdomain'),
+									'binding' => array(
+										'field' => 'color_preset',
+										'function' => 'vp_bind_color_background',
 									),
 								),
 							),
@@ -933,25 +934,103 @@ return array(
 					),
 				),
 				array(
-					'type' => 'section',
-					'title' => __('Single Field dependency', 'vp_textdomain'),
-					'name' => 'section_single_field_deps',
-					'fields' => array(
+					'name' => 'dependent_field',
+					'title' => __('Dependent Field', 'vp_textdomain'),
+					'icon' => 'font-awesome:icon-key',
+					'controls' => array(
 						array(
-							'type' => 'toggle',
-							'name' => 'use_custom_logo',
-							'label' => __('Use Custom Logo', 'vp_textdomain'),
-							'description' => __('Use custom logo or not', 'vp_textdomain'),
+							'type' => 'section',
+							'title' => __('Decider', 'vp_textdomain'),
+							'name' => 'section_custom_font_decider',
+							'fields' => array(
+								array(
+									'type' => 'toggle',
+									'name' => 'use_custom_font',
+									'label' => __('Use Custom Font', 'vp_textdomain'),
+									'description' => __('Use custom font or not', 'vp_textdomain'),
+								),
+							),
 						),
 						array(
-							'type' => 'upload',
-							'name' => 'custom_logo',
-							'label' => __('Custom Logo', 'vp_textdomain'),
+							'type' => 'section',
+							'title' => __('Custom Font', 'vp_textdomain'),
+							'name' => 'section_custom_font',
 							'dependency' => array(
-								'field' => 'use_custom_logo',
+								'field' => 'use_custom_font',
 								'function' => 'vp_dep_boolean',
 							),
-							'description' => __('Upload or choose custom logo', 'vp_textdomain'),
+							'fields' => array(
+								array(
+									'type' => 'select',
+									'name' => 'dep_font_face',
+									'label' => __('Font Face', 'vp_textdomain'),
+									'description' => __('Select Font', 'vp_textdomain'),
+									'items' => array(
+										'data' => array(
+											array(
+												'source' => 'function',
+												'value' => 'vp_get_gwf_family',
+											),
+										),
+									),
+								),
+								array(
+									'type' => 'radiobutton',
+									'name' => 'dep_font_style',
+									'label' => __('Font Style', 'vp_textdomain'),
+									'description' => __('Select Font Style', 'vp_textdomain'),
+									'items' => array(
+										'data' => array(
+											array(
+												'source' => 'binding',
+												'field' => 'dep_font_face',
+												'value' => 'vp_get_gwf_style',
+											),
+										),
+									),
+									'default' => array(
+										'{{first}}',
+									),
+								),
+								array(
+									'type' => 'radiobutton',
+									'name' => 'dep_font_weight',
+									'label' => __('Font Weight', 'vp_textdomain'),
+									'description' => __('Select Font Weight', 'vp_textdomain'),
+									'items' => array(
+										'data' => array(
+											array(
+												'source' => 'binding',
+												'field' => 'dep_font_face',
+												'value' => 'vp_get_gwf_weight',
+											),
+										),
+									),
+								),
+							),
+						),
+						array(
+							'type' => 'section',
+							'title' => __('Single Field dependency', 'vp_textdomain'),
+							'name' => 'section_single_field_deps',
+							'fields' => array(
+								array(
+									'type' => 'toggle',
+									'name' => 'use_custom_logo',
+									'label' => __('Use Custom Logo', 'vp_textdomain'),
+									'description' => __('Use custom logo or not', 'vp_textdomain'),
+								),
+								array(
+									'type' => 'upload',
+									'name' => 'custom_logo',
+									'label' => __('Custom Logo', 'vp_textdomain'),
+									'dependency' => array(
+										'field' => 'use_custom_logo',
+										'function' => 'vp_dep_boolean',
+									),
+									'description' => __('Upload or choose custom logo', 'vp_textdomain'),
+								),
+							),
 						),
 					),
 				),

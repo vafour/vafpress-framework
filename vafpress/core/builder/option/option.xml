@@ -24,7 +24,6 @@
 									<name>tb_1</name>
 									<label>Alphabet</label>
 									<description>Only alphabets allowed here.</description>
-									<default>abcdefg</default>
 									<validation>alphabet</validation>
 								</textbox>
 								<textbox>
@@ -307,7 +306,7 @@
 					<title>Section 1</title>
 					<fields>
 						<wpeditor>
-							<name>tb_1</name>
+							<name>we_1</name>
 							<label>WP TinyMCE Editor</label>
 							<description>Wordpress tinyMCE editor.</description>
 							<use_external_plugins>0</use_external_plugins>
@@ -413,191 +412,239 @@
 				</section>
 			</controls>
 		</menu>
+
 		<menu>
 			<title>Custom Data Source</title>
 			<name>menu_3</name>
 			<icon>font-awesome:icon-th-list</icon>
-			<controls>	
-				<section>
-					<title>Data Source and Special Default</title>
-					<fields>
-						<multiselect>
-							<name>ms_categories</name>
-							<label>Categories</label>
-							<description>MultiSelect field with WP Categories Data Source and **{{first}}** **{{last}}** default items.</description>
-							<items>
-								<data source="function">vp_get_categories</data>
-							</items>
-							<default>
-								<item>{{first}}</item>
-								<item>{{last}}</item>
-							</default>
-						</multiselect>
-						<select>
-							<name>se_pages</name>
-							<label>Pages</label>
-							<description>Select field with WP Pages Data Source</description>
-							<items>
-								<data source="function">vp_get_pages</data>
-							</items>	
-						</select>
-						<checkbox>
-							<name>cb_users</name>
-							<label>Users Data Source</label>
-							<description>Checkbox field with WP Users Data Source and **{{all}}** default items.</description>
-							<items>
-								<data source="function" params="admin">vp_get_users</data>
-							</items>
-							<default>
-								<item>{{all}}</item>
-							</default>
-						</checkbox>
-						<radiobutton>
-							<name>rb_roles</name>
-							<label>Roles</label>
-							<description>RadioButton field with WP Roles Data Source and **{{last}}** default item.</description>
-							<items>
-								<data source="function">vp_get_roles</data>
-							</items>
-							<default>
-								<item>{{last}}</item>
-							</default>
-						</radiobutton>
-						<multiselect>
-							<name>ms_tags</name>
-							<label>Tags</label>
-							<description>MultiSelect field with WP Tags Data Source and **{{first}}** default items.</description>
-							<items>
-								<data source="function">vp_get_tags</data>
-							</items>
-							<default>
-								<item>{{first}}</item>
-							</default>
-						</multiselect>
-						<select>
-							<name>se_posts</name>
-							<label>Posts</label>
-							<description>Select field with WP Post Data Source</description>
-							<items>
-								<data source="function">vp_get_posts</data>
-							</items>	
-						</select>
-					</fields>
-				</section>
-			</controls>
+			<menus>
+				<menu>
+					<title>Dynamic</title>
+					<name>dynamic_data_source</name>
+					<icon>font-awesome:icon-fire</icon>
+					<controls>
+						<section>
+							<title>Data Source and Smart Tags</title>
+							<fields>
+								<multiselect>
+									<name>ms_categories</name>
+									<label>Categories</label>
+									<description>MultiSelect field with WP Categories Data Source and **{{first}}** **{{last}}** default items.</description>
+									<items>
+										<data source="function">vp_get_categories</data>
+									</items>
+									<default>
+										<item>{{first}}</item>
+										<item>{{last}}</item>
+									</default>
+								</multiselect>
+								<select>
+									<name>se_pages</name>
+									<label>Pages</label>
+									<description>Select field with WP Pages Data Source</description>
+									<items>
+										<data source="function">vp_get_pages</data>
+									</items>	
+								</select>
+								<checkbox>
+									<name>cb_users</name>
+									<label>Users Data Source</label>
+									<description>Checkbox field with WP Users Data Source and **{{all}}** default items.</description>
+									<items>
+										<data source="function" params="admin">vp_get_users</data>
+									</items>
+									<default>
+										<item>{{all}}</item>
+									</default>
+								</checkbox>
+								<radiobutton>
+									<name>rb_roles</name>
+									<label>Roles</label>
+									<description>RadioButton field with WP Roles Data Source and **{{last}}** default item.</description>
+									<items>
+										<data source="function">vp_get_roles</data>
+									</items>
+									<default>
+										<item>{{last}}</item>
+									</default>
+								</radiobutton>
+								<multiselect>
+									<name>ms_tags</name>
+									<label>Tags</label>
+									<description>MultiSelect field with WP Tags Data Source and **{{first}}** default items.</description>
+									<items>
+										<data source="function">vp_get_tags</data>
+									</items>
+									<default>
+										<item>{{first}}</item>
+									</default>
+								</multiselect>
+								<select>
+									<name>se_posts</name>
+									<label>Posts</label>
+									<description>Select field with WP Post Data Source</description>
+									<items>
+										<data source="function">vp_get_posts</data>
+									</items>	
+								</select>
+							</fields>
+						</section>
+					</controls>
+				</menu>
+				<menu>
+					<title>Binding</title>
+					<name>binding_data_source</name>
+					<icon>font-awesome:icon-link</icon>
+					<controls>
+						<section>
+							<title>Choose Font</title>
+							<fields>
+								<select>
+									<name>logo_font_face</name>
+									<label>Logo Font Face</label>
+									<description>Select Font</description>
+									<items>
+										<data source="function">vp_get_gwf_family</data>
+									</items>	
+								</select>
+								<radiobutton>
+									<name>logo_font_style</name>
+									<label>Logo Font Style</label>
+									<description>Select Font Style</description>
+									<items>
+										<data source="binding" field="logo_font_face">vp_get_gwf_style</data>
+									</items>
+									<default>
+										<item>{{first}}</item>
+									</default>
+								</radiobutton>
+								<radiobutton>
+									<name>logo_font_weight</name>
+									<label>Logo Font Weight</label>
+									<description>Select Font Weight</description>
+									<items>
+										<data source="binding" field="logo_font_face">vp_get_gwf_weight</data>
+									</items>
+								</radiobutton>
+							</fields>
+						</section>
+					</controls>
+				</menu>
+			</menus>
 		</menu>
-		<menu>
-			<name>binding_data_source</name>
-			<title>Binding Data Source</title>
-			<icon>font-awesome:icon-link</icon>
-			<controls>
-				<section>
-					<title>Choose Font</title>
-					<fields>
-						<select>
-							<name>logo_font_face</name>
-							<label>Logo Font Face</label>
-							<description>Select Font</description>
-							<items>
-								<data source="function">vp_get_gwf_family</data>
-							</items>	
-						</select>
-						<radiobutton>
-							<name>logo_font_style</name>
-							<label>Logo Font Style</label>
-							<description>Select Font Style</description>
-							<items>
-							</items>
-							<default>
-								<item>{{first}}</item>
-							</default>
-							<binding field="logo_font_face">vp_get_gwf_style</binding>
-						</radiobutton>
-						<radiobutton>
-							<name>logo_font_weight</name>
-							<label>Logo Font Weight</label>
-							<description>Select Font Weight</description>
-							<items>
-							</items>
-							<binding field="logo_font_face">vp_get_gwf_weight</binding>
-						</radiobutton>
-					</fields>
-				</section>
-			</controls>
-		</menu>
 
 		<menu>
-			<name>dependent_field</name>
-			<title>Dependent Field</title>
-			<icon>font-awesome:icon-key</icon>
-			<controls>
-
-				<section>
-					<title>Decider</title>
-					<name>section_custom_font_decider</name>
-					<fields>
-						<toggle>
-							<name>use_custom_font</name>
-							<label>Use Custom Font</label>
-							<description>Use custom font or not</description>
-						</toggle>
-					</fields>
-				</section>
-
-				<section>
-					<title>Custom Font</title>
-					<name>section_custom_font</name>
-					<dependency field="use_custom_font">vp_dep_boolean</dependency>
-					<fields>
-						<select>
-							<name>dep_font_face</name>
-							<label>Font Face</label>
-							<description>Select Font</description>
-							<items>
-								<data source="function">vp_get_gwf_family</data>
-							</items>	
-						</select>
-						<radiobutton>
-							<name>dep_font_style</name>
-							<label>Font Style</label>
-							<description>Select Font Style</description>
-							<items>
-								<data source="bind" field="dep_font_face">vp_get_gwf_style</data>
-							</items>
-							<default>
-								<item>{{first}}</item>
-							</default>
-						</radiobutton>
-						<radiobutton>
-							<name>dep_font_weight</name>
-							<label>Font Weight</label>
-							<description>Select Font Weight</description>
-							<items>
-								<data source="bind" field="dep_font_face">vp_get_gwf_weight</data>
-							</items>
-						</radiobutton>
-					</fields>
-				</section>
-
-				<section>
-					<title>Single Field dependency</title>
-					<name>section_single_field_deps</name>
-					<fields>
-						<toggle>
-							<name>use_custom_logo</name>
-							<label>Use Custom Logo</label>
-							<description>Use custom logo or not</description>
-						</toggle>
-						<upload>
-							<name>custom_logo</name>
-							<label>Custom Logo</label>
-							<dependency field="use_custom_logo">vp_dep_boolean</dependency>
-							<description>Upload or choose custom logo</description>
-						</upload>
-					</fields>
-				</section>
-
-			</controls>
+			<title>Fields Interactions</title>
+			<name>fields_interactions</name>
+			<icon>font-awesome:icon-exchange</icon>
+			<menus>
+				<menu>
+					<name>binding_field</name>
+					<title>Binding Field</title>
+					<icon>font-awesome:icon-retweet</icon>
+					<controls>
+						<section>
+							<title>Color Set</title>
+							<fields>
+								<select>
+									<name>color_preset</name>
+									<label>Color Preset</label>
+									<items>
+										<item value="red">Red</item>
+										<item value="green">Green</item>
+										<item value="blue">Blue</item>
+									</items>
+									<default>red</default>
+								</select>
+								<color>
+									<name>color_accent</name>
+									<label>Color Accent</label>
+									<binding field="color_preset">vp_bind_color_accent</binding>
+								</color>
+								<color>
+									<name>color_subtle</name>
+									<label>Color Subtle</label>
+									<binding field="color_preset">vp_bind_color_subtle</binding>
+								</color>
+								<color>
+									<name>color_background</name>
+									<label>Color Background</label>
+									<binding field="color_preset">vp_bind_color_background</binding>
+								</color>
+							</fields>
+						</section>
+					</controls>
+				</menu>
+				<menu>
+					<name>dependent_field</name>
+					<title>Dependent Field</title>
+					<icon>font-awesome:icon-key</icon>
+					<controls>
+						<section>
+							<title>Decider</title>
+							<name>section_custom_font_decider</name>
+							<fields>
+								<toggle>
+									<name>use_custom_font</name>
+									<label>Use Custom Font</label>
+									<description>Use custom font or not</description>
+								</toggle>
+							</fields>
+						</section>
+						<section>
+							<title>Custom Font</title>
+							<name>section_custom_font</name>
+							<dependency field="use_custom_font">vp_dep_boolean</dependency>
+							<fields>
+								<select>
+									<name>dep_font_face</name>
+									<label>Font Face</label>
+									<description>Select Font</description>
+									<items>
+										<data source="function">vp_get_gwf_family</data>
+									</items>	
+								</select>
+								<radiobutton>
+									<name>dep_font_style</name>
+									<label>Font Style</label>
+									<description>Select Font Style</description>
+									<items>
+										<data source="binding" field="dep_font_face">vp_get_gwf_style</data>
+									</items>
+									<default>
+										<item>{{first}}</item>
+									</default>
+								</radiobutton>
+								<radiobutton>
+									<name>dep_font_weight</name>
+									<label>Font Weight</label>
+									<description>Select Font Weight</description>
+									<items>
+										<data source="binding" field="dep_font_face">vp_get_gwf_weight</data>
+									</items>
+								</radiobutton>
+							</fields>
+						</section>
+						<section>
+							<title>Single Field dependency</title>
+							<name>section_single_field_deps</name>
+							<fields>
+								<toggle>
+									<name>use_custom_logo</name>
+									<label>Use Custom Logo</label>
+									<description>Use custom logo or not</description>
+								</toggle>
+								<upload>
+									<name>custom_logo</name>
+									<label>Custom Logo</label>
+									<dependency field="use_custom_logo">vp_dep_boolean</dependency>
+									<description>Upload or choose custom logo</description>
+								</upload>
+							</fields>
+						</section>
+					</controls>
+				</menu>
+			</menus>
 		</menu>
 
 		<menu>

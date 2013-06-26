@@ -190,7 +190,8 @@ class VP_Option_Control_Set
 		foreach ($fields as $field)
 		{
 			$bind = $field->get_binding();
-			if(!empty($bind))
+			$val  = $field->get_value();
+			if(!empty($bind) and is_null($val))
 			{
 				$bind   = explode('|', $bind);
 				$func   = $bind[0];
