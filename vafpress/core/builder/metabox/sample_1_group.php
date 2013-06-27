@@ -3,7 +3,7 @@
 return array(
 	'id'          => 'vp_meta_sample_1',
 	'types'       => array('post'),
-	'title'       => __('VP Group & Dependent Metabox', 'vp_textdomain'),
+	'title'       => __('VP Dependent Fields and Group', 'vp_textdomain'),
 	'priority'    => 'high',
 	'template'    => array(
 		array(

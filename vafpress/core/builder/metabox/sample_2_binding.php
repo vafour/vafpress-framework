@@ -3,7 +3,7 @@
 return array(
 	'id'          => 'vp_meta_sample_2',
 	'types'       => array('post'),
-	'title'       => __('VP Binding Group Metabox', 'vp_textdomain'),
+	'title'       => __('VP Repeating Group With Binding Fields', 'vp_textdomain'),
 	'priority'    => 'high',
 	'template'    => array(
 		array(

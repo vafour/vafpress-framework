@@ -3,7 +3,7 @@
 return array(
 	'id'          => 'vp_meta_sample_6',
 	'types'       => array('post'),
-	'title'       => __('VP Binding Fixed Group Metabox', 'vp_textdomain'),
+	'title'       => __('VP Fixed Group With Item Bindings Fields', 'vp_textdomain'),
 	'priority'    => 'high',
 	'template'    => array(
 		array(

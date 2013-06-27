@@ -3,7 +3,7 @@
 return array(
 	'id'          => 'vp_meta_sample_4',
 	'types'       => array('post'),
-	'title'       => __('VP Metabox Notebox', 'vp_textdomain'),
+	'title'       => __('VP All Notebox', 'vp_textdomain'),
 	'priority'    => 'low',
 	'template'    => array(
 		array(

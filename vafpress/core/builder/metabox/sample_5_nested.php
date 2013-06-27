@@ -3,7 +3,7 @@
 return array(
 	'id'          => 'page_builder',
 	'types'       => array('post'),
-	'title'       => __('Page Builder', 'vp_textdomain'),
+	'title'       => __('VP Page Builder Sample', 'vp_textdomain'),
 	'priority'    => 'high',
 	'template'    => array(
 		array(
