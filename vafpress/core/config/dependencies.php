@@ -15,7 +15,7 @@ return array(
 	 * Scripts.
 	 */
 	'scripts' => array(
-		'always' => array('jquery', 'prefixfree', 'scrollspy', 'tipsy', 'jquery-typing'),
+		'always' => array('jquery', 'scrollspy', 'tipsy', 'jquery-typing'),
 		'paths' => array(
 			'jquery' => array(
 				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery-1.8.3.min.js',
@@ -32,11 +32,6 @@ return array(
 				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery.tipsy.js',
 				'deps'     => array('jquery'),
 				'ver'      => '1.0.0a'
-			),
-			'prefixfree' => array(
-				'path'     => VP_PUBLIC_URL . '/js/vendor/prefixfree.min.js',
-				'deps'     => array(),
-				'ver'      => '1.0.7',
 			),
 			'scrollspy' => array(
 				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery-scrollspy.js',
