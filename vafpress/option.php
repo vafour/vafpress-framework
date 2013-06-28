@@ -166,7 +166,7 @@ function vp_option($key)
 	global $vp_opt;
 	if(array_key_exists($key, $vp_opt))
 	{
-		$vp_opt[$key] = apply_filters( 'vp_option_value', $vp_opt[$key], $key );
+		$vp_opt[$key] = apply_filters( 'vp_option_get_value', $vp_opt[$key], $key );
 		return $vp_opt[$key];
 	}
 	return null;
@@ -237,11 +237,11 @@ function vp_setup_options_to_db()
 
 		$opt = $vp_set->get_values();
 		// before db options db action hook
-		do_action('vp_before_db_options_init', $opt);
+		do_action('vp_option_before_db_init', $opt);
 		// save to db
 		$result = $vp_set->save($option_key);
 		// after db options db action hook
-		do_action('vp_after_db_options_init', $opt, $result['status'], $option_key);
+		do_action('vp_option_after_db_init', $opt, $result['status'], $option_key);
 	}
 }
 
@@ -302,13 +302,13 @@ function vp_ajax_save()
 		$opt = $vp_set->get_values();
 
 		// before ajax save action hook
-		do_action('vp_before_ajax_save', $opt);
+		do_action('vp_option_before_ajax_save', $opt);
 
 		// do saving
 		$result = $vp_set->save($vp_config['option_key']);
 
 		// after ajax save action hook
-		do_action('vp_after_ajax_save', $opt, $result['status'], $vp_config['option_key']);
+		do_action('vp_option_after_ajax_save', $opt, $result['status'], $vp_config['option_key']);
 	}
 
 	if (ob_get_length()) ob_clean();
