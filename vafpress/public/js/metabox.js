@@ -173,6 +173,7 @@
 			if(margin_top > 0)
 				$notif.css('margin-top', margin_top);
 			e.preventDefault();
+			return;
 		}
 
 		// add hidden field before toggle to force submit
