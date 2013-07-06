@@ -307,6 +307,9 @@ function vp_ajax_save()
 		// do saving
 		$result = $vp_set->save($vp_config['option_key']);
 
+		// re-init $opt
+		vp_init_options_db();
+
 		// after ajax save action hook
 		do_action('vp_option_after_ajax_save', $opt, $result['status'], $vp_config['option_key']);
 	}
