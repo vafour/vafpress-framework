@@ -1,21 +1,26 @@
 # Vafpress Framework
 
-For those who need a simpler way to create their own Wordpress Theme. See the [homepage](http://vafpress.com/vafpress-framework/).
+For those who need a simpler way to create their own Wordpress Theme. See the [homepage](http://vafpress.com/vafpress-framework/). Available as library and plugin, please check out those repos:
+
+* [Vafpress Framework Plugin](https://github.com/vafour/vafpress-framework-plugin)
+* [Vafpress Framework Theme Boilerplate](https://github.com/vafour/vafpress-framework-theme-boilerplate)
 
 ## Core Features
 
 * Theme Options Builder
 * Metaboxes Builder
+* Shortcode Generator Builder
 
 ## Features
 
-* Easy Theme Options Builder using XML Format
+* Rich Set Of Fields
 * Client Side Validation
 * Custom Data Source
 * Binding Data Source
 * Fields Binding
 * Fields Dependencies
 * Import / Export
+* Restore Options to Default
 * Localization
 * Wordpress 3.3++ compatibility
 * New WP 3.5 Media Manager
@@ -63,6 +68,4 @@ And you can contact us at contact [@] vafour.com
 
 ## Credits
 
-Metabox Support made with WPAlchemy MetaBox PHP Class by Dimas Begunoff, read more about it at [WPAlchemy Site](http://www.farinspace.com/wpalchemy-metabox/).
-
-All icons used are provided by [FontAwesome](http://fortawesome.github.com/Font-Awesome/)
+Please read credits.txt file.
