@@ -8,7 +8,7 @@
 define('VP_VERSION'  , '2.0');
 define('VP_NAMESPACE', 'VP_');
 
-if(function_exists('get_template_directory_uri'))
+if(function_exists('get_template_directory'))
 {
 	define('VP_THEME_DIR'   , get_template_directory());
 }

@@ -1082,7 +1082,7 @@ vp.init_sorter = function($elements)
 	{
 		if($elements.length <= 0)
 			return;
-		$elements.select2().select2Sortable();
+		$elements.select2Sortable();
 	}
 };
 
@@ -1091,14 +1091,14 @@ vp.init_tipsy = function()
 {
 	if (jQuery.fn.tipsy)
 	{
-		jQuery('.vp-js-tipsy.description').each(function() { jQuery(this).tipsy({ gravity : 'e' }); });
-		jQuery('.vp-js-tipsy.slideinput').each(function() { jQuery(this).tipsy({ trigger : 'focus' }); });
-		jQuery('.vp-js-tipsy.image-item').each(function() { jQuery(this).tipsy(); });
+		jQuery('.vp-js-tipsy.description').tipsy({ live: true, gravity : 'e' });
+		jQuery('.vp-js-tipsy.slideinput').tipsy({ live: true, trigger : 'focus' });
+		jQuery('.vp-js-tipsy.image-item').tipsy({ live: true });
 	}
 };
 vp.init_tipsy();
 
-// Init Sorter
+// Init Ace Editor
 vp.init_ace_editor = function($elements)
 {
 	if(window.ace !== 'undefined')
