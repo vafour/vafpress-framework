@@ -4,6 +4,9 @@ Metabox Support:
   by Dimas Begunoff
   http://www.farinspace.com/wpalchemy-metabox/
 
+- Multiple WYSIWYG
+  by Kathy (helgatheviking)
+  http://www.kathyisawesome.com/426/multiple-wordpress-wysiwyg-visual-editors/
 
 Icons:
 
