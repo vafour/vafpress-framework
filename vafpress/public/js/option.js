@@ -204,6 +204,7 @@
 
 		// update tinyMCE textarea content
 		vp.tinyMCE_save();
+		$('.vp-js-sorter').select2SortableOrder();
 
 		$('.vp-js-option-form .vp-field').removeClass('vp-error');
 		$('.validation-notif.vp-error').remove();
