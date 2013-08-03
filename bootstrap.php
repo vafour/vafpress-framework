@@ -73,7 +73,7 @@ if( !function_exists('vp_ajax_wrapper') )
 		try {
 			$result['data']    = call_user_func_array($function, $params);
 			$result['status']  = true;
-			$result['message'] = __("", 'vp_textdomain');
+			$result['message'] = __("Success", 'vp_textdomain');
 		} catch (Exception $e) {
 			$result['data']    = '';
 			$result['status']  = false;
