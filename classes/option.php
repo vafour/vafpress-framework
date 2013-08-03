@@ -266,7 +266,7 @@ class VP_Option
 
 			$result = array(
 				'status' => true,
-				'message'=> __("", 'vp_textdomain'),
+				'message'=> __("Success", 'vp_textdomain'),
 				'option' => $db_options,
 			);
 		}
@@ -284,7 +284,7 @@ class VP_Option
 		if($verify)
 		{
 			$result['status']  = true;
-			$result['message'] = __("", 'vp_textdomain');	
+			$result['message'] = __("Success", 'vp_textdomain');	
 		}
 		else
 		{
