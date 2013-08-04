@@ -107,7 +107,7 @@ return array(
 					)
 				)
 			),
-			'option' => array(
+			'vp-option' => array(
 				'path'     => VP_PUBLIC_URL . '/js/option.js',
 				'deps'     => array(),
 				'ver'      => '2.0',
@@ -118,7 +118,7 @@ return array(
 					)
 				)
 			),
-			'metabox' => array(
+			'vp-metabox' => array(
 				'path'     => VP_PUBLIC_URL . '/js/metabox.js',
 				'deps'     => array(),
 				'ver'      => '2.0',
@@ -130,12 +130,12 @@ return array(
 				)
 			),
 			'vp-shortcode-qt' => array(
-				'path'     => VP_PUBLIC_URL . '/js/vp-shortcode-quicktags.js',
+				'path'     => VP_PUBLIC_URL . '/js/shortcode-quicktags.js',
 				'deps'     => array('reveal'),
 				'ver'      => '1.0.0',
 			),
 			'vp-shortcode' => array(
-				'path'     => VP_PUBLIC_URL . '/js/vp-shortcode-menu.js',
+				'path'     => VP_PUBLIC_URL . '/js/shortcode-menu.js',
 				'deps'     => array('reveal', 'vp-shortcode-qt'),
 				'ver'      => '2.0',
 				'localize' => array(
@@ -152,13 +152,13 @@ return array(
 	 * Styles.
 	 */
 	'styles' => array(
-		'always' => array('tipsy-css', 'font-awesome', 'font-awesome-ie7'),
+		'always' => array('tipsy', 'font-awesome', 'font-awesome-ie7'),
 		'paths' => array(
 			'bootstrap-colorpicker' => array(
 				'path' => VP_PUBLIC_URL . '/css/vendor/bootstrap-colorpicker.css',
 				'deps' => array(),
 			),
-			'tipsy-css' => array(
+			'tipsy' => array(
 				'path' => VP_PUBLIC_URL . '/css/vendor/tipsy.css',
 				'deps' => array(),
 			),
@@ -174,25 +174,25 @@ return array(
 				'path' => VP_PUBLIC_URL . '/css/vendor/font-awesome.min.css',
 				'deps' => array(),
 			),
-			'select2-css' => array(
+			'select2' => array(
 				'path' => VP_PUBLIC_URL . '/css/vendor/select2.css',
 				'deps' => array(),
 			),
-			'reveal-css' => array(
+			'reveal' => array(
 				'path' => VP_PUBLIC_URL . '/css/vendor/reveal.css',
 				'deps' => array(),
 			),
-			'option-css' => array(
-				'path' => VP_PUBLIC_URL . '/css/option.css',
+			'vp-option' => array(
+				'path' => VP_PUBLIC_URL . '/css/option.min.css',
 				'deps' => array(),
 			),
-			'metabox-css' => array(
+			'vp-metabox' => array(
 				'path' => VP_PUBLIC_URL . '/css/metabox.min.css',
 				'deps' => array(),
 			),
-			'vp-shortcode-css' => array(
-				'path' => VP_PUBLIC_URL . '/css/vp-shortcode.css',
-				'deps' => array('reveal-css'),
+			'vp-shortcode' => array(
+				'path' => VP_PUBLIC_URL . '/css/shortcode.min.css',
+				'deps' => array('reveal'),
 			),
 		),
 	),
@@ -202,13 +202,13 @@ return array(
 	 */
 	'rules'   => array(
 		'color'       => array( 'js' => array('bootstrap-colorpicker'), 'css' => array('bootstrap-colorpicker') ),
-		'select'      => array( 'js' => array('select2'), 'css' => array('select2-css') ),
-		'multiselect' => array( 'js' => array('select2'), 'css' => array('select2-css') ),
+		'select'      => array( 'js' => array('select2'), 'css' => array('select2') ),
+		'multiselect' => array( 'js' => array('select2'), 'css' => array('select2') ),
 		'slider'      => array( 'js' => array('jquery-ui-slider'), 'css' => array('jqui') ),
 		'date'        => array( 'js' => array('jquery-ui-datepicker'), 'css' => array('jqui') ),
 		'codeeditor'  => array( 'js' => array('ace-editor'), 'css' => array() ),
-		'sorter'      => array( 'js' => array('select2-sortable'), 'css' => array('select2-css', 'jqui') ),
-		'fontawesome' => array( 'js' => array('select2'), 'css' => array('select2-css') ),
+		'sorter'      => array( 'js' => array('select2-sortable'), 'css' => array('select2', 'jqui') ),
+		'fontawesome' => array( 'js' => array('select2'), 'css' => array('select2') ),
 		'wpeditor'    => array( 'js' => array('kia-metabox'), 'css' => array() ),
 	)
 

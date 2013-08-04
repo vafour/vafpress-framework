@@ -33,7 +33,7 @@ class VP_Control_Field_TextArea extends VP_Control_Field
 			$_value = str_replace(array("\r\n", "\r"), "\n", $_value);
 		}
 		$this->_value = $_value;
-	    return $this;
+		return $this;
 	}
 
 }

@@ -289,7 +289,7 @@ class VP_ShortcodeGenerator
 
 	public static function add_buttons($plugin_array)
 	{
-		$plugin_array['vp_sc_button'] = VP_PUBLIC_URL .'/js/vp-shortcodes.js';
+		$plugin_array['vp_sc_button'] = VP_PUBLIC_URL .'/js/shortcodes.js';
 		foreach (self::$pool as $sg)
 		{
 			if( $sg->can_output() )

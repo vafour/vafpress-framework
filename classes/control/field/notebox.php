@@ -76,7 +76,7 @@ class VP_Control_Field_NoteBox extends VP_Control_Field
 	 * @return String Status of message
 	 */
 	public function get_status() {
-	    return $this->_status;
+		return $this->_status;
 	}
 	
 	/**
@@ -85,8 +85,8 @@ class VP_Control_Field_NoteBox extends VP_Control_Field
 	 * @param String $_status Status of message
 	 */
 	public function set_status($_status) {
-	    $this->_status = $_status;
-	    return $this;
+		$this->_status = $_status;
+		return $this;
 	}
 
 }

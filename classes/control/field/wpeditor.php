@@ -69,7 +69,7 @@ class VP_Control_Field_WPEditor extends VP_Control_Field
 			$_value = str_replace(array("\r\n", "\r"), "\n", $_value);
 		}
 		$this->_value = $_value;
-	    return $this;
+		return $this;
 	}
 
 	public function use_external_plugins($use = null)
@@ -88,7 +88,7 @@ class VP_Control_Field_WPEditor extends VP_Control_Field
 	 */
 	public function get_disabled_externals_plugins()
 	{
-	    return $this->_disabled_externals_plugins;
+		return $this->_disabled_externals_plugins;
 	}
 	
 	/**
@@ -98,8 +98,8 @@ class VP_Control_Field_WPEditor extends VP_Control_Field
 	 */
 	public function set_disabled_externals_plugins($_disabled_externals_plugins)
 	{
-	    $this->_disabled_externals_plugins = $_disabled_externals_plugins;
-	    return $this;
+		$this->_disabled_externals_plugins = $_disabled_externals_plugins;
+		return $this;
 	}
 
 
@@ -109,7 +109,7 @@ class VP_Control_Field_WPEditor extends VP_Control_Field
 	 * @return Array
 	 */
 	public function get_disabled_internals_plugins() {
-	    return $this->_disabled_internals_plugins;
+		return $this->_disabled_internals_plugins;
 	}
 	
 	/**
@@ -118,8 +118,8 @@ class VP_Control_Field_WPEditor extends VP_Control_Field
 	 * @param Array $_disabled_internals_plugins 
 	 */
 	public function set_disabled_internals_plugins($_disabled_internals_plugins) {
-	    $this->_disabled_internals_plugins = $_disabled_internals_plugins;
-	    return $this;
+		$this->_disabled_internals_plugins = $_disabled_internals_plugins;
+		return $this;
 	}
 
 }

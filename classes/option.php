@@ -133,12 +133,12 @@ class VP_Option
 	{	
 		$opt_loader = VP_WP_NewLoader::instance();
 		$opt_loader->add_types( $this->get_field_types() );
-		$opt_loader->add_main_js( 'option' );
-		$opt_loader->add_main_css( 'option-css' );
-		$opt_loader->add_js_data( 'option', 'custom_local.name', $this->_option_key );
-		$opt_loader->add_js_data( 'option', 'custom_local.SAVE_SUCCESS', VP_Option_Control_Set::SAVE_SUCCESS );
-		$opt_loader->add_js_data( 'option', 'custom_local.SAVE_NOCHANGES', VP_Option_Control_Set::SAVE_NOCHANGES );
-		$opt_loader->add_js_data( 'option', 'custom_local.SAVE_FAILED', VP_Option_Control_Set::SAVE_FAILED );
+		$opt_loader->add_main_js( 'vp-option' );
+		$opt_loader->add_main_css( 'vp-option' );
+		$opt_loader->add_js_data( 'vp-option', 'custom_local.name', $this->_option_key );
+		$opt_loader->add_js_data( 'vp-option', 'custom_local.SAVE_SUCCESS', VP_Option_Control_Set::SAVE_SUCCESS );
+		$opt_loader->add_js_data( 'vp-option', 'custom_local.SAVE_NOCHANGES', VP_Option_Control_Set::SAVE_NOCHANGES );
+		$opt_loader->add_js_data( 'vp-option', 'custom_local.SAVE_FAILED', VP_Option_Control_Set::SAVE_FAILED );
 		$opt_loader->build();
 	}
 

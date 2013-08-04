@@ -167,7 +167,7 @@ abstract class VP_Control_Field implements iFactory
 	 * @return Array Render data array
 	 */
 	public function get_data() {
-	    return $this->_data;
+		return $this->_data;
 	}
 	
 	/**
@@ -176,8 +176,8 @@ abstract class VP_Control_Field implements iFactory
 	 * @param Array $_data Render data array
 	 */
 	public function set_data($_data) {
-	    $this->_data = $_data;
-	    return $this;
+		$this->_data = $_data;
+		return $this;
 	}
 
 	/**
@@ -186,8 +186,8 @@ abstract class VP_Control_Field implements iFactory
 	 * @param Array $_data Render data array
 	 */
 	public function set_single_data($key, $_data) {
-	    $this->_data[$key] = $_data;
-	    return $this;
+		$this->_data[$key] = $_data;
+		return $this;
 	}
 
 	/**
@@ -309,7 +309,7 @@ abstract class VP_Control_Field implements iFactory
 	 * @return String bind rule string
 	 */
 	public function get_binding() {
-	    return $this->_binding;
+		return $this->_binding;
 	}
 	
 	/**
@@ -318,8 +318,8 @@ abstract class VP_Control_Field implements iFactory
 	 * @param String $_binding bind rule string
 	 */
 	public function set_binding($_binding) {
-	    $this->_binding = $_binding;
-	    return $this;
+		$this->_binding = $_binding;
+		return $this;
 	}
 
 	/**
@@ -347,7 +347,7 @@ abstract class VP_Control_Field implements iFactory
 	 * @return String|Array Value of field
 	 */
 	public function get_value() {
-	    return $this->_value;
+		return $this->_value;
 	}
 	
 	/**
@@ -356,8 +356,8 @@ abstract class VP_Control_Field implements iFactory
 	 * @param String|Array $_value Value of field
 	 */
 	public function set_value($_value) {
-	    $this->_value = $_value;
-	    return $this;
+		$this->_value = $_value;
+		return $this;
 	}
 
 	/**
@@ -419,7 +419,7 @@ abstract class VP_Control_Field implements iFactory
 	 */
 	public function is_hidden($_is_hidden = null) {
 		if(!is_null($_is_hidden))
-	    	$this->_is_hidden = (bool) $_is_hidden;
+			$this->_is_hidden = (bool) $_is_hidden;
 		return $this->_is_hidden;
 	}
 

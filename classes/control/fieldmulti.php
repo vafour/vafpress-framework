@@ -158,7 +158,7 @@ abstract class VP_Control_FieldMulti extends VP_Control_Field
 	 * @return String bind rule string
 	 */
 	public function get_items_binding() {
-	    return $this->_items_binding;
+		return $this->_items_binding;
 	}
 	
 	/**
@@ -167,8 +167,8 @@ abstract class VP_Control_FieldMulti extends VP_Control_Field
 	 * @param String $_items_binding bind rule string
 	 */
 	public function set_items_binding($_items_binding) {
-	    $this->_items_binding = $_items_binding;
-	    return $this;
+		$this->_items_binding = $_items_binding;
+		return $this;
 	}
 
 }
