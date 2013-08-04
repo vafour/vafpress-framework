@@ -6,9 +6,9 @@
 abstract class VP_Control_FieldMultiImage extends VP_Control_FieldMulti
 {
 
-	protected $item_max_height;
+	protected $_item_max_height;
 
-	protected $item_max_width;
+	protected $_item_max_width;
 
 	/**
 	 * Basic self setup of the object

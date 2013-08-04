@@ -62,7 +62,7 @@ class VP_Control_Field_CodeEditor extends VP_Control_Field
 			$_value = str_replace(array("\r\n", "\r"), "\n", $_value);
 		}
 		$this->_value = $_value;
-	    return $this;
+		return $this;
 	}
 
 	public function get_value()
@@ -78,7 +78,7 @@ class VP_Control_Field_CodeEditor extends VP_Control_Field
 	 * @return String Language mode
 	 */
 	public function get_mode() {
-	    return $this->_mode;
+		return $this->_mode;
 	}
 	
 	/**
@@ -87,8 +87,8 @@ class VP_Control_Field_CodeEditor extends VP_Control_Field
 	 * @param String $_mode Language mode
 	 */
 	public function set_mode($_mode) {
-	    $this->_mode = $_mode;
-	    return $this;
+		$this->_mode = $_mode;
+		return $this;
 	}
 
 
@@ -98,7 +98,7 @@ class VP_Control_Field_CodeEditor extends VP_Control_Field
 	 * @return String Editor's theme
 	 */
 	public function get_theme() {
-	    return $this->_theme;
+		return $this->_theme;
 	}
 	
 	/**
@@ -107,8 +107,8 @@ class VP_Control_Field_CodeEditor extends VP_Control_Field
 	 * @param String $_theme Editor's theme
 	 */
 	public function set_theme($_theme) {
-	    $this->_theme = $_theme;
-	    return $this;
+		$this->_theme = $_theme;
+		return $this;
 	}
 
 }

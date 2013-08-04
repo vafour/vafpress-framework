@@ -37,7 +37,7 @@ class VP_Option_Control_Set
 	 * @return String Option set title
 	 */
 	public function get_title() {
-	    return $this->_title;
+		return $this->_title;
 	}
 	
 	/**
@@ -46,8 +46,8 @@ class VP_Option_Control_Set
 	 * @param String $_title Option set title
 	 */
 	public function set_title($_title) {
-	    $this->_title = $_title;
-	    return $this;
+		$this->_title = $_title;
+		return $this;
 	}
 
 	/**
@@ -56,7 +56,7 @@ class VP_Option_Control_Set
 	 * @return String Page name
 	 */
 	public function get_page() {
-	    return $this->_page;
+		return $this->_page;
 	}
 	
 	/**
@@ -65,8 +65,8 @@ class VP_Option_Control_Set
 	 * @param String $_page Page name
 	 */
 	public function set_page($_page) {
-	    $this->_page = $_page;
-	    return $this;
+		$this->_page = $_page;
+		return $this;
 	}
 
 	/**
@@ -96,7 +96,7 @@ class VP_Option_Control_Set
 	 * @return String Logo URL
 	 */
 	public function get_logo() {
-	    return $this->_logo;
+		return $this->_logo;
 	}
 	
 	/**
@@ -105,8 +105,8 @@ class VP_Option_Control_Set
 	 * @param String $_logo Logo URL
 	 */
 	public function set_logo($_logo) {
-	    $this->_logo = $_logo;
-	    return $this;
+		$this->_logo = $_logo;
+		return $this;
 	}
 
 	public function add_menu($menu)

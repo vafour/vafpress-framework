@@ -383,17 +383,16 @@ function vp_bind_color_background($preset)
 	return vp_bind_color_accent($preset);
 }
 
-function vp_font_preview($face, $style, $weight, $size)
+function vp_font_preview($face, $style, $weight, $size, $line_height)
 {
 	$gwf  = new VP_Site_GoogleWebFont();
 	$gwf->add($face, $style, $weight);
 	$link = reset($gwf->get_links());
-	$face = str_replace(' ', '+', $face);
 	$dom  = <<<EOD
-<div style="text-align: center; min-height: 32px; margin: 5px;">
 <link href='$link' rel='stylesheet' type='text/css'>
-<span style="font-family: $face; font-style: $style; font-weight: $weight; font-size: {$size}px;">Grumpy wizards make toxic brew for the evil Queen and Jack</span>
-</div>
+<p style="font-family: $face; font-style: $style; font-weight: $weight; font-size: {$size}px; line-height: {$line_height}em;">
+	Grumpy wizards make toxic brew for the evil Queen and Jack
+</p>
 EOD;
 	return $dom;
 }

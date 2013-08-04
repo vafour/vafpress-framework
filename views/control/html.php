@@ -5,7 +5,7 @@
 	<?php echo VP_Util_Text::print_if_exists(isset($binding) ? $binding : '', 'data-vp-bind="%s"'); ?>
 	<?php echo VP_Util_Text::print_if_exists(isset($dependency) ? $dependency : '', 'data-vp-dependency="%s"'); ?>
 	id="<?php echo $name; ?>">
-	<div class="field">
+	<div class="field" style="height: <?php echo $height; ?>;">
 		<div class="input" id="<?php echo $name . '_dom'; ?>">
 			<?php echo stripslashes($value); ?>
 		</div>

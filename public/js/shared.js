@@ -520,9 +520,13 @@ vp.binding_action =	function(ids, field, func, thecase) {
 	var $loader = $source_tr.find('.vp-js-bind-loader'),
 	    $input  = $source_tr.find('.input');
 
-	$input.vp_fadeOut(function(){
+	if (field.type == 'vp-html') {
 		$loader.vp_fadeIn();
-	});
+	} else {
+		$input.vp_fadeOut(function(){
+			$loader.vp_fadeIn();
+		});
+	}
 
 	jQuery.post(ajaxurl, data, function(response) {
 		$loader.vp_fadeOut(function(){

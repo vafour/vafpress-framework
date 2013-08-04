@@ -98,8 +98,8 @@ if( !function_exists('vp_metabox_enqueue') )
 		if( VP_WP_Admin::is_post_or_page() and VP_Metabox::pool_can_output() )
 		{
 			$loader = VP_WP_NewLoader::instance();
-			$loader->add_main_js( 'metabox' );
-			$loader->add_main_css( 'metabox-css' );
+			$loader->add_main_js( 'vp-metabox' );
+			$loader->add_main_css( 'vp-metabox' );
 			$loader->build();
 		}
 	}
@@ -119,7 +119,7 @@ if( !function_exists('vp_sg_enqueue') )
 
 			$loader = VP_WP_NewLoader::instance();
 			$loader->add_main_js( 'vp-shortcode' );
-			$loader->add_main_css( 'vp-shortcode-css' );
+			$loader->add_main_css( 'vp-shortcode' );
 			$loader->build();
 		}
 	}
