@@ -1735,7 +1735,7 @@ class WPAlchemy_MetaBox
 		{
 			if ($this->in_template)
 			{
-				return htmlentities($value, ENT_QUOTES, 'UTF-8');
+				return $value;
 			}
 			else
 			{

@@ -57,7 +57,7 @@ class VP_ShortcodeGenerator
 			// print modal dialog dom
 			add_action( 'admin_footer', array($this, 'print_modal') );
 			// populate scripts and styles dependencies
-			$loader = VP_WP_NewLoader::instance();
+			$loader = VP_WP_Loader::instance();
 			$loader->add_types( $this->get_field_types() );
 		}
 	}

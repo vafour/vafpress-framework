@@ -97,7 +97,7 @@ if( !function_exists('vp_metabox_enqueue') )
 	{
 		if( VP_WP_Admin::is_post_or_page() and VP_Metabox::pool_can_output() )
 		{
-			$loader = VP_WP_NewLoader::instance();
+			$loader = VP_WP_Loader::instance();
 			$loader->add_main_js( 'vp-metabox' );
 			$loader->add_main_css( 'vp-metabox' );
 			$loader->build();
@@ -117,7 +117,7 @@ if( !function_exists('vp_sg_enqueue') )
 			wp_localize_script( 'vp-sg-dummy', 'vp_sg', $localize );
 			wp_enqueue_script( 'vp-sg-dummy' );
 
-			$loader = VP_WP_NewLoader::instance();
+			$loader = VP_WP_Loader::instance();
 			$loader->add_main_js( 'vp-shortcode' );
 			$loader->add_main_css( 'vp-shortcode' );
 			$loader->build();

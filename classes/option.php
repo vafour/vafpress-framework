@@ -131,7 +131,7 @@ class VP_Option
 
 	public function enqueue_scripts_and_styles()
 	{	
-		$opt_loader = VP_WP_NewLoader::instance();
+		$opt_loader = VP_WP_Loader::instance();
 		$opt_loader->add_types( $this->get_field_types() );
 		$opt_loader->add_main_js( 'vp-option' );
 		$opt_loader->add_main_css( 'vp-option' );
