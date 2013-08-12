@@ -3,160 +3,184 @@
 class VP_WP_Loader
 {
 
-	private $_localize;
+	private static $_instance;
 
-	private function setup_localize($use_upload)
+	private $_js_data = array();
+
+	private $_css_data = array();
+
+	private $_localize = array();
+
+	private $_scripts;
+
+	private $_styles;
+
+	private $_use_media_upload = false;
+
+	private $_use_wp_35_media_upload = false;
+
+	private $_types = array();
+
+	public static function instance()
+	{
+		if (is_null(self::$_instance))
+		{
+			self::$_instance = new self();
+		}
+		return self::$_instance;
+	}
+
+	public function __construct()
+	{}
+
+	public function build()
 	{
 
-		$messages = VP_Util_Config::instance()->load('messages');
+		// get scripts and styles dependencies configs
+		$req_scripts = VP_Util_Config::instance()->load('dependencies', 'scripts.always');
+		$req_styles  = VP_Util_Config::instance()->load('dependencies', 'styles.always');
+		$scripts     = VP_Util_Config::instance()->load('dependencies', 'scripts.paths');
+		$styles      = VP_Util_Config::instance()->load('dependencies', 'styles.paths');
+		$rules       = VP_Util_Config::instance()->load('dependencies', 'rules');
 
-		$localize = array(
-			'use_upload'           => $use_upload,
-			'use_new_media_upload' => false,
-			'public_url'           => VP_PUBLIC_URL,
-			'wp_include_url'       => includes_url(),
-			'nonce'                => wp_create_nonce( 'vafpress' ),
-			'val_msg'              => $messages['validation'],
-			'impexp_msg'           => $messages['impexp'],
-		);
-		
-		// determine whether to load uploader and which version
-		if($localize['use_upload'])
+		// for all types build required scripts and styles array
+		foreach ($this->_types as $type)
+		{
+			if( array_key_exists($type, $rules) )
+			{
+				$req_scripts = array_merge($req_scripts, $rules[$type]['js']);
+				$req_styles  = array_merge($req_styles, $rules[$type]['css']);
+			}
+		}
+
+		// also determine whether to use media upload and the WP35 version or not
+		if( in_array('upload', $this->_types) )
 		{
 			global $wp_version;
+			$this->_use_media_upload = true;
 			if (!version_compare($wp_version, '3.5', '<'))
 			{
-				$localize['use_new_media_upload'] = true;
+				$this->_use_wp_35_media_upload = true;
 				wp_enqueue_media();
 			}
 		}
 
-		// assign localize to be used in further process
-		$this->_localize = $localize;		
+		// build localize data
+		$this->build_localize_data();
 
+		// register all depended js
+		foreach ($req_scripts as $script)
+		{
+			$this->js_unit_register($script);
+		}
+
+		// register and add shared-js at the end of dependencies
+		$this->js_unit_register('shared', $req_scripts);
+
+		// register all styles
+		foreach ($styles as $name => $style) 
+		{
+			if(in_array($name, $req_styles) and ! wp_style_is($name, 'registered'))
+				wp_register_style($name, $style['path'], $style['deps']);
+		}
+
+		// register all mains
+		foreach ($this->_js_data as $name => $js)
+		{
+			// build main js localize
+			$localize = array();
+			// var_dump($js);
+			foreach ($js['local_data'] as $datum)
+			{
+				if(array_key_exists($datum, $this->_localize))
+				{
+					$localize[$datum] = $this->_localize[$datum];
+				}
+			}
+
+			if( isset($js['custom_local']) )
+			{
+				$localize = array_merge( $localize, $js['custom_local'] );
+			}
+
+			$deps   = array();
+			if( isset($js['deps']) ) $deps = $js['deps'];
+			$deps[] = 'shared';
+
+			foreach ($deps as $dep)
+			{
+				$this->js_unit_register($dep);
+			}
+
+			// register, enqueue and localized scripts
+			wp_register_script($name, $js['path'], $deps, '', true);
+			wp_localize_script($name, $js['local_name'], $localize);
+			wp_enqueue_script($name);
+		}
+
+		foreach ($this->_css_data as $name => $css)
+		{
+			foreach ($css['deps'] as $dep)
+			{
+				$this->css_unit_register($dep);
+			}
+			$req_styles = array_merge($req_styles, $css['deps']);
+			wp_register_style($name, $css['path'], $req_styles);
+			wp_enqueue_style($name);
+		}
 	}
 
-	public function register($loaders, $hook_suffix = '')
+	public function add_localize_data($key, $value)
 	{
-
-		if(!is_array($loaders))
-			$loaders = array($loaders);
-
-		$all_deps     = array();
-		$styles_deps  = array();
-		$scripts_deps = array();
-
-		foreach ($loaders as $loader)
-		{
-			// check if we should output
-			if($hook_suffix !== '' and !$loader->can_output($hook_suffix))
-				break;
-
-			// build dependencies array
-			$deps       = $loader->build();
-			$all_deps[] = $deps;
-
-			// var_dump($deps['localize']);
-
-			// unite scripts and style
-			$styles_deps  = array_merge($styles_deps, $deps['styles']);
-			$scripts_deps = array_merge($scripts_deps, $deps['scripts']);
-		}
-
-
-		if(!empty($all_deps))
-		{
-			// use upload or not, then setup localize
-			$use_upload = false;
-			foreach ($all_deps as $deps)
-			{
-				$use_upload = $deps['use_upload'] || $use_upload;
-			}
-			$this->setup_localize($use_upload);
-
-			// determine whether to load uploader and which version
-			if($this->_localize['use_upload'])
-			{
-				if ($this->_localize['use_new_media_upload'])
-				{
-					$scripts_deps[] = 'thickbox';
-					$styles_deps[]  = 'thickbox';
-				}
-			}
-
-			// dynamically registering scripts and styles
-			$styles = VP_Util_Config::instance()->load('dependencies', 'styles.paths');
-
-			foreach ($scripts_deps as $dep)
-				$this->unit_register($dep);
-
-			foreach ($styles as $name => $style) 
-				if(in_array($name, $styles_deps) and ! wp_style_is($name, 'registered'))
-					wp_register_style($name, $style['path'], $style['deps']);
-
-			// register and add shared-js at the end of dependencies
-			$this->unit_register('shared', $scripts_deps);
-			$deps['scripts'][] = 'shared';
-
-			foreach ($all_deps as $deps)
-			{
-				// build main js localize
-				foreach ($deps['localize_default'] as $key)
-				{
-					if(array_key_exists($key, $this->_localize))
-					{
-						$deps['localize'][$key] = $this->_localize[$key];
-					}
-				}
-
-				// register, enqueue and localized scripts
-				wp_register_script($deps['main_js']['name'], $deps['main_js']['path'], array('shared'), '', true);
-				wp_localize_script($deps['main_js']['name'], $deps['localize_name'], $deps['localize']);
-				wp_enqueue_script($deps['main_js']['name']);
-
-				// register and enqueue styles
-				wp_register_style($deps['main_css']['name'], $deps['main_css']['path'], $styles_deps);
-				wp_enqueue_style($deps['main_css']['name']);
-
-			}
-		}
-
+		$this->_localize[$key] = $value;
 	}
 
-	private function unit_register($name, $extra_deps = null)
+	private function build_localize_data()
+	{
+		$messages = VP_Util_Config::instance()->load('messages');
+		$localize = array(
+			'use_upload'           => $this->_use_media_upload,
+			'use_new_media_upload' => $this->_use_wp_35_media_upload,
+			'public_url'           => VP_PUBLIC_URL,
+			'wp_include_url'       => includes_url(),
+			'nonce'                => wp_create_nonce( 'vafpress' ),
+			'val_msg'              => $messages['validation'],
+			'util_msg'             => $messages['util'],
+		);
+		$this->_localize = array_merge($this->_localize, $localize);
+	}
+
+	private function js_unit_register($name, $extra_deps = null)
 	{
 		global $wp_scripts;
 
-		// dynamically registering scripts
-		$scripts     = VP_Util_Config::instance()->load('dependencies', 'scripts.paths');
+		$scripts = VP_Util_Config::instance()->load('dependencies', 'scripts.paths');
 
-		$registered  = wp_script_is($name, 'registered');
-		$is_older    = false;
-		$available   = isset($scripts[$name]);
-
-		if($available)
+		if( isset($scripts[$name]) )
 		{
-			$script   = $scripts[$name];
-			$override = isset($script['override']) ? $script['override'] : false;
-			if($registered)
+
+			$registered = wp_script_is($name, 'registered');
+			$is_older   = false;
+			$script     = $scripts[$name];
+			$override   = isset($script['override']) ? $script['override'] : false;
+			if( $registered )
 			{
 				$is_older = version_compare($script['ver'], $wp_scripts->registered[$name]->ver) == 1;
 			}
-			if(!$registered or ($is_older and $override))
+			if( !$registered or ($is_older and $override) )
 			{
-				if(!is_null($extra_deps))
+				if( !is_null($extra_deps) )
 				{
-					$script['deps'] = array_merge($script['deps'], $extra_deps);
-					$script['deps'] = array_unique($script['deps']);
+					$script['deps'] = array_unique( array_merge( $script['deps'], $extra_deps ) );
 				}
-				if(!empty($script['deps']))
+				if( !empty($script['deps']) )
 				{
 					foreach ($script['deps'] as $dep)
 					{
-						$this->unit_register($dep);
+						$this->js_unit_register($dep);
 					}
 				}
-				if($is_older)
+				if( $is_older )
 				{
 					wp_deregister_script($name);
 				}
@@ -177,6 +201,134 @@ class VP_WP_Loader
 				}
 			}
 		}
+	}
+
+	private function css_unit_register($name, $extra_deps = null)
+	{
+		$styles = VP_Util_Config::instance()->load('dependencies', 'styles.paths');
+
+		if( isset($styles[$name]) )
+		{
+			$style = $styles[$name];
+
+			if( !is_null($extra_deps) )
+			{
+				$style['deps'] = array_unique( array_merge( $style['deps'], $extra_deps ) );
+			}
+			if( !empty($style['deps']) )
+			{
+				foreach ($style['deps'] as $dep)
+				{
+					$this->css_unit_register($dep);
+				}
+			}
+			wp_register_style($name, $style['path'], $style['deps'], isset($style['ver']) ? $style['ver'] : false);
+		}
+	}
+
+	// how to setup the localization data?
+	public function add_js_data($js_name, $key, $data)
+	{
+		$this->add_data($js_name, $key, $data, 'js');
+	}
+
+	public function add_css_data($css_name, $key, $data)
+	{
+		$this->add_data($css_name, $key, $data, 'css');
+	}
+
+	public function add_data($name, $key, $data, $type)
+	{
+
+		$array_data = array();
+
+		if( $type === 'js' )
+			$array_data = array('local_data');
+
+		$var_name = '_' . $type . '_data';
+
+		if( in_array($key, $array_data) )
+		{
+			if( !isset($this->{$var_name}[$name][$key]) || !is_array($this->{$var_name}[$name][$key]) )
+				$this->{$var_name}[$name][$key] = array();
+			
+			$this->{$var_name}[$name][$key] = array_unique(
+				array_merge(
+					$this->{$var_name}[$name][$key],
+					(array) $data
+				)
+			);
+		}
+		else
+		{
+			$keys = explode('.', $key);
+			$arr  = &$this->{$var_name}[$name];
+			foreach ($keys as $key)
+			{
+				$arr = &$arr[$key];
+			}
+			$arr = $data;
+		}
+
+	}
+
+	// how to setup the main js and css data?
+	public function add_main_css($css)
+	{
+
+		if( is_string($css) )
+		{
+			$css_name = $css;
+			$deps     = VP_Util_Config::instance()->load('dependencies', 'styles.paths');
+			$css      = $deps[$css_name];
+		}
+		else
+		{
+			$css_name = $css['name'];
+		}
+
+		if( isset($css['deps']) )
+			$this->add_css_data($css_name, 'deps', $css['deps']);
+
+		if( isset($css['path']) )
+			$this->add_css_data($css_name, 'path', $css['path']);
+	}
+
+	public function add_main_js($js)
+	{
+
+		if( is_string($js) )
+		{
+			$js_name = $js;
+			$deps    = VP_Util_Config::instance()->load('dependencies', 'scripts.paths');
+			$js      = $deps[$js_name];
+		}
+		else
+		{
+			$js_name = $js['name'];
+		}
+
+		if( isset($js['localize']) and is_array($js['localize']) )
+		{
+			if( isset($js['localize']['name']) )
+				$this->add_js_data($js_name, 'local_name', $js['localize']['name']);
+			
+			if( isset($js['localize']['keys']) and is_array($js['localize']['keys']) )
+				$this->add_js_data($js_name, 'local_data', $js['localize']['keys']);
+		}
+
+		if( isset($js['path']) )
+			$this->add_js_data($js_name, 'path', $js['path']);
+
+		if( isset($js['deps']) )
+			$this->add_js_data($js_name, 'deps', $js['deps']);
+	}
+
+	// option class added their types to this
+	public function add_types($types)
+	{
+		$types = (array) $types;
+		$this->_types = array_unique( array_merge( $this->_types, $types ) );
 	}
 
 }

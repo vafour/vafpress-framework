@@ -46,6 +46,7 @@ class VP_Control_Field_HTML extends VP_Control_Field
 		return $this;
 	}
 
+
 	/**
 	 * Get the Height of the Container
 	 *

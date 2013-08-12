@@ -37,7 +37,7 @@ class VP_Metabox extends WPAlchemy_MetaBox
 
 		if ($this->can_output())
 		{
-			$loader = VP_WP_NewLoader::instance();
+			$loader = VP_WP_Loader::instance();
 			$loader->add_types( $this->get_field_types() );
 		}
 

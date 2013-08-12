@@ -7,9 +7,9 @@
 	id="<?php echo $name; ?>">
 	<div class="field" style="height: <?php echo $height; ?>;">
 		<div class="input" id="<?php echo $name . '_dom'; ?>">
-			<?php echo stripslashes($value); ?>
+			<?php echo wp_kses_post(stripslashes($value)); ?>
 		</div>
-		<textarea name="<?php echo $name; ?>" class="vp-hide"><?php echo stripslashes($value); ?></textarea>
+		<textarea name="<?php echo $name; ?>" class="vp-hide"><?php echo wp_kses_post(stripslashes($value)); ?></textarea>
 		<div class="vp-js-bind-loader vp-field-loader vp-hide"><img src="<?php VP_Util_Res::img_out('ajax-loader.gif', ''); ?>" /></div>
 	</div>
 </div>
