@@ -6,7 +6,7 @@
 |--------------------------------------------------------------------------
 */
 
-defined('VP_VERSION')     or define('VP_VERSION'    , '2.0');
+defined('VP_VERSION')     or define('VP_VERSION'    , '2.0-beta');
 defined('VP_NAMESPACE')   or define('VP_NAMESPACE'  , 'VP_');
 defined('VP_DIR')         or define('VP_DIR'        , dirname(__FILE__));
 defined('VP_DIR_NAME')    or define('VP_DIR_NAME'   , basename(VP_DIR));

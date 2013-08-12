@@ -187,7 +187,7 @@ return array(
 				'deps' => array(),
 			),
 			'vp-metabox' => array(
-				'path' => VP_PUBLIC_URL . '/css/metabox.min.css',
+				'path' => VP_PUBLIC_URL . '/css/metabox.css',
 				'deps' => array(),
 			),
 			'vp-shortcode' => array(

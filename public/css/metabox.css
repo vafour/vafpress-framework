@@ -39,6 +39,25 @@
 	vertical-align: top;
 	width: 20%;
 }
+#postbox-container-1 .vp-metabox .vp-field,#postbox-container-1 .vp-metabox .vp-field .label,#postbox-container-1 .vp-metabox .vp-field .field {
+	display: block;
+	width: auto;
+}
+#postbox-container-1 .vp-metabox .vp-field {
+	margin: 15px 0;
+}
+#postbox-container-1 .vp-metabox .vp-field .label {
+	margin-bottom: 3px;
+}
+#postbox-container-1 .vp-metabox .vp-field .label,#postbox-container-1 .vp-metabox .vp-field .field {
+	padding: 0 10px;
+}
+#postbox-container-1 .vp-metabox .vp-field .label label {
+	margin: 0;
+}
+#postbox-container-1 .vp-metabox .vp-wpa-loop {
+	padding: 10px 0;
+}
 .vp-metabox .vp-field .label label {
 	cursor: default;
 	font-size: 1em;
