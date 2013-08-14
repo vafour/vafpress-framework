@@ -211,7 +211,7 @@ class VP_Metabox extends WPAlchemy_MetaBox
 						$bind   = explode('|', $bind);
 						$func   = $bind[0];
 						$params = $bind[1];
-						$params = explode(',', $params);
+						$params = preg_split('/[\s,]+/', $params);
 						$values = array();
 						foreach ($params as $param)
 						{
@@ -271,7 +271,7 @@ class VP_Metabox extends WPAlchemy_MetaBox
 
 					if(!empty($dependency))
 					{
-						$params     = explode(',', $params);
+						$params     = preg_split('/[\s,]+/', $params);
 						$values     = array();
 						foreach ($params as $param)
 						{

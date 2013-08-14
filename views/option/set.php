@@ -9,7 +9,8 @@
 				<div id="vp-menus" class="vp-menus">
 					<ul class="vp-menu-level-1">
 						<?php foreach ($set->get_menus() as $menu): ?>
-						<?php $is_first_lvl_1 = $menu === reset($set->get_menus()); ?>
+						<?php $menus          = $set->get_menus(); ?>
+						<?php $is_first_lvl_1 = $menu === reset($menus); ?>
 						<?php if ($is_first_lvl_1): ?>
 						<li class="vp-current">
 						<?php else: ?>
@@ -34,7 +35,8 @@
 							<?php if ($menu->get_menus()): ?>
 							<ul class="vp-menu-level-2">
 								<?php foreach ($menu->get_menus() as $submenu): ?>
-								<?php if ($is_first_lvl_1 and $submenu === reset($menu->get_menus())): ?>
+								<?php $submenus = $menu->get_menus(); ?>
+								<?php if ($is_first_lvl_1 and $submenu === reset($submenus)): ?>
 								<li class="vp-current">
 								<?php else: ?>
 								<li>
@@ -70,7 +72,8 @@
 						</div>
 					</div>
 					<?php foreach ($set->get_menus() as $menu): ?>
-					<?php if ($menu === reset($set->get_menus())): ?>
+					<?php $menus = $set->get_menus(); ?>
+					<?php if ($menu === reset($menus)): ?>
 						<?php echo $menu->render(array('current' => 1)); ?>
 					<?php else: ?>
 						<?php echo $menu->render(array('current' => 0)); ?>

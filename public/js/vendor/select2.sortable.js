@@ -32,8 +32,8 @@
 					if (!this) {
 						return undefined;
 					}
-					var text = $.trim($(this).text());
-					return $select.find('option').filter(function () { return $(this).html() == text; })[0];
+					var id = $(this).data('select2Data').id;
+					return $select.find('option[value="' + id + '"]')[0];
 				}));
 
 				sorted.push.apply(sorted, unselected);
@@ -51,7 +51,7 @@
 			if(args.length === 0 || typeof(args[0]) === 'object')
 			{
 				var defaultOptions = {
-					bindOrder       : 'form_submit', // or sortstop
+					bindOrder       : 'formSubmit', // or sortableStop
 					sortableOptions : {
 						placeholder : 'ui-state-highlight',
 						items       : 'li:not(.select2-search-field)',
@@ -73,16 +73,13 @@
 					$select2choices.sortable(options.sortableOptions);
 
 					switch(options.bindOrder){
-						case 'sortstop':
+						case 'sortableStop':
 							// apply options ordering in sortstop event
 							$select2choices.on("sortstop.select2sortable", function( event, ui ) {
 								$select.select2SortableOrder();
 							});
-							break;
-						case 'form_submit':
-							// apply options ordering in form submit
-							$select.closest('form').unbind('submit.select2sortable').on('submit.select2sortable', function(){
-								$select.select2SortableOrder();
+							$select.on('change', function(e){
+								$(this).select2SortableOrder();
 							});
 							break;
 						default:

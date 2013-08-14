@@ -225,7 +225,7 @@ class VP_Option_Control_Set
 				$bind   = explode('|', $bind);
 				$func   = $bind[0];
 				$params = $bind[1];
-				$params = explode(',', $params);
+				$params = preg_split('/[\s,]+/', $params);
 				$values = array();
 				foreach ($params as $param)
 				{
@@ -259,7 +259,7 @@ class VP_Option_Control_Set
 					$bind   = explode('|', $bind);
 					$func   = $bind[0];
 					$params = $bind[1];
-					$params = explode(',', $params);
+					$params = preg_split('/[\s,]+/', $params);
 					$values = array();
 					foreach ($params as $param)
 					{

@@ -1109,7 +1109,7 @@ vp.init_sorter = function($elements)
 			var $el     = jQuery(el),
 			    options = $el.getDatas();
 			options = vp.parseOpt(options.opt);
-			$el.select2(options).select2Sortable();
+			$el.select2(options).select2Sortable({bindOrder: 'sortableStop'});
 		});
 
 	}

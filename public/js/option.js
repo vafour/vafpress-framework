@@ -210,7 +210,6 @@
 
 		// update tinyMCE textarea content
 		vp.tinyMCE_save();
-		$('.vp-js-sorter').select2SortableOrder();
 
 		$('.vp-js-option-form .vp-field').removeClass('vp-error');
 		$('.validation-notif.vp-error').remove();
@@ -341,21 +340,6 @@
 
 		$button.attr('disabled', 'disabled');
 		$import_loader.fadeIn(100);
-
-		// var request = $.ajax({
-		// 	url: ajaxurl,
-		// 	type: "POST",
-		// 	processData: true,
-		// 	data: thedata,
-		// 	dataType: "text",
-		// 	success: function(msg){
-		// 		alert(msg);
-		// 	}
-		// });
-
-		// request.done(function(msg) {
-		// 	console.log(msg);
-		// });
 
 		$.post(ajaxurl, data, function(response) {
 			$import_loader.fadeOut(0);
