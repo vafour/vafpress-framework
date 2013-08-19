@@ -45,6 +45,7 @@ class VP_Option
 			'layout'                => 'fixed',
 			'page_title'            => __( 'An Awesome Options', 'vp_textdomain' ),
 			'menu_label'            => __( 'An Awesome Options', 'vp_textdomain' ),
+			'priority'              => 10,
 		), $configs));
 
 		// check and set required configs
@@ -88,7 +89,7 @@ class VP_Option
 		add_action('wp_ajax_vp_ajax_' . $this->get_option_key() . '_restore', array($this, 'vp_ajax_restore'));
 
 		// register menu page
-		add_action( 'admin_menu', array($this, 'register_menu_page') );
+		add_action( 'admin_menu', array($this, 'register_menu_page'), $priority );
 	}
 
 	public static function get_pool()
