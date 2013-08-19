@@ -24,7 +24,7 @@ if(!class_exists('VP_WP_Tracker'))
 			// Adds once weekly to the existing schedules.
 			$schedules['weekly'] = array(
 				'interval' => 60 * 60 * 24 * 7,
-				'display' => __( 'Once Weekly' )
+				'display' => __( 'Once Weekly', 'vp_textdomain' )
 			);
 			return $schedules;
 		}

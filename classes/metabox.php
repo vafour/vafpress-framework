@@ -32,7 +32,7 @@ class VP_Metabox extends WPAlchemy_MetaBox
 		// Modify title in dev mode
 		if( $this->is_dev_mode )
 		{
-			$this->title = __('[Dev Mode] ') . $this->title;
+			$this->title = __('[Dev Mode] ', 'vp_textdomain') . $this->title;
 		}
 
 		if ($this->can_output())

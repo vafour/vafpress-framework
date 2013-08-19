@@ -148,13 +148,19 @@ if( !function_exists('vp_sg_init_buttons') )
 
 if( !function_exists('vp_metabox') )
 {
-	function vp_metabox($key, $default = null)
+	function vp_metabox($key, $default = null, $post_id = null)
 	{
 		global $post;
 
 		$vp_metaboxes = VP_Metabox::get_pool();
 
-		if(is_null($post))
+		if(!is_null($post_id))
+		{
+			$the_post = get_post($post_id);
+			if ( empty($the_post) ) $post_id = null;
+		}
+			
+		if(is_null($post) and is_null($post_id))
 			return $default;
 
 		$keys = explode('.', $key);
@@ -167,7 +173,10 @@ if( !function_exists('vp_metabox') )
 				if(array_key_exists($key, $vp_metaboxes))
 				{
 					$temp = $vp_metaboxes[$key];
-					$temp->the_meta();
+					if(!is_null($post_id))
+						$temp->the_meta($post_id);
+					else
+						$temp->the_meta();
 				}
 				else
 				{

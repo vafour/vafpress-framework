@@ -65,13 +65,6 @@ class VP_Control_Field_CodeEditor extends VP_Control_Field
 		return $this;
 	}
 
-	public function get_value()
-	{
-		$value = $this->_value;
-		$value = stripslashes($value);
-		return $value;
-	}
-
 	/**
 	 * Get editor's language mode
 	 *

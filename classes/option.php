@@ -157,6 +157,9 @@ class VP_Option
 			$option = VP_Util_Array::unite( $option, 'name', 'value' );
 			$option = $this->get_options_set()->normalize_values($option);
 
+			// stripslashes added by WP in $_GET / $_POST
+			$option = stripslashes_deep($option);
+
 			$this->get_options_set()->populate_values($option, true);
 
 			// get back options from set
