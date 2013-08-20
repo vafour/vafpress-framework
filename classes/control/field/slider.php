@@ -58,7 +58,7 @@ class VP_Control_Field_Slider extends VP_Control_Field
 
 	protected function validate_value($_value)
 	{
-		$out_range = (intval($_value) < $this->get_min()) || (intval($_value) > $this->get_max());
+		$out_range = (floatval($_value) < $this->get_min()) || (floatval($_value) > $this->get_max());
 
 		if (is_null($_value) || $out_range)
 			return $this->get_min();

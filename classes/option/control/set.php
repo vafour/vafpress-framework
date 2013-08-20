@@ -13,8 +13,6 @@ class VP_Option_Control_Set
 
 	private $_title;
 
-	private $_page;
-
 	private $_logo;
 
 	private $_layout;
@@ -47,25 +45,6 @@ class VP_Option_Control_Set
 	 */
 	public function set_title($_title) {
 		$this->_title = $_title;
-		return $this;
-	}
-
-	/**
-	 * Get page name
-	 *
-	 * @return String Page name
-	 */
-	public function get_page() {
-		return $this->_page;
-	}
-	
-	/**
-	 * Set page name
-	 *
-	 * @param String $_page Page name
-	 */
-	public function set_page($_page) {
-		$this->_page = $_page;
 		return $this;
 	}
 
