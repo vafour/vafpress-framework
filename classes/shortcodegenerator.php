@@ -173,7 +173,7 @@ class VP_ShortcodeGenerator
 										<?php echo $element['title']; ?>
 										<?php if(isset($element['attributes'])) echo '<i class="icon-arrow-down"></i>'; ?>
 									</a>
-									<div class="hidden vp-sc-code"><?php echo $element['code']; ?></div>
+									<div class="hidden vp-sc-code"><?php echo htmlentities($element['code']); ?></div>
 									<?php if(isset($element['attributes'])): ?>
 									<form class="vp-sc-form vp-hide">
 										<?php echo $this->print_form($element['attributes']); ?>
