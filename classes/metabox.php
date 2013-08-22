@@ -37,6 +37,9 @@ class VP_Metabox extends WPAlchemy_MetaBox
 
 		if ($this->can_output())
 		{
+			// make sure metabox template loaded
+			if( !is_array($this->template) and file_exists($this->template) )
+				$this->template = include $this->template;
 			$loader = VP_WP_Loader::instance();
 			$loader->add_types( $this->get_field_types() );
 		}
@@ -81,10 +84,10 @@ class VP_Metabox extends WPAlchemy_MetaBox
 		$id      =  $this->id;
 		$meta    =  $this->_meta(NULL, TRUE);
 
-		// use include because users may want to use one template for multiple meta boxes
+		// make sure metabox template loaded
 		if( !is_array($this->template) and file_exists($this->template) )
 		{
-			include $this->template;
+			$this->template = include $this->template;
 		}
 		else
 		{
