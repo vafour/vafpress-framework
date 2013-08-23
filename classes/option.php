@@ -43,8 +43,8 @@ class VP_Option
 			'minimum_role'          => 'edit_theme_options',
 			'menu_page'             => 'themes.php',
 			'layout'                => 'fixed',
-			'page_title'            => __( 'An Awesome Options', 'vp_textdomain' ),
-			'menu_label'            => __( 'An Awesome Options', 'vp_textdomain' ),
+			'page_title'            => __( 'Vafpress Options', 'vp_textdomain' ),
+			'menu_label'            => __( 'Vafpress Options', 'vp_textdomain' ),
 			'priority'              => 10,
 		), $configs));
 
