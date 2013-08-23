@@ -107,7 +107,7 @@
 		};
 
 		// init controls
-		vp.init_controls($('.vp-sc-menu-content'));
+		vp.init_controls($('.vp-sc-main'));
 
 		// shortcode image controls event bind
 		vp.custom_check_radio_event(".vp-sc-dialog", ".vp-checkimage .field .input label");
@@ -119,7 +119,7 @@
 			var $modal   = $(this).parents('.vp-sc-dialog'),
 			    $parent  = $(this).parent('li'),
 			    targetId = $(this).attr('href').substring(1),
-			    $target  = $modal.find('.vp-sc-menu-content-' + targetId);
+			    $target  = $modal.find('.vp-sc-sub-menu-' + targetId);
 
 			// set clicked menu item as current
 			$parent.siblings().removeClass('current');
@@ -133,12 +133,13 @@
 			return false;
 		});
 
-		$('.vp-sc-menu-item > a').bind('click.vp_sc', function(e){
+		$('.vp-sc-element .vp-sc-element-heading').unbind();
+		$('.vp-sc-element .vp-sc-element-heading a').bind('click.vp_sc', function(e){
 			e.preventDefault();
 
-			var $parent = $(this).parent('li'),
+			var $parent = $(this).parents('li'),
 			    id      = $parent.attr('id'),
-			    $form   = $parent.find('.vp-sc-form').first();
+			    $form   = $parent.find('.vp-sc-element-form').first();
 
 			if($parent.hasClass('active'))
 			{
@@ -151,8 +152,8 @@
 				var code   = $parent.find('.vp-sc-code').first().html(),
 				    $modal = $(this).parents('.vp-sc-dialog').first();
 
-				$modal.find('.vp-sc-menu-item').removeClass('active');
-				$modal.find('.vp-sc-form').vp_slideUp();
+				$modal.find('.vp-sc-element').removeClass('active');
+				$modal.find('.vp-sc-element-form').vp_slideUp();
 
 				if($form.exists())
 				{
@@ -171,8 +172,8 @@
 		$('.vp-sc-insert').bind('click.vp_sc_insert', function(e){
 			e.preventDefault();
 			var $modal  = $(this).parents('.vp-sc-dialog'),
-			    $parent = $(this).parents('.vp-sc-menu-item'),
-			    $form   = $(this).parents('.vp-sc-form'),
+			    $parent = $(this).parents('.vp-sc-element'),
+			    $form   = $(this).parents('.vp-sc-element-form'),
 			    $fields = $form.find('.vp-sc-field'),
 			    values  = {},
 			    code    = $parent.find('.vp-sc-code').first().html(),
@@ -215,7 +216,7 @@
 			$modal.trigger('vp_insert_shortcode', code);
 
 			// reset form and close dialog
-			$('.vp-sc-menu-item').removeClass('active');
+			$('.vp-sc-element').removeClass('active');
 			$form.vp_slideUp();
 			$form.scReset();
 			$modal.trigger('reveal:close');
@@ -223,8 +224,8 @@
 
 		$('.vp-sc-cancel').bind('click.vp_sc_cancel', function(e){
 			e.preventDefault();
-			$('.vp-sc-menu-item').removeClass('active');
-			var $form   = $(this).parents('.vp-sc-form')
+			$('.vp-sc-element').removeClass('active');
+			var $form   = $(this).parents('.vp-sc-element-form')
 			$form.vp_slideUp();
 			$form.scReset();
 		});

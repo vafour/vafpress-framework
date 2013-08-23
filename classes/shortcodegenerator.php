@@ -160,22 +160,24 @@ class VP_ShortcodeGenerator
 						<?php endif; ?>
 					<?php endforeach; ?>
 					</ul>
-					<div class="vp-sc-menu-content">
+					<div class="vp-sc-main">
 						<?php foreach ($this->template as $title => $menu): ?>
-							<?php if(reset($this->template) == $menu): ?>
-							<ul class="vp-sc-menu-content-<?php echo str_replace(' ', '_', $title); ?> current">
-							<?php else: ?>
-							<ul class="vp-hide vp-sc-menu-content-<?php echo str_replace(' ', '_', $title); ?>">
+							<?php if (reset($this->template) == $menu) : ?>
+							<ul class="current vp-sc-sub-menu-list vp-sc-sub-menu-<?php echo str_replace(' ', '_', $title); ?>">
+							<?php else : ?>
+							<ul class="vp-hide vp-sc-sub-menu-list vp-sc-sub-menu-<?php echo str_replace(' ', '_', $title); ?>">
 							<?php endif; ?>
 							<?php foreach ($menu['elements'] as $name => $element): ?>
-								<li class="vp-sc-menu-item<?php if(isset($element['attributes'])) echo ' has-menu'; ?>">
-									<a href="">
-										<?php echo $element['title']; ?>
-										<?php if(isset($element['attributes'])) echo '<i class="icon-arrow-down"></i>'; ?>
-									</a>
+								<li class="vp-sc-element postbox<?php if(isset($element['attributes'])) echo ' has-options'; ?>">
+									<h3 class="hndle vp-sc-element-heading">
+										<a href="#">
+											<?php echo $element['title']; ?>
+											<?php if(isset($element['attributes'])) echo '<i class="icon-arrow-down"></i>'; ?>
+										</a>
+									</h3>
 									<div class="hidden vp-sc-code"><?php echo htmlentities($element['code']); ?></div>
 									<?php if(isset($element['attributes'])): ?>
-									<form class="vp-sc-form vp-hide">
+									<form class="vp-sc-element-form vp-hide inside">
 										<?php echo $this->print_form($element['attributes']); ?>
 									</form>
 									<?php endif; ?>
@@ -265,7 +267,7 @@ class VP_ShortcodeGenerator
 			<style type="text/css">
 				<?php foreach (self::$pool as $sg): ?>
 				#qt_content_<?php echo $sg->name; ?>{
-					background: url('<?php echo $sg->sprite_image; ?>') 0 -20px no-repeat !important;
+					background: url('<?php echo $sg->sprite_image; ?>') 2px -21px no-repeat !important;
 					text-indent: -999px;
 				}
 				span.mce_<?php echo $sg->name; ?>{

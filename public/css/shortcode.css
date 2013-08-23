@@ -12,7 +12,7 @@
 }
 .vp-sc-scroll-container {
 	height: 300px;
-	overflow: auto;
+	overflow-y: scroll;
 }
 .vp-sc-wrapper a {
 	text-decoration: none;
@@ -26,61 +26,62 @@
 .vp-sc-wrapper .vp-sc-menu {
 	display: table-cell;
 	vertical-align: top;
-	width: 20%;
-	border-right: 1px solid #eeeeee;
+	width: 150px;
+	border-right: 1px solid #dfdfdf;
+}
+.vp-sc-wrapper .vp-sc-menu li {
+	margin: 0;
 }
 .vp-sc-wrapper .vp-sc-menu a {
+	font-weight: bold;
 	display: block;
 	border-color: transparent;
 	border-width: 1px;
 	border-style: solid;
-	border-radius: 3px;
+	border-radius: 3px 0 0 3px;
 	margin-right: -1px;
-	padding: 5px 20px;
+	padding: 7px 10px;
 }
 .vp-sc-wrapper .vp-sc-menu .current a {
-	border-color: #eeeeee;
+	border-color: #dfdfdf;
 	border-right-color: #ffffff;
 }
-.vp-sc-wrapper .vp-sc-menu-content {
+.vp-sc-wrapper .vp-sc-main {
 	display: table-cell;
 	padding-left: 20px;
+	padding-right: 10px;
 	vertical-align: top;
-	width: 80%;
+	width: 100%;
 }
-.vp-sc-wrapper .vp-sc-menu-content > ul {
+.vp-sc-wrapper .vp-sc-main .vp-sc-sub-menu-list {
 	margin: 0;
 }
-.vp-sc-wrapper .vp-sc-menu-content > ul > li {
+.vp-sc-wrapper .vp-sc-main .vp-sc-element {
 	margin-bottom: 10px;
 }
-.vp-sc-wrapper .vp-sc-menu-content > ul > li > a {
-	border: 1px solid #eeeeee;
-	border-radius: 3px;
-	background-color: #f9f9f9;
+.vp-sc-wrapper .vp-sc-main .vp-sc-element-heading {
+	cursor: default;
+	margin: 0;
+}
+.vp-sc-wrapper .vp-sc-main .vp-sc-element-heading a {
+	color: inherit;
+	font-weight: bold;
 	display: block;
-	padding: 5px 10px;
+	padding: 8px 10px;
+	font-size: 12px;
 }
-.vp-sc-wrapper .vp-sc-menu-content > ul > li > a > i {
+.vp-sc-wrapper .vp-sc-main .vp-sc-element-heading a i {
 	float: right;
-	line-height: 1.4em;
-}
-.vp-sc-wrapper .vp-sc-menu-content > ul > li > a:hover {
-	background-color: #f3f3f3;
-}
-.vp-sc-wrapper form {
-	border-color: #eeeeee;
-	border-radius: 0 0 3px 3px;
-	border-width: 0 1px 1px 1px;
-	border-style: solid;
-	margin-top: -3px;
+	opacity: 0.2;
 }
 .vp-sc-wrapper .vp-sc-fields {
-	padding: 15px;
+	border-bottom: 1px solid #dfdfdf;
+	padding-bottom: 15px;
 }
 .vp-sc-wrapper .vp-sc-action {
-	padding: 15px;
-	background-color: #f9f9f9;
+	border-top: 1px solid #fff;
+	padding-top: 15px;
+	text-align: right;
 }
 .vp-sc-wrapper .vp-sc-field {
 	display: table;
