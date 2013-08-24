@@ -31,7 +31,9 @@ function vp_get_users()
 
 function vp_get_posts()
 {
-	$wp_posts = get_posts();
+	$wp_posts = get_posts(array(
+		'posts_per_page' => -1,
+	));
 
 	$result = array();
 	foreach ($wp_posts as $post)
