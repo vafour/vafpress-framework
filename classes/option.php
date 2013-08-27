@@ -109,14 +109,35 @@ class VP_Option
 	// register menu page as configured
 	public function register_menu_page()
 	{
-		$hook_suffix = add_submenu_page(
-			$this->get_menu_page(),
-			$this->get_page_title(),
-			$this->get_menu_label(),
-			$this->get_minimum_role(),
-			$this->get_page_slug(),
-			array($this, 'option_page_display')
-		);
+		if( is_array( $this->get_menu_page() ) )
+		{
+			$menu_page = $this->get_menu_page();
+
+			// check and set required configs
+			if(!isset($menu_page['icon_url'])) $menu_page['icon_url'] = '';
+			if(!isset($menu_page['position'])) $menu_page['position'] = null;
+
+			$hook_suffix = add_menu_page(
+				$this->get_page_title(),
+				$this->get_menu_label(),
+				$this->get_minimum_role(),
+				$this->get_page_slug(),
+				array($this, 'option_page_display'),
+				$menu_page['icon_url'],
+				$menu_page['position']
+			);
+		}
+		else
+		{
+			$hook_suffix = add_submenu_page(
+				$this->get_menu_page(),
+				$this->get_page_title(),
+				$this->get_menu_label(),
+				$this->get_minimum_role(),
+				$this->get_page_slug(),
+				array($this, 'option_page_display')
+			);
+		}
 		$this->set_hook_suffix($hook_suffix);
 
 		// register option page load
