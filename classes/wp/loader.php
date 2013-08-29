@@ -15,6 +15,8 @@ class VP_WP_Loader
 
 	private $_styles;
 
+	private $_dependencies;
+
 	private $_use_media_upload = false;
 
 	private $_use_wp_35_media_upload = false;
@@ -31,17 +33,19 @@ class VP_WP_Loader
 	}
 
 	public function __construct()
-	{}
+	{
+		$this->_dependencies = apply_filters( 'vp_dependencies_array', VP_Util_Config::instance()->load('dependencies') );
+	}
 
 	public function build()
 	{
 
 		// get scripts and styles dependencies configs
-		$req_scripts = VP_Util_Config::instance()->load('dependencies', 'scripts.always');
-		$req_styles  = VP_Util_Config::instance()->load('dependencies', 'styles.always');
-		$scripts     = VP_Util_Config::instance()->load('dependencies', 'scripts.paths');
-		$styles      = VP_Util_Config::instance()->load('dependencies', 'styles.paths');
-		$rules       = VP_Util_Config::instance()->load('dependencies', 'rules');
+		$req_scripts = $this->_dependencies['scripts']['always'];
+		$req_styles  = $this->_dependencies['styles']['always'];
+		$scripts     = $this->_dependencies['scripts']['paths'];
+		$styles      = $this->_dependencies['styles']['paths'];
+		$rules       = $this->_dependencies['rules'];
 
 		// for all types build required scripts and styles array
 		foreach ($this->_types as $type)
@@ -89,7 +93,6 @@ class VP_WP_Loader
 		{
 			// build main js localize
 			$localize = array();
-			// var_dump($js);
 			foreach ($js['local_data'] as $datum)
 			{
 				if(array_key_exists($datum, $this->_localize))
@@ -139,13 +142,21 @@ class VP_WP_Loader
 	{
 		$messages = VP_Util_Config::instance()->load('messages');
 		$localize = array(
-			'use_upload'           => $this->_use_media_upload,
-			'use_new_media_upload' => $this->_use_wp_35_media_upload,
-			'public_url'           => VP_PUBLIC_URL,
-			'wp_include_url'       => includes_url(),
-			'nonce'                => wp_create_nonce( 'vafpress' ),
-			'val_msg'              => $messages['validation'],
-			'util_msg'             => $messages['util'],
+			'use_upload'               => $this->_use_media_upload,
+			'use_new_media_upload'     => $this->_use_wp_35_media_upload,
+			'public_url'               => VP_PUBLIC_URL,
+			'wp_include_url'           => includes_url(),
+			'nonce'                    => wp_create_nonce( 'vafpress' ),
+			'val_msg'                  => $messages['validation'],
+			'util_msg'                 => $messages['util'],
+			// validatable data
+			'alphabet_validatable'     => apply_filters( 'vp_alphabet_validatable'    , array( 'vp-textbox', 'vp-textarea' ) ),
+			'alphanumeric_validatable' => apply_filters( 'vp_alphanumeric_validatable', array( 'vp-textbox', 'vp-textarea' ) ),
+			'numeric_validatable'      => apply_filters( 'vp_numeric_validatable'     , array( 'vp-textbox', 'vp-textarea' ) ),
+			'email_validatable'        => apply_filters( 'vp_email_validatable'       , array( 'vp-textbox', 'vp-textarea' ) ),
+			'url_validatable'          => apply_filters( 'vp_url_validatable'         , array( 'vp-textbox', 'vp-textarea' ) ),
+			'maxlength_validatable'    => apply_filters( 'vp_maxlength_validatable'   , array( 'vp-toggle', 'vp-radiobutton', 'vp-radioimage', 'vp-select' ) ),
+			'minlength_validatable'    => apply_filters( 'vp_minlength_validatable'   , array( 'vp-toggle', 'vp-radiobutton', 'vp-radioimage', 'vp-select' ) ),
 		);
 		$this->_localize = array_merge($this->_localize, $localize);
 	}
@@ -154,7 +165,7 @@ class VP_WP_Loader
 	{
 		global $wp_scripts;
 
-		$scripts = VP_Util_Config::instance()->load('dependencies', 'scripts.paths');
+		$scripts = $this->_dependencies['scripts']['paths'];
 
 		if( isset($scripts[$name]) )
 		{
@@ -205,7 +216,7 @@ class VP_WP_Loader
 
 	private function css_unit_register($name, $extra_deps = null)
 	{
-		$styles = VP_Util_Config::instance()->load('dependencies', 'styles.paths');
+		$styles = $this->_dependencies['styles']['paths'];
 
 		if( isset($styles[$name]) )
 		{
@@ -279,7 +290,7 @@ class VP_WP_Loader
 		if( is_string($css) )
 		{
 			$css_name = $css;
-			$deps     = VP_Util_Config::instance()->load('dependencies', 'styles.paths');
+			$deps     = $this->_dependencies['styles']['paths'];
 			$css      = $deps[$css_name];
 		}
 		else
@@ -300,7 +311,7 @@ class VP_WP_Loader
 		if( is_string($js) )
 		{
 			$js_name = $js;
-			$deps    = VP_Util_Config::instance()->load('dependencies', 'scripts.paths');
+			$deps    = $this->_dependencies['scripts']['paths'];
 			$js      = $deps[$js_name];
 		}
 		else

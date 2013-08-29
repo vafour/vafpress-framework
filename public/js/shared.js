@@ -314,14 +314,14 @@ vp.thejqname = function(name, thecase) {
 
 vp.validateAlphabet = function(type, val) {
 	// ignore array and empty string, since they should be handled by 'required' rule
-	if (val === '' || jQuery.isArray(val) || jQuery.inArray(type, ['vp-textbox', 'vp-textarea']) == -1) { return true; }
+	if (val === '' || jQuery.isArray(val) || jQuery.inArray(type, vp_wp.alphabet_validatable) == -1) { return true; }
 	var regex = new RegExp(/^[A-Z\s]+$/i);
 	return regex.test(val);
 };
 
 vp.validateAlphaNumeric = function(type, val) {
 	// ignore array and empty string, since they should be handled by 'required' rule
-	if (val === '' || jQuery.isArray(val) || jQuery.inArray(type, ['vp-textbox', 'vp-textarea']) == -1) { return true; }
+	if (val === '' || jQuery.isArray(val) || jQuery.inArray(type, vp_wp.alphanumeric_validatable) == -1) { return true; }
 
 	var regex = new RegExp(/^[A-Z0-9]+$/i);
 	return regex.test(val);
@@ -329,7 +329,7 @@ vp.validateAlphaNumeric = function(type, val) {
 
 vp.validateNumeric = function(type, val) {
 	// ignore array and empty string, since they should be handled by 'required' rule
-	if (val === '' || jQuery.isArray(val) || jQuery.inArray(type, ['vp-textbox', 'vp-textarea']) == -1) { return true; }
+	if (val === '' || jQuery.isArray(val) || jQuery.inArray(type, vp_wp.numeric_validatable) == -1) { return true; }
 
 	var regex = new RegExp(/^[-+]?[0-9]*\.?[0-9]+$/);
 	return regex.test(val);
@@ -337,7 +337,7 @@ vp.validateNumeric = function(type, val) {
 
 vp.validateEmail = function(type, val) {
 	// ignore array and empty string, since they should be handled by 'required' rule
-	if (val === '' || jQuery.isArray(val) || jQuery.inArray(type, ['vp-textbox', 'vp-textarea']) == -1) { return true; }
+	if (val === '' || jQuery.isArray(val) || jQuery.inArray(type, vp_wp.email_validatable) == -1) { return true; }
 
 	var regex = new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i);
 	return regex.test(val);
@@ -345,7 +345,7 @@ vp.validateEmail = function(type, val) {
 
 vp.validateURL = function(type, val) {
 	// ignore array and empty string, since they should be handled by 'required' rule
-	if (val === '' || jQuery.isArray(val) || jQuery.inArray(type, ['vp-textbox', 'vp-textarea']) == -1) { return true; }
+	if (val === '' || jQuery.isArray(val) || jQuery.inArray(type, vp_wp.url_validatable) == -1) { return true; }
 
 	var regex = new RegExp(/^(ftp|http|https):\/\/[^ "]+$/i);
 	return regex.test(val);
@@ -353,14 +353,14 @@ vp.validateURL = function(type, val) {
 
 vp.validateMaxLength = function(type, val, n) {
 	// ignore array
-	if (jQuery.inArray(type, ['vp-toggle', 'vp-radiobutton', 'vp-radioimage', 'vp-select']) != -1) { return true; }
+	if (jQuery.inArray(type, vp_wp.maxlength_validatable) != -1) { return true; }
 
 	return (val.length <= n) ? true : false;
 };
 
 vp.validateMinLength = function(type, val, n) {
 	// ignore array
-	if (jQuery.inArray(type, ['vp-toggle', 'vp-radiobutton', 'vp-radioimage', 'vp-select']) != -1) { return true; }
+	if (jQuery.inArray(type, vp_wp.minlength_validatable) != -1) { return true; }
 
 	return (val.length >= n) ? true : false;
 };

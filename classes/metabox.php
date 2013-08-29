@@ -35,16 +35,21 @@ class VP_Metabox extends WPAlchemy_MetaBox
 			$this->title = __('[Dev Mode] ', 'vp_textdomain') . $this->title;
 		}
 
-		if ($this->can_output())
+		if ($this->can_output() and VP_WP_Admin::is_post_or_page() )
 		{
 			// make sure metabox template loaded
 			if( !is_array($this->template) and file_exists($this->template) )
 				$this->template = include $this->template;
-			$loader = VP_WP_Loader::instance();
-			$loader->add_types( $this->get_field_types() );
+			add_action( 'init', array( $this, 'register_fields' ) );
 		}
 
 		self::$pool[$this->id] = $this;
+	}
+
+	public function register_fields()
+	{
+		$loader = VP_WP_Loader::instance();
+		$loader->add_types( $this->get_field_types() );
 	}
 
 	public static function get_pool()

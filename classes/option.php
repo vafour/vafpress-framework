@@ -148,7 +148,7 @@ class VP_Option
 	{
 		$this->init_options_set();
 		$this->init_options();
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_and_styles' ) );
+		$this->enqueue_scripts_and_styles();
 	}
 
 	public function enqueue_scripts_and_styles()
@@ -161,7 +161,6 @@ class VP_Option
 		$opt_loader->add_js_data( 'vp-option', 'custom_local.SAVE_SUCCESS', VP_Option_Control_Set::SAVE_SUCCESS );
 		$opt_loader->add_js_data( 'vp-option', 'custom_local.SAVE_NOCHANGES', VP_Option_Control_Set::SAVE_NOCHANGES );
 		$opt_loader->add_js_data( 'vp-option', 'custom_local.SAVE_FAILED', VP_Option_Control_Set::SAVE_FAILED );
-		$opt_loader->build();
 	}
 
 	function vp_ajax_save()
