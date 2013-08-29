@@ -149,6 +149,7 @@ class VP_WP_Loader
 			'nonce'                    => wp_create_nonce( 'vafpress' ),
 			'val_msg'                  => $messages['validation'],
 			'util_msg'                 => $messages['util'],
+			'ctrl_msg'                 => $messages['control'],
 			// validatable data
 			'alphabet_validatable'     => apply_filters( 'vp_alphabet_validatable'    , array( 'vp-textbox', 'vp-textarea' ) ),
 			'alphanumeric_validatable' => apply_filters( 'vp_alphanumeric_validatable', array( 'vp-textbox', 'vp-textarea' ) ),

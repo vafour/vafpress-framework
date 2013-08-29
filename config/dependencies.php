@@ -97,20 +97,20 @@ return array(
 				'override' => true,
 			),
 			'shared' => array(
-				'path'     => VP_PUBLIC_URL . '/js/shared.js',
+				'path'     => VP_PUBLIC_URL . '/js/shared.min.js',
 				'deps'     => array(),
 				'ver'      => '1.1',
 				'localize' => array(
 					'name' => 'vp_wp',
 					'keys' => array(
-						'use_upload', 'use_new_media_upload', 'public_url', 'wp_include_url', 'val_msg',
-						'alphabet_validatable', 'alphanumeric_validatable', 'numeric_validatable',
-						'email_validatable', 'url_validatable', 'maxlength_validatable', 'minlength_validatable'
+						'use_upload', 'use_new_media_upload', 'public_url', 'wp_include_url', 'val_msg', 'ctrl_msg',
+						'alphabet_validatable', 'alphanumeric_validatable', 'numeric_validatable', 'email_validatable',
+						'url_validatable', 'maxlength_validatable', 'minlength_validatable'
 					)
 				)
 			),
 			'vp-option' => array(
-				'path'     => VP_PUBLIC_URL . '/js/option.js',
+				'path'     => VP_PUBLIC_URL . '/js/option.min.js',
 				'deps'     => array(),
 				'ver'      => '2.0',
 				'localize' => array(

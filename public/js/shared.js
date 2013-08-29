@@ -1081,7 +1081,7 @@ vp.init_fontawesome_chooser = function($elements)
 			formatSelection: format,
 			escapeMarkup: function(m) { return m; },
 			allowClear: true,
-			placeholder: "Select an icon"
+			placeholder: vp_wp.ctrl_msg.fac_placeholder
 		});
 	}
 };
@@ -1093,7 +1093,7 @@ vp.init_select2 = function($elements)
 	{
 		if($elements.length <= 0)
 			return;
-		$elements.select2({allowClear: true, placeholder: "Select option(s)"});
+		$elements.select2({allowClear: true, placeholder: vp_wp.ctrl_msg.select2_placeholder});
 	}
 };
 

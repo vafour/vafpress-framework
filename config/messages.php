@@ -35,6 +35,16 @@ return array(
 		'restore_failed'    => __('Restore failed', 'vp_textdomain'),
 	),
 
+	/**
+	 * Control Fields String
+	 */
+	'control' => array(
+		// select2 select box
+		'select2_placeholder' => __('Select option(s)', 'vp_textdomain'),
+		// fontawesome chooser
+		'fac_placeholder'     => __('Select an Icon', 'vp_textdomain'),
+	),
+
 );
 
 /**
