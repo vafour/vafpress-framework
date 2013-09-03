@@ -305,15 +305,12 @@
 			switch(response.code)
 			{
 				case parseInt(vp_opt.SAVE_SUCCESS):
-					console.log('test');
 					$status.html(vp_opt.util_msg.restore_success);
 					break;
 				case parseInt(vp_opt.SAVE_NOCHANGES):
-					console.log('test2');
 					$status.html(vp_opt.util_msg.restore_nochanges);	
 					break;
 				case parseInt(vp_opt.SAVE_FAILED):
-					console.log('test3');
 					$status.html(vp_opt.util_msg.restore_failed + ': ' + response.message);
 					break;
 			}

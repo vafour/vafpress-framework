@@ -131,6 +131,9 @@ class VP_WP_Loader
 			wp_register_style($name, $css['path'], $req_styles);
 			wp_enqueue_style($name);
 		}
+
+		do_action( 'vp_after_dependencies_loader_build' );
+
 	}
 
 	public function add_localize_data($key, $value)

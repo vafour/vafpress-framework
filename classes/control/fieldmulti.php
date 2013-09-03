@@ -19,6 +19,7 @@ abstract class VP_Control_FieldMulti extends VP_Control_Field
 	{
 		parent::_basic_make($arr);
 
+
 		if (!empty($arr['items']))
 		{
 			if(isset($arr['items']['data']) and is_array($arr['items']['data']))
@@ -27,14 +28,11 @@ abstract class VP_Control_FieldMulti extends VP_Control_Field
 				{
 					if($data['source'] == 'function')
 					{
-						$function = $data['value'];
-						$params   = explode(',', !empty($data['params']) ? $data['params'] : '');
+						$function     = $data['value'];
+						$params       = explode(',', !empty($data['params']) ? $data['params'] : '');
 
-						if(function_exists($function))
-						{
-							$items = call_user_func_array($function, $params);
-							$arr['items'] = array_merge($arr['items'], $items);
-						}
+						$items        = call_user_func_array($function, $params);
+						$arr['items'] = array_merge($arr['items'], $items);
 					}
 					else if($data['source'] == 'binding')
 					{

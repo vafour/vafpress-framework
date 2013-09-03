@@ -149,6 +149,14 @@ class VP_Option
 		$this->init_options_set();
 		$this->init_options();
 		$this->enqueue_scripts_and_styles();
+		// show dev mode notice
+		if( $this->is_dev_mode() )
+			add_action( 'admin_notices', array( $this, 'dev_mode_notice' ) );
+	}
+
+	public function dev_mode_notice()
+	{
+		VP_WP_Util::admin_notice(__("Development Mode is Active, options' values won't be saved into database.", 'vp_textdomain'), false);
 	}
 
 	public function enqueue_scripts_and_styles()
