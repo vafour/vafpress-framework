@@ -40,7 +40,7 @@ class VP_Util_Reflection
 
 	public static function field_type_from_class($class)
 	{
-		$prefix = array('VP_Control_Field_', 'VP_Option_Control_Field_');
+		$prefix = apply_filters('vp_field_type_from_class_prefix', array('VP_Control_Field_', 'VP_Option_Control_Field_'));
 		return strtolower(str_replace($prefix, '', $class));
 	}
 
@@ -52,6 +52,8 @@ class VP_Util_Reflection
 		// special case
 		if($type === 'impexp')
 			$prefix = 'VP_Option_Control_Field_';
+
+		$prefix = apply_filters( 'vp_field_class_from_type_prefix', $prefix, $type );
 			
 		$class = $prefix . $type;
 		return $class;

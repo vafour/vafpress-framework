@@ -50,9 +50,9 @@ class VP_Option
 
 		// check and set required configs
 		if(isset($option_key)) $this->set_option_key($option_key);
-		else throw new Exception(__( 'Option Key is required.', 'vp_textdomain' ), 1);
+		else throw new Exception(__( 'Option Key is required', 'vp_textdomain' ), 1);
 		if(isset($template)) $this->set_template($template);
-		else throw new Exception(__( 'Template Array/File is required.', 'vp_textdomain' ), 1);
+		else throw new Exception(__( 'Template Array/File is required', 'vp_textdomain' ), 1);
 		if(isset($page_slug)) $this->set_page_slug($page_slug);
 		else throw new Exception(__( 'Page Slug is required', 'vp_textdomain' ), 1);
 		
@@ -148,7 +148,7 @@ class VP_Option
 	{
 		$this->init_options_set();
 		$this->init_options();
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_and_styles' ) );
+		$this->enqueue_scripts_and_styles();
 	}
 
 	public function enqueue_scripts_and_styles()
@@ -161,7 +161,6 @@ class VP_Option
 		$opt_loader->add_js_data( 'vp-option', 'custom_local.SAVE_SUCCESS', VP_Option_Control_Set::SAVE_SUCCESS );
 		$opt_loader->add_js_data( 'vp-option', 'custom_local.SAVE_NOCHANGES', VP_Option_Control_Set::SAVE_NOCHANGES );
 		$opt_loader->add_js_data( 'vp-option', 'custom_local.SAVE_FAILED', VP_Option_Control_Set::SAVE_FAILED );
-		$opt_loader->build();
 	}
 
 	function vp_ajax_save()
@@ -257,7 +256,7 @@ class VP_Option
 			if(empty($option))
 			{
 				$result['status']  = false;
-				$result['message'] = __("Can't be empty.", 'vp_textdomain');
+				$result['message'] = __("Can not be empty", 'vp_textdomain');
 			}
 			else
 			{
@@ -272,7 +271,7 @@ class VP_Option
 				else
 				{
 					$result['status']  = false;
-					$result['message'] = __("Invalid data.", 'vp_textdomain');
+					$result['message'] = __("Invalid data", 'vp_textdomain');
 				}
 			}
 		}
@@ -294,7 +293,7 @@ class VP_Option
 
 			$result = array(
 				'status' => true,
-				'message'=> __("Success", 'vp_textdomain'),
+				'message'=> __("Successful", 'vp_textdomain'),
 				'option' => $db_options,
 			);
 		}
@@ -312,7 +311,7 @@ class VP_Option
 		if($verify)
 		{
 			$result['status']  = true;
-			$result['message'] = __("Success", 'vp_textdomain');	
+			$result['message'] = __("Successful", 'vp_textdomain');	
 		}
 		else
 		{

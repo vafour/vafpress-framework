@@ -32,19 +32,24 @@ class VP_Metabox extends WPAlchemy_MetaBox
 		// Modify title in dev mode
 		if( $this->is_dev_mode )
 		{
-			$this->title = __('[Dev Mode] ', 'vp_textdomain') . $this->title;
+			$this->title = __('[Development Mode] ', 'vp_textdomain') . $this->title;
 		}
 
-		if ($this->can_output())
+		if ($this->can_output() and VP_WP_Admin::is_post_or_page() )
 		{
 			// make sure metabox template loaded
 			if( !is_array($this->template) and file_exists($this->template) )
 				$this->template = include $this->template;
-			$loader = VP_WP_Loader::instance();
-			$loader->add_types( $this->get_field_types() );
+			add_action( 'init', array( $this, 'register_fields' ) );
 		}
 
 		self::$pool[$this->id] = $this;
+	}
+
+	public function register_fields()
+	{
+		$loader = VP_WP_Loader::instance();
+		$loader->add_types( $this->get_field_types() );
 	}
 
 	public static function get_pool()
@@ -537,7 +542,7 @@ class VP_Metabox extends WPAlchemy_MetaBox
 			if ($g === reset($group['groups'])){ $is_first = true; $class = ' first';}
 
 			$html .= '<div id="'. $g['name'] .'" class="vp-wpa-group wpa_group wpa_group-' . $name . $class . '">';
-			$html .= '<div class="vp-wpa-group-heading"><a href="#" class="vp-wpa-group-title">' . $icon . $group['title'] . '</a><a href="#" class="dodelete vp-wpa-group-remove" title="Remove"><i class="icon-remove"></i> Remove</a></div>';
+			$html .= '<div class="vp-wpa-group-heading"><a href="#" class="vp-wpa-group-title">' . $icon . $group['title'] . '</a><a href="#" class="dodelete vp-wpa-group-remove" title="'. __('Remove', 'vp_textdomain') .'"><i class="icon-remove"></i> '. __('Remove', 'vp_textdomain') .'</a></div>';
 			$html .= '<div class="vp-controls' . ((!$is_first) ? ' vp-hide' : '') . '">';
 			if ($g === end($group['groups']))
 			{
@@ -559,7 +564,7 @@ class VP_Metabox extends WPAlchemy_MetaBox
 		}
 
 		$html .= '<div class="vp-wpa-group-add">';
-		$html .= '<a href="#" class="button button-large docopy-' . $name . '">Add More ' . $group['title'] . '</a>';
+		$html .= '<a href="#" class="button button-large docopy-' . $name . '">'. __('Add More', 'vp_textdomain') . ' ' . $group['title'] . '</a>';
 		$html .= '</div>';
 
 		$html .= '</div>';

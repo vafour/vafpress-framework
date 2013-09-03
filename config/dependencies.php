@@ -103,7 +103,9 @@ return array(
 				'localize' => array(
 					'name' => 'vp_wp',
 					'keys' => array(
-						'use_upload', 'use_new_media_upload', 'public_url', 'wp_include_url', 'val_msg'
+						'use_upload', 'use_new_media_upload', 'public_url', 'wp_include_url', 'val_msg', 'ctrl_msg',
+						'alphabet_validatable', 'alphanumeric_validatable', 'numeric_validatable', 'email_validatable',
+						'url_validatable', 'maxlength_validatable', 'minlength_validatable'
 					)
 				)
 			),

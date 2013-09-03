@@ -30,6 +30,9 @@ foreach (glob(VP_DATA_DIR . "/*.php") as $datasource)
 	require_once($datasource);
 }
 
+//////////////////////////
+// TGMPA Unsetting      //
+//////////////////////////
 add_action('after_setup_theme', 'vp_tgm_ac_check');
 
 if( !function_exists('vp_tgm_ac_check') )
@@ -57,7 +60,9 @@ if( !function_exists('vp_tgm_ac_vafpress_check') )
 	}
 }
 
-// ajax definition
+//////////////////////////
+// Ajax Definition      //
+//////////////////////////
 add_action('wp_ajax_vp_ajax_wrapper', 'vp_ajax_wrapper');
 
 if( !function_exists('vp_ajax_wrapper') )
@@ -73,7 +78,7 @@ if( !function_exists('vp_ajax_wrapper') )
 		try {
 			$result['data']    = call_user_func_array($function, $params);
 			$result['status']  = true;
-			$result['message'] = __("Success", 'vp_textdomain');
+			$result['message'] = __("Successful", 'vp_textdomain');
 		} catch (Exception $e) {
 			$result['data']    = '';
 			$result['status']  = false;
@@ -87,8 +92,12 @@ if( !function_exists('vp_ajax_wrapper') )
 	}
 }
 
-add_action( 'admin_enqueue_scripts', 'vp_metabox_enqueue' );
-add_action( 'admin_enqueue_scripts', 'vp_sg_enqueue' );
+/////////////////////////////////
+// Pool and Dependencies Init  //
+/////////////////////////////////
+add_action( 'init'                 , 'vp_metabox_enqueue' );
+add_action( 'init'                 , 'vp_sg_enqueue' );
+add_action( 'admin_enqueue_scripts', 'vp_enqueue_scripts' );
 add_action( 'current_screen'       , 'vp_sg_init_buttons' );
 
 if( !function_exists('vp_metabox_enqueue') )
@@ -100,7 +109,6 @@ if( !function_exists('vp_metabox_enqueue') )
 			$loader = VP_WP_Loader::instance();
 			$loader->add_main_js( 'vp-metabox' );
 			$loader->add_main_css( 'vp-metabox' );
-			$loader->build();
 		}
 	}
 }
@@ -120,7 +128,6 @@ if( !function_exists('vp_sg_enqueue') )
 			$loader = VP_WP_Loader::instance();
 			$loader->add_main_js( 'vp-shortcode' );
 			$loader->add_main_css( 'vp-shortcode' );
-			$loader->build();
 		}
 	}
 }
@@ -133,6 +140,15 @@ if( !function_exists('vp_sg_init_buttons') )
 		{
 			VP_ShortcodeGenerator::init_buttons();
 		}
+	}
+}
+
+if( !function_exists('vp_enqueue_scripts') )
+{
+	function vp_enqueue_scripts()
+	{
+		$loader = VP_WP_Loader::instance();
+		$loader->build();
 	}
 }
 
