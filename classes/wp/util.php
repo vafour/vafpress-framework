@@ -10,7 +10,10 @@ class VP_WP_Util
 				'href' => true,
 				'rel'  => true,
 				'type' => true,
-			)
+			),
+			'style' => array(
+				'type' => true,
+			),
 		));
 		return wp_kses($html, $allow);
 	}

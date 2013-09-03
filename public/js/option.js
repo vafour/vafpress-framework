@@ -207,7 +207,7 @@
 	// Ajax Saving
 	$('.vp-js-option-form').bind('submit', function(e) {
 		e.preventDefault();
-
+		
 		// update tinyMCE textarea content
 		vp.tinyMCE_save();
 

@@ -322,6 +322,19 @@ class VP_ShortcodeGenerator
 		return $buttons;
 	}
 
+	public function get_shortcode_tags() {
+		$shortcodes = $this->template;
+		$tags = array();
+		foreach ($shortcodes as $menu) {
+			foreach ($menu['elements'] as $sc) {
+				$code = $sc['code'];
+				preg_match('/\[(\w+).*\]/', $code, $matches);
+				$tags[] = $matches[1];
+			}
+		}
+		return $tags;
+	}
+
 }
 
 /**

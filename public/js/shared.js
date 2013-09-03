@@ -507,7 +507,11 @@ vp.binding_action =	function(ids, field, func, thecase) {
 
 	for (var i = 0; i < ids.length; i++)
 	{
-		values.push(jQuery(vp.thejqname(ids[i], thecase)).validationVal());
+		var val = jQuery(vp.thejqname(ids[i], thecase)).validationVal();
+		if (jQuery.isArray(val) && val.length == 0) {
+			val = null;
+		}
+		values.push(val);
 	}
 
 	var data = {
@@ -1028,6 +1032,7 @@ vp.init_colorpicker = function($elements)
 				$colorpicker.prev('label').find('span').css('background-color', color);
 			}).on('blur', function(ev){
 				$colorpicker.prev('label').find('span').css('background-color', $colorpicker.val());
+				$colorpicker.keypress().keyup();
 			});
 		});
 	}

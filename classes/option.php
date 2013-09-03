@@ -50,9 +50,9 @@ class VP_Option
 
 		// check and set required configs
 		if(isset($option_key)) $this->set_option_key($option_key);
-		else throw new Exception(__( 'Option Key is required.', 'vp_textdomain' ), 1);
+		else throw new Exception(__( 'Option Key is required', 'vp_textdomain' ), 1);
 		if(isset($template)) $this->set_template($template);
-		else throw new Exception(__( 'Template Array/File is required.', 'vp_textdomain' ), 1);
+		else throw new Exception(__( 'Template Array/File is required', 'vp_textdomain' ), 1);
 		if(isset($page_slug)) $this->set_page_slug($page_slug);
 		else throw new Exception(__( 'Page Slug is required', 'vp_textdomain' ), 1);
 		
@@ -205,6 +205,9 @@ class VP_Option
 
 			// after ajax save action hook
 			do_action('vp_option_after_ajax_save', $opt, $result['status'], $this->get_option_key());
+
+			// option key specific after ajax save action hook
+			do_action('vp_option_after_ajax_save-' . $this->get_option_key(), $opt, $result['status']);
 		}
 
 		if (ob_get_length()) ob_clean();
@@ -261,7 +264,7 @@ class VP_Option
 			if(empty($option))
 			{
 				$result['status']  = false;
-				$result['message'] = __("Can't be empty.", 'vp_textdomain');
+				$result['message'] = __("Can not be empty", 'vp_textdomain');
 			}
 			else
 			{
@@ -276,7 +279,7 @@ class VP_Option
 				else
 				{
 					$result['status']  = false;
-					$result['message'] = __("Invalid data.", 'vp_textdomain');
+					$result['message'] = __("Invalid data", 'vp_textdomain');
 				}
 			}
 		}
@@ -298,7 +301,7 @@ class VP_Option
 
 			$result = array(
 				'status' => true,
-				'message'=> __("Success", 'vp_textdomain'),
+				'message'=> __("Successful", 'vp_textdomain'),
 				'option' => $db_options,
 			);
 		}
@@ -316,7 +319,7 @@ class VP_Option
 		if($verify)
 		{
 			$result['status']  = true;
-			$result['message'] = __("Success", 'vp_textdomain');	
+			$result['message'] = __("Successful", 'vp_textdomain');	
 		}
 		else
 		{
