@@ -63,7 +63,7 @@
 				</div>
 			</div>
 			<div class="vp-right-panel">
-				<form id="vp-option-form" class="vp-option-form vp-js-option-form">
+				<form id="vp-option-form" class="vp-option-form vp-js-option-form" method="POST">
 					<div id="vp-submit-top" class="vp-submit top">
 						<div class="inner">
 							<input class="vp-save vp-button button button-primary" type="submit" value="<?php _e('Save Changes', 'vp_textdomain'); ?>" />

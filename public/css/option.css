@@ -78,6 +78,7 @@
 }
 .vp-wrap .vp-right-panel {
 	border-radius: 0 4px 4px 0;
+	padding: 51px 0;
 	display: table-cell;
 	position: relative;
 }
@@ -194,11 +195,17 @@
 }
 /* Submit
  * ==================================================== */
+.vp-wrap .vp-submit {
+	position: absolute;
+	width: 100%;
+}
 .vp-wrap .vp-submit.top {
 	border-bottom: 1px solid #dddddd;
+	top: 0;
 }
 .vp-wrap .vp-submit.bottom {
 	border-top: 1px solid #dddddd;
+	bottom: 0;
 }
 .vp-wrap .vp-submit .inner {
 	overflow: hidden;
@@ -245,13 +252,13 @@
 	top: -9999px !important;
 	left: -9999px !important;
 }
-.vp-wrap .vp-panel h2 {
+.vp-wrap .vp-panel > h2 {
 	background-color: #f9f9f9;
 	margin: 10px 0 30px;
 	padding: 0;
 	height: 10px;
 }
-.vp-wrap .vp-panel h2 span {
+.vp-wrap .vp-panel > h2 span {
 	background-color: #ffffff;
 	line-height: 1em;
 	padding: 0 15px;

@@ -198,6 +198,9 @@ class VP_Option
 
 			// after ajax save action hook
 			do_action('vp_option_after_ajax_save', $opt, $result['status'], $this->get_option_key());
+
+			// option key specific after ajax save action hook
+			do_action('vp_option_after_ajax_save-' . $this->get_option_key(), $opt, $result['status']);
 		}
 
 		if (ob_get_length()) ob_clean();

@@ -2,8 +2,10 @@
 	<div class="label">
 		<label>
 			<?php _e('Import', 'vp_textdomain') ?>
-			<p class="description"><?php _e('Import Options', 'vp_textdomain') ?></p>
 		</label>
+		<div class="description">
+			<p><?php _e('Import Options', 'vp_textdomain') ?></p>
+		</div>
 	</div>
 	<div class="field">
 		<div class="input">
@@ -23,8 +25,10 @@
 	<div class="label">
 		<label>
 			<?php _e('Export', 'vp_textdomain') ?>
-			<p class="description"><?php _e('Export Options', 'vp_textdomain') ?></p>
 		</label>
+		<div class="description">
+			<p><?php _e('Export Options', 'vp_textdomain') ?></p>
+		</div>
 	</div>
 	<div class="field">
 		<div class="input">
