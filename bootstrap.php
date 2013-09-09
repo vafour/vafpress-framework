@@ -72,18 +72,28 @@ if( !function_exists('vp_ajax_wrapper') )
 		$function = $_POST['func'];
 		$params   = $_POST['params'];
 
-		if(!is_array($params))
-			$params = array($params);
+		if( VP_Security::instance()->is_function_whitelisted($function) )
+		{
+			if(!is_array($params))
+				$params = array($params);
 
-		try {
-			$result['data']    = call_user_func_array($function, $params);
-			$result['status']  = true;
-			$result['message'] = __("Successful", 'vp_textdomain');
-		} catch (Exception $e) {
-			$result['data']    = '';
-			$result['status']  = false;
-			$result['message'] = $e->getMessage();		
+			try {
+				$result['data']    = call_user_func_array($function, $params);
+				$result['status']  = true;
+				$result['message'] = __("Successful", 'vp_textdomain');
+			} catch (Exception $e) {
+				$result['data']    = '';
+				$result['status']  = false;
+				$result['message'] = $e->getMessage();		
+			}
 		}
+		else
+		{
+				$result['data']    = '';
+				$result['status']  = false;
+				$result['message'] = __("Function not allowed", 'vp_textdomain');		
+		}
+
 
 		if (ob_get_length()) ob_clean();
 		header('Content-type: application/json');
