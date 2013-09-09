@@ -1,4 +1,4 @@
-/* Main Layout
+/* General
  * ==================================================== */
 .vp-wrap .vp-option-panel a:hover,.vp-wrap .vp-option-panel a:active,.vp-wrap .vp-option-panel a:focus {
 	outline: 0;
@@ -8,6 +8,16 @@
 	-moz-box-sizing: border-box;
 	-ms-box-sizing: border-box;
 	box-sizing: border-box;
+}
+.vp-wrap .vp-hide {
+	position: absolute !important;
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: 0;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	width: 0 !important;
 }
 /* Main Layout
  * ==================================================== */
@@ -826,14 +836,4 @@
 }
 .vp-wrap .select2-results .select2-highlighted {
 	background: #278ab7;
-}
-.vp-hide {
-	position: absolute !important;
-	border: 0;
-	clip: rect(0 0 0 0);
-	height: 1px;
-	margin: -1px;
-	overflow: hidden;
-	padding: 0;
-	width: 1px;
 }

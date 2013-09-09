@@ -4,6 +4,16 @@
 	-ms-box-sizing: border-box;
 	box-sizing: border-box;
 }
+.vp-metabox .vp-hide {
+	position: absolute !important;
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: 0;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	width: 0 !important;
+}
 .vp-metabox img {
 	max-width: 100%;
 	vertical-align: bottom;
@@ -510,14 +520,4 @@
 }
 .select2-results .select2-highlighted {
 	background: #278ab7;
-}
-.vp-hide {
-	position: absolute !important;
-	border: 0;
-	clip: rect(0 0 0 0);
-	height: 1px;
-	margin: -1px;
-	overflow: hidden;
-	padding: 0;
-	width: 1px;
 }

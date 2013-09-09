@@ -5,6 +5,16 @@
 	table-layout: fixed;
 	height: 100%;
 }
+.vp-sc-wrapper .vp-hide {
+	position: absolute !important;
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: 0;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	width: 0 !important;
+}
 .vp-sc-wrapper a {
 	outline: 0;
 }
@@ -499,14 +509,4 @@
 }
 .fullscreen-active .colorpicker.dropdown-menu {
 	z-index: 150008;
-}
-.vp-hide {
-	position: absolute !important;
-	border: 0;
-	clip: rect(0 0 0 0);
-	height: 1px;
-	margin: -1px;
-	overflow: hidden;
-	padding: 0;
-	width: 1px;
 }
