@@ -73,43 +73,88 @@ class VP_Util_Color {
 		$c['saturation'] = 0;
 		$c['lightness']  = 0;
 
-		$min = min($c['red'] / 255, $c['green'] / 255, $c['blue'] / 255);
-		$max = max($c['red'] / 255, $c['green'] / 255, $c['blue'] / 255);
-		$chroma = $max - $min;
+		$var_R = $c['red'] / 255;
+		$var_G = $c['green'] / 255;
+		$var_B = $c['blue'] / 255;
+
+		$var_Min = min($var_R, $var_G, $var_B);
+		$var_Max = max($var_R, $var_G, $var_B);
+		$del_Max = $var_Max - $var_Min;
 
 		// lightness
-		$c['lightness'] = ($max + $min) / 2;
+		$c['lightness'] = ($var_Max + $var_Min) / 2;
 		
 		// grayscale
-		if ($chroma == 0) return $c;
+		if ($del_Max == 0) return $c;
 
 		// saturation
 		if ($c['lightness'] < 0.5) {
-			$c['saturation'] = $chroma / ($max + $min);
+			$c['saturation'] = $del_Max / ($var_Max + $var_Min);
 		}
 		else {
-			$c['saturation'] = $chroma / (2 - $max - $min);
+			$c['saturation'] = $del_Max / (2 - $var_Max - $var_Min);
 		}
 
 		// hue
-		$_R = ((($max - $c['red']) / 6) + ($chroma / 2)) / $chroma;
-		$_G = ((($max - $c['green']) / 6) + ($chroma / 2)) / $chroma;
-		$_B = ((($max - $c['blue']) / 6) + ($chroma / 2)) / $chroma;
+		$del_R = ((($var_Max - $var_R) / 6) + ($del_Max / 2)) / $del_Max;
+		$del_G = ((($var_Max - $var_G) / 6) + ($del_Max / 2)) / $del_Max;
+		$del_B = ((($var_Max - $var_B) / 6) + ($del_Max / 2)) / $del_Max;
 
-		if ($c['red'] == $max) {
-			$c['hue'] = $_B - $_G;
+		if ($var_R == $var_Max) {
+			$c['hue'] = $del_B - $del_G;
 		}
-		else if ($c['green'] == $max) {
-			$c['hue'] = (1 / 3) + $_R - $_B;
+		else if ($var_G == $var_Max) {
+			$c['hue'] = (1 / 3) + $del_R - $del_B;
 		}
-		else if ($c['blue'] == $max) {
-			$c['hue'] = (2 / 3) + $_G - $_R;
+		else if ($var_B == $var_Max) {
+			$c['hue'] = (2 / 3) + $del_G - $del_R;
 		}
-		$c['hue'] = self::_validate_percent_value($c['hue']) * 360;
+
+		if ($c['hue'] < 0) $c['hue']++;
+		if ($c['hue'] > 1) $c['hue']--;
+		$c['hue'] *= 360;
 
 		// return
 		return $c;
 	}
+
+	private function _update_rgb($c) {
+
+		$h = $c['hue'] / 360;
+
+		if ($c['saturation'] == 0) {
+			$c['red'] = (int) ($c['lightness'] * 255);
+			$c['green'] = (int) ($c['lightness'] * 255);
+			$c['blue'] = (int) ($c['lightness'] * 255);
+		} else {
+
+			if ($c['lightness'] < 0.5) {
+			    $var_2 = $c['lightness'] * (1 + $c['saturation']);
+			} else {
+			    $var_2 = ($c['lightness'] + $c['saturation']) - ($c['saturation'] * $c['lightness']);
+			}
+
+			$var_1 = 2 * $c['lightness'] - $var_2;
+
+			$c['red'] = (int) (round(255 * self::_hue_to_rgb($var_1, $var_2, $h + (1/3))));
+			$c['green'] = (int) (round(255 * self::_hue_to_rgb($var_1, $var_2, $h)));
+			$c['blue'] = (int) (round(255 * self::_hue_to_rgb($var_1, $var_2, $h - (1/3))));
+
+		}
+
+		return $c;
+	}
+
+	private static function _hue_to_rgb($v1, $v2, $vH) {
+
+		if ($vH < 0) $vH += 1;
+		if ($vH > 1) $vH -= 1;
+		if ($vH < 1 / 6) return $v1 + ($v2 - $v1) * 6 * $vH;
+		if ($vH < 1 / 2) return $v2;
+		if ($vH < 2 / 3) return ($v1 + ($v2 - $v1) * ((2 / 3) - $vH) * 6);
+
+		return $v1;
+    }
 
 	/**
 	 * Extract from HEX color
@@ -187,7 +232,7 @@ class VP_Util_Color {
 	 * @return string    HEX color string
 	 */
 	private function _parse_hex($c) {
-		return '#' . self::_dechex($c['red']) . self::_dechex($c['blue']) . self::_dechex($c['green']);
+		return '#' . self::_dechex($c['red']) . self::_dechex($c['green']) . self::_dechex($c['blue']);
 	}
 
 	/**
@@ -264,11 +309,49 @@ class VP_Util_Color {
 	 */
 	public static function adjust_lightness($color, $amount = 0) {
 		$c = self::extract($color);
-		$amount = self::_validate_percent_value($amoun, true);
+
+		$amount = self::_validate_percent_value($amount, true);
 
 		$c['lightness'] = $c['lightness'] + $amount;
 		$c['lightness'] = self::_validate_percent_value($c['lightness']);
+		$c = self::_update_rgb($c);
 		
+		return call_user_func(array('VP_Util_Color', "_parse_{$c["format"]}"), $c);
+	}
+
+	/**
+	 * Set Lightness (lighten / darken)
+	 * @param  string $color  Color String
+	 * @param  float  $amount Ammount of adjustment
+	 * @return string         Return Color String
+	 */
+	public static function set_lightness($color, $amount = 0) {
+		$c = self::extract($color);
+
+		$amount = self::_validate_percent_value($amount, true);
+
+		$c['lightness'] = $amount;
+		$c['lightness'] = self::_validate_percent_value($c['lightness']);
+		$c = self::_update_rgb($c);
+		
+		return call_user_func(array('VP_Util_Color', "_parse_{$c["format"]}"), $c);
+	}
+
+	/**
+	 * Percentage Lightness (lighten / darken)
+	 * @param  string $color  Color String
+	 * @param  float  $amount Ammount of adjustment
+	 * @return string         Return Color String
+	 */
+	public static function percentage_lightness($color, $amount = 0) {
+		$c = self::extract($color);
+
+		$amount = self::_validate_percent_value($amount, true);
+
+		$c['lightness'] = $c['lightness'] * ($amount + 1);
+		$c['lightness'] = self::_validate_percent_value($c['lightness']);
+		$c = self::_update_rgb($c);
+
 		return call_user_func(array('VP_Util_Color', "_parse_{$c["format"]}"), $c);
 	}
 
@@ -289,6 +372,22 @@ class VP_Util_Color {
 	}
 
 	/**
+	 * Set Alpha
+	 * @param  string $color  Color String
+	 * @param  float  $amount Ammount of adjustment
+	 * @return string         Return Color String
+	 */
+	public static function set_alpha($color, $amount = 0) {
+		$c = self::extract($color);
+		$amount = self::_validate_percent_value($amount, true);
+
+		$c['alpha'] = $amount;
+		$c['alpha'] = self::_validate_percent_value($c['alpha']);
+
+		return call_user_func(array('VP_Util_Color', "_parse_{$c["format"]}"), $c);
+	}
+
+	/**
 	 * Percentage Alpha
 	 * @param  string $color  Color String
 	 * @param  float  $amount Ammount of adjustment
@@ -296,9 +395,9 @@ class VP_Util_Color {
 	 */
 	public static function percentage_alpha($color, $amount = 0) {
 		$c = self::extract($color);
-		$amount = self::_validate_percent_value($amount, false);
+		$amount = self::_validate_percent_value($amount, true);
 
-		$c['alpha'] = $c['alpha'] * $amount;
+		$c['alpha'] = $c['alpha'] * ($amount + 1);
 		$c['alpha'] = self::_validate_percent_value($c['alpha']);
 
 		return call_user_func(array('VP_Util_Color', "_parse_{$c["format"]}"), $c);
