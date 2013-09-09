@@ -129,7 +129,10 @@ class VP_ShortcodeGenerator
 		if( VP_Metabox::_is_post_or_page() )
 		{
 			// then consider the types
-			$can &= in_array(VP_Metabox::_get_current_post_type(), $this->types);
+			if( !in_array("*", $this->types) ) // if wildcard exists, then always shows
+				$can &= in_array(VP_Metabox::_get_current_post_type(), $this->types);
+			else
+				$can &= true;
 		}
 		else
 		{
