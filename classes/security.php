@@ -14,13 +14,12 @@ class VP_Security
 	public static function instance()
 	{
 		if (is_null(self::$_instance))
-		{
 			self::$_instance = new self();
-		}
+		
 		return self::$_instance;
 	}
 
-	public function add_function_whitelist($name)
+	public function whitelist_function($name)
 	{
 		if( ! in_array($name, $this->_whitelist) )
 		{

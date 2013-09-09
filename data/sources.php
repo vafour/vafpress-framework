@@ -94,6 +94,8 @@ function vp_get_gwf_family()
 	return $result;
 }
 
+VP_Security::instance()->whitelist_function('vp_get_gwf_weight');
+
 function vp_get_gwf_weight($face)
 {
 	if(empty($face))
@@ -110,6 +112,8 @@ function vp_get_gwf_weight($face)
 
 	return $result;
 }
+
+VP_Security::instance()->whitelist_function('vp_get_gwf_style');
 
 function vp_get_gwf_style($face)
 {
@@ -183,6 +187,8 @@ function vp_get_fontawesome_icons()
 
 	return $icons;
 }
+
+VP_Security::instance()->whitelist_function('vp_dep_boolean');
 
 function vp_dep_boolean($value)
 {
