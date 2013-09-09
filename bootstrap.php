@@ -89,9 +89,9 @@ if( !function_exists('vp_ajax_wrapper') )
 		}
 		else
 		{
-				$result['data']    = '';
-				$result['status']  = false;
-				$result['message'] = __("Function not allowed", 'vp_textdomain');		
+			$result['data']    = '';
+			$result['status']  = false;
+			$result['message'] = __("Unauthorized function", 'vp_textdomain');		
 		}
 
 
