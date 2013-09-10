@@ -84,10 +84,10 @@ class VP_Option
 		$this->init_options_from_db();
 
 		// setup ajax
-		add_action('wp_ajax_vp_ajax_' . $this->get_option_key() . '_export_option', array($this, 'vp_ajax_export_option'));
-		add_action('wp_ajax_vp_ajax_' . $this->get_option_key() . '_import_option', array($this, 'vp_ajax_import_option'));
-		add_action('wp_ajax_vp_ajax_' . $this->get_option_key() . '_save', array($this, 'vp_ajax_save'));
-		add_action('wp_ajax_vp_ajax_' . $this->get_option_key() . '_restore', array($this, 'vp_ajax_restore'));
+		add_action('wp_ajax_vp_ajax_' . $this->get_option_key() . '_export_option', array($this, 'ajax_export_option'));
+		add_action('wp_ajax_vp_ajax_' . $this->get_option_key() . '_import_option', array($this, 'ajax_import_option'));
+		add_action('wp_ajax_vp_ajax_' . $this->get_option_key() . '_save'         , array($this, 'ajax_save'));
+		add_action('wp_ajax_vp_ajax_' . $this->get_option_key() . '_restore'      , array($this, 'ajax_restore'));
 
 		// register menu page
 		add_action( 'admin_menu', array($this, 'register_menu_page'), $priority );
@@ -182,7 +182,7 @@ class VP_Option
 		return $result;
 	}
 
-	function vp_ajax_save()
+	function ajax_save()
 	{
 		$result = $this->vp_verify_nonce();
 		
@@ -227,7 +227,7 @@ class VP_Option
 		die();
 	}
 
-	function vp_ajax_restore()
+	function ajax_restore()
 	{
 		$result = $this->vp_verify_nonce();
 		
@@ -264,7 +264,7 @@ class VP_Option
 		die();
 	}
 
-	function vp_ajax_import_option()
+	function ajax_import_option()
 	{
 		global $vp_set, $vp_config;
 
@@ -321,7 +321,7 @@ class VP_Option
 		die();
 	}
 
-	function vp_ajax_export_option()
+	function ajax_export_option()
 	{
 		global $wpdb;
 		$result = $this->vp_verify_nonce();
