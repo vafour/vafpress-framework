@@ -35,6 +35,7 @@ class VP_Option
 
 	public function __construct(array $configs)
 	{
+
 		// extract and set default value
 		extract($test = array_merge(array(
 			'is_dev_mode'           => false,
@@ -55,6 +56,9 @@ class VP_Option
 		else throw new Exception(__( 'Template Array/File is required', 'vp_textdomain' ), 1);
 		if(isset($page_slug)) $this->set_page_slug($page_slug);
 		else throw new Exception(__( 'Page Slug is required', 'vp_textdomain' ), 1);
+
+		// swim in the pool
+		self::$pool[$this->get_option_key()] = &$this;
 		
 		// check and set the remaining configs
 		if(isset($menu_page))             $this->set_menu_page($menu_page);
@@ -78,9 +82,6 @@ class VP_Option
 
 		// init options from db and expose to the api
 		$this->init_options_from_db();
-
-		// swim in the pool
-		self::$pool[$this->get_option_key()] = $this;
 
 		// setup ajax
 		add_action('wp_ajax_vp_ajax_' . $this->get_option_key() . '_export_option', array($this, 'vp_ajax_export_option'));
@@ -171,6 +172,16 @@ class VP_Option
 		$opt_loader->add_js_data( 'vp-option', 'custom_local.SAVE_FAILED', VP_Option_Control_Set::SAVE_FAILED );
 	}
 
+	function save_and_reinit()
+	{
+		// do saving
+		$result = $this->get_options_set()->save($this->get_option_key());
+		// re-init $opt
+		$this->init_options_from_db();
+
+		return $result;
+	}
+
 	function vp_ajax_save()
 	{
 		$result = $this->vp_verify_nonce();
@@ -200,11 +211,8 @@ class VP_Option
 			// before ajax save action hook
 			do_action('vp_option_before_ajax_save', $opt);
 
-			// do saving
-			$result = $this->get_options_set()->save($this->get_option_key());
-
-			// re-init $opt
-			$this->init_options_from_db();
+			// save and re-init options
+			$result = $this->save_and_reinit();
 
 			// after ajax save action hook
 			do_action('vp_option_after_ajax_save', $opt, $old_opt, $result['status'], $this->get_option_key());
@@ -229,21 +237,25 @@ class VP_Option
 			$set     = $this->get_options_set();
 			$options = $set->get_defaults();
 
+			// get old options from set
+			$old_opt = $this->get_options_set()->get_values();
+
 			// setup and process values
 			$set->setup($options);
 
 			// before ajax save action hook
 			do_action('vp_option_before_ajax_restore', $options);
 
-			// do saving
-			$result = $set->save($this->get_option_key());
+			// save and re-init options
+			$result  = $this->save_and_reinit();
 
-			// re-init $opt
-			$this->init_options_from_db();
 			$options = $this->get_options_set()->get_values();
 
-			// after ajax save action hook
-			do_action('vp_option_after_ajax_restore', $options, $result['status'], $this->get_option_key());
+			// after ajax restore action hook
+			do_action('vp_option_after_ajax_restore', $options, $old_opt, $result['status'], $this->get_option_key());
+
+			// after ajax restore action hook
+			do_action('vp_option_after_ajax_restore-' . $this->get_option_key(), $options, $old_opt, $result['status']);
 		}
 
 		if (ob_get_length()) ob_clean();
@@ -275,9 +287,19 @@ class VP_Option
 
 				if( is_array($option) )
 				{
-					$set    = $this->get_options_set();
+					$set = $this->get_options_set();
+					
+					// get old options from set
+					$old_opt = $this->get_options_set()->get_values();
+
+					// populate new values
 					$set->populate_values($option, true);
-					$result = $set->save($this->get_option_key());
+
+					// save and re-init options
+					$result  = $this->save_and_reinit();
+
+					// get new options
+					$options = $this->get_options_set()->get_values();
 				}
 				else
 				{
@@ -286,6 +308,12 @@ class VP_Option
 				}
 			}
 		}
+
+		// after ajax import action hook
+		do_action('vp_option_after_ajax_import', $options, $old_opt, $result['status'], $this->get_option_key());
+
+		// after ajax import action hook
+		do_action('vp_option_after_ajax_import-' . $this->get_option_key(), $options, $old_opt, $result['status']);
 
 		if (ob_get_length()) ob_clean();
 		header('Content-type: application/json');
@@ -300,14 +328,21 @@ class VP_Option
 		if($result['status'])
 		{
 			$db_options = get_option($this->get_option_key());
-			$db_options = serialize($db_options);
+			$sr_options = serialize($db_options);
 
 			$result = array(
 				'status' => true,
 				'message'=> __("Successful", 'vp_textdomain'),
-				'option' => $db_options,
+				'option' => $sr_options,
 			);
 		}
+
+		// after ajax export action hook
+		do_action('vp_option_after_ajax_export', $db_options, $sr_options, $result['status'], $this->get_option_key());
+
+		// after ajax export action hook
+		do_action('vp_option_after_ajax_export-' . $this->get_option_key(), $db_options, $sr_options, $result['status']);
+
 
 		if (ob_get_length()) ob_clean();
 		header('Content-type: application/json');
@@ -355,10 +390,13 @@ class VP_Option
 
 		// before db options db action hook
 		do_action('vp_option_before_db_init', $opt);
+
 		// save to db
-		$result = $set->save($this->get_option_key());
+		$result = $this->save_and_reinit();
+
 		// after db options db action hook
 		do_action('vp_option_after_db_init', $opt, $result['status'], $this->get_option_key());
+		do_action('vp_option_after_db_init-' . $this->get_option_key(), $opt, $result['status']);
 	}
 
 	public function init_options()

@@ -94,7 +94,6 @@ if( !function_exists('vp_ajax_wrapper') )
 			$result['message'] = __("Unauthorized function", 'vp_textdomain');		
 		}
 
-
 		if (ob_get_length()) ob_clean();
 		header('Content-type: application/json');
 		echo json_encode($result);
@@ -245,6 +244,9 @@ if( !function_exists('vp_option') )
 	function vp_option($key, $default = null)
 	{
 		$vp_options = VP_Option::get_pool();
+
+		if(empty($vp_options))
+			return $default;
 
 		$keys = explode('.', $key);
 		$temp = NULL;
