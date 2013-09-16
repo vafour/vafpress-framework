@@ -17,7 +17,18 @@ class VP_Util_Array
 		$result = array();
 		foreach ($array as $key => $value)
 		{
-			$result[] = $value[$the_key];
+			if (is_object($value))
+			{
+				$result[] = $value->$the_key;
+			}
+			elseif (is_array($value))
+			{
+				$result[] = $value[$the_key];
+			}
+			else
+			{
+				$result[] = $value;
+			}
 		}
 		return $result;
 	}

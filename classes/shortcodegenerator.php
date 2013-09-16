@@ -179,7 +179,7 @@ class VP_ShortcodeGenerator
 										</a>
 									</h3>
 									<div class="hidden vp-sc-code"><?php echo htmlentities($element['code']); ?></div>
-									<?php if(isset($element['attributes'])): ?>
+									<?php if(isset($element['attributes']) and !empty($element['attributes'])): ?>
 									<form class="vp-sc-element-form vp-hide inside">
 										<?php echo $this->print_form($element['attributes']); ?>
 									</form>
