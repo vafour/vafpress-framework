@@ -49,7 +49,7 @@ class VP_Metabox extends WPAlchemy_MetaBox
 	public function register_fields()
 	{
 		$loader = VP_WP_Loader::instance();
-		$loader->add_types( $this->get_field_types() );
+		$loader->add_types( $this->get_field_types(), 'metabox' );
 	}
 
 	public static function get_pool()
@@ -67,6 +67,25 @@ class VP_Metabox extends WPAlchemy_MetaBox
 			}
 		}
 		return false;
+	}
+
+	public static function pool_supports_editor()
+	{
+		foreach (self::$pool as $mb)
+		{
+			if( $mb->supports_editor() )
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public function supports_editor()
+	{
+		$post_type  = self::_get_current_post_type();
+		$has_editor = post_type_supports( $post_type, 'editor' );
+		return $has_editor;
 	}
 
 	/**

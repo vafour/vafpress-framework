@@ -163,7 +163,7 @@ class VP_Option
 	public function enqueue_scripts_and_styles()
 	{	
 		$opt_loader = VP_WP_Loader::instance();
-		$opt_loader->add_types( $this->get_field_types() );
+		$opt_loader->add_types( $this->get_field_types(), 'option' );
 		$opt_loader->add_main_js( 'vp-option' );
 		$opt_loader->add_main_css( 'vp-option' );
 		$opt_loader->add_js_data( 'vp-option', 'custom_local.name', $this->_option_key );
@@ -367,18 +367,6 @@ class VP_Option
 		return $result;
 	}
 
-	function init_wpeditor()
-	{
-		$types = $this->get_options_set()->get_field_types();
-		if(in_array('wpeditor', $types))
-		{
-			echo '<div style="display: none">';
-			add_filter( 'wp_default_editor', create_function('', 'return "tinymce";') );
-			wp_editor( '', 'vp_dummy_editor' );
-			echo '</div>';
-		}
-	}
-
 	function initial_db_setup()
 	{
 		// init set and options
@@ -481,7 +469,6 @@ class VP_Option
 
 	public function option_page_display()
 	{
-		$this->init_wpeditor();
 		echo $this->get_options_set()->render();
 	}
 

@@ -21,7 +21,7 @@ class VP_WP_Loader
 
 	private $_use_wp_35_media_upload = false;
 
-	private $_types = array();
+	private $_types;
 
 	public static function instance()
 	{
@@ -32,9 +32,14 @@ class VP_WP_Loader
 		return self::$_instance;
 	}
 
-	public function __construct()
+	private function __construct()
 	{
 		$this->_dependencies = apply_filters( 'vp_dependencies_array', VP_Util_Config::instance()->load('dependencies') );
+		$this->_types        = array(
+			'option'             => array(),
+			'metabox'            => array(),
+			'shortcodegenerator' => array(),
+		);
 	}
 
 	public function build()
@@ -46,9 +51,10 @@ class VP_WP_Loader
 		$scripts     = $this->_dependencies['scripts']['paths'];
 		$styles      = $this->_dependencies['styles']['paths'];
 		$rules       = $this->_dependencies['rules'];
+		$types       = $this->get_flat_types();
 
 		// for all types build required scripts and styles array
-		foreach ($this->_types as $type)
+		foreach ($types as $type)
 		{
 			if( array_key_exists($type, $rules) )
 			{
@@ -58,7 +64,7 @@ class VP_WP_Loader
 		}
 
 		// also determine whether to use media upload and the WP35 version or not
-		if( in_array('upload', $this->_types) )
+		if( in_array('upload', $types) )
 		{
 			global $wp_version;
 			$this->_use_media_upload = true;
@@ -340,10 +346,28 @@ class VP_WP_Loader
 	}
 
 	// option class added their types to this
-	public function add_types($types)
+	public function add_types($types, $key)
 	{
 		$types = (array) $types;
-		$this->_types = array_unique( array_merge( $this->_types, $types ) );
+		$this->_types[$key] = array_unique( array_merge( $this->_types[$key], $types ) );
+	}
+
+	public function get_types($key = null)
+	{
+		if( is_null($key) )
+			return $this->_types;
+		else
+			return $this->_types[$key];
+	}
+
+	public function get_flat_types()
+	{
+		$flat_types = array();
+		foreach ($this->_types as $types)
+		{
+			$flat_types = array_unique( array_merge( $flat_types, $types ) );
+		}
+		return $flat_types;
 	}
 
 }
