@@ -58,7 +58,7 @@ class VP_ShortcodeGenerator
 			add_action( 'admin_footer', array($this, 'print_modal') );
 			// populate scripts and styles dependencies
 			$loader = VP_WP_Loader::instance();
-			$loader->add_types( $this->get_field_types() );
+			$loader->add_types( $this->get_field_types(), 'shortcodegenerator' );
 		}
 	}
 
@@ -103,6 +103,25 @@ class VP_ShortcodeGenerator
 		return self::$pool;
 	}
 
+	public static function pool_supports_editor()
+	{
+		foreach (self::$pool as $sg)
+		{
+			if( $sg->supports_editor() )
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public function supports_editor()
+	{
+		$post_type  = VP_Metabox::_get_current_post_type();
+		$has_editor = post_type_supports( $post_type, 'editor' );
+		return $has_editor;
+	}
+
 	public static function pool_can_output()
 	{
 		foreach (self::$pool as $sg)
@@ -141,10 +160,10 @@ class VP_ShortcodeGenerator
 			{
 				$can &= in_array($screen, $this->included_pages);
 			}
-			else
-			{
-				$can &= false;
-			}
+			// else
+			// {
+			// 	$can &= false;
+			// }
 		}
 
 		return $can;

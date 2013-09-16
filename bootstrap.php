@@ -141,6 +141,47 @@ if( !function_exists('vp_sg_enqueue') )
 	}
 }
 
+add_action('admin_footer', 'vp_post_dummy_editor');
+
+if( !function_exists('vp_post_dummy_editor') )
+{
+	function vp_post_dummy_editor()
+	{
+		/**
+		 * If we're in post edit page, and the post type doesn't support `editor`
+		 * we need to echo out a dummy editor to load all necessary js and css
+		 * to be used in our own called wp editor.
+		 */
+		$loader = VP_WP_Loader::instance();
+		$types  = $loader->get_types();
+		$dummy  = false;
+
+		if( VP_WP_Admin::is_post_or_page() )
+		{
+			$types = array_unique( array_merge( $types['metabox'], $types['shortcodegenerator'] ) );
+			if( in_array('wpeditor', $types ) )
+			{
+				if( !VP_ShortcodeGenerator::pool_supports_editor() and !VP_Metabox::pool_supports_editor() )
+					$dummy = true;
+			}
+		}
+		else
+		{
+			$types = $types['option'];
+			if( in_array('wpeditor', $types ) )
+				$dummy = true;
+		}
+
+		if( $dummy )
+		{
+			echo '<div style="display: none">';
+			add_filter( 'wp_default_editor', create_function('', 'return "tinymce";') );
+			wp_editor ( '', 'vp_dummy_editor' );
+			echo '</div>';		
+		}
+	}
+}
+
 if( !function_exists('vp_sg_init_buttons') )
 {
 	function vp_sg_init_buttons()

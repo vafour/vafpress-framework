@@ -77,7 +77,14 @@ var KIA_metabox, tinyMCEbackupConfig = null;
 				options      = vp.parseOpt(options.opt);
 				options.use_external_plugins = options.use_external_plugins ? true : false;
 
-				var plugins = tinyMCE.settings.plugins;
+				var plugins                 = tinyMCE.settings.plugins;
+				var theme_advanced_buttons1 = tinyMCE.settings.theme_advanced_buttons1;
+
+				// remove `wpfullscreen` plugin
+				plugins                 = plugins.replace(/,wpfullscreen/gm, '');
+				// replace `wp_fullscreen` with normal `fullscreen` button
+				theme_advanced_buttons1 = theme_advanced_buttons1.replace(/wp_fullscreen/gm, 'fullscreen');
+
 				if(options.use_external_plugins === false)
 				{
 					plugins = plugins.replace(/\-(.*?)(,|$)+?/gm, '');
@@ -104,7 +111,8 @@ var KIA_metabox, tinyMCEbackupConfig = null;
 						plugins = plugins.replace(reg, '');
 					}
 				}
-				tinyMCE.settings.plugins = plugins;
+				tinyMCE.settings.plugins                 = plugins;
+				tinyMCE.settings.theme_advanced_buttons1 = theme_advanced_buttons1;
 
 				tinyMCE.execCommand('mceAddControl', false, id);
 			} catch(e){}

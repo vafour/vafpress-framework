@@ -498,7 +498,7 @@
 	margin: 1.5rem 0 0.5rem;
 }
 /* fullscreen active styling */
-.fullscreen-active .reveal-modal {
+/*.fullscreen-active .reveal-modal {
 	z-index: 150006;
 }
 .fullscreen-active .select2-drop {
@@ -509,4 +509,20 @@
 }
 .fullscreen-active .colorpicker.dropdown-menu {
 	z-index: 150008;
+}*/
+.reveal-modal {
+	z-index: 150006;
+}
+.select2-drop {
+	z-index: 150008;
+}
+.select2-drop-mask {
+	z-index: 150007;
+}
+.colorpicker.dropdown-menu {
+	z-index: 150008;
+}
+/* lower tinymce native fullscreen z-index (it's hidden it's own add media) */
+#mce_fullscreen_container {
+	z-index: 150005 !important;
 }
