@@ -50,8 +50,7 @@ var KIA_metabox, tinyMCEbackupConfig = null;
 
 		//store the default settings
 		try {
-			// tinyMCEdefaultConfig = $.extend(true, {}, tinyMCE.settings);
-			tinyMCEdefaultConfig = $.extend(true, {}, tinyMCEbackupConfig);
+			tinyMCEdefaultConfig = $.extend(true, {}, tinyMCE.settings);
 
 			//tweak the setting just a litte to set the height and to add an HTML code button (since toggling editors is crazy difficult)
 			tinyMCEdefaultConfig.height = "250";
@@ -82,8 +81,8 @@ var KIA_metabox, tinyMCEbackupConfig = null;
 
 				// remove `wpfullscreen` plugin
 				plugins                 = plugins.replace(/,wpfullscreen/gm, '');
-				// replace `wp_fullscreen` with normal `fullscreen` button
-				theme_advanced_buttons1 = theme_advanced_buttons1.replace(/wp_fullscreen/gm, 'fullscreen');
+				// remove `wp_fullscreen` button
+				theme_advanced_buttons1 = theme_advanced_buttons1.replace(/wp_fullscreen/gm, '');
 
 				if(options.use_external_plugins === false)
 				{
