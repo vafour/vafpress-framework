@@ -24,7 +24,7 @@
 							if(i == siblings.length - 1)
 							{
 								container.animate({
-									scrollTop: group.offset().top - container.offset().top + container.scrollTop() - $('#wpadminbar').height()
+									scrollTop: group.offset().top - $('#wpadminbar').height()
 								}).promise().done(function(){
 									control.slideUp(0,function() {
 										$(this).removeClass('vp-hide')
@@ -39,7 +39,7 @@
 			else
 			{
 				container.animate({
-					scrollTop: group.offset().top - container.offset().top + container.scrollTop() - $('#wpadminbar').height()
+					scrollTop: group.offset().top - $('#wpadminbar').height()
 				}).promise().done(function(){
 					control.slideUp(0,function() {
 						$(this).removeClass('vp-hide')
