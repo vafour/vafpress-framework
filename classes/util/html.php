@@ -5,13 +5,13 @@ class VP_Util_HTML {
 	/**
 	 * Build Classes
 	 * @param  array   $params set of classes
-	 * @param  boolean $format format of return string, use %%replace%% for 
+	 * @param  boolean $format format of return string, use %s for 
 	 * @return string          full classes declaration
 	 */
-	public static function build_class($params, $format = ' class="%%replace%%"') {
+	public static function build_class($params, $format = ' class="%s"') {
 		$params = (array) $params;
 		$params = array_filter($params);
-		return str_replace('%%replace%%', implode(" ", $params), $format);
+		return str_replace('%s', implode(" ", $params), $format);
 	}
 
 	/**
@@ -31,12 +31,12 @@ class VP_Util_HTML {
 	/**
 	 * Build inline styles
 	 * @param  array   $params set of styles declaration
-	 * @param  boolean $format format of return string, use %%replace%% for 
+	 * @param  boolean $format format of return string, use %s for 
 	 * @return string          full style declaration
 	 */
-	public static function build_inline_style($params, $format = ' style="%%replace%%"') {
+	public static function build_inline_style($params, $format = ' style="%s"') {
 		$params = (array) $params;
 		$params = array_filter($params);
-		return str_replace('%%replace%%', implode(" ", $params), $format);
+		return str_replace('%s', implode(" ", $params), $format);
 	}
 }
