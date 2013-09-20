@@ -142,7 +142,7 @@ function vp_get_social_medias() {
 		array('value' => 'email', 'label' => 'Email'),
 		array('value' => 'facebook', 'label' => 'Facebook'),
 		array('value' => 'flickr', 'label' => 'Flickr'),
-		array('value' => 'forst', 'label' => 'Forst'),
+		array('value' => 'forrst', 'label' => 'Forrst'),
 		array('value' => 'foursquare', 'label' => 'Foursquare'),
 		array('value' => 'github', 'label' => 'Github'),
 		array('value' => 'googleplus', 'label' => 'Google+'),

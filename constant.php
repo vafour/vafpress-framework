@@ -33,7 +33,7 @@ else
 }
 
 defined('VP_URL')         or define('VP_URL'        , $vp_url);
-defined('VP_PUBLIC_URL')  or define('VP_PUBLIC_URL' , VP_URL        . '/public');
+defined('VP_PUBLIC_URL')  or define('VP_PUBLIC_URL' , VP_URL        . 'public');
 defined('VP_IMAGE_URL')   or define('VP_IMAGE_URL'  , VP_PUBLIC_URL . '/img');
 defined('VP_INCLUDE_URL') or define('VP_INCLUDE_URL', VP_URL        . '/includes');
 
