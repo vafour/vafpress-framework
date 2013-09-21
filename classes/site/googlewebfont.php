@@ -58,7 +58,7 @@ class VP_Site_GoogleWebFont
 
 	public function register()
 	{
-		$links = $this->get_links();
+		$links = $this->get_fonts_links();
 		foreach ($links as $name => $link)
 		{
 			wp_register_style( $name, $link);
@@ -80,7 +80,7 @@ class VP_Site_GoogleWebFont
 		$this->enqueue();
 	}
 
-	public function get_links()
+	public function get_fonts_links()
 	{
 		$links = array();
 		foreach ($this->_fonts as $name => $atts)

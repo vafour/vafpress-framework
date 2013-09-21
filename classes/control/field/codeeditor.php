@@ -31,8 +31,8 @@ class VP_Control_Field_CodeEditor extends VP_Control_Field
 			$instance = new $class_name;
 		$instance->_basic_make($arr);
 
-		$instance->set_mode( isset($arr['mode'])  ? $arr['mode']  : 'css');
-		$instance->set_theme(isset($arr['theme']) ? $arr['theme'] : 'textmate');
+		$instance->set_editor_mode( isset($arr['mode'])  ? $arr['mode']  : 'css');
+		$instance->set_editor_theme(isset($arr['theme']) ? $arr['theme'] : 'textmate');
 
 		return $instance;
 	}
@@ -40,8 +40,8 @@ class VP_Control_Field_CodeEditor extends VP_Control_Field
 	protected function _setup_data()
 	{
 		$opt = array(
-			'mode'  => $this->get_mode(),
-			'theme' => $this->get_theme(),
+			'mode'  => $this->get_editor_mode(),
+			'theme' => $this->get_editor_theme(),
 		);
 		$this->add_data('opt', VP_Util_Text::make_opt($opt));
 		parent::_setup_data();
@@ -70,7 +70,7 @@ class VP_Control_Field_CodeEditor extends VP_Control_Field
 	 *
 	 * @return String Language mode
 	 */
-	public function get_mode() {
+	public function get_editor_mode() {
 		return $this->_mode;
 	}
 	
@@ -79,7 +79,7 @@ class VP_Control_Field_CodeEditor extends VP_Control_Field
 	 *
 	 * @param String $_mode Language mode
 	 */
-	public function set_mode($_mode) {
+	public function set_editor_mode($_mode) {
 		$this->_mode = $_mode;
 		return $this;
 	}
@@ -90,7 +90,7 @@ class VP_Control_Field_CodeEditor extends VP_Control_Field
 	 *
 	 * @return String Editor's theme
 	 */
-	public function get_theme() {
+	public function get_editor_theme() {
 		return $this->_theme;
 	}
 	
@@ -99,7 +99,7 @@ class VP_Control_Field_CodeEditor extends VP_Control_Field
 	 *
 	 * @param String $_theme Editor's theme
 	 */
-	public function set_theme($_theme) {
+	public function set_editor_theme($_theme) {
 		$this->_theme = $_theme;
 		return $this;
 	}
