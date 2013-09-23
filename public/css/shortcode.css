@@ -455,6 +455,10 @@
 #ui-datepicker-div {
 	display: none;
 }
+/* jQuery UI widget overlay glitch */
+.ui-widget-overlay {
+	background-repeat: repeat;
+}
 /* fontawesome chooser + select2 width */
 .select2-container .fontawesome,.select2-result-label .fontawesome {
 	font-size: 12px;
@@ -497,19 +501,6 @@
 	top: 0;
 	margin: 1.5rem 0 0.5rem;
 }
-/* fullscreen active styling */
-/*.fullscreen-active .reveal-modal {
-	z-index: 150006;
-}
-.fullscreen-active .select2-drop {
-	z-index: 150008;
-}
-.fullscreen-active .select2-drop-mask {
-	z-index: 150007;
-}
-.fullscreen-active .colorpicker.dropdown-menu {
-	z-index: 150008;
-}*/
 .reveal-modal {
 	z-index: 150006;
 }

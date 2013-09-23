@@ -771,8 +771,10 @@
 .vp-wrap .vp-section .vp-notebox {
 	margin: 10px 20px;
 }
+
 /* Extension
  * ==================================================== */
+ 
 /* Code Editor styling */
 .ace_editor {
 	border-width: 1px;
@@ -807,6 +809,10 @@
 #ui-datepicker-div {
 	display: none;
 	z-index: 4 !important;
+}
+/* jQuery UI widget overlay glitch */
+.ui-widget-overlay {
+	background-repeat: repeat;
 }
 /* fontawesome chooser + select2 width */
 .vp-wrap .select2-container .fontawesome,.vp-wrap .select2-result-label .fontawesome {

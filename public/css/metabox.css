@@ -385,10 +385,6 @@
 	left: 50%;
 	margin: -5px 0 0 -8px;
 }
-/* jQuery UI Datepicker bottom div bug */
-#ui-datepicker-div {
-	display: none;
-}
 /**
  * Notebox styling
  * (normal, warning, info, error, success)
@@ -468,6 +464,18 @@
 	border-color: #dddddd;
 	border-radius: 3px;
 	height: 200px;
+}
+
+/* Extension
+ * ==================================================== */
+
+/* jQuery UI Datepicker bottom div bug */
+#ui-datepicker-div {
+	display: none;
+}
+/* jQuery UI widget overlay glitch */
+.ui-widget-overlay {
+	background-repeat: repeat;
 }
 /* Bootstrap Colorpicker */
 .dropdown-menu {
