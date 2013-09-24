@@ -160,10 +160,13 @@ class VP_ShortcodeGenerator
 			{
 				$can &= in_array($screen, $this->included_pages);
 			}
-			// else
-			// {
-			// 	$can &= false;
-			// }
+			else
+			{
+				if( !is_admin() )
+				{
+					$can &= false;
+				}
+			}
 		}
 
 		return $can;
