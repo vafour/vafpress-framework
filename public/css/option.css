@@ -89,7 +89,6 @@
 .vp-wrap .vp-right-panel {
 	border-radius: 0 4px 4px 0;
 	padding: 51px 0;
-	display: table-cell;
 	position: relative;
 }
 /* Menus
@@ -176,6 +175,9 @@
 	position: relative;
 	text-decoration: none;
 	width: 100%;
+}
+.vp-wrap .vp-menus li:hover {
+	background-color: rgba(255,255,255,0.2);
 }
 .vp-wrap .vp-menus a i {
 	display: table-cell;
