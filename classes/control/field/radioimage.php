@@ -16,10 +16,7 @@ class VP_Control_Field_RadioImage extends VP_Control_FieldMultiImage
 		else
 			$instance = new $class_name;
 		$instance->_basic_make($arr);
-				
-		// Turn default array to single value
-		$instance->set_default(VP_Util_Array::first($instance->get_default()));
-		
+
 		return $instance;
 	}
 

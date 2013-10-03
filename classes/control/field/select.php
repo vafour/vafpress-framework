@@ -16,9 +16,6 @@ class VP_Control_Field_Select extends VP_Control_FieldMulti
 			$instance = new $class_name;
 		$instance->_basic_make($arr);
 
-		// Turn default array to single value
-		$instance->set_default(VP_Util_Array::first($instance->get_default()));
-		
 		return $instance;
 	}
 

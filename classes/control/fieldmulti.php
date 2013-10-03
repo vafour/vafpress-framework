@@ -10,6 +10,8 @@ abstract class VP_Control_FieldMulti extends VP_Control_Field
 
 	protected $_items_binding;
 
+	protected $_raw_default;
+
 	/**
 	 * Basic self setup of the object
 	 * @param  SimpleXMLElement $simpleXML SimpleXML object representation of the field
@@ -18,7 +20,6 @@ abstract class VP_Control_FieldMulti extends VP_Control_Field
 	protected function _basic_make($arr)
 	{
 		parent::_basic_make($arr);
-
 
 		if (!empty($arr['items']))
 		{
@@ -60,41 +61,40 @@ abstract class VP_Control_FieldMulti extends VP_Control_Field
 			{
 				$arr['default'] = (array) reset($arr['default']);
 			}
-			if(is_array($arr['default']))
-			{
-				$this->_process_default($arr['default'], $arr['items']);
-			}
+			$this->_raw_default = $arr['default'];
+			$this->_process_default();
 		}
 		return $this;
 	}
 
-	protected function _process_default($arr_default, $arr_items)
+	public function _process_default()
 	{
 		$defaults = array();
-		foreach ($arr_default as $def)
+		$items    = $this->get_items();
+		foreach ($this->_raw_default as $def)
 		{
 			switch ($def)
 			{
 				case '{{all}}':
 					if(VP_Util_Reflection::is_multiselectable($this))
-						$defaults = array_merge($defaults, VP_Util_Array::deep_values($arr_items, 'value'));
+						$defaults = array_merge($defaults, array_keys($items));
 					break;
 				case '{{first}}':
-					$first = VP_Util_Array::first($arr_items);
-					$defaults[] = $first['value'];
+					$first = VP_Util_Array::first($items);
+					$defaults[] = $first->value;
 					break;
 				case '{{last}}':
-					$last = end($arr_items);
-					$defaults[] = $last['value'];
+					$last = end($items);
+					$defaults[] = $last->value;
 					break;
 				default:
-					if(array_key_exists($def, $this->get_items()))
-						$defaults[] = $def;
+					$defaults[] = $def;
 					break;
 			}
 		}
 		$defaults = array_unique($defaults);
-		$this->set_default($defaults);
+		if(!empty($defaults))
+			$this->set_default($defaults);
 	}
 
 	protected function _setup_data()
@@ -102,6 +102,18 @@ abstract class VP_Control_FieldMulti extends VP_Control_Field
 		parent::_setup_data();
 		$this->add_single_data('head_info', 'items_binding', $this->get_items_binding());
 		$this->add_data('items', $this->get_items());
+	}
+
+	/**
+	 * Setter for $_default
+	 *
+	 * @param mixed $_default default value of the field
+	 */
+	public function set_default($_default) {
+		if(is_array($_default) and !VP_Util_Reflection::is_multiselectable($this))
+			$_default = VP_Util_Array::first($_default);
+		$this->_default = $_default;
+		return $this;
 	}
 
 	public function add_items($items)

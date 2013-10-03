@@ -240,6 +240,9 @@ class VP_Option
 			// get old options from set
 			$old_opt = $this->get_options_set()->get_values();
 
+			// set options so that default value can be accessed in binding done in `setup`
+			$this->set_options($options);
+
 			// setup and process values
 			$set->setup($options);
 
@@ -410,8 +413,12 @@ class VP_Option
 		if($this->is_dev_mode())
 			$options = $set->get_defaults();
 
+		// set options so that default value can be accessed in binding done in `setup`
+		$this->set_options($options);
+
 		// setup and process values
 		$set->setup($options);
+		
 	}
 
 	public function init_options_set()
