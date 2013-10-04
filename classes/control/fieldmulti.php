@@ -71,6 +71,7 @@ abstract class VP_Control_FieldMulti extends VP_Control_Field
 	{
 		$defaults = array();
 		$items    = $this->get_items();
+
 		foreach ($this->_raw_default as $def)
 		{
 			switch ($def)
@@ -81,11 +82,13 @@ abstract class VP_Control_FieldMulti extends VP_Control_Field
 					break;
 				case '{{first}}':
 					$first = VP_Util_Array::first($items);
-					$defaults[] = $first->value;
+					if(!is_null($first))
+						$defaults[] = $first->value;
 					break;
 				case '{{last}}':
 					$last = end($items);
-					$defaults[] = $last->value;
+					if(!is_null($last))
+						$defaults[] = $last->value;
 					break;
 				default:
 					$defaults[] = $def;
