@@ -122,6 +122,9 @@ jQuery.fn.validationVal = function() {
 			case 'TEXTAREA':
 				val = $field.val();
 				break;
+			default:
+				val = $field.val();
+				break;
 		}
 	});
 
@@ -637,6 +640,10 @@ vp.binding_event = function(ids, idx, field, func, parent, thecase)
 			delay: 400
 		});
 	}
+	else
+	{
+		jQuery(parent).delegate(name, 'change', function(){vp.binding_action(ids, field, func, thecase);});
+	}
 };
 
 /*
@@ -749,6 +756,10 @@ vp.items_binding_event = function(ids, idx, field, func, parent, thecase)
 			delay: 400
 		});
 	}
+	else
+	{
+		jQuery(parent).delegate(name, 'change', function(){vp.binding_action(ids, field, func, thecase);});
+	}
 };
 
 /*
@@ -822,6 +833,10 @@ vp.dependency_event = function(ids, idx, field, func, parent){
 			},
 			delay: 400
 		});
+	}
+	else
+	{
+		jQuery(parent).delegate(name, 'change', function(){vp.binding_action(ids, field, func, thecase);});
 	}
 };
 
