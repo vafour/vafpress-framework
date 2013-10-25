@@ -11,7 +11,7 @@ class VP_Option
 
 	private $_is_dev_mode;
 
-	private $_use_exim_menu;
+	private $_use_util_menu;
 
 	private $_use_auto_group_naming;
 
@@ -40,7 +40,7 @@ class VP_Option
 		extract($test = array_merge(array(
 			'is_dev_mode'           => false,
 			'use_auto_group_naming' => true,
-			'use_exim_menu'         => true,
+			'use_util_menu'         => true,
 			'minimum_role'          => 'edit_theme_options',
 			'menu_page'             => 'themes.php',
 			'layout'                => 'fixed',
@@ -63,7 +63,7 @@ class VP_Option
 		// check and set the remaining configs
 		if(isset($menu_page))             $this->set_menu_page($menu_page);
 		if(isset($is_dev_mode))           $this->is_dev_mode($is_dev_mode);
-		if(isset($use_exim_menu))         $this->use_exim_menu($use_exim_menu);
+		if(isset($use_util_menu))         $this->use_util_menu($use_util_menu);
 		if(isset($use_auto_group_naming)) $this->use_auto_group_naming($use_auto_group_naming);
 		if(isset($minimum_role))          $this->set_minimum_role($minimum_role);
 		if(isset($page_title))            $this->set_page_title($page_title);
@@ -448,23 +448,23 @@ class VP_Option
 		// assign set object
 		$this->set_options_set($set);
 
-		// setup utility menu
-		$util_menu = new VP_Option_Control_Group_Menu();
-		$util_menu->set_title(__('Utility', 'vp_textdomain'));
-		$util_menu->set_name('menu_util');
-		$util_menu->set_icon('font-awesome:icon-ambulance');
-
-		// setup restore default section
-		$restore_section = new VP_Option_Control_Group_Section();
-		$restore_section->set_title(__('Restore Default', 'vp_textdomain'));
-		$restore_section->set_name('section_restore');
-
-		// setup restore button
-		$restore_button = new VP_Option_Control_Field_Restore();
-		$restore_section->add_field($restore_button);
-
-		if( $this->use_exim_menu() )
+		if( $this->use_util_menu() )
 		{
+			// setup utility menu
+			$util_menu = new VP_Option_Control_Group_Menu();
+			$util_menu->set_title(__('Utility', 'vp_textdomain'));
+			$util_menu->set_name('menu_util');
+			$util_menu->set_icon('font-awesome:icon-ambulance');
+
+			// setup restore default section
+			$restore_section = new VP_Option_Control_Group_Section();
+			$restore_section->set_title(__('Restore Default', 'vp_textdomain'));
+			$restore_section->set_name('section_restore');
+
+			// setup restore button
+			$restore_button = new VP_Option_Control_Field_Restore();
+			$restore_section->add_field($restore_button);
+
 			// setup exim section
 			$exim_section = new VP_Option_Control_Group_Section();
 			$exim_section->set_title(__('Export/Import', 'vp_textdomain'));
@@ -476,10 +476,10 @@ class VP_Option
 
 			// add exim section
 			$util_menu->add_control($exim_section);
-		}
 
-		$util_menu->add_control($restore_section);
-		$set->add_menu($util_menu);
+			$util_menu->add_control($restore_section);
+			$set->add_menu($util_menu);
+		}
 	}
 
 	public function option_page_display()
@@ -749,13 +749,13 @@ class VP_Option
 	/**
 	 * Get/Set whether to use export import menu or not
 	 *
-	 * @return bool $_use_exim_menu
+	 * @return bool $_use_util_menu
 	 */
-	public function use_exim_menu($_use_exim_menu = NULL)
+	public function use_util_menu($_use_util_menu = NULL)
 	{
-		if(is_null($_use_exim_menu))
-			return $this->_use_exim_menu;
-		$this->_use_exim_menu = $_use_exim_menu;
+		if(is_null($_use_util_menu))
+			return $this->_use_util_menu;
+		$this->_use_util_menu = $_use_util_menu;
 	}
 
 	/**
