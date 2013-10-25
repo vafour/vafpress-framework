@@ -28,7 +28,7 @@ return array(
 	'util' => array(
 		'import_success'    => __('Import succeed, option page will be refreshed..', 'vp_textdomain'),
 		'import_failed'     => __('Import failed', 'vp_textdomain'),
-		'export_success'    => __('Export succeed, copy the serialized options', 'vp_textdomain'),
+		'export_success'    => __('Export succeed, copy the JSON formatted options', 'vp_textdomain'),
 		'export_failed'     => __('Export failed', 'vp_textdomain'),
 		'restore_success'   => __('Restoration succeed, option page will be refreshed..', 'vp_textdomain'),
 		'restore_nochanges' => __('Options identical to default', 'vp_textdomain'),
