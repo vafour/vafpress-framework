@@ -27,11 +27,6 @@ class VP_Control_Field_TextArea extends VP_Control_Field
 
 	public function set_value($_value)
 	{
-		// normalize linebreak to \n for all saved data
-		if( is_string($_value) )
-		{
-			$_value = str_replace(array("\r\n", "\r"), "\n", $_value);
-		}
 		$this->_value = $_value;
 		return $this;
 	}
