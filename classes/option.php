@@ -271,6 +271,9 @@ class VP_Option
 	{
 		global $vp_set, $vp_config;
 
+		$options = null;
+		$old_opt = null;
+
 		$result = $this->vp_verify_nonce();
 		
 		if($result['status'])
@@ -286,9 +289,9 @@ class VP_Option
 			}
 			else
 			{
-				$option = (array) json_decode(stripslashes($option));
+				$option = json_decode(stripslashes($option), true);
 
-				if( is_array($option) or is_object($option) )
+				if( is_array($option) )
 				{
 					$set = $this->get_options_set();
 					
@@ -327,7 +330,12 @@ class VP_Option
 	function ajax_export_option()
 	{
 		global $wpdb;
+
+		$sr_options = null;
+		$db_options = null;
+
 		$result = $this->vp_verify_nonce();
+
 		if($result['status'])
 		{
 			$db_options = get_option($this->get_option_key());
