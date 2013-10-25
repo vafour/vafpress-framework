@@ -286,10 +286,7 @@ class VP_Option
 			}
 			else
 			{
-				// $option = maybe_unserialize(stripslashes($option));
-				// var_dump($option);
 				$option = (array) json_decode(stripslashes($option));
-				// var_dump($option);
 
 				if( is_array($option) or is_object($option) )
 				{
