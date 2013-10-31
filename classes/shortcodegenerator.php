@@ -201,7 +201,7 @@ class VP_ShortcodeGenerator
 									<h3 class="hndle vp-sc-element-heading">
 										<a href="#">
 											<?php echo $element['title']; ?>
-											<?php if(isset($element['attributes'])) echo '<i class="icon-arrow-down"></i>'; ?>
+											<?php if(isset($element['attributes'])) echo '<i class="fa fa-arrow-down"></i>'; ?>
 										</a>
 									</h3>
 									<div class="hidden vp-sc-code"><?php echo htmlentities($element['code']); ?></div>

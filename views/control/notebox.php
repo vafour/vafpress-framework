@@ -9,25 +9,25 @@
 <?php endif; ?>
 	<?php switch ($status) {
 		case 'normal':
-			$icon_class = 'icon-lightbulb';
+			$icon_class = 'fa-lightbulb-o';
 			break;
 		case 'info':
-			$icon_class = 'icon-info-sign';
+			$icon_class = 'fa-info-circle';
 			break;
 		case 'success':
-			$icon_class = 'icon-ok-sign';
+			$icon_class = 'fa-check-circle';
 			break;
 		case 'warning':
-			$icon_class = 'icon-warning-sign';
+			$icon_class = 'fa-exclamation-triangle';
 			break;
 		case 'error':
-			$icon_class = 'icon-remove-sign';
+			$icon_class = 'fa-times-circle';
 			break;
 		default:
-			$icon_class = 'icon-lightbulb';
+			$icon_class = 'fa-lightbulb-o';
 			break;
 	} ?>
-	<i class="<?php echo $icon_class; ?>"></i>
+	<i class="fa <?php echo $icon_class; ?>"></i>
 	<div class="label"><?php echo $label; ?></div>
 	<?php VP_Util_Text::print_if_exists($description, '<div class="description">%s</div>'); ?>
 

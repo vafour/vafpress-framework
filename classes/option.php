@@ -454,7 +454,7 @@ class VP_Option
 			$util_menu = new VP_Option_Control_Group_Menu();
 			$util_menu->set_title(__('Utility', 'vp_textdomain'));
 			$util_menu->set_name('menu_util');
-			$util_menu->set_icon('font-awesome:icon-ambulance');
+			$util_menu->set_icon('font-awesome:fa-ambulance');
 
 			// setup restore default section
 			$restore_section = new VP_Option_Control_Group_Section();

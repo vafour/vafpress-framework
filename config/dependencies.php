@@ -154,7 +154,7 @@ return array(
 	 * Styles.
 	 */
 	'styles' => array(
-		'always' => array('tipsy', 'font-awesome', 'font-awesome-ie7'),
+		'always' => array('tipsy', 'font-awesome'),
 		'paths' => array(
 			'bootstrap-colorpicker' => array(
 				'path' => VP_PUBLIC_URL . '/css/vendor/bootstrap-colorpicker.css',
@@ -166,10 +166,6 @@ return array(
 			),
 			'jqui' => array(
 				'path' => VP_PUBLIC_URL . '/css/vendor/jqueryui/themes/' . $jqui_theme . '/jquery-ui-1.9.2.custom.min.css',
-				'deps' => array(),
-			),
-			'font-awesome-ie7' => array(
-				'path' => VP_PUBLIC_URL . '/css/vendor/font-awesome-ie7.min.css',
 				'deps' => array(),
 			),
 			'font-awesome' => array(

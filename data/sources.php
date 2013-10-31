@@ -171,7 +171,7 @@ function vp_get_fontawesome_icons()
 	// scrape list of icons from fontawesome css
 	if( false === ( $icons  = get_transient( 'vp_fontawesome_icons' ) ) )
 	{
-		$pattern = '/\.(icon-(?:\w+(?:-)?)+):before\s*{\s*content/';
+		$pattern = '/\.(fa-(?:\w+(?:-)?)+):before\s*{\s*content/';
 		$subject = file_get_contents(VP_DIR . '/public/css/vendor/font-awesome.min.css');
 
 		preg_match_all($pattern, $subject, $matches, PREG_SET_ORDER);

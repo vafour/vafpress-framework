@@ -25,7 +25,7 @@
 								$icon = $menu->get_icon();
 								$font_awesome = VP_Util_Res::is_font_awesome($icon);
 								if ($font_awesome !== false):
-									VP_Util_Text::print_if_exists($font_awesome, '<i class="%s"></i>');
+									VP_Util_Text::print_if_exists($font_awesome, '<i class="fa %s"></i>');
 								else:
 									VP_Util_Text::print_if_exists(VP_Util_Res::img($icon), '<i class="custom-menu-icon" style="background-image: url(\'%s\');"></i>');
 								endif;
@@ -46,7 +46,7 @@
 										$sub_icon = $submenu->get_icon();
 										$font_awesome = VP_Util_Res::is_font_awesome($sub_icon);
 										if ($font_awesome !== false):
-											VP_Util_Text::print_if_exists($font_awesome, '<i class="%s"></i>');
+											VP_Util_Text::print_if_exists($font_awesome, '<i class="fa %s"></i>');
 										else:
 											VP_Util_Text::print_if_exists(VP_Util_Res::img($sub_icon), '<i class="custom-menu-icon" style="background-image: url(\'%s\');"></i>');
 										endif;

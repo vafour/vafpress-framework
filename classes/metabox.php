@@ -502,7 +502,7 @@ class VP_Metabox extends WPAlchemy_MetaBox
 
 		$icon = '';
 		if(isset($group['sortable']) and $group['sortable'])
-			$icon = '<i class="icon-move"></i> ';
+			$icon = '<i class="fa fa-move"></i> ';
 
 		foreach ($group['groups'] as $g)
 		{
@@ -550,7 +550,7 @@ class VP_Metabox extends WPAlchemy_MetaBox
 
 		$icon = '';
 		if(isset($group['sortable']) and $group['sortable'])
-			$icon = '<i class="icon-move"></i> ';
+			$icon = '<i class="fa fa-move"></i> ';
 
 		foreach ($group['groups'] as $g)
 		{
@@ -561,7 +561,7 @@ class VP_Metabox extends WPAlchemy_MetaBox
 			if ($g === reset($group['groups'])){ $is_first = true; $class = ' first';}
 
 			$html .= '<div id="'. $g['name'] .'" class="vp-wpa-group wpa_group wpa_group-' . $name . $class . '">';
-			$html .= '<div class="vp-wpa-group-heading"><a href="#" class="vp-wpa-group-title">' . $icon . $group['title'] . '</a><a href="#" class="dodelete vp-wpa-group-remove" title="'. __('Remove', 'vp_textdomain') .'"><i class="icon-remove"></i> '. __('Remove', 'vp_textdomain') .'</a></div>';
+			$html .= '<div class="vp-wpa-group-heading"><a href="#" class="vp-wpa-group-title">' . $icon . $group['title'] . '</a><a href="#" class="dodelete vp-wpa-group-remove" title="'. __('Remove', 'vp_textdomain') .'"><i class="fa fa-times"></i> '. __('Remove', 'vp_textdomain') .'</a></div>';
 			$html .= '<div class="vp-controls' . ((!$is_first) ? ' vp-hide' : '') . '">';
 			if ($g === end($group['groups']))
 			{

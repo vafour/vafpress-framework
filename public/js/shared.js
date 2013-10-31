@@ -1094,7 +1094,7 @@ vp.init_fontawesome_chooser = function($elements)
 		if($elements.length <= 0)
 			return;
 		var format = function vp_fontawesome_chooser_format(icon){
-			return '<span class="fontawesome"><i class="' + icon.id + '"></i>' + icon.text + '</span>';
+			return '<span class="fontawesome"><i class="fa ' + icon.id + '"></i>' + icon.text + '</span>';
 		};
 		$elements.select2({
 			formatResult: format,
