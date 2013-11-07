@@ -701,7 +701,7 @@ vp.items_binding_action =	function(ids, field, func, thecase) {
 					$source.empty();
 					$source = jQuery(vp.jqid(field.source)).find('.input');
 					response.data !== null && jQuery.each(response.data, function(key, value) {
-						$source.append(jQuery('<label><input type="checkbox" name="' + field.source + '" value="' + value.value + '"><span></span>'+ value.label + '</label>'));
+						$source.append(jQuery('<label><input class="vp-input" type="checkbox" name="' + field.source + '" value="' + value.value + '"><span></span>'+ value.label + '</label>'));
 					});
 					break;
 				case 'vp-checkimage':
@@ -709,7 +709,7 @@ vp.items_binding_action =	function(ids, field, func, thecase) {
 					$source.empty();
 					$source = jQuery(vp.jqid(field.source)).find('.input');
 					response.data !== null && jQuery.each(response.data, function(key, value) {
-						$source.append(jQuery('<label><input type="checkbox" name="' + field.source + '" value="' + value.value + '"><img src="' + value.img + '" alt="' + value.label + '" class="vp-js-tipsy image-item" style="" original-title="' + value.value + '"></label>'));
+						$source.append(jQuery('<label><input class="vp-input" type="checkbox" name="' + field.source + '" value="' + value.value + '"><img src="' + value.img + '" alt="' + value.label + '" class="vp-js-tipsy image-item" style="" original-title="' + value.value + '"></label>'));
 					});
 					vp.init_tipsy();
 					break;
@@ -718,7 +718,7 @@ vp.items_binding_action =	function(ids, field, func, thecase) {
 					$source.empty();
 					$source = jQuery(vp.jqid(field.source)).find('.input');
 					response.data !== null && jQuery.each(response.data, function(key, value) {
-						$source.append(jQuery('<label><input type="radio" name="' + field.source + '" value="' + value.value + '"><span></span>'+ value.label + '</label>'));
+						$source.append(jQuery('<label><input class="vp-input" type="radio" name="' + field.source + '" value="' + value.value + '"><span></span>'+ value.label + '</label>'));
 					});
 					break;
 				case 'vp-radioimage':
@@ -726,7 +726,7 @@ vp.items_binding_action =	function(ids, field, func, thecase) {
 					$source.empty();
 					$source = jQuery(vp.jqid(field.source)).find('.input');
 					response.data !== null && jQuery.each(response.data, function(key, value) {
-						$source.append(jQuery('<label><input type="radio" name="' + field.source + '" value="' + value.value + '"><img src="' + value.img + '" alt="' + value.label + '" class="vp-js-tipsy image-item" style="" original-title="' + value.value + '"></label>'));
+						$source.append(jQuery('<label><input class="vp-input" type="radio" name="' + field.source + '" value="' + value.value + '"><img src="' + value.img + '" alt="' + value.label + '" class="vp-js-tipsy image-item" style="" original-title="' + value.value + '"></label>'));
 					});
 					vp.init_tipsy();
 					break;
