@@ -5,7 +5,14 @@ class VP_WP_Util
 
 	public static function kses_html($html)
 	{
-		$allow = array_merge(wp_kses_allowed_html( 'post' ), array(
+		if( function_exists('wp_kses_allowed_html') ) {
+			$allowed_post_html = wp_kses_allowed_html( 'post' );
+		}
+		else {
+			global $allowedposttags;
+			$allowed_post_html = $allowedposttags;
+		}
+		$allow = array_merge($allowed_post_html, array(
 			'link' => array(
 				'href' => true,
 				'rel'  => true,

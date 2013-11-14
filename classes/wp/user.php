@@ -12,7 +12,9 @@ class VP_WP_User
 			$result   = array();
 			foreach ($wp_users as $user)
 			{
-				$result[] = array('id' => $user->data->ID, 'display_name' => $user->data->display_name);
+				if( property_exists( $user, 'data' ) )
+					$user = $user->data;
+				$result[] = array('id' => $user->ID, 'display_name' => $user->display_name);
 			}
 		}
 		else

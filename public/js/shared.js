@@ -963,7 +963,7 @@ else
 		       $input     = jQuery(this).parent('.buttons').prev('input'),
 		       $preview   = jQuery(this).parent('.buttons').siblings('.image').find('img');
 
-		tb_show('Upload Image', 'media-upload.php?referer=vafpress&TB_iframe=true&post_id=0');
+		tb_show('Upload Image', 'media-upload.php?&post_id=0&referer=vafpress&TB_iframe=true');
 
 		window.send_to_editor = function(html) {
 			if (html !== '')
