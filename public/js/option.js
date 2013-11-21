@@ -391,7 +391,7 @@
 		}, 'JSON');
 	});
 
-	$('.vp-js-multitextbox-remove').bind('click', function(e) {
+	$('.vp-multitextbox').on('click', '.vp-js-multitextbox-remove', function(e) {
 		e.preventDefault();
 
 		if($('#'+$(this).attr('rel-id')+' div').length > 1)
@@ -405,7 +405,7 @@
 		}
 	});
 
-	$('.vp-js-multitextbox-add').bind('click', function(e) {
+	$('.vp-js-multitextbox-add').on('click', function(e) {
 		e.preventDefault();
 
 		var $textbox = $(this).attr('rel-id'),
