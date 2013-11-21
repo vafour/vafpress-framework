@@ -62,9 +62,19 @@ For those who need a simpler way to create their own Wordpress Theme. See the [h
 
 Go to our [Documentation](http://vafpress.com/documentation/vafpress-framework/), everything is there.
 
-## Contact Us
+## Support
 
-And you can contact us at contact [@] vafour.com
+Please visit our support forum at http://support.vafpress.com if you need any helps.
+
+## Contribution
+
+We welcome to any contribution, you can:
+
+1. Contribute to Vafpress code base.
+2. Report on issue here.
+3. Give us feedback via [forum](http://support.vafpress.com)
+4. Helping others in forum.
+5. Help us translate Vafpress Framework to your language at [Vafpress on Transifex](https://www.transifex.com/projects/p/vafpress-framework/)
 
 ## Credits
 

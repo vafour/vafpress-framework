@@ -14,6 +14,11 @@ require_once 'constant.php';
 require_once 'autoload.php';
 
 //////////////////////////
+// Load Languages       //
+//////////////////////////
+load_theme_textdomain('vp_textdomain', VP_DIR . '/lang');
+
+//////////////////////////
 // Setup FileSystem     //
 //////////////////////////
 $vpfs = VP_FileSystem::instance();
