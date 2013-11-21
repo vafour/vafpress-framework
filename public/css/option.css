@@ -434,6 +434,19 @@
 .vp-wrap .vp-radiobutton .field input.checked ~ span {
 	background-position: -20px -20px;
 }
+
+/* MULTITEXTBOX */
+.vp-deletion {
+	padding: 2px 4px;
+	margin-left: 5px;
+	color: #f00;
+}
+.vp-deletion:hover {
+	background: #f00;
+	color: #fff;
+	text-decoration: none;
+}
+
 /* CHECKIMAGE & RADIOIMAGE */
 .vp-wrap .vp-checkimage .field label,.vp-wrap .vp-radioimage .field label {
 	*display: inline;

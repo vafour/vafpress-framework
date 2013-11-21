@@ -391,5 +391,30 @@
 		}, 'JSON');
 	});
 
+	$('.vp-js-multitextbox-remove').bind('click', function(e) {
+		e.preventDefault();
+
+		if($('#'+$(this).attr('rel-id')+' div').length > 1)
+		{
+			$(this).prev('input[type="text"]').val('');
+			$(this).parent().slideUp('medium', function(){$(this).remove();});	
+		}
+		else
+		{
+			return;
+		}
+	});
+
+	$('.vp-js-multitextbox-add').bind('click', function(e) {
+		e.preventDefault();
+
+		var $textbox = $(this).attr('rel-id'),
+			new_input = $('#'+$textbox+' div:last-child').clone();
+
+		$('#'+$textbox).append(new_input);
+		$('#'+$textbox+' div:last-child').removeAttr('style');
+		$('#'+$textbox+' div:last-child input[type="text"]').attr('value', '');
+		$('#'+$textbox+' div:last-child input[type="text"]').attr('name' , $(this).attr('rel-name'));
+	});	
 
 }(jQuery));
