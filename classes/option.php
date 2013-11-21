@@ -373,7 +373,7 @@ class VP_Option
 		else
 		{
 			$result['status']  = false;
-			$result['message'] = __("Unverified Access.", 'vp_textdomain');
+			$result['message'] = __("Unverified Access", 'vp_textdomain');
 		}
 		return $result;
 	}
