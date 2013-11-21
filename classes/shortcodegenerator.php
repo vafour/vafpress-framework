@@ -197,7 +197,7 @@ class VP_ShortcodeGenerator
 							<ul class="vp-hide vp-sc-sub-menu-list vp-sc-sub-menu-<?php echo str_replace(' ', '_', $title); ?>">
 							<?php endif; ?>
 							<?php foreach ($menu['elements'] as $name => $element): ?>
-								<li class="vp-sc-element postbox<?php if(isset($element['attributes'])) echo ' has-options'; ?>">
+								<li class="vp-sc-element postbox<?php if(isset($element['attributes'])) echo ' has-options'; ?><?php if(isset($element['active']) && $element['active'] == true) echo ' active'; ?>">
 									<h3 class="hndle vp-sc-element-heading">
 										<a href="#">
 											<?php echo $element['title']; ?>
@@ -206,7 +206,7 @@ class VP_ShortcodeGenerator
 									</h3>
 									<div class="hidden vp-sc-code"><?php echo htmlentities($element['code']); ?></div>
 									<?php if(isset($element['attributes']) and !empty($element['attributes'])): ?>
-									<form class="vp-sc-element-form vp-hide inside">
+									<form class="vp-sc-element-form <?php if(!isset($element['active']) || isset($element['active']) && $element['active'] == false):?>vp-hide<?php endif; ?> inside">
 										<?php echo $this->print_form($element['attributes']); ?>
 									</form>
 									<?php endif; ?>
