@@ -15,7 +15,7 @@ class VP_Util_Res
 	public static function get_preview_from_url($url)
 	{
 		$preview = '';
-		$images  = array('jpg', 'jpeg', 'bmp',  'gif',  'png');
+		$images  = array('jpg', 'JPG', 'jpeg', 'bmp',  'gif',  'png', 'ico');
 		
 		if(filter_var($url, FILTER_VALIDATE_URL) !== FALSE)
 		{
