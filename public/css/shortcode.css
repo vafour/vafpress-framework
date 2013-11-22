@@ -517,3 +517,15 @@
 #mce_fullscreen_container {
 	z-index: 150005 !important;
 }
+
+/* MULTITEXTBOX */
+.vp-deletion {
+	padding: 2px 4px;
+	margin-left: 5px;
+	color: #f00;
+}
+.vp-deletion:hover {
+	background: #f00;
+	color: #fff;
+	text-decoration: none;
+}

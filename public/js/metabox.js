@@ -164,7 +164,7 @@
 	});
 
 	vp.is_multianswer = function(type){
-		var multi = ['vp-checkbox', 'vp-checkimage', 'vp-multiselect'];
+		var multi = ['vp-checkbox', 'vp-checkimage', 'vp-multiselect', 'vp-multitextbox'];
 		if(jQuery.inArray(type, multi) !== -1 )
 		{
 			return true;

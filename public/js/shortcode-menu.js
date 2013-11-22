@@ -230,5 +230,33 @@
 			$form.scReset();
 		});
 
+		$('.vp-multitextbox').on('click', '.vp-js-multitextbox-remove', function(e) {
+			e.preventDefault();
+
+			var $textboxes = $(this).parent().parent().find('div').length;
+
+			if($textboxes > 1)
+			{
+				$(this).prev('input[type="text"]').val('');
+				$(this).parent().slideUp('medium', function(){$(this).remove();});	
+			}
+			else
+			{
+				return;
+			}
+		});
+
+		$('.vp-js-multitextbox-add').on('click', function(e) {
+			e.preventDefault();
+
+			var $textbox = $(this).parents('.field div'),
+				new_input = $textbox.find('div > div:last-child').clone();
+
+			$textbox.find('div:last-child').after(new_input);
+			$textbox.find('div:last-child').removeAttr('style');
+			$textbox.find('div:last-child input[type=text]').attr('value', '');
+			$textbox.find('div:last-child input[type=text]').attr('name' , $(this).attr('rel-name'));
+		});
+
 	});
 })(jQuery);
