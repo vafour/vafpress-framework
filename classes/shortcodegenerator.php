@@ -141,7 +141,8 @@ class VP_ShortcodeGenerator
 		if( function_exists('get_current_screen') )
 		{
 			$screen = get_current_screen();
-			$screen = $screen->id;
+			if( !is_null($screen) )
+				$screen = $screen->id;
 		}
 
 		// if in post / page
