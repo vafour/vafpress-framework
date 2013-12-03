@@ -176,8 +176,18 @@ class VP_Option
 	{
 		// do saving
 		$result = $this->get_options_set()->save($this->get_option_key());
+
 		// re-init $opt
 		$this->init_options_from_db();
+
+		// get the new $opt
+		$opt = $this->get_options_set()->get_values();
+
+		// save and re-init action hook
+		do_action('vp_option_save_and_reinit', $opt, $result['status'], $this->get_option_key());
+
+		// option key specific save and re-init action hook
+		do_action('vp_option_save_and_reinit-' . $this->get_option_key(), $opt, $result['status']);
 
 		return $result;
 	}
