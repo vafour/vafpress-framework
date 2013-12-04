@@ -110,7 +110,7 @@ if( !function_exists('vp_ajax_wrapper') )
 // Pool and Dependencies Init  //
 /////////////////////////////////
 add_action( 'init'                 , 'vp_metabox_enqueue' );
-add_action( 'init'                 , 'vp_sg_enqueue' );
+add_action( 'current_screen'       , 'vp_sg_enqueue' );
 add_action( 'admin_enqueue_scripts', 'vp_enqueue_scripts' );
 add_action( 'current_screen'       , 'vp_sg_init_buttons' );
 
