@@ -113,6 +113,18 @@ add_action( 'init'                 , 'vp_metabox_enqueue' );
 add_action( 'current_screen'       , 'vp_sg_enqueue' );
 add_action( 'admin_enqueue_scripts', 'vp_enqueue_scripts' );
 add_action( 'current_screen'       , 'vp_sg_init_buttons' );
+add_filter( 'clean_url'            , 'vp_ace_script_attributes', 10, 1 );
+
+if( !function_exists('vp_ace_script_attributes') )
+{
+	function vp_ace_script_attributes( $url )
+	{
+		if ( FALSE === strpos( $url, 'ace.js' ) )
+			return $url;
+
+		return "$url' charset='utf8";
+	}
+}
 
 if( !function_exists('vp_metabox_enqueue') )
 {
