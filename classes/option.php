@@ -289,6 +289,7 @@ class VP_Option
 		if($result['status'])
 		{
 			$this->init_options_set();
+			$this->init_options();
 
 			$option = $_POST['option'];
 
@@ -309,7 +310,7 @@ class VP_Option
 					$old_opt = $this->get_options_set()->get_values();
 
 					// populate new values
-					$set->populate_values($option, true);
+					$set->populate_values($option, false);
 
 					// save and re-init options
 					$result  = $this->save_and_reinit();
