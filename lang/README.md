@@ -18,7 +18,7 @@ Alexander Chen ([http://arkross.com](http://arkross.com))
 
 #### Turkish
 ---
-M. Kaan Karakaya ([https://github.com/krky](https://github.com/krky))
+M. Kaan Karakaya ([http://krky.org](http://krky.org))
 
 #### Dutch
 ---
