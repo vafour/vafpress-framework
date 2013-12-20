@@ -36,8 +36,8 @@ class VP_Option
 	public function __construct(array $configs)
 	{
 
-		// extract and set default value
-		extract($test = array_merge(array(
+		// merge configs with default value
+		$configs = array_merge(array(
 			'is_dev_mode'           => false,
 			'use_auto_group_naming' => true,
 			'use_util_menu'         => true,
@@ -47,7 +47,14 @@ class VP_Option
 			'page_title'            => __( 'Vafpress Options', 'vp_textdomain' ),
 			'menu_label'            => __( 'Vafpress Options', 'vp_textdomain' ),
 			'priority'              => 10,
-		), $configs));
+		), $configs);
+
+		// options config filter
+		$configs = apply_filters('vp_option_configuration_array'  , $configs, $configs['option_key']);
+		$configs = apply_filters('vp_option_configuration_array-' . $configs['option_key'], $configs);
+
+		// extract the configs
+		extract($configs);
 
 		// check and set required configs
 		if(isset($option_key)) $this->set_option_key($option_key);
