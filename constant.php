@@ -17,15 +17,18 @@ defined('VP_CLASSES_DIR') or define('VP_CLASSES_DIR', VP_DIR . '/classes');
 defined('VP_VIEWS_DIR')   or define('VP_VIEWS_DIR'  , VP_DIR . '/views');
 defined('VP_INCLUDE_DIR') or define('VP_INCLUDE_DIR', VP_DIR . '/includes');
 
-// detect url whether it's theme or plugin integrated
-$dirname = str_replace('\\' ,'/', dirname(__FILE__));
-$dirname = preg_replace('|/+|', '/', $dirname);
-$dir_url = plugin_dir_url(__FILE__);
+// get and normalize framework dirname
+$dirname        = str_replace('\\' ,'/', dirname(__FILE__)); // standardize slash
+$dirname        = preg_replace('|/+|', '/', $dirname);       // normalize duplicate slash
 
-if( strpos($dir_url, $dirname) === false )
-	$vp_url   = $dir_url;
-else
-	$vp_url   = trailingslashit(get_template_directory_uri()) . VP_DIR_NAME;
+// get and normalize WP content directory
+$wp_content_dir = str_replace( '\\', '/', WP_CONTENT_DIR );  // standardize slash
+
+// build relative url
+$relative_url   = str_replace($wp_content_dir, "", $dirname);
+
+// finally framework base url
+$vp_url         = content_url() . $relative_url;
 
 defined('VP_URL')         or define('VP_URL'        , untrailingslashit($vp_url));
 defined('VP_PUBLIC_URL')  or define('VP_PUBLIC_URL' , VP_URL        . '/public');
