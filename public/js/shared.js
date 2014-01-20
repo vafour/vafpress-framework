@@ -1162,8 +1162,12 @@ vp.init_ace_editor = function($elements)
 
 			options      = vp.parseOpt(options.opt);
 
+			// set theme
 			editor.setTheme("ace/theme/" + options.theme);
-			editor.getSession().setMode("ace/mode/" + options.mode);
+			// set language mode if specified
+			if( options.mode ) {
+				editor.getSession().setMode("ace/mode/" + options.mode);
+			}
 			editor.getSession().setUseWrapMode( true );
 			editor.setShowPrintMargin( false );
 
