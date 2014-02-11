@@ -20,7 +20,7 @@ class VP_Site_GoogleWebFont
 		return self::$_instance;
 	}
 
-	public function add($name, $weights = 'normal', $styles = 'normal')
+	public function add($name, $weights = 'normal', $styles = 'normal', $subsets = null)
 	{
 		
 		if(empty($name))
@@ -28,10 +28,14 @@ class VP_Site_GoogleWebFont
 
 		$weights = (array) $weights;
 		$styles  = (array) $styles;
+		$subsets = !empty($subsets) ? (array) $subsets : null;
 		$name    = str_replace(' ', '+', $name);
 
-		if(!isset($this->_fonts[$name]))
-			$this->_fonts[$name] = array();
+		if(!isset($this->_fonts[$name])) {
+			$this->_fonts[$name]            = array();
+			$this->_fonts[$name]['atts']    = array();
+			$this->_fonts[$name]['subsets'] = array('latin');
+		}
 
 		foreach ($weights as $weight)
 		{
@@ -50,10 +54,17 @@ class VP_Site_GoogleWebFont
 
 				$couple = $weight . $style;
 
-				if(!in_array($couple, $this->_fonts[$name]))
-					$this->_fonts[$name][] = $couple;
+				if(!in_array($couple, $this->_fonts[$name]['atts']))
+					$this->_fonts[$name]['atts'][] = $couple;
 			}
 		}
+
+		if(!empty($subsets))
+		{
+			$this->_fonts[$name]['subsets'] = array_merge($this->_fonts[$name]['subsets'], $subsets);
+			$this->_fonts[$name]['subsets'] = array_unique($this->_fonts[$name]['subsets']);
+		}
+
 	}
 
 	public function register()
@@ -83,10 +94,17 @@ class VP_Site_GoogleWebFont
 	public function get_font_links()
 	{
 		$links = array();
-		foreach ($this->_fonts as $name => $atts)
+		foreach ($this->_fonts as $name => $font)
 		{
+			$atts  = $font['atts'];
 			$param = implode(',', $atts);
 			$link  = "http://fonts.googleapis.com/css?family=$name" . ($param !== '' ? ":$param" : '');
+			if(!empty($font['subsets']))
+			{
+				$subsets = implode(',', $font['subsets']);
+				$link   .= '&subset=' . $subsets;
+
+			}
 			$links[$name] = $link;
 		}
 		return $links;
