@@ -33,7 +33,9 @@ abstract class VP_Control_FieldMulti extends VP_Control_Field
 						$params       = explode(',', !empty($data['params']) ? $data['params'] : '');
 
 						$items        = call_user_func_array($function, $params);
-						$arr['items'] = array_merge($arr['items'], $items);
+						if ( $items ) {
+							$arr['items'] = array_merge($arr['items'], $items);
+						}	
 					}
 					else if($data['source'] == 'binding')
 					{
