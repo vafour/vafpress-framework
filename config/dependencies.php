@@ -18,7 +18,7 @@ return array(
 		'always' => array('jquery', 'scrollspy', 'tipsy', 'jquery-typing'),
 		'paths' => array(
 			'jquery' => array(
-				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery-1.8.3.min.js',
+				'path'     => '',
 				'deps'     => array(),
 				'ver'      => '1.8.3',
 				'override' => false,
@@ -39,27 +39,27 @@ return array(
 				'ver'      => false,
 			),
 			'jquery-ui-core' => array(
-				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery.ui.core.js',
+				'path'     => '',
 				'deps'     => array(),
 				'ver'      => '1.9.2',
 			),
 			'jquery-ui-widget' => array(
-				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery.ui.widget.js',
+				'path'     => '',
 				'deps'     => array(),
 				'ver'      => '1.9.2',
 			),
 			'jquery-ui-mouse' => array(
-				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery.ui.mouse.js',
+				'path'     => '',
 				'deps'     => array('jquery-ui-widget'),
 				'ver'      => '1.9.2',
 			),
 			'jquery-ui-slider' => array(
-				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery.ui.slider.js',
+				'path'     => '',
 				'deps'     => array('jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-mouse'),
 				'ver'      => '1.9.2',
 			),
 			'jquery-ui-datepicker' => array(
-				'path'     => VP_PUBLIC_URL . '/js/vendor/jquery.ui.datepicker.js',
+				'path'     => '',
 				'deps'     => array('jquery', 'jquery-ui-core', 'jquery-ui-widget'),
 				'ver'      => '1.9.2',
 			),
