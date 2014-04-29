@@ -139,7 +139,7 @@ var KIA_metabox, tinyMCEbackupConfig = null;
 		window.send_to_editor_clone = function(html){
 
 			try {
-				tinyMCE.execInstanceCommand(mceID, 'mceInsertContent', false, html);
+				tinyMCE.get(mceID).insertContent(html);
 			} catch(e) {
 				$(textarea).insertAtCaret(html);
 			}
