@@ -377,8 +377,10 @@ class VP_Metabox extends WPAlchemy_MetaBox
 			{
 				if( VP_Util_Reflection::is_multiselectable($field['type']) )
 				{
-					if( !is_array($value) )
+					if( !is_array($value) and !is_null($value) )
 						$value = array( $value );
+					else if( is_null($value) )
+						$value = array();
 				}
 			}
 		}
