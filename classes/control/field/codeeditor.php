@@ -31,7 +31,7 @@ class VP_Control_Field_CodeEditor extends VP_Control_Field
 			$instance = new $class_name;
 		$instance->_basic_make($arr);
 
-		$instance->set_editor_mode( isset($arr['mode'])  ? $arr['mode']  : 'css');
+		$instance->set_editor_mode( isset($arr['mode'])  ? $arr['mode']  : '');
 		$instance->set_editor_theme(isset($arr['theme']) ? $arr['theme'] : 'textmate');
 
 		return $instance;

@@ -5,13 +5,12 @@ class VP_Util_Text
 
 	public static function parse_md($text)
 	{
-		if(!function_exists('Markdown'))
+		if(!class_exists('Parsedown'))
 		{
-			$path = VP_FileSystem::instance()->resolve_path('includes', 'markdown/parser');
+			$path = VP_FileSystem::instance()->resolve_path('includes', 'parsedown');
 			require $path;
-			// require VP_INCLUDE_DIR . '/markdown/parser.php';
 		}
-		return Markdown($text);
+		return Parsedown::instance()->parse($text);
 	}
 
 	public static function make_opt($optArray)

@@ -103,6 +103,8 @@ function vp_get_gwf_weight($face)
 	
 	$fonts   = file_get_contents(dirname(__FILE__) . '/gwf.json');
 	$fonts   = json_decode($fonts);
+	if( !property_exists($fonts, $face) )
+		return null;
 	$weights = $fonts->{$face}->weights;
 
 	foreach ($weights as $weight)
@@ -122,11 +124,34 @@ function vp_get_gwf_style($face)
 	
 	$fonts   = file_get_contents(dirname(__FILE__) . '/gwf.json');
 	$fonts   = json_decode($fonts);
+	if( !property_exists($fonts, $face) )
+		return null;
 	$styles = $fonts->{$face}->styles;
 
 	foreach ($styles as $style)
 	{
 		$result[] = array('value' => $style, 'label' => $style);
+	}
+
+	return $result;
+}
+
+VP_Security::instance()->whitelist_function('vp_get_gwf_subset');
+
+function vp_get_gwf_subset($face)
+{
+	if(empty($face))
+		return array();
+	
+	$fonts   = file_get_contents(dirname(__FILE__) . '/gwf.json');
+	$fonts   = json_decode($fonts);
+	if( !property_exists($fonts, $face) )
+		return null;
+	$subsets = $fonts->{$face}->subsets;
+
+	foreach ($subsets as $subset)
+	{
+		$result[] = array('value' => $subset, 'label' => $subset);
 	}
 
 	return $result;

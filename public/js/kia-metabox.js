@@ -5,7 +5,7 @@
 /* requires jquery 1.7
 /* tested on WordPress 3.3.1
 /*
-/* © Kathy Darling http://www.kathyisawesome.com
+/* Â© Kathy Darling http://www.kathyisawesome.com
 /* 2012-03-07.
 /*
 /* A bit modification to work with Vafpress (http://vafpress.com)
@@ -113,7 +113,7 @@ var KIA_metabox, tinyMCEbackupConfig = null;
 				tinyMCE.settings.plugins                 = plugins;
 				tinyMCE.settings.theme_advanced_buttons1 = theme_advanced_buttons1;
 
-				tinyMCE.execCommand('mceAddControl', false, id);
+				tinyMCE.execCommand('mceAddEditor', false, id);
 			} catch(e){}
 
 		});
@@ -139,7 +139,7 @@ var KIA_metabox, tinyMCEbackupConfig = null;
 		window.send_to_editor_clone = function(html){
 
 			try {
-				tinyMCE.execInstanceCommand(mceID, 'mceInsertContent', false, html);
+				tinyMCE.get(mceID).insertContent(html);
 			} catch(e) {
 				$(textarea).insertAtCaret(html);
 			}
