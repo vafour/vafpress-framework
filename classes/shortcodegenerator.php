@@ -243,7 +243,10 @@ class VP_ShortcodeGenerator
 			<?php if($attr['type'] !== 'notebox'): ?>
 				<div class="vp-sc-field vp-<?php echo $attr['type']; ?>" data-vp-type="vp-<?php echo $attr['type']; ?>">
 					<div class="label"><label><?php echo $attr['label']; ?></label></div>
-					<div class="field"><div class="input"><?php echo $field->render(true); ?></div></div>
+					<div class="field">
+                        <div class="input"><?php echo $field->render(true); ?></div>
+                        <?php if(isset($attr['description'])) echo '<div class="description">'.$attr['description'].'</div>'; ?>
+                    </div>
 				</div>
 			<?php else: ?>
 				<?php $status = isset($attr['status']) ? $attr['status'] : 'normal'; ?>
