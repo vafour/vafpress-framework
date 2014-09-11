@@ -41,7 +41,7 @@ class VP_WP_Admin
 	public static function get_current_post_type()
 	{
 		
-		if(!class_exists('WPAlchemy_MetaBox'))
+		if(!class_exists('VP_WPAlchemy_MetaBox'))
 		{
 			require_once VP_FileSystem::instance()->resolve_path('includes', 'wpalchemy/MetaBox');
 		}
@@ -56,7 +56,7 @@ class VP_WP_Admin
 
 			if ($uri AND in_array($file, array('post.php', 'post-new.php')))
 			{
-				$post_id = WPAlchemy_MetaBox::_get_post_id();
+				$post_id = VP_WPAlchemy_MetaBox::_get_post_id();
 
 				$post_type = isset($_GET['post_type']) ? $_GET['post_type'] : NULL ;
 
