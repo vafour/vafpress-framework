@@ -92,7 +92,7 @@ class VP_Metabox_Depsloader
 
 	public function can_output($hook_suffix = '')
 	{
-		if ( WPAlchemy_MetaBox::_is_post() or WPAlchemy_MetaBox::_is_page() )
+		if ( VP_WPAlchemy_MetaBox::_is_post() or VP_WPAlchemy_MetaBox::_is_page() )
 			return true;
 		return false;
 	}

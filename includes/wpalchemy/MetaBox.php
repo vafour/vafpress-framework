@@ -19,9 +19,9 @@
 // todo: perhaps move _global_head and _global_foot locally, when first run
 // define a constant to prevent other instances from running again ...
 
-add_action('admin_head', array('WPAlchemy_MetaBox', '_global_head'));
+add_action('admin_head', array('VP_WPAlchemy_MetaBox', '_global_head'));
 
-add_action('admin_footer', array('WPAlchemy_MetaBox', '_global_foot'));
+add_action('admin_footer', array('VP_WPAlchemy_MetaBox', '_global_foot'));
 
 define('WPALCHEMY_MODE_ARRAY', 'array');
 
@@ -58,7 +58,7 @@ define('WPALCHEMY_VIEW_START_CLOSED', 'closed');
 
 define('WPALCHEMY_VIEW_ALWAYS_OPENED', 'always_opened');
 
-class WPAlchemy_MetaBox
+class VP_WPAlchemy_MetaBox
 {
 	/**
 	 * User defined identifier for the meta box, prefix with an underscore to
@@ -450,7 +450,7 @@ class WPAlchemy_MetaBox
 	 */
 	var $_loop_data;
 	
-	function WPAlchemy_MetaBox($arr)
+	function VP_WPAlchemy_MetaBox($arr)
 	{
 		$this->_loop_data = new stdClass;
 		
@@ -562,7 +562,7 @@ class WPAlchemy_MetaBox
 	function _init()
 	{
 		// must be creating or editing a post or page
-		if ( ! WPAlchemy_MetaBox::_is_post() AND ! WPAlchemy_MetaBox::_is_page()) return;
+		if ( ! VP_WPAlchemy_MetaBox::_is_post() AND ! VP_WPAlchemy_MetaBox::_is_page()) return;
 		
 		if ( ! empty($this->output_filter))
 		{
@@ -988,7 +988,7 @@ class WPAlchemy_MetaBox
 	 */
 	static function _is_post()
 	{
-		if ('post' == WPAlchemy_MetaBox::_is_post_or_page())
+		if ('post' == VP_WPAlchemy_MetaBox::_is_post_or_page())
 		{
 			return TRUE;
 		}
@@ -1007,7 +1007,7 @@ class WPAlchemy_MetaBox
 	 */
 	static function _is_page()
 	{
-		if ('page' == WPAlchemy_MetaBox::_is_post_or_page())
+		if ('page' == VP_WPAlchemy_MetaBox::_is_post_or_page())
 		{
 			return TRUE;
 		}
@@ -1026,7 +1026,7 @@ class WPAlchemy_MetaBox
 	 */
 	static function _is_post_or_page()
 	{
-		$post_type = WPAlchemy_MetaBox::_get_current_post_type();
+		$post_type = VP_WPAlchemy_MetaBox::_get_current_post_type();
 
 		if (isset($post_type))
 		{
@@ -1063,7 +1063,7 @@ class WPAlchemy_MetaBox
 
 			if ($uri AND in_array($file, array('post.php', 'post-new.php')))
 			{
-				$post_id = WPAlchemy_MetaBox::_get_post_id();
+				$post_id = VP_WPAlchemy_MetaBox::_get_post_id();
 
 				$post_type = isset($_GET['post_type']) ? $_GET['post_type'] : NULL ;
 
@@ -1116,7 +1116,7 @@ class WPAlchemy_MetaBox
 	 */
 	function can_output()
 	{
-		$post_id = WPAlchemy_MetaBox::_get_post_id();
+		$post_id = VP_WPAlchemy_MetaBox::_get_post_id();
 
 		if (!empty($this->exclude_template) OR !empty($this->include_template))
 		{
@@ -1326,7 +1326,7 @@ class WPAlchemy_MetaBox
 			}
 		}
 
-		$post_type = WPAlchemy_MetaBox::_get_current_post_type();
+		$post_type = VP_WPAlchemy_MetaBox::_get_current_post_type();
 
 		if (isset($post_type) AND ! in_array($post_type, $this->types))
 		{
@@ -1354,7 +1354,7 @@ class WPAlchemy_MetaBox
 	static function _global_head()
 	{
 		// must be creating or editing a post or page
-		if ( ! WPAlchemy_MetaBox::_is_post() AND ! WPAlchemy_MetaBox::_is_page()) return;
+		if ( ! VP_WPAlchemy_MetaBox::_is_post() AND ! VP_WPAlchemy_MetaBox::_is_page()) return;
 
 		// todo: you're assuming people will want to use this exact functionality
 		// consider giving a developer access to change this via hooks/callbacks
@@ -1544,7 +1544,7 @@ class WPAlchemy_MetaBox
 	static function _global_foot()
 	{
 		// must be creating or editing a post or page
-		if ( ! WPAlchemy_MetaBox::_is_post() AND ! WPAlchemy_MetaBox::_is_page()) return;
+		if ( ! VP_WPAlchemy_MetaBox::_is_post() AND ! VP_WPAlchemy_MetaBox::_is_page()) return;
 
 		?>
 		<script type="text/javascript">
@@ -2238,7 +2238,7 @@ class WPAlchemy_MetaBox
 	 
 		$new_data = isset( $_POST[$this->id] ) ? $_POST[$this->id] : NULL ;
 
-		WPAlchemy_MetaBox::clean($new_data);
+		VP_WPAlchemy_MetaBox::clean($new_data);
 
 		if (empty($new_data))
 		{
@@ -2256,7 +2256,7 @@ class WPAlchemy_MetaBox
 			 */
 			if (FALSE === $new_data) return $post_id;
 
-			WPAlchemy_MetaBox::clean($new_data);
+			VP_WPAlchemy_MetaBox::clean($new_data);
 		}
 
 		// get current fields, use $real_post_id (checked for in both modes)
@@ -2355,7 +2355,7 @@ class WPAlchemy_MetaBox
 			{
 				if (is_array($arr[$i])) 
 				{
-					WPAlchemy_MetaBox::clean($arr[$i]);
+					VP_WPAlchemy_MetaBox::clean($arr[$i]);
 	 
 					if (!count($arr[$i])) 
 					{
