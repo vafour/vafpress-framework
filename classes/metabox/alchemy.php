@@ -9,12 +9,12 @@
 /////////////////////////////////////////
 // Include original WPAlchemy Class    //
 /////////////////////////////////////////
-if(!class_exists('WPAlchemy_MetaBox'))
+if(!class_exists('VP_WPAlchemy_MetaBox'))
 {
 	require_once VP_FileSystem::instance()->resolve_path('includes', 'wpalchemy/MetaBox');
 }
 
-class VP_MetaBox_Alchemy extends WPAlchemy_MetaBox
+class VP_MetaBox_Alchemy extends VP_WPAlchemy_MetaBox
 {
 
 	/**
