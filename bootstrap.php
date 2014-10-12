@@ -340,5 +340,46 @@ if( !function_exists('vp_option') )
 }
 
 /**
+ * Get option values using dot notation, and fallback to the default value as specified in the template
+ * example:
+ *
+ * vp_option_with_default('option_key.field_name')
+ *
+ */
+
+if( !function_exists('vp_option_with_default') )
+{
+    function vp_option_with_default($key)
+    {
+        // Get option via the standard vp_option function.
+        $value = vp_option($key, null);
+
+        // If value is set, return it.
+        if ($value !== null) {
+            return $value;
+        }
+
+        // Get pool name and option name.
+        $keys = explode('.', $key);
+        $pool_name = $keys[0];
+        $option_name = $keys[1];
+
+        // Get defaults.
+        /* @var VP_Option $pool */
+        $pool = VP_Option::get_pool();
+        $pool = $pool[$pool_name];
+        $pool->init_options_set();
+        $options_set = $pool->get_options_set();
+        $defaults = $options_set->get_defaults();
+
+        if (array_key_exists($option_name, $defaults)) {
+            return $defaults[$option_name];
+        }
+
+        return null;
+    }
+}
+
+/**
  * EOF
  */
