@@ -289,53 +289,95 @@ if( !function_exists('vp_metabox') )
 	}
 }
 
-/**
- * Easy way to get option values using dot notation
- * example:
- * 
- * vp_option('option_key.field_name')
- * 
- */
-
 if( !function_exists('vp_option') )
 {
+	/**
+	 * Get an option's value using dot notation. If no value is set, fallback to either the given $default parameter,
+	 * or the default value as specified in the template used.
+	 * Example: vp_option('option_key.field_name')
+	 *
+	 * @param string $key Option key using dot notation.
+	 * @param null|string $default Specify a custom default value. If null, use the default value as specified in the
+	 * template used.
+	 *
+	 * @return null|string
+	 */
 	function vp_option($key, $default = null)
 	{
+		$value = null;
+
+		// Get option value.
 		$vp_options = VP_Option::get_pool();
-
-		if(empty($vp_options))
-			return $default;
-
-		$keys = explode('.', $key);
-		$temp = NULL;
-
-		foreach ($keys as $idx => $key)
+		if(!empty($vp_options))
 		{
-			if($idx == 0)
+			$subkeys = explode('.', $key);
+			$temp = null;
+
+			foreach ($subkeys as $idx => $subkey)
 			{
-				if(array_key_exists($key, $vp_options))
+				if($idx == 0)
 				{
-					$temp = $vp_options[$key];
-					$temp = $temp->get_options();
+					if(array_key_exists($subkey, $vp_options))
+					{
+						$value = $vp_options[$subkey];
+						$value = $value->get_options();
+					}
+					else
+					{
+						$value = null;
+						break;
+					}
 				}
 				else
 				{
-					return $default;
-				}
-			}
-			else
-			{
-				if(is_array($temp) and array_key_exists($key, $temp))
-				{
-					$temp = $temp[$key];
-				}
-				else
-				{
-					return $default;
+					if(is_array($value) and array_key_exists($subkey, $value))
+					{
+						$value = $value[$subkey];
+					}
+					else
+					{
+						$value = null;
+						break;
+					}
 				}
 			}
 		}
-		return $temp;
+
+		// If value is set, return it.
+		if ($value !== null)
+		{
+			return $value;
+		}
+
+		// If a custom default value is given, return that.
+		if ($default !== null)
+		{
+			return $default;
+		}
+
+		// Get default value.
+		{
+			// Get pool name and option name.
+			$keys        = explode( '.', $key );
+			$pool_name   = $keys[0];
+			$option_name = $keys[1];
+
+			// Get array of defaults.
+			$pool = VP_Option::get_pool();
+			$pool = $pool[ $pool_name ];
+			if ($pool !== null) {
+				$pool->init_options_set();
+				$options_set = $pool->get_options_set();
+				$defaults    = $options_set->get_defaults();
+				// Get default value for given $key.
+				if ( array_key_exists( $option_name, $defaults ) ) {
+					return $defaults[ $option_name ];
+				}
+			}
+		}
+
+		// Nothing found.
+		return null;
 	}
 }
 

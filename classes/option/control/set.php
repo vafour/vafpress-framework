@@ -17,6 +17,8 @@ class VP_Option_Control_Set
 
 	private $_layout;
 
+	private $_defaults = null;
+
 	public function __construct()
 	{
 		$this->_menus = array();
@@ -314,12 +316,18 @@ class VP_Option_Control_Set
 
 	public function get_defaults()
 	{
+		if (null !== $this->_defaults) {
+			return $this->_defaults;
+		}
+
 		$defaults = array();
 		$fields   = $this->get_fields();
 		foreach ( $fields as $field )
 		{
 			$defaults[$field->get_name()] = $field->get_default();
 		}
+		$this->_defaults = $defaults;
+
 		return $defaults;
 	}
 
