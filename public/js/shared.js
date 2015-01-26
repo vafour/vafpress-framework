@@ -926,15 +926,18 @@ if ( vp_wp.use_new_media_upload )
 		// handler for attachment
 		wp.media.editor.send.attachment = function(props, attachment) {
 
-			$input.val(attachment.url);
+			// Check for sizes
+			var $selectedSize = attachment.sizes[props.size];
+			
+			$input.val($selectedSize.url);
 			$input.trigger('change');
 
-			if(attachment.type === 'image')
-				$preview.attr('src', attachment.url);
+			if($selectedSize.type === 'image')
+				$preview.attr('src', $selectedSize.url);
 			else
-				$preview.attr('src', attachment.icon);
+				$preview.attr('src', $selectedSize.icon);
 
-			wp.media.editor.send.attachment = _orig_send_attachment;
+			wp.media.editor.send.$selectedSize = _orig_send_attachment;
 			window.send_to_editor = _orig_send_to_editor;
 		};
 
