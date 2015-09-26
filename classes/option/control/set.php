@@ -329,7 +329,22 @@ class VP_Option_Control_Set
 		$fields = $this->get_fields();
 		foreach ( $fields as $field )
 		{
-			$values[$field->get_name()] = $field->get_value();
+			// Use 'dot' separate field name to array
+			if (strpos($field->get_name(), '.') !== false) {
+				$arrField     = explode('.', $field->get_name());
+				$fieldNameEnd = &$values;
+
+				foreach ($arrField as $i => $fieldName) {
+					$fieldNameEnd = &$fieldNameEnd[$fieldName];
+				}
+
+				$fieldNameEnd = $field->get_value();
+			} else
+			// End 
+			{
+				$values[$field->get_name()] = $field->get_value();
+			}
+
 		}
 		return $values;
 	}
