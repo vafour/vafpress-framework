@@ -352,7 +352,7 @@ class VP_Option_Control_Set
 	public function setup($options)
 	{
 		// populate option to fields' values
-		$this->populate_values($options);
+		$this->populate_values($options, false, false);
 
 		// process binding
 		$this->process_binding();
