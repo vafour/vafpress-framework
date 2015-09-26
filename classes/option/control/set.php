@@ -397,34 +397,45 @@ class VP_Option_Control_Set
 		return $result;
 	}
 
-	public function populate_values($opt, $force_update = false)
-	{
+	// add $save_populate - it check if populate when save or first load panel
+	public function populate_values($opt, $force_update = false, $save_populate = true) {
 		$fields = $this->get_fields();
-		foreach ( $fields as $field )
-		{
+		foreach ($fields as $field) {
 			$is_multi = VP_Util_Reflection::is_multiselectable($field);
-			if( array_key_exists($field->get_name(), $opt) )
-			{
-				if( $is_multi and is_array($opt[$field->get_name()]) )
-				{
-					$field->set_value($opt[$field->get_name()]);
+
+			if (strpos($field->get_name(), '.') !== false && !$save_populate) {
+				$arrField = explode('.', $field->get_name());
+				$fieldEnd = $opt;
+
+				foreach ($arrField as $i => $fieldName) {
+					$fieldEnd = $fieldEnd[$fieldName];
 				}
-				if( !$is_multi and !is_array($opt[$field->get_name()]) )
-				{
-					$field->set_value($opt[$field->get_name()]);
+
+				if (!is_null($fieldEnd)) {
+					if ($is_multi and is_array($fieldEnd)) {
+						$field->set_value($fieldEnd);
+					}
+					if (!$is_multi and !is_array($fieldEnd)) {
+						$field->set_value($fieldEnd);
+					}
 				}
 			}
-			else
-			{
-				if($force_update)
-				{
-					if($is_multi)
-					{
-						$field->set_value(array());
+			else {
+
+				if (array_key_exists($field->get_name(), $opt)) {
+					if ($is_multi and is_array($opt[$field->get_name()])) {
+						$field->set_value($opt[$field->get_name()]);
 					}
-					else
-					{
-						$field->set_value('');
+					if (!$is_multi and !is_array($opt[$field->get_name()])) {
+						$field->set_value($opt[$field->get_name()]);
+					}
+				} else {
+					if ($force_update) {
+						if ($is_multi) {
+							$field->set_value(array());
+						} else {
+							$field->set_value('');
+						}
 					}
 				}
 			}
