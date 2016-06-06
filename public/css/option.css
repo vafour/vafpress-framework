@@ -847,3 +847,18 @@
 .vp-wrap .select2-results .select2-highlighted {
 	background: #278ab7;
 }
+/* Add Right to Left languages support
+ * ==================================================== */
+.vp-wrap .vp-menus a i {
+        padding: 12px 15px 12px 0;
+}
+div[data-vp-validation=url] input, div[data-vp-validation=numeric] input, div[data-vp-validation=email] input {
+        text-align: left;
+        direction: ltr;
+}
+.vp-field p, .vp-field label {
+        padding-right: 15px;
+}
+.vp-wrap .vp-section>.description {
+    left: 0; right: auto;
+}
