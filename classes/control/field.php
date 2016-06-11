@@ -47,8 +47,14 @@ abstract class VP_Control_Field implements iFactory
 	 * @var String|Array
 	 */
 	protected $_default;
+        
+        /**
+         * Style for the field
+         * @var Array
+         */
+        protected $_style;
 
-	/**
+        /**
 	 * Maximum height of the field
 	 * @var Integer
 	 */
@@ -98,6 +104,7 @@ abstract class VP_Control_Field implements iFactory
 		$this->add_data('name', $this->get_name());
 		$this->add_data('default', $this->get_default());
 		$this->add_data('value', $this->get_value());
+		$this->add_data('style', VP_Util_Array::parse_style($this->get_style()));
 
 		// Determine Type
 		$type = 'vp-' . strtolower(substr(get_class($this), strrpos(get_class($this), '_') + 1));
@@ -118,7 +125,8 @@ abstract class VP_Control_Field implements iFactory
 			'dependency'              => $this->get_dependency(),
 			'binding'                 => $this->get_binding(),
 			'label'                   => $this->get_label(),
-			'description'             => VP_Util_Text::parse_md($this->get_description())
+			'description'             => VP_Util_Text::parse_md($this->get_description()),
+			'style'                   => $this->get_style(),
 		));
 	}
 
@@ -133,7 +141,8 @@ abstract class VP_Control_Field implements iFactory
 			 ->set_label(isset($arr['label']) ? $arr['label'] : '')
 			 ->set_default(isset($arr['default']) ? $arr['default'] : null)
 			 ->set_description(isset($arr['description']) ? $arr['description'] : '')
-			 ->set_validation(isset($arr['validation']) ? $arr['validation'] : '');
+			 ->set_validation(isset($arr['validation']) ? $arr['validation'] : '')
+			 ->set_style(isset($arr['style']) ? $arr['style'] : array());
 
 		if(isset($arr['dependency']))
 		{
@@ -262,6 +271,25 @@ abstract class VP_Control_Field implements iFactory
 	 */
 	public function set_description($_description) {
 		$this->_description = $_description;
+		return $this;
+	}
+
+	/**
+	 * Getter for $_style
+	 *
+	 * @return Array Style(s) of field 
+	 */
+	public function get_style() {
+		return $this->_style;
+	}
+	
+	/**
+	 * Setter for $_style
+	 *
+	 * @param Array $_style Style(s) of the field
+	 */
+	public function set_style($_style) {
+		$this->_style = $_style;
 		return $this;
 	}
 
