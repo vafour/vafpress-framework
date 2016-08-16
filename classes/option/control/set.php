@@ -14,6 +14,8 @@ class VP_Option_Control_Set
 	private $_title;
 
 	private $_logo;
+        
+	private $_logo_link;
 
 	private $_layout;
 
@@ -85,6 +87,25 @@ class VP_Option_Control_Set
 	 */
 	public function set_logo($_logo) {
 		$this->_logo = $_logo;
+		return $this;
+	}
+
+	/**
+	 * Get logo link
+	 *
+	 * @return String Logo Link
+	 */
+	public function get_logo_link() {
+		return $this->_logo_link;
+	}
+	
+	/**
+	 * Set logo link
+	 *
+	 * @param String $_logo_link Logo Link
+	 */
+	public function set_logo_link($_logo_link) {
+		$this->_logo_link = $_logo_link;
 		return $this;
 	}
 

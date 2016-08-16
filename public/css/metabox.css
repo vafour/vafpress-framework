@@ -529,3 +529,8 @@
 .select2-results .select2-highlighted {
 	background: #278ab7;
 }
+/* Add Right to Left languages support
+ * ==================================================== */
+.vp-metabox .vp-upload .image {
+        max-width: 100%;
+}

@@ -14,7 +14,8 @@ class VP_Option_Parser
 			$arr['logo']  = 'vp-logo.png';
 
 		$set->set_title(isset($arr['title']) ? $arr['title'] : '')
-		    ->set_logo(isset($arr['logo']) ? $arr['logo'] : '');
+		    ->set_logo(isset($arr['logo']) ? $arr['logo'] : '')
+		    ->set_logo_link(isset($arr['logo_link']) ? $arr['logo_link'] : home_url());
 
 		$auto_menu_index  = 0;
 		$auto_menu        = "the_menu_";
