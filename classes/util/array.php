@@ -129,7 +129,13 @@ class VP_Util_Array
 	}
 
         public static function parse_style($style){
+
+                if( ! is_array( $style ) ){
+                	return '';
+                }
+
                 $styleString = '';
+
                 foreach( $style as $property => $value ){
                         $styleString.= $property . ':' . $value . '; ';
                 }
