@@ -6,7 +6,13 @@
 	if( has_filter('the_editor_content') )
 		$value = apply_filters('the_editor_content', $value);
 	else
-		$value = wp_richedit_pre($value);
+	    // 'wp_richedit_pre' is deprecated since version 4.3
+        // use 'format_for_editor' when WP version is >= 4.3
+        global $wp_version;
+	    if ($wp_version < 4.3)
+            $value = wp_richedit_pre($value);
+	    else
+            $value = format_for_editor($value);
 ?>
 <div class="customEditor">
 	<div class="wp-editor-tools">
