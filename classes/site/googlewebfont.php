@@ -98,7 +98,7 @@ class VP_Site_GoogleWebFont
 		{
 			$atts  = $font['atts'];
 			$param = implode(',', $atts);
-			$link  = "http://fonts.googleapis.com/css?family=$name" . ($param !== '' ? ":$param" : '');
+			$link  = "//fonts.googleapis.com/css?family=$name" . ($param !== '' ? ":$param" : '');
 			if(!empty($font['subsets']))
 			{
 				$subsets = implode(',', $font['subsets']);
